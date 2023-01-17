@@ -68,9 +68,6 @@ public class HistoryServiceImpl implements HistoryService {
         // 유저들을 중복없이 넣어줄 set
         Set<Long> userSet = new HashSet<>();
 
-        //Key= historyId, Value = UserId List
-        Map<Long, List<UserDto>> historyMap = new HashMap<>();
-
         //result 선언
         Map<Long, HistoryResp> result = new HashMap<>();
 
@@ -82,7 +79,7 @@ public class HistoryServiceImpl implements HistoryService {
             if (!result.containsKey(spyPlay.getHistoryId())) {
                 HistoryResp normalGame = new HistoryResp();
                 normalGame.setRole(spyPlay.getRole());
-                result.put(spyPlay.getHistoryId(), new HistoryResp());
+                result.put(spyPlay.getHistoryId(), normalGame);
             } else { // key가 있으면 historyId에 맞는 NormalGameHistoryResp를 꺼내서 userId, role을 넣어줌
                 HistoryResp historyResp = result.get(spyPlay.getHistoryId());
                 if (historyResp.getUsers() == null)
@@ -105,7 +102,7 @@ public class HistoryServiceImpl implements HistoryService {
         userList.forEach(user -> userMap.put(user.getId(), user.getName()));
 
         //historyMap의 키값들은 중복되지 않는 historyId들의 집합
-        List<SpyHistory> historyList = spyHistoryRepository.findByHistorySet(historyMap.keySet());
+        List<SpyHistory> historyList = spyHistoryRepository.findByHistorySet(result.keySet());
 
         // result에 넣어준다
         for (SpyHistory spyHistory : historyList) {
@@ -122,9 +119,6 @@ public class HistoryServiceImpl implements HistoryService {
         // 유저들을 중복없이 넣어줄 set
         Set<Long> userSet = new HashSet<>();
 
-        //Key= historyId, Value = UserId List
-        Map<Long, List<UserDto>> historyMap = new HashMap<>();
-
         //result 선언
         Map<Long, HistoryResp> result = new HashMap<>();
 
@@ -136,7 +130,7 @@ public class HistoryServiceImpl implements HistoryService {
             if (!result.containsKey(normalPlay.getHistoryId())) {
                 HistoryResp normalGame = new HistoryResp();
                 normalGame.setRole(normalPlay.getRole());
-                result.put(normalPlay.getHistoryId(), new HistoryResp());
+                result.put(normalPlay.getHistoryId(), normalGame);
             } else { // key가 있으면 historyId에 맞는 NormalGameHistoryResp를 꺼내서 userId, role을 넣어줌
                 HistoryResp historyResp = result.get(normalPlay.getHistoryId());
                 if (historyResp.getUsers() == null)
@@ -159,7 +153,7 @@ public class HistoryServiceImpl implements HistoryService {
         userList.forEach(user -> userMap.put(user.getId(), user.getName()));
 
         //historyMap의 키값들은 중복되지 않는 historyId들의 집합
-        List<NormalHistory> historyList = normalHistoryRepository.findByHistorySet(historyMap.keySet());
+        List<NormalHistory> historyList = normalHistoryRepository.findByHistorySet(result.keySet());
 
         // result에 넣어준다
         for (NormalHistory normalHistory : historyList) {

@@ -2,7 +2,6 @@ package com.sixsense.liargame.db.repository.support;
 
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sixsense.liargame.db.entity.NormalPlay;
 import org.springframework.stereotype.Repository;
@@ -21,17 +20,16 @@ public class NormalPlayRepositorySupportImpl implements NormalPlayRepositorySupp
 
     @Override
     public List<NormalPlay> findTop10ByUserId(Long userId) {
+        List<Long> historyIdList = query.select(normalPlay.historyId)
+                .from(normalPlay)
+                .where(normalPlay.userId.eq(userId))
+                .limit(10)
+                .orderBy(new OrderSpecifier<>(Order.DESC, normalPlay.historyId))
+                .fetch();
         return query
                 .select(normalPlay)
                 .from(normalPlay)
-                .where(normalPlay.historyId.in(
-                        JPAExpressions
-                                .select(normalPlay.historyId)
-                                .from(normalPlay)
-                                .where(normalPlay.userId.eq(userId))
-                                .limit(10)
-                                .orderBy(new OrderSpecifier<>(Order.DESC, normalPlay.historyId))
-                ))
+                .where(normalPlay.historyId.in(historyIdList))
                 .fetch();
     }
 }

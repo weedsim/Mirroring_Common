@@ -9,6 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class GameUserDto {
     private Long userId;
-    private Long historyId;
     private String role;
 }
