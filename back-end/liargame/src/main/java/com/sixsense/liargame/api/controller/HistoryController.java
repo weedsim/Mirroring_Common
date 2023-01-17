@@ -1,11 +1,8 @@
 package com.sixsense.liargame.api.controller;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.sixsense.liargame.api.request.NormalGameHistoryReq;
-import com.sixsense.liargame.api.response.NormalGameHistoryResp;
+import com.sixsense.liargame.api.response.HistoryResp;
 import com.sixsense.liargame.api.service.HistoryService;
-import com.sixsense.liargame.common.auth.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,10 +21,18 @@ public class HistoryController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/normal")
-    public ResponseEntity<List<NormalGameHistoryResp>> getNormalGame(HttpServletRequest request) {
-        String token = request.getHeader(JwtProperties.HEADER_STRING);
-        Long userId = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token).getClaim("id").asLong();
+    @PostMapping("/spy")
+    public ResponseEntity<?> writeSpy(HttpServletRequest request, @RequestBody NormalGameHistoryReq history) {
+        return ResponseEntity.ok().build();
+    }
 
+    @GetMapping("/normal/{id}")
+    public ResponseEntity<List<HistoryResp>> getNormalGame(@PathVariable Long id) {
+        return ResponseEntity.ok().body(historyService.getNormalGameHistory(id));
+    }
+
+    @GetMapping("/spy/{id}")
+    public ResponseEntity<List<HistoryResp>> getSpyGame(@PathVariable Long id) {
+        return ResponseEntity.ok().body(historyService.getSpyGameHistory(id));
     }
 }

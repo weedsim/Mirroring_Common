@@ -1,9 +1,11 @@
 package com.sixsense.liargame.api.service;
 
-import com.sixsense.liargame.api.response.NormalGameHistoryResp;
+import com.sixsense.liargame.api.response.HistoryResp;
 
 import java.util.List;
 
 public interface HistoryService {
-    List<NormalGameHistoryResp> getNormalGameHistory(Long userId);
+    List<HistoryResp> getSpyGameHistory(Long userId);
+
+    List<HistoryResp> getNormalGameHistory(Long userId);
 }

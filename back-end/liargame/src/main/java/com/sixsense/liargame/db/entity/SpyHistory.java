@@ -1,6 +1,9 @@
 package com.sixsense.liargame.db.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +12,10 @@ import javax.persistence.Id;
 
 @Entity
 @Getter
-public class SpyGame extends History {
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class SpyHistory extends History {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
