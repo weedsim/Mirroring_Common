@@ -1,6 +1,5 @@
 package com.sixsense.liargame.db.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +10,14 @@ import java.io.Serializable;
 
 @Entity
 @Getter
-@IdClass(Play.class)
+@IdClass(PlayPK.class)
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class NormalPlay extends Play implements Serializable {
+public class NormalPlay extends PlayPK implements Serializable {
     private String role;
+
+    @Builder
+    public NormalPlay(Long userId, Long historyId, String role) {
+        super(userId, historyId);
+        this.role = role;
+    }
 }

@@ -14,7 +14,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Play implements Serializable {
+public class PlayPK implements Serializable {
     @Id
     private Long userId;
     @Id

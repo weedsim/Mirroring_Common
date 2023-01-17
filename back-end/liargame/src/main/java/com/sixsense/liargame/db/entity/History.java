@@ -13,5 +13,4 @@ import javax.persistence.MappedSuperclass;
 public class History extends PlayBaseTime {
     private Long liar;
     private String winner;
-    private String word;
 }

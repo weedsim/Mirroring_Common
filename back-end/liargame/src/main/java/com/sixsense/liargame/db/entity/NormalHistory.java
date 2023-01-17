@@ -1,6 +1,5 @@
 package com.sixsense.liargame.db.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +12,14 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class NormalHistory extends History {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Builder
+    public NormalHistory(Long liar, String winner, Long id) {
+        super(liar, winner);
+        this.id = id;
+    }
 }

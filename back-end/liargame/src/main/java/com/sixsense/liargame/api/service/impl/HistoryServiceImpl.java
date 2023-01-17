@@ -1,5 +1,7 @@
 package com.sixsense.liargame.api.service.impl;
 
+import com.sixsense.liargame.api.request.NormalGameHistoryReq;
+import com.sixsense.liargame.api.request.SpyGameHistoryReq;
 import com.sixsense.liargame.api.response.HistoryResp;
 import com.sixsense.liargame.api.service.HistoryService;
 import com.sixsense.liargame.common.model.response.UserDto;
@@ -24,6 +26,41 @@ public class HistoryServiceImpl implements HistoryService {
         this.spyPlayRepository = spyPlayRepository;
         this.spyHistoryRepository = spyHistoryRepository;
         this.userRepository = userRepository;
+    }
+
+    @Override
+    public void insertNormalPlay(NormalGameHistoryReq history) {
+        NormalHistory normalHistory = NormalHistory.builder()
+                .liar(history.getLiar())
+                .winner(history.getWinner())
+                .build();
+        Long historyId = normalHistoryRepository.save(normalHistory).getId();
+        List<NormalPlay> list = history.getUsers().stream().map(user ->
+                        NormalPlay.builder()
+                                .historyId(historyId)
+                                .userId(user.getUserId())
+                                .role(user.getRole())
+                                .build())
+                .collect(Collectors.toList());
+        normalPlayRepository.saveAll(list);
+    }
+
+    @Override
+    public void insertSpyPlay(SpyGameHistoryReq history) {
+        SpyHistory spyHistory = SpyHistory.builder()
+                .liar(history.getLiar())
+                .spy(history.getSpy())
+                .winner(history.getWinner())
+                .build();
+        Long historyId = spyHistoryRepository.save(spyHistory).getId();
+        List<SpyPlay> list = history.getUsers().stream().map(user ->
+                        SpyPlay.builder()
+                                .historyId(historyId)
+                                .userId(user.getUserId())
+                                .role(user.getRole())
+                                .build())
+                .collect(Collectors.toList());
+        spyPlayRepository.saveAll(list);
     }
 
     @Override
