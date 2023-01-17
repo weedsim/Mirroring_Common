@@ -20,6 +20,7 @@ public class SpyPlayRepositorySupportImpl implements SpyPlayRepositorySupport {
 
     @Override
     public List<SpyPlay> findTop10ByUserId(Long userId) {
+        //현재 querydsl로 서브쿼리를 만들면 limit가 적용되지 않는 이슈가 있음
         List<Long> historyIdList = query.select(spyPlay.historyId)
                 .from(spyPlay)
                 .where(spyPlay.userId.eq(userId))
