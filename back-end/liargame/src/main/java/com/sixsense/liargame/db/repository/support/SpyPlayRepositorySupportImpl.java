@@ -10,6 +10,7 @@ import java.util.List;
 
 import static com.sixsense.liargame.db.entity.QSpyPlay.spyPlay;
 
+
 @Repository
 public class SpyPlayRepositorySupportImpl implements SpyPlayRepositorySupport {
     private final JPAQueryFactory query;

@@ -12,7 +12,7 @@ import com.querydsl.core.types.Path;
 /**
  * QHistory is a Querydsl query type for History
  */
-@Generated("com.querydsl.codegen.DefaultSupertypeSerializer")
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
 public class QHistory extends EntityPathBase<History> {
 
     private static final long serialVersionUID = -1112037632L;
@@ -20,6 +20,8 @@ public class QHistory extends EntityPathBase<History> {
     public static final QHistory history = new QHistory("history");
 
     public final QPlayBaseTime _super = new QPlayBaseTime(this);
+
+    public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final NumberPath<Long> liar = createNumber("liar", Long.class);
 

@@ -21,7 +21,8 @@ public class QSpyHistory extends EntityPathBase<SpyHistory> {
 
     public final QHistory _super = new QHistory(this);
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    //inherited
+    public final NumberPath<Long> id = _super.id;
 
     //inherited
     public final NumberPath<Long> liar = _super.liar;

@@ -10,6 +10,7 @@ import java.util.List;
 
 import static com.sixsense.liargame.db.entity.QNormalPlay.normalPlay;
 
+
 @Repository
 public class NormalPlayRepositorySupportImpl implements NormalPlayRepositorySupport {
     private final JPAQueryFactory query;
