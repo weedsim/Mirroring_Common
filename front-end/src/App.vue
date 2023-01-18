@@ -4,7 +4,7 @@
     <router-link to="/ingame">InGame</router-link> |
     <router-link to="/inlobby">InLobby</router-link>
   </nav>
-  <router-view  style="width:100%;height:100vh;"/>
+  <router-view/>
 </template>
 
 <style>
@@ -34,4 +34,6 @@ div{
     border-style: solid;
     border-width: 1px;
 }
+
+
 </style>
