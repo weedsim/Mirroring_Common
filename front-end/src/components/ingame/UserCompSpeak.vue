@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "UserCompSpeak",
+  name: "RoomCompSpeak",
   created() {
     this.btn1 = false;
   },

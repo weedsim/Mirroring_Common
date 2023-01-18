@@ -16,11 +16,8 @@
 </template>
 
 <script>
-import UserCompSpeak from "@/components/ingame/UserCompSpeak.vue";
-
 export default {
-  name: "UserComp",
-  components: { UserCompSpeak },
+  name: "RoomComp",
   created() {
     
   },
