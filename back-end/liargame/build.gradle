@@ -12,6 +12,9 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    configureEach {
+        exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+    }
 }
 
 repositories {
@@ -53,6 +56,9 @@ dependencies {
 
     //redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    //log4j2
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
