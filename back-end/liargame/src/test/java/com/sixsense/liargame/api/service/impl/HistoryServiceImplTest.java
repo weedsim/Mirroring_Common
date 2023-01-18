@@ -227,7 +227,7 @@ class HistoryServiceImplTest {
     @Order(3)
     @DisplayName("3.노말게임전적 불러오기")
     void getNormalGameHistory() {
-        List<HistoryResp> normalGameHistory = historyService.getNormalGameHistory(userId);
+        List<HistoryResp> normalGameHistory = historyService.selectNormalGameHistory(userId);
         int idx = 0;
         HistoryResp historyResp = normalGameHistory.get(idx);
         assertEquals(historyResp.getRole(), LIAR);
@@ -345,7 +345,7 @@ class HistoryServiceImplTest {
     @Order(4)
     @DisplayName("4.스파이게임전적 불러오기")
     void getSpyGameHistory() {
-        List<HistoryResp> spyGameHistory = historyService.getSpyGameHistory(userId);
+        List<HistoryResp> spyGameHistory = historyService.selectSpyGameHistory(userId);
         int idx = 0;
         HistoryResp historyResp = spyGameHistory.get(idx);
         assertEquals(historyResp.getRole(), LIAR);

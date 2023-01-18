@@ -1,8 +1,8 @@
 package com.sixsense.liargame.api.controller;
 
+import com.sixsense.liargame.api.response.SubjectResp;
+import com.sixsense.liargame.api.response.WordResp;
 import com.sixsense.liargame.api.service.SubjectService;
-import com.sixsense.liargame.common.model.response.SubjectDto;
-import com.sixsense.liargame.common.model.response.WordDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,12 +19,12 @@ public class SubjectController {
     private final SubjectService subjectService;
 
     @GetMapping
-    public ResponseEntity<List<SubjectDto>> getSubject() {
+    public ResponseEntity<List<SubjectResp>> getSubject() {
         return ResponseEntity.ok().body(subjectService.selectAllSubjects());
     }
 
     @GetMapping("/{subjectId}/words")
-    public ResponseEntity<WordDto> getWord(@PathVariable Long subjectId) {
+    public ResponseEntity<WordResp> getWord(@PathVariable Long subjectId) {
         return ResponseEntity.ok().body(subjectService.selectRandomWord(subjectId));
     }
 }

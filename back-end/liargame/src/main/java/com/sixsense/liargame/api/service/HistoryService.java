@@ -11,7 +11,7 @@ public interface HistoryService {
 
     void insertSpyPlay(SpyGameHistoryReq history);
 
-    List<HistoryResp> getSpyGameHistory(Long userId);
+    List<HistoryResp> selectSpyGameHistory(Long userId);
 
-    List<HistoryResp> getNormalGameHistory(Long userId);
+    List<HistoryResp> selectNormalGameHistory(Long userId);
 }

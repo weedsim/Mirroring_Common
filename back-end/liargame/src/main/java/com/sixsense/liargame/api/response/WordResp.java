@@ -1,15 +1,15 @@
-package com.sixsense.liargame.common.model.response;
+package com.sixsense.liargame.api.response;
 
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class SubjectDto {
+public class WordResp {
     private Long id;
     private String name;
 
     @Builder
-    public SubjectDto(Long id, String name) {
+    public WordResp(Long id, String name) {
         this.id = id;
         this.name = name;
     }

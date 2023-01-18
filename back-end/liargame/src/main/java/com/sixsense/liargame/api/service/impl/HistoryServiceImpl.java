@@ -64,7 +64,7 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     @Override
-    public List<HistoryResp> getSpyGameHistory(Long userId) {
+    public List<HistoryResp> selectSpyGameHistory(Long userId) {
         // 유저들을 중복없이 넣어줄 set
         Set<Long> userSet = new HashSet<>();
 
@@ -115,7 +115,7 @@ public class HistoryServiceImpl implements HistoryService {
     }
 
     @Override
-    public List<HistoryResp> getNormalGameHistory(Long userId) {
+    public List<HistoryResp> selectNormalGameHistory(Long userId) {
         // 유저들을 중복없이 넣어줄 set
         Set<Long> userSet = new HashSet<>();
 
