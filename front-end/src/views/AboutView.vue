@@ -1,5 +1,32 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="about" style="width:100%;height:100vh;">
+    
+    <div class="row">
+        <div class="col-1">
+        </div>
+        <div class="col-7">
+            <main-game style="width:100%;height:100vh;"></main-game>
+        </div>
+        <div class="col-3">
+            <main-chat style="width:100%;height:100vh;"></main-chat>
+        </div>
+        <div class="col-1">
+        </div>
+    </div>
+    
   </div>
 </template>
+
+<script>
+// import { mapState } from "vuex";
+import MainChat from "../components/ingame/MainChat.vue";
+import MainGame from "../components/ingame/MainGame.vue";
+
+export default {
+    "name":"AboutView",
+    components: {
+    MainChat, MainGame
+  }
+}
+
+</script>

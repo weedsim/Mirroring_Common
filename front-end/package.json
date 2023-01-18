@@ -12,8 +12,9 @@
     "@vueup/vue-quill": "^1.0.1",
     "bootstrap": "^5.2.3",
     "bootstrap-icons-vue": "^1.8.1",
+    "bootstrap-vue-3": "^0.5.1",
     "core-js": "^3.8.3",
-    "vue": "^3.2.13",
+    "vue": "^3.2.45",
     "vue-router": "^4.1.6",
     "vuex": "^4.1.0"
   },
@@ -45,14 +46,9 @@
       "parser": "@babel/eslint-parser"
     },
     "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "endOfLine": "auto"
-        }
-      ],
-      "no-unused-vars": "off",
-      "vue/multi-word-component-names": "off"
+      "prettier/prettier": 0,
+      "vue/multi-word-component-names": "off",
+      "vue/no-unused-components": "off"
     }
   },
   "browserslist": [

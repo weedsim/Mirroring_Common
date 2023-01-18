@@ -3,7 +3,7 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
-  <router-view />
+  <router-view  style="width:100%;height:100vh;"/>
 </template>
 
 <style>
@@ -26,5 +26,11 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+/* 코딩 끝나면 지워주세요 */
+div{
+    border-style: solid;
+    border-width: 1px;
 }
 </style>
