@@ -11,6 +11,7 @@ import java.util.Set;
 
 import static com.sixsense.liargame.db.entity.QNormalHistory.normalHistory;
 
+
 @Repository
 public class NormalHistoryRepositorySupportImpl implements NormalHistoryRepositorySupport {
     private final JPAQueryFactory query;

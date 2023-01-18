@@ -9,10 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 
-@MappedSuperclass
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
 public class PlayPK implements Serializable {
     @Id

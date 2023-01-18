@@ -11,6 +11,7 @@ import java.util.Set;
 
 import static com.sixsense.liargame.db.entity.QSpyHistory.spyHistory;
 
+
 @Repository
 public class SpyHistoryRepositorySupportImpl implements SpyHistoryRepositorySupport {
     private final JPAQueryFactory query;

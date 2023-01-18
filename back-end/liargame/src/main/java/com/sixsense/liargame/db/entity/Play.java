@@ -5,17 +5,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "mode")
-@Getter
+@IdClass(PlayPK.class)
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class History extends PlayBaseTime {
+@Getter
+public abstract class Play{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long liar;
-    private String winner;
+    private Long userId;
+    @Id
+    private Long historyId;
+    private String role;
 }
