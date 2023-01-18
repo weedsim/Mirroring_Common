@@ -1,8 +1,8 @@
 package com.sixsense.liargame.api.service.impl;
 
+import com.sixsense.liargame.api.response.SubjectResp;
+import com.sixsense.liargame.api.response.WordResp;
 import com.sixsense.liargame.api.service.SubjectService;
-import com.sixsense.liargame.common.model.response.SubjectDto;
-import com.sixsense.liargame.common.model.response.WordDto;
 import com.sixsense.liargame.db.entity.Subject;
 import com.sixsense.liargame.db.repository.SubjectRepository;
 import org.springframework.stereotype.Service;
@@ -21,13 +21,13 @@ public class SubjectServiceImpl implements SubjectService {
 
 
     @Override
-    public List<SubjectDto> selectAllSubjects() {
+    public List<SubjectResp> selectAllSubjects() {
         return subjectRepository.findAll().stream().map(this::toSubjectDto).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
-    public WordDto selectRandomWord(Long subjectId) {
+    public WordResp selectRandomWord(Long subjectId) {
         Subject subject = subjectRepository.findById(subjectId).orElseThrow();
         int size = subject.getWords().size();
         int idx = (int) (Math.random() * size);

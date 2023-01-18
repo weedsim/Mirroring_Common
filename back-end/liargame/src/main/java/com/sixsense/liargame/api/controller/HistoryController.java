@@ -33,11 +33,11 @@ public class HistoryController {
 
     @GetMapping("/normal/{userId}")
     public ResponseEntity<List<HistoryResp>> getNormalGame(@PathVariable Long userId) {
-        return ResponseEntity.ok().body(historyService.getNormalGameHistory(userId));
+        return ResponseEntity.ok().body(historyService.selectNormalGameHistory(userId));
     }
 
     @GetMapping("/spy/{userId}")
     public ResponseEntity<List<HistoryResp>> getSpyGame(@PathVariable Long userId) {
-        return ResponseEntity.ok().body(historyService.getSpyGameHistory(userId));
+        return ResponseEntity.ok().body(historyService.selectSpyGameHistory(userId));
     }
 }
