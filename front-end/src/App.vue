@@ -1,8 +1,8 @@
 <template>
   <nav id="nav">
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/about2">About2</router-link>
+    <router-link to="/ingame">InGame</router-link> |
+    <router-link to="/inlobby">InLobby</router-link>
   </nav>
   <router-view  style="width:100%;height:100vh;"/>
 </template>
