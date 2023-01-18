@@ -37,13 +37,15 @@
       </div>
     </div>
   </div>
+  <LoginModal />
 </template>
 
 <script>
 import navbar from "@/components/NavView.vue";
+import LoginModal from "@/components/home/LoginModal.vue";
 
 export default {
-  components: { navbar },
+  components: { navbar, LoginModal },
   data() {
     return {};
   },
@@ -59,8 +61,8 @@ export default {
   background-image: url(../../assets/home/glass-top-b.png),
     url(../../assets/home/glass-bottom-a.png),
     url(../../assets/home/home-top.jpg);
-  height: 100vh;
-  background-position: 0 0, bottom, 0 0;
+  height: 95vh;
+  background-position: 0 0, 0 100%, 0 0;
   background-repeat: no-repeat;
   background-size: 100vw auto, 100vw auto, 100vw auto;
   display: grid;

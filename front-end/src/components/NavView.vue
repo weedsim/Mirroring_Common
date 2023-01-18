@@ -15,10 +15,22 @@
         </ul>
         <ul class="navbar-nav d-flex">
           <li class="nav-item">
-            <a class="nav-link" href="#">로그인</a>
+            <a
+              class="nav-link"
+              href="#"
+              data-bs-toggle="modal"
+              data-bs-target="#loginModal"
+              >로그인</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">회원가입</a>
+            <a
+              class="nav-link"
+              href="#"
+              data-bs-toggle="modal"
+              data-bs-target="#signupModal"
+              >회원가입</a
+            >
           </li>
         </ul>
       </div>
@@ -37,5 +49,8 @@ export default {
   margin: 0px;
   padding: 0px;
   border: 1px red solid;
+}
+nav {
+  height: 5vh;
 }
 </style>
