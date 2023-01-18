@@ -49,7 +49,8 @@
       "prettier/prettier": 0,
       "no-unused-vars": "off",
       "vue/no-unused-components": "off",
-      "vue/no-parsing-error": "off"
+      "vue/no-parsing-error": "off",
+      "vue/multi-word-component-names": "off"
     }
   },
   "browserslist": [

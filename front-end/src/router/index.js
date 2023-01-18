@@ -17,6 +17,12 @@ const routes = [
     name: "inlobby",
     component: () => import("../views/InLobby.vue"),
   },
+  {
+    path: "/main",
+    name: "main",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/home/MainHome.vue"),
+  },
 ];
 
 const router = createRouter({
