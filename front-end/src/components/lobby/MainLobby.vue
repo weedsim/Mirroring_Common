@@ -5,7 +5,7 @@
       <lobby-header></lobby-header>
     </div>
     <!-- <div class="row" style="height: 80%; background-color: blue"> -->
-    <div class="row" style="height: 80%">
+    <div class="row" style="height: 60%">
       <lobby-main></lobby-main>
     </div>
     <!-- <div class="row" style="height: 20%; background-color: yellow"> -->
@@ -31,8 +31,4 @@ export default {
 };
 </script>
 
-<style>
-.lobby {
-  background-color: red;
-}
-</style>
+<style></style>

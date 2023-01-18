@@ -1,8 +1,8 @@
 <template>
-  <div class="about" style="width:100%;height:100vh;">
+  <div class="about">
     <!-- <left-container></left-container> -->
     <!-- <main-lobby style="width:100%;height:100vh;"></main-lobby> -->
-    <outer-container style="width:100%;height:100vh;"></outer-container>
+    <outer-container></outer-container>
     <!-- <right-container></right-container> -->
   </div>
 </template>
