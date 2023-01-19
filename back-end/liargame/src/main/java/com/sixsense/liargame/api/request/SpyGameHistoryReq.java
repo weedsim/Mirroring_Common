@@ -1,6 +1,6 @@
 package com.sixsense.liargame.api.request;
 
-import com.sixsense.liargame.common.model.request.GameUserDto;
+import com.sixsense.liargame.common.model.request.GameUserReq;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +15,7 @@ import java.util.List;
 public class SpyGameHistoryReq extends NormalGameHistoryReq {
     private Long spy;
 
-    public SpyGameHistoryReq(Long liar, String winner, List<GameUserDto> users, Long spy) {
+    public SpyGameHistoryReq(Long liar, String winner, List<GameUserReq> users, Long spy) {
         super(liar, winner, users);
         this.spy = spy;
     }

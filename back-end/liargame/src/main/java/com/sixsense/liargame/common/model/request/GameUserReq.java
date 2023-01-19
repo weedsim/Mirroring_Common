@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GameUserDto {
+public class GameUserReq {
     private Long userId;
     private String role;
 }

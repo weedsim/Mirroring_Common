@@ -4,7 +4,7 @@ import com.sixsense.liargame.api.request.NormalGameHistoryReq;
 import com.sixsense.liargame.api.request.SpyGameHistoryReq;
 import com.sixsense.liargame.api.response.HistoryResp;
 import com.sixsense.liargame.api.service.HistoryService;
-import com.sixsense.liargame.common.model.response.UserDto;
+import com.sixsense.liargame.common.model.response.GameUserResp;
 import com.sixsense.liargame.db.entity.*;
 import com.sixsense.liargame.db.repository.*;
 import org.springframework.stereotype.Service;
@@ -85,7 +85,7 @@ public class HistoryServiceImpl implements HistoryService {
                 if (historyResp.getUsers() == null)
                     historyResp.setUsers(new ArrayList<>());
                 historyResp.getUsers().add(
-                        UserDto.builder()
+                        GameUserResp.builder()
                                 .id(spyPlay.getUserId())
                                 .role(spyPlay.getRole())
                                 .build());
@@ -136,7 +136,7 @@ public class HistoryServiceImpl implements HistoryService {
                 if (historyResp.getUsers() == null)
                     historyResp.setUsers(new ArrayList<>());
                 historyResp.getUsers().add(
-                        UserDto.builder()
+                        GameUserResp.builder()
                                 .id(normalPlay.getUserId())
                                 .role(normalPlay.getRole())
                                 .build());
