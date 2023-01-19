@@ -44,10 +44,16 @@
             </li>
             <hr />
             <li style="font-size: small">
-              아직 회원이 아니신가요?? <a href="#">회원가입</a>
+              아직 회원이 아니신가요?
+              <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal"
+                >회원가입</a
+              >
             </li>
             <li style="font-size: small">
-              비밀번호를 잊어버리셨나요? <a href="#">비밀번호 찾기</a>
+              비밀번호를 잊어버리셨나요?
+              <a href="#" data-bs-toggle="modal" data-bs-target="#pwdModal"
+                >비밀번호 찾기</a
+              >
             </li>
           </ul>
         </div>
@@ -79,12 +85,27 @@ ul {
   display: table;
   /* margin-left: auto; */
   margin-right: auto;
+  margin-left: auto;
   width: 80%;
+  padding: 0px;
 }
 li {
   margin-bottom: 1vh;
 }
-input {
-  width: 100%;
-}
 </style>
+
+<!-- 
+  -기능
+  1. 로그인 버튼
+    - 로그인 버튼 클릭시, 로그인 진행
+      - 로그인 완료시 토큰을 vuex에 저장. 메인페이지로 이동
+      - 로그인 실패시 현재상태유지, alert창 로그인실패 안내
+  
+  2. 회원가입 링크
+    - 회원가입 링크 클릭시, 로그인 모달창 닫힘
+    - 회원가입 모달창 켜짐
+  
+  3. 비밀번호 찾기 링크
+    - 비밀번호 찾기 링크 클릭시, 로그인 모달창 닫힘
+    - 비밀번호 찾기 모달창 켜짐
+ -->

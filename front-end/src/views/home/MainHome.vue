@@ -38,14 +38,18 @@
     </div>
   </div>
   <LoginModal />
+  <SignupModal />
+  <PwdModal />
 </template>
 
 <script>
 import navbar from "@/components/NavView.vue";
 import LoginModal from "@/components/home/LoginModal.vue";
+import SignupModal from "@/components/home/SignupModal.vue";
+import PwdModal from "@/components/home/PwdModal.vue";
 
 export default {
-  components: { navbar, LoginModal },
+  components: { navbar, LoginModal, SignupModal, PwdModal },
   data() {
     return {};
   },
