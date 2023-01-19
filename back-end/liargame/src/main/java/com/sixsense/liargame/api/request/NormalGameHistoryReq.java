@@ -1,6 +1,6 @@
 package com.sixsense.liargame.api.request;
 
-import com.sixsense.liargame.common.model.request.GameUserDto;
+import com.sixsense.liargame.common.model.request.GameUserReq;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,9 +15,9 @@ import java.util.List;
 public class NormalGameHistoryReq {
     private Long liar;
     private String winner;
-    private List<GameUserDto> users;
+    private List<GameUserReq> users;
 
-    public NormalGameHistoryReq(Long liar, String winner, List<GameUserDto> users) {
+    public NormalGameHistoryReq(Long liar, String winner, List<GameUserReq> users) {
         this.liar = liar;
         this.winner = winner;
         this.users = users;

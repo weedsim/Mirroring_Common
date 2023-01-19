@@ -1,6 +1,6 @@
 package com.sixsense.liargame.api.response;
 
-import com.sixsense.liargame.common.model.response.GameUserDto;
+import com.sixsense.liargame.common.model.response.GameUserResp;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,5 +15,5 @@ public class HistoryResp {
     private String result;
     private String role;
     private LocalDateTime playedTime;
-    private List<GameUserDto> users;
+    private List<GameUserResp> users;
 }
