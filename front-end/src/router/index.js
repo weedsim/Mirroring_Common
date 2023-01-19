@@ -23,6 +23,12 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/home/MainHome.vue"),
   },
+  {
+    path: "/lobby",
+    name: "lobby",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/lobby/InLobby.vue"),
+  },
 ];
 
 const router = createRouter({

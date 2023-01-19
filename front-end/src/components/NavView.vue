@@ -1,13 +1,14 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="m-0 p-0 container-fluid">
+    <div class="container-fluid">
       <a class="navbar-brand" href="#">
         <img src="@/assets/nav/logo.jpg" alt="logo" id="logo" />
       </a>
-      <div class="m-0 p-0 collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#">대기방 목록</a>
+            <router-link to="/lobby" class="nav-link">게임로비</router-link>
+            <!-- <a class="nav-link" href="#">게임로비</a> -->
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">커뮤니티</a>
