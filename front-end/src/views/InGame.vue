@@ -1,15 +1,15 @@
 <template>
-  <div class="about" style="width:100%;height:100vh;">
-    <div class="row">
-        <div class="col-1">
+  <div class="m-0 p-0 about" style="width:100%;height:100vh;">
+    <div class="m-0 p-0 row">
+        <div class="m-0 p-0 col-1">
         </div>
-        <div class="col-7">
+        <div class="m-0 p-0 col-7">
             <main-game style="width:100%;height:100vh;"></main-game>
         </div>
-        <div class="col-3">
+        <div class="m-0 p-0 col-3">
             <main-chat style="width:100%;height:100vh;"></main-chat>
         </div>
-        <div class="col-1">
+        <div class="m-0 p-0 col-1">
         </div>
     </div>
   </div>

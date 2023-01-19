@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="m-0 p-0 about">
     <!-- <left-container></left-container> -->
     <!-- <main-lobby style="width:100%;height:100vh;"></main-lobby> -->
     <outer-container></outer-container>
