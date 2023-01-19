@@ -1,25 +1,25 @@
 <template>
-  <div class="users">
-    <div class="row" style="height:40%;">
-        <div class="col-4">
+  <div class="m-0 p-0 users">
+    <div class="m-0 p-0 row" style="height:40%;">
+        <div class="m-0 p-0 col-4">
             <user-comp></user-comp>
         </div>
-        <div class="col-4">
+        <div class="m-0 p-0 col-4">
             <user-comp></user-comp>
         </div>
-        <div class="col-4">
+        <div class="m-0 p-0 col-4">
             <user-comp></user-comp>
         </div>
     </div>
-    <div class="row" style="height:10%;"></div>
-    <div class="row" style="height:40%;">
-        <div class="col-4">
+    <div class="m-0 p-0 row" style="height:10%;"></div>
+    <div class="m-0 p-0 row" style="height:40%;">
+        <div class="m-0 p-0 col-4">
             <user-comp></user-comp>
         </div>
-        <div class="col-4">
+        <div class="m-0 p-0 col-4">
             <user-comp></user-comp>
         </div>
-        <div class="col-4">
+        <div class="m-0 p-0 col-4">
             <user-comp></user-comp>
         </div>
     </div>

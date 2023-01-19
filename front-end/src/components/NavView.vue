@@ -1,10 +1,10 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
+    <div class="m-0 p-0 container-fluid">
       <a class="navbar-brand" href="#">
         <img src="@/assets/nav/logo.jpg" alt="logo" id="logo" />
       </a>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="m-0 p-0 collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link" href="#">대기방 목록</a>

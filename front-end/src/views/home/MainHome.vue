@@ -1,21 +1,21 @@
 <template>
   <navbar />
-  <div class="maintop">
-    <div class="maintopwrapper">
+  <div class="m-0 p-0 maintop">
+    <div class="m-0 p-0 maintopwrapper">
       <h1>Liar Game</h1>
       <button type="button" class="btn btn-light">게임 시작</button>
     </div>
   </div>
-  <div class="mainbottom">
-    <div class="container">
-      <div class="mainbottomtitle">
+  <div class="m-0 p-0 mainbottom">
+    <div class="m-0 p-0 container">
+      <div class="m-0 p-0 mainbottomtitle">
         <h1>게임 모드</h1>
       </div>
-      <div class="mainbottomcardwrapper row">
-        <!-- <div class="card g-col" style="width: 35vw"> -->
-        <div class="card col-sm-5 firstcard">
-          <div class="card-img-top modeone"><div class="cardframe"></div></div>
-          <div class="card-body">
+      <div class="m-0 p-0 mainbottomcardwrapper row">
+        <!-- <div class="m-0 p-0 card g-col" style="width: 35vw"> -->
+        <div class="m-0 p-0 card col-sm-5 firstcard">
+          <div class="m-0 p-0 card-img-top modeone"><div class="m-0 p-0 cardframe"></div></div>
+          <div class="m-0 p-0 card-body">
             <h5 class="card-title">일반 모드</h5>
             <p class="card-text">
               시민들은 제시어를 알고, 라이어는 모른다. <br />누가 라이어인지
@@ -23,10 +23,10 @@
             </p>
           </div>
         </div>
-        <!-- <div class="col-sm-3"></div> -->
-        <div class="card col-sm-5">
-          <div class="card-img-top modetwo"><div class="cardframe"></div></div>
-          <div class="card-body">
+        <!-- <div class="m-0 p-0 col-sm-3"></div> -->
+        <div class="m-0 p-0 card col-sm-5">
+          <div class="m-0 p-0 card-img-top modetwo"><div class="m-0 p-0 cardframe"></div></div>
+          <div class="m-0 p-0 card-body">
             <h5 class="card-title">스파이 모드</h5>
             <p class="card-text">
               서로 정체를 알고있는 라이어와 스파이. <br />누가 스파이인지 혹은

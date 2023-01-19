@@ -1,13 +1,13 @@
 <template>
-<div class="outer">
-    <div class="row">
-        <div class="col-3">
+<div class="m-0 p-0 outer">
+    <div class="m-0 p-0 row">
+        <div class="m-0 p-0 col-3">
         </div>
-        <div class="col-6">
+        <div class="m-0 p-0 col-6">
             <!-- 반복문을 통해 컨테이너 추가 가능 -->
             <component :is="comp" style="width:100%;height:92vh;"></component>
         </div>
-        <div class="col-3">
+        <div class="m-0 p-0 col-3">
         </div>
     </div>
 </div>

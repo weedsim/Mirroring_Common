@@ -1,43 +1,43 @@
 
 <template>
-  <div class="main">
-    <div class="row" style="height:2.5%;"></div>
-    <div class="row" style="height:20%;">
-        <div class="col-6">
+  <div class="m-0 p-0 main">
+    <div class="m-0 p-0 row" style="height:2.5%;"></div>
+    <div class="m-0 p-0 row" style="height:20%;">
+        <div class="m-0 p-0 col-6">
             <user-comp></user-comp>
         </div>
-        <div class="col-6">
-            <user-comp></user-comp>
-        </div>
-    </div>
-    <div class="row" style="height:5%;"></div>
-    <div class="row" style="height:20%;">
-        <div class="col-6">
-            <user-comp></user-comp>
-        </div>
-        <div class="col-6">
+        <div class="m-0 p-0 col-6">
             <user-comp></user-comp>
         </div>
     </div>
-    <div class="row" style="height:5%;"></div>
-    <div class="row" style="height:20%;">
-        <div class="col-6">
+    <div class="m-0 p-0 row" style="height:5%;"></div>
+    <div class="m-0 p-0 row" style="height:20%;">
+        <div class="m-0 p-0 col-6">
             <user-comp></user-comp>
         </div>
-        <div class="col-6">
-            <user-comp></user-comp>
-        </div>
-    </div>
-    <div class="row" style="height:5%;"></div>
-    <div class="row" style="height:20%;">
-        <div class="col-6">
-            <user-comp></user-comp>
-        </div>
-        <div class="col-6">
+        <div class="m-0 p-0 col-6">
             <user-comp></user-comp>
         </div>
     </div>
-    <div class="row" style="height:2.5%;"></div>
+    <div class="m-0 p-0 row" style="height:5%;"></div>
+    <div class="m-0 p-0 row" style="height:20%;">
+        <div class="m-0 p-0 col-6">
+            <user-comp></user-comp>
+        </div>
+        <div class="m-0 p-0 col-6">
+            <user-comp></user-comp>
+        </div>
+    </div>
+    <div class="m-0 p-0 row" style="height:5%;"></div>
+    <div class="m-0 p-0 row" style="height:20%;">
+        <div class="m-0 p-0 col-6">
+            <user-comp></user-comp>
+        </div>
+        <div class="m-0 p-0 col-6">
+            <user-comp></user-comp>
+        </div>
+    </div>
+    <div class="m-0 p-0 row" style="height:2.5%;"></div>
   </div>
 </template>
 
