@@ -3,7 +3,7 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/ingame">InGame</router-link> |
     <router-link to="/inlobby">InLobby</router-link>
-  </nav>
+  </nav> -->
   <router-view/>
 </template>
 
