@@ -4,20 +4,19 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.IdClass;
 import java.io.Serializable;
 
 @Entity
 @Getter
-@IdClass(PlayPK.class)
 @NoArgsConstructor
-public class NormalPlay extends PlayPK implements Serializable {
-    private String role;
-
+@DiscriminatorValue("Normal")
+public class NormalPlay extends Play {
     @Builder
     public NormalPlay(Long userId, Long historyId, String role) {
-        super(userId, historyId);
-        this.role = role;
+        super(userId, historyId, role);
     }
 }

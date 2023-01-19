@@ -210,7 +210,7 @@ class HistoryServiceImplTest {
         List<SpyPlay> spyPlayList = spyPlayRepository.findAll();
         for (long i = 0; i < 40; i++) {
             SpyHistory spyHistory = spyHistoryList.get((int) i);
-            assertEquals(spyHistory.getId(), i + 1);
+            assertEquals(spyHistory.getId(), i + 41);
             assertEquals(spyHistory.getWinner(), spyGameList.get((int) i).getWinner());
             assertEquals(spyHistory.getLiar(), spyGameList.get((int) i).getLiar());
             for (long j = 0; j < 6; j++) {

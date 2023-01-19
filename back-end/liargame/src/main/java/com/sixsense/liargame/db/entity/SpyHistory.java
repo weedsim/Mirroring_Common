@@ -4,24 +4,19 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@DiscriminatorValue("spy")
 @Getter
 @NoArgsConstructor
 public class SpyHistory extends History {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
     private Long spy;
 
     @Builder
-    public SpyHistory(Long liar, String winner, Long id, Long spy) {
-        super(liar, winner);
-        this.id = id;
+    public SpyHistory(Long id, Long liar, String winner, Long spy) {
+        super(id, liar, winner);
         this.spy = spy;
     }
 }
