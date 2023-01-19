@@ -3,6 +3,7 @@
     <!-- <user-comp-speak> -->
         <div class="row" style="height:80%;">
             <!-- 화상 화면 및 닉네임 -->
+            <user-display></user-display>
             webrtc & nickname
         </div>
         <div class="row" style="height:5%;">
@@ -16,11 +17,13 @@
 </template>
 
 <script>
+import UserDisplay from "./UserDisplay.vue"
 export default {
   name: "RoomComp",
   created() {
     
   },
+  components:{UserDisplay}
 }
 </script>
 
