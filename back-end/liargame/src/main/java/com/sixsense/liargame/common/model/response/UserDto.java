@@ -10,29 +10,9 @@ import lombok.Setter;
 @Setter
 @Builder
 public class UserDto {
-    private Long id;
-    private String name;
-    private String role;
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof UserDto) {
-            UserDto userObj = (UserDto) obj;
-            return userObj.getId().equals(id) && userObj.getRole().equals(role) && userObj.getName().equals(name);
-        }
-        return false;
-    }
+	private Long id;
+	private String name;
+	private String email;
+	private String password;
+	private String role;
 }
-//        spyGame(userId, CITIZEN, CITIZEN, start++);
-//        spyGame(userId, SPY, CITIZEN, start++);
-//        spyGame(userId, CITIZEN, CITIZEN, start++);
-//        spyGame(userId, SPY, CITIZEN, start++);
-//        spyGame(userId, CITIZEN, CITIZEN, start++);
-//        spyGame(userId, LIAR, LIAR, start++);
-//        spyGame(userId, CITIZEN, CITIZEN, start++);
-//        spyGame(userId, LIAR, CITIZEN, start++);
-//        spyGame(userId, CITIZEN, CITIZEN, start++);
-//        spyGame(userId, SPY, LIAR, start++);
-//        spyGame(userId, LIAR, LIAR, start++);
-//        spyGame(userId, CITIZEN, CITIZEN, start++);
-//        spyGame(userId, LIAR, CITIZEN, start++);//71

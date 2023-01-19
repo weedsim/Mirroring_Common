@@ -1,8 +1,7 @@
 package com.sixsense.liargame.common.auth;
 
 public interface JwtProperties {
-    String SECRET = "SixSenseLiarGame"; // 우리 서버만 알고 있는 비밀값
-    int EXPIRATION_TIME = 1000 * 60 * 60 * 10; // 10일 (1/1000초)
-    String TOKEN_PREFIX = "Bearer ";
-    String HEADER_STRING = "Authorization";
+    String SECRET = "zPT5HqJxqJPsetlB6rnsQGCcoWP5T2M9sdjfjaslkjfle"; // 우리 서버만 알고 있는 비밀값
+    int ACCESS_TOKEN_TIME =  1000 * 60 * 30;
+    int REFRESH_TOKEN_TIME = 6 * 24 * 60 * 60 * 1000;
 }

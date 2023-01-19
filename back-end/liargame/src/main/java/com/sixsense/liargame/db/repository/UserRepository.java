@@ -4,5 +4,8 @@ import com.sixsense.liargame.db.entity.User;
 import com.sixsense.liargame.db.repository.support.UserRepositorySupport;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 public interface UserRepository extends JpaRepository<User, Long>, UserRepositorySupport {
+    Optional<User> findByEmail(String email);
 }
