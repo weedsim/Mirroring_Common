@@ -23,4 +23,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+div {
+  border-style: solid;
+  border-width: 1px;
+}
+</style>
