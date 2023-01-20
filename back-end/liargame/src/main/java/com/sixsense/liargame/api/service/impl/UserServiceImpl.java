@@ -40,21 +40,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void signUp(UserDto userdto) {
-        System.out.println("dtoEMail : " + userdto.getEmail());
-        System.out.println("dtoName : " + userdto.getName());
-        System.out.println("dtoPw : " + userdto.getPassword());
-        System.out.println("--------");
         User user = User.builder()
                 .email(userdto.getEmail())
                 .name(userdto.getName())
                 .password(userdto.getPassword())
                 .role("guest")
                 .build();
-        System.out.println("userEmail : " + user.getEmail());
-        System.out.println("userName : " + user.getName());
-        System.out.println("userPw : " + user.getPassword());
-        System.out.println("userRole : " + user.getPassword());
-        System.out.println("--------");
         userRepository.save(user);
     }
 
