@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
@@ -54,7 +53,7 @@ public class UserServiceImpl implements UserService {
         System.out.println("userEmail : " + user.getEmail());
         System.out.println("userName : " + user.getName());
         System.out.println("userPw : " + user.getPassword());
-        System.out.println("userRole : " + user.getRole());
+        System.out.println("userRole : " + user.getPassword());
         System.out.println("--------");
         userRepository.save(user);
     }
