@@ -3,6 +3,8 @@ package com.sixsense.liargame.api.service.impl;
 import com.sixsense.liargame.api.service.UserService;
 import com.sixsense.liargame.common.auth.JwtTokenProvider;
 import com.sixsense.liargame.common.auth.TokenInfo;
+import com.sixsense.liargame.common.model.response.UserDto;
+import com.sixsense.liargame.db.entity.User;
 import com.sixsense.liargame.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,4 +38,26 @@ public class UserServiceImpl implements UserService {
 
         return tokenInfo;
     }
+
+    @Override
+    public void signUp(UserDto userdto) {
+        System.out.println("dtoEMail : " + userdto.getEmail());
+        System.out.println("dtoName : " + userdto.getName());
+        System.out.println("dtoPw : " + userdto.getPassword());
+        System.out.println("--------");
+        User user = User.builder()
+                .email(userdto.getEmail())
+                .name(userdto.getName())
+                .password(userdto.getPassword())
+                .role("guest")
+                .build();
+        System.out.println("userEmail : " + user.getEmail());
+        System.out.println("userName : " + user.getName());
+        System.out.println("userPw : " + user.getPassword());
+        System.out.println("userRole : " + user.getRole());
+        System.out.println("--------");
+        userRepository.save(user);
+    }
+
+
 }
