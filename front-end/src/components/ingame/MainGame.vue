@@ -1,14 +1,14 @@
 <template>
   <div class="m-0 p-0 game">
-    <div class="m-0 p-0 row" style="height:20%">
+    <div class="m-0 p-0 row" style="height:15%">
         <game-title></game-title>
     </div>
     <div class="m-0 p-0 row" style="height:5%">a_blank</div>
-    <div class="m-0 p-0 row" style="height:50%">
+    <div class="m-0 p-0 row" style="height:60%">
         <game-users></game-users>
     </div>
-    <div class="m-0 p-0 row" style="height:5%">a_blank</div>
-    <div class="m-0 p-0 row" style="height:20%">
+    <div class="m-0 p-0 row" style="height:5%">b_blank</div>
+    <div class="m-0 p-0 row" style="height:15%">
         <game-confirm></game-confirm>
     </div>
   </div>
