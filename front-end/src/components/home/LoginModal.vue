@@ -55,6 +55,12 @@
                 >비밀번호 찾기</a
               >
             </li>
+            <li>
+              <div style="display: flex; justify-content: space-between;">
+                <button type="button" class="btn btn-primary btn-sm" @click="google">구글</button>
+                  <button type="button" class="btn btn-primary btn-sm" @click="kakao">카카오</button>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -63,16 +69,36 @@
 </template>
 
 <script>
+import axios from 'axios'
+import { mapMutations, mapActions } from 'vuex'
+
 export default {
   name: "LoginModal",
   components: {},
   data() {
-    return {};
+    return {
+      email: '',
+      password: ''
+    };
   },
   setup() {},
   created() {},
   mounted() {},
-  methods: {},
+  methods: {
+    kakao(){
+          location.href = 'http://localhost:3000/oauth2/authorization/google?redirect_uri=http://localhost:3000/oauth/redirect';
+    },
+    google(){
+          location.href = 'http://localhost:3000/oauth2/authorization/google?redirect_uri=http://localhost:3000/oauth/redirect';
+    },
+    login() {
+      axios.post('http://localhost:8080/login',{email:this.email,password:this.password})
+        .then(res => {
+            const token = res.data.body.token
+            console.log(token)
+        });
+    }
+  },
 };
 </script>
 

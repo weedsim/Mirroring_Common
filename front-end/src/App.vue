@@ -3,7 +3,7 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/ingame">InGame</router-link> |
     <router-link to="/inlobby">InLobby</router-link>
-  </nav>
+  </nav> -->
   <router-view/>
 </template>
 
@@ -30,10 +30,10 @@ nav a.router-link-exact-active {
 }
 
 /* 코딩 끝나면 지워주세요 */
-div{
+/* div{
     border-style: solid;
     border-width: 1px;
-}
+} */
 
 
 </style>
