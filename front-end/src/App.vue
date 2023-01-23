@@ -30,8 +30,17 @@ nav a.router-link-exact-active {
 } */
 
 /* 코딩 끝나면 지워주세요 */
+<<<<<<< HEAD
 /* div {
   border-style: solid;
   border-width: 1px;
 } */
+=======
+/* div{
+    border-style: solid;
+    border-width: 1px;
+} */
+
+
+>>>>>>> b61d59c9c95916b7465784f786ce4aee8f7905aa
 </style>
