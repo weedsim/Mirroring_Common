@@ -1,14 +1,13 @@
 package com.sixsense.liargame.config;
 
-import com.nimbusds.oauth2.sdk.AuthorizationRequest;
 import com.sixsense.liargame.security.auth.JwtAuthenticationFilter;
 import com.sixsense.liargame.security.auth.JwtExceptionFilter;
 import com.sixsense.liargame.security.auth.JwtLoginFilter;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
 import com.sixsense.liargame.security.handler.OAuth2AuthenticationFailureHandler;
 import com.sixsense.liargame.security.handler.OAuth2AuthenticationSuccessHandler;
+import com.sixsense.liargame.security.oauth2.CustomOAuth2AuthorizationRequestRepository;
 import com.sixsense.liargame.security.oauth2.CustomOAuth2UserService;
-import com.sixsense.liargame.security.oauth2.OAuth2CookieAuthorizationRequestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +18,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.web.AuthorizationRequestRepository;
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -30,7 +28,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
     private final CorsConfig corsConfig;
-    private final OAuth2CookieAuthorizationRequestRepository<OAuth2AuthorizationRequest> oAuth2CookieAuthorizationRequestRepository;
+    private final CustomOAuth2AuthorizationRequestRepository<OAuth2AuthorizationRequest> customOAuth2AuthorizationRequestRepository;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
     private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
@@ -56,7 +54,7 @@ public class SecurityConfig {
                 .oauth2Login()
                 .authorizationEndpoint(authorize -> {
                     authorize.authorizationRequestRepository(
-                            oAuth2CookieAuthorizationRequestRepository);
+                            customOAuth2AuthorizationRequestRepository);
                 })
                 .userInfoEndpoint(userInfo -> {
                     userInfo.userService(customOAuth2UserService);
