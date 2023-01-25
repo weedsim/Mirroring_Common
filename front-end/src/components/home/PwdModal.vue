@@ -20,12 +20,13 @@
         <div class="modal-body" style="text-align: left">
           <ul style="list-style: none">
             <li>이메일</li>
-            <li>
+            <li style="display: flex; justify-content: space-between">
               <input
                 type="text"
                 placeholder="이메일을 입력해주세요"
                 id="useremain"
                 class="form-control"
+                style="width: 70%"
               />
               <button type="button" class="btn btn-primary btn-sm">발송</button>
             </li>
@@ -63,6 +64,13 @@ ul {
   width: 80%;
   padding: 0px;
 }
+/* ul {
+  display: table;
+  margin-right: auto;
+  margin-left: auto;
+  width: 80%;
+  padding: 0px;
+} */
 li {
   margin-bottom: 1vh;
 }
