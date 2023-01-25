@@ -1,4 +1,4 @@
-package com.sixsense.liargame.common.auth;
+package com.sixsense.liargame.security.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

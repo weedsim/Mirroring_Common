@@ -1,6 +1,6 @@
 package com.sixsense.liargame.api.service;
 
-import com.sixsense.liargame.common.auth.TokenInfo;
+import com.sixsense.liargame.security.auth.TokenInfo;
 import com.sixsense.liargame.common.model.response.UserDto;
 
 public interface UserService {

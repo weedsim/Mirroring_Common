@@ -1,8 +1,8 @@
 package com.sixsense.liargame.api.service.impl;
 
 import com.sixsense.liargame.api.service.UserService;
-import com.sixsense.liargame.common.auth.JwtTokenProvider;
-import com.sixsense.liargame.common.auth.TokenInfo;
+import com.sixsense.liargame.security.auth.JwtTokenProvider;
+import com.sixsense.liargame.security.auth.TokenInfo;
 import com.sixsense.liargame.common.model.response.UserDto;
 import com.sixsense.liargame.db.entity.User;
 import com.sixsense.liargame.db.repository.UserRepository;
