@@ -67,7 +67,6 @@ public class SecurityConfig {
                 .and()
                 .logout()
                 .logoutUrl("/auth/logout")
-                .deleteCookies("refresh_token")
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilter(new JwtLoginFilter(jwtTokenProvider))
