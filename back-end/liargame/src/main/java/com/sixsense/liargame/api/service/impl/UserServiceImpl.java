@@ -3,6 +3,8 @@ package com.sixsense.liargame.api.service.impl;
 import com.sixsense.liargame.api.service.UserService;
 import com.sixsense.liargame.common.auth.JwtTokenProvider;
 import com.sixsense.liargame.common.auth.TokenInfo;
+import com.sixsense.liargame.common.model.response.UserDto;
+import com.sixsense.liargame.db.entity.User;
 import com.sixsense.liargame.db.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
@@ -36,4 +37,17 @@ public class UserServiceImpl implements UserService {
 
         return tokenInfo;
     }
+
+    @Override
+    public void signUp(UserDto userdto) {
+        User user = User.builder()
+                .email(userdto.getEmail())
+                .name(userdto.getName())
+                .password(userdto.getPassword())
+                .role("guest")
+                .build();
+        userRepository.save(user);
+    }
+
+
 }
