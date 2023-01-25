@@ -63,8 +63,7 @@ public class SecurityConfig {
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler)
                 .and()
-                .logout()
-                .logoutUrl("/auth/logout")
+                .logout() // 로그아웃 로직 추가해야함
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilter(new JwtLoginFilter(jwtTokenProvider))
