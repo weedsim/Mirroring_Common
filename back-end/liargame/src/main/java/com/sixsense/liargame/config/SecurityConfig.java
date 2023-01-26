@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt사용으로 session 비활성화
                 .and()
                 .authorizeRequests()
-                .antMatchers("/swagger-ui/**", "/swagger-resources/", "/v2/api-docs").permitAll()
+                .antMatchers("/swagger-ui/**", "/swagger-resources/", "/**").permitAll()
                 .antMatchers("/login", "/users", "/users/duplicate").permitAll()
                 .anyRequest().authenticated()
                 .and()
