@@ -6,9 +6,9 @@
             <!-- 화상 화면 및 닉네임 -->
             <img src="@/assets/headphone.png" alt="">
         </div>
-        
-          <button type="button" class="btn btn-warning" v-if="$store.state.isShow" style="width:100%"><div class="m-0 p-0" style="font-size: 2vw;">준비중</div></button>
-          <button type="button" class="btn btn-success" v-else style="width:100%"><div class="m-0 p-0" style="font-size: 2vw;">준비완료</div></button>
+            <button type="button" class="btn btn-warning" v-if="$store.state.isShowList[curIdx]" style="width:100%"><div class="m-0 p-0" style="font-size: 2vw;">준비중</div></button>
+          
+            <button type="button" class="btn btn-success" v-else style="width:100%"><div class="m-0 p-0" style="font-size: 2vw;">준비완료</div></button>
           <!-- <img src="@/assets/icon/icon_headset.jpg" alt="" id="icon_headset"><img src="@/assets/icon/icon_camera.png" alt="" id="icon_camera"> -->
           <BIconMicFill></BIconMicFill>
           <BIconHeadset></BIconHeadset>
@@ -29,11 +29,13 @@ import { BIconHeadset } from "bootstrap-icons-vue";
 export default {
   name: "RoomComp",
   components: { BIconMicFill, BIconHeadset},
+  props: {
+    curIdx : Number,
+  },
   created() {
   },
   data(){
     return {
-     
     }
   }
 }

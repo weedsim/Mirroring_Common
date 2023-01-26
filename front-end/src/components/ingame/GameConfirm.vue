@@ -32,8 +32,8 @@ export default {
   },
   methods:{
     toggle(){
-      
-      this.$store.state.isShow = !this.$store.state.isShow
+      // console.log(this.$store.state.isShowList)
+      this.$store.state.isShowList[this.$store.state.myIdx] = !this.$store.state.isShowList[this.$store.state.myIdx]
      }
     }
   }
