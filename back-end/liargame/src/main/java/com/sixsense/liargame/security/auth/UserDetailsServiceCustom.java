@@ -18,7 +18,7 @@ public class UserDetailsServiceCustom implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        System.out.println("hi");
+        // 로그인 필터에서 DB에 user정보가 있는지 확인하는 메서드
         return new UserDetailsCustom(userRepository.findByEmail(email).orElseThrow());
     }
 }

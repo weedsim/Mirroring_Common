@@ -6,7 +6,7 @@ import com.sixsense.liargame.security.auth.UserDetailsCustom;
 import com.sixsense.liargame.security.oauth2.provider.GoogleUserInfo;
 import com.sixsense.liargame.security.oauth2.provider.KaKaoUserInfo;
 import com.sixsense.liargame.security.oauth2.provider.OAuth2UserInfo;
-import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -17,9 +17,14 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public CustomOAuth2UserService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     //구글로 부터 받은 userRequest 데이터에 대한 후처리되는 함수
     //함수 종료시 @AuthenticationPrincipal 어노테이션이 만들어진다.
@@ -37,37 +42,39 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private OAuth2User processOAuth2User(OAuth2UserRequest userRequest, OAuth2User oAuth2User) {
         OAuth2UserInfo oAuth2UserInfo = null;
         if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
+            //구글 로그인 요청
             System.out.println("구글 로그인 요청~~");
             oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
         } else if (userRequest.getClientRegistration().getRegistrationId().equals("kakao")) {
+            //카카오 로그인 요청
             System.out.println("카카오 로그인 요청~~");
             oAuth2UserInfo = new KaKaoUserInfo((Map) oAuth2User.getAttributes());
             System.out.println(oAuth2UserInfo.toString());
         } else {
+            //다른 소셜 로그인 요청
             System.out.println("우리는 구글과 카카오만 지원해요 ㅎㅎ");
         }
-        //얘기해봐야함 소셜로그인 한사람과 로그인한사람 구별 어떻게 할건지
+        //ex)kakao_1238471249@liargame.com
+        String email = oAuth2UserInfo.getProvider() + '_' + oAuth2UserInfo.getProviderId() + "@liargame.com";
+        //이미 가입되어있는지 찾아봄
         Optional<User> userOptional =
-                userRepository.findByProviderAndProviderId(oAuth2UserInfo.getProvider(), oAuth2UserInfo.getProviderId());
+                userRepository.findByEmail(email);
 
         User user;
         if (userOptional.isPresent()) {
+            // DB에 해당 유저가 있으면 유저를 바로 반환
             user = userOptional.get();
-            // user가 존재하면 update 해주기
-            user.setEmail(oAuth2UserInfo.getEmail());
-            userRepository.save(user);
         } else {
-            // user의 패스워드가 secret이기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음.
+            // DB에 해당 유저가 없으면 새로 만들어줌.
+            // 닉네임은 해당 유저의 이메일으로, 패스워드는 정해진 패스워드를 암호화해서 넣어줌
+            // user의 패스워드를 임의로 정해줬기 때문에 OAuth 유저는 일반적인 로그인을 할 수 없음.
             user = User.builder()
-                    .userId(oAuth2UserInfo.getProvider() + "_" + oAuth2UserInfo.getProviderId())
-                    .email(oAuth2UserInfo.getEmail())
-                    .username(oAuth2UserInfo.getName())
-//                    .password(bCryptPasswordEncoder.encode("secret"))
-                    .role("ROLE_USER")
-                    .provider(oAuth2UserInfo.getProvider())
-                    .providerId(oAuth2UserInfo.getProviderId())
+                    .email(email)
+                    .password(bCryptPasswordEncoder.encode("식스센스"))
+                    .role("USER")
+                    .name(email)
                     .build();
-            userRepository.save(user);
+            user = userRepository.save(user);
         }
         System.out.println(user.toString());
         return new UserDetailsCustom(user, oAuth2User.getAttributes());
