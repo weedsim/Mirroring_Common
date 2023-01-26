@@ -1,7 +1,7 @@
 package com.sixsense.liargame.api.controller;
 
 import com.sixsense.liargame.api.service.UserService;
-import com.sixsense.liargame.common.auth.TokenInfo;
+import com.sixsense.liargame.security.auth.TokenInfo;
 import com.sixsense.liargame.common.model.response.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

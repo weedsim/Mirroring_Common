@@ -1,4 +1,4 @@
-package com.sixsense.liargame.common.auth;
+package com.sixsense.liargame.security.auth;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

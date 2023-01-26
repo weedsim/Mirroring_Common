@@ -19,12 +19,13 @@ public class QSpyPlay extends EntityPathBase<SpyPlay> {
 
     public static final QSpyPlay spyPlay = new QSpyPlay("spyPlay");
 
-    public final QPlayPK _super = new QPlayPK(this);
+    public final QPlay _super = new QPlay(this);
 
     //inherited
     public final NumberPath<Long> historyId = _super.historyId;
 
-    public final StringPath role = createString("role");
+    //inherited
+    public final StringPath role = _super.role;
 
     //inherited
     public final NumberPath<Long> userId = _super.userId;

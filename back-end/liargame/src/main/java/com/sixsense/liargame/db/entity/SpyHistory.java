@@ -7,13 +7,11 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@DiscriminatorValue("spy")
+@DiscriminatorValue("Spy")
 @Getter
 @NoArgsConstructor
 public class SpyHistory extends History {
-
     private Long spy;
-
     @Builder
     public SpyHistory(Long id, Long liar, String winner, Long spy) {
         super(id, liar, winner);

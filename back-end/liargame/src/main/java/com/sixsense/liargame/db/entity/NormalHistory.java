@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@DiscriminatorValue("normal")
+@DiscriminatorValue("Normal")
 @Getter
 @NoArgsConstructor
 public class NormalHistory extends History {
