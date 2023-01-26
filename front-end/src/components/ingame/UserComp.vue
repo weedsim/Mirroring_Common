@@ -11,6 +11,7 @@
           <button type="button" class="btn btn-success" v-else style="width:100%"><div class="m-0 p-0" style="font-size: 2vw;">준비완료</div></button>
           <!-- <img src="@/assets/icon/icon_headset.jpg" alt="" id="icon_headset"><img src="@/assets/icon/icon_camera.png" alt="" id="icon_camera"> -->
           <BIconMicFill></BIconMicFill>
+          <BIconHeadset></BIconHeadset>
           <div class="m-0 p-0 row" style="height:%;">
           
         </div>
@@ -24,10 +25,10 @@
 
 <script>
 import { BIconMicFill } from "bootstrap-icons-vue";
-
+import { BIconHeadset } from "bootstrap-icons-vue";
 export default {
   name: "RoomComp",
-  components: { BIconMicFill },
+  components: { BIconMicFill, BIconHeadset},
   created() {
   },
   data(){
