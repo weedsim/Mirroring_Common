@@ -1,5 +1,5 @@
 <template>
-  <div class="m-0 p-0 about" style="width:100%;height:100vh;">
+  <div class="m-0 p-0 about"  style="width:100%;height:100vh;">
     <div class="m-0 p-0 row">
         <div class="m-0 p-0 col-1">
         </div>
@@ -27,4 +27,18 @@ export default {
   }
 }
 
+
+
+
 </script>
+
+<style scoped>
+.about{
+  background-image: url(../assets/ingame/ingame_bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.8;
+}
+
+
+</style>

@@ -4,14 +4,14 @@
     <!-- <user-comp-speak> -->
         <div class="m-0 p-0 row" style="height:70%;">
             <!-- 화상 화면 및 닉네임 -->
-            <img src="@/assets/headphone.png" alt="">
+            <img src="@/assets/ingame/headphone.png" alt="">
         </div>
         
           <button type="button" class="btn btn-warning" v-if="$store.state.isShow" style="width:100%"><div class="m-0 p-0" style="font-size: 2vw;">준비중</div></button>
           <button type="button" class="btn btn-success" v-else style="width:100%"><div class="m-0 p-0" style="font-size: 2vw;">준비완료</div></button>
           <!-- <img src="@/assets/icon/icon_headset.jpg" alt="" id="icon_headset"><img src="@/assets/icon/icon_camera.png" alt="" id="icon_camera"> -->
-          <BIconMicFill></BIconMicFill>
-          <BIconHeadset></BIconHeadset>
+          <BIconMicFill style="color:white"></BIconMicFill>
+          <BIconHeadset style="color:white"></BIconHeadset>
           <div class="m-0 p-0 row" style="height:%;">
           
         </div>
