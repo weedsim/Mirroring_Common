@@ -1,5 +1,7 @@
 <template>
     <div class="m-0 p-0 users">
+        <!-- <div :style="{'background-image':`url(@assets/ingame/ingame_bg.jpg)`}"></div> -->
+        
       <div class="m-0 p-0 row" style="height:40%;">
           <div class="m-0 p-0" style="width:20%">
               <user-comp></user-comp>
@@ -9,8 +11,8 @@
           </div>
           <div class="m-0 p-0" style="width:20%">
               
-              <user-comp @click="toggleShow"></user-comp>
-              <div v-if="show">liar</div> 
+              <user-comp @click="toggleShow" ></user-comp>
+              <div v-if="show" style="color:white">liar</div> 
               
           </div>
           <div class="m-0 p-0" style="width:20%">
