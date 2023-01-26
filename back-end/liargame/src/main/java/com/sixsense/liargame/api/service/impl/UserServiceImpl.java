@@ -49,5 +49,17 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
+    /**
+     * 이메일 또는 이름 중복 여부 확인
+     * @param email 사용자 이메일
+     * @param name 사용자 이름
+     * @return 이메일 또는 이름 중복 여부 (true == 중복, false == 중복x)
+     */
+    @Override
+    public boolean isDuplication(String email, String name) {
+        if (email != null) return userRepository.existsByEmail(email);
+        else return userRepository.existsByName(name);
+    }
+
 
 }
