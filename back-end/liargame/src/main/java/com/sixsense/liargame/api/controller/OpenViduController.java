@@ -35,7 +35,8 @@ public class OpenViduController {
     @PostMapping("/api/sessions")
     public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
             throws OpenViduJavaClientException, OpenViduHttpException {
-        SessionProperties properties = SessionProperties.fromJson(params).build();
+//        SessionProperties properties = SessionProperties.fromJson(params).build();'
+        SessionProperties properties = new SessionProperties.Builder().build();
         Session session = openvidu.createSession(properties);
         return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
     }
