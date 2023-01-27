@@ -5,7 +5,7 @@
         
         <div class="m-0 p-0 col-5"></div>
          <div class="m-0 p-0 col-3"></div>
-        <div class="m-0 p-0 col-2"><button type="button" class="btn btn-danger" id="btn_quit">Quit</button></div>
+        <div class="m-0 p-0 col-2"><router-link :to="{path:'InLobby'}"><button type="button" class="btn btn-danger" id="btn_quit">Quit</button></router-link></div>
     </div>
   </div>
 </template>
