@@ -4,15 +4,16 @@
         <div class="m-0 p-0 col-2"><button type="button" @click="toggle()" class="btn btn-success" id="btn_ready">Ready</button></div>
         
         <div class="m-0 p-0 col-5"></div>
-         <div class="m-0 p-0 col-3"></div>
-        <div class="m-0 p-0 col-2"><router-link :to="{path:'InLobby'}"><button type="button" class="btn btn-danger" id="btn_quit">Quit</button></router-link></div>
+        <div class="m-0 p-0 col-3"></div>
+        <div class="m-0 p-0 col-2"><button type="button" class="btn btn-danger" id="btn_quit">Quit</button></div>
     </div>
   </div>
 </template>
 
 <script>
-import store from '@/store';
-import { useStore } from "vuex";
+// import store from '@/store';
+// import { useStore } from "vuex";
+
 export default {
   // setup() {
   //   const store = useStore();
@@ -20,7 +21,6 @@ export default {
   // },
   data () {
     return {
-      
       isShow: false
     }
   },
@@ -28,11 +28,9 @@ export default {
   name: "GameConfirm",
   created() {
     // this.toggle = store.commit("isShow", store.state.isShow = !store.state.isShow)
-    
   },
   methods:{
     toggle(){
-      
       this.$store.state.isShow = !this.$store.state.isShow
      }
     }

@@ -16,8 +16,8 @@
 
 <script>
 import GameUsers from "@/components/ingame/GameUsers.vue"
-import GameTitle from "@/components/ingame/GameTitle.vue"
-import GameConfirm from "@/components/ingame/GameConfirm.vue"
+import GameTitle from "@/components/ingame/waitroom/GameTitle.vue"
+import GameConfirm from "@/components/ingame/waitroom/GameConfirm.vue"
 
 export default {
   components: { GameUsers, GameTitle, GameConfirm },
