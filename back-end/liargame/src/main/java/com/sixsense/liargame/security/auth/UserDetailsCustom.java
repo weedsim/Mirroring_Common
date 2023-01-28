@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 @Data
-public class UserDetailsCustom implements UserDetails, OAuth2User {
+public class UserDetailsCustom implements OAuth2User {
     private final User user;
     private Map<String, Object> attributes;
 
@@ -33,42 +33,10 @@ public class UserDetailsCustom implements UserDetails, OAuth2User {
     }
 
     @Override
-    public String getPassword() {
-        return user.getPassword();
-    }
-
-    @Override
-    public String getUsername() {
-        return user.getEmail();
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-
-    @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(user::getRole);
-        return authorities;
+        return user.getAuthorities();
     }
+
 
     @Override
     public String getName() {

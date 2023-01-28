@@ -53,7 +53,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/swagger-resources/", "/**").permitAll()
-                .antMatchers("/login", "/users", "/users/duplicate").permitAll()
+                .antMatchers("/users/login", "/users", "/users/duplicate", "/users/sign-up").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login()
@@ -68,7 +68,7 @@ public class SecurityConfig {
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler)
                 .and()
-                .logout() // 로그아웃 로직 추가해야함
+                .logout() // TODO:: 로그아웃 로직 추가해야함
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilter(new JwtLoginFilter(authenticationManager, jwtTokenProvider))
