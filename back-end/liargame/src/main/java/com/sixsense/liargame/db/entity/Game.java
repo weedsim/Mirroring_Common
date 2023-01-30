@@ -31,7 +31,7 @@ public class Game {
     public Game() {
     }
 
-    public void vote(Integer voter, Integer target) {
+    public void vote(Long voter, Long target) {
         boolean voted = false;
         for (Vote vote : votes) {
             if (Objects.equals(vote.getVoter(), voter)) {
