@@ -4,8 +4,9 @@
     <!-- <user-comp-speak> -->
         <div class="m-0 p-0 row" style="height:70%;">
             <!-- 화상 화면 및 닉네임 -->
-            <user-display></user-display>
-            <img src="@/assets/ingame/접속.png" v-if="$store.state.sessions[curIdx].isJoin" alt="">
+            <user-display v-if="$store.state.sessions[curIdx].isJoin" alt="">
+            </user-display>
+            
             <img src="@/assets/ingame/headphone.png" v-else alt="">
         </div>
             <!-- 준비 부분을 컴포넌트로 만들어야되는데 그냥 데이터 상속받아서 처리하겠습니다 -->
@@ -29,9 +30,13 @@
 </template>
 
 <script>
+import { BIconMicFill } from "bootstrap-icons-vue";
+import { BIconHeadset } from "bootstrap-icons-vue";
+import UserDisplay from "@/components/ingame/UserDisplay.vue"
+
 export default {
   name: "RoomComp",
-  components: { BIconMicFill, BIconHeadset},
+  components: { BIconMicFill, BIconHeadset, UserDisplay},
   created() {
   },
   props: {

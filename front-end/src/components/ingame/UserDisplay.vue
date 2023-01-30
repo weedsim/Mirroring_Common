@@ -16,9 +16,9 @@
             <input v-model="mySessionId" class="form-control" type="text" required />
           </p>
           <p class="text-center">
-            <button class="btn btn-lg btn-success" @click="joinSession()">
+            <!-- <button class="btn btn-lg btn-success" @click="joinSession()">
               Join!
-            </button>
+            </button> -->
           </p>
         </div>
       </div>
@@ -72,7 +72,10 @@ export default {
       myUserName: "Participant" + Math.floor(Math.random() * 100),
     };
   },
-
+created(){
+    this.joinSession()
+    // console.log(1)
+},
   methods: {
     joinSession() {
       // --- 1) Get an OpenVidu object ---

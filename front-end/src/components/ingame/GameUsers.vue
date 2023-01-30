@@ -73,7 +73,7 @@ export default {
                     break;
                 }
             }
-            console.log(this.myIdx)
+            console.log(this.$store.state.myIdx)
         },
 
         // 세션 통신 부분
@@ -96,27 +96,25 @@ export default {
         postFrontSessionToBackSession(){
             let session = this.mySession
             // axios로 세션보내기(x)
-        }
+        },
         
-    },
-  methods:{
-    async getToken() {
-        const sessionId = await this.createSession(this.state.mySessionId);
-        return await this.createToken(sessionId);
-    },
-    async createSession(sessionId) {
-        const response = await axios.post(this.APPLICATION_SERVER_URL + 'api/sessions', { customSessionId: sessionId }, {
-            headers: { 'Content-Type': 'application/json', },
-        });
-        return response.data; // The sessionId
-    },
-    async createToken(sessionId) {
-        const response = await axios.post(this.APPLICATION_SERVER_URL + 'api/sessions/' + sessionId + '/connections', {}, {
-            headers: { 'Content-Type': 'application/json', },
-        });
-        return response.data; // The token
+        async getToken() {
+            const sessionId = await this.createSession(this.state.mySessionId);
+            return await this.createToken(sessionId);
+        },
+        async createSession(sessionId) {
+            const response = await axios.post(this.APPLICATION_SERVER_URL + 'api/sessions', { customSessionId: sessionId }, {
+                headers: { 'Content-Type': 'application/json', },
+            });
+            return response.data; // The sessionId
+        },
+        async createToken(sessionId) {
+            const response = await axios.post(this.APPLICATION_SERVER_URL + 'api/sessions/' + sessionId + '/connections', {}, {
+                headers: { 'Content-Type': 'application/json', },
+            });
+            return response.data; // The token
+        }
     }
-  }
 }
 </script>
 
