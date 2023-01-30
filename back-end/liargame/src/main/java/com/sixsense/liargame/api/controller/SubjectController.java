@@ -24,7 +24,8 @@ public class SubjectController {
     }
 
     @GetMapping("/{subjectId}/words")
-    public ResponseEntity<WordResp> getWord(@PathVariable Long subjectId) {
-        return ResponseEntity.ok().body(subjectService.selectRandomWord(subjectId));
+    public ResponseEntity<WordResp> getWord(@PathVariable Long subjectId, Integer roomId) {
+
+        return ResponseEntity.ok().body(subjectService.selectRandomWord(subjectId, roomId));
     }
 }

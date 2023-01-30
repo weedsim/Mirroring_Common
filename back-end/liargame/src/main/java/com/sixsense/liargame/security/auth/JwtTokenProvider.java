@@ -108,4 +108,8 @@ public class JwtTokenProvider {
             return e.getClaims();
         }
     }
+
+    public String getEmail(String accessToken) {
+        return parseClaims(accessToken).get("email").toString();
+    }
 }
