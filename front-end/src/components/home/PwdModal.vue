@@ -24,7 +24,6 @@
               <input
                 type="text"
                 placeholder="이메일을 입력해주세요"
-                id="useremain"
                 class="form-control"
                 style="width: 70%"
               />

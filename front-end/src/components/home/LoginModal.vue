@@ -24,8 +24,8 @@
               <input
                 type="text"
                 placeholder="이메일을 입력해주세요"
-                id="useremain"
                 class="form-control"
+                v-model="useremail"
               />
             </li>
             <li style="margin-top: 3vh">비밀번호</li>
@@ -35,6 +35,7 @@
                 placeholder="비밀번호를 입력해주세요"
                 id="userpwd"
                 class="form-control"
+                v-model="userpwd"
               />
             </li>
             <li style="text-align: center; margin-top: 3vh">
@@ -43,6 +44,10 @@
               </button>
             </li>
             <hr />
+            <li class="btngrp">
+              <img src="@/assets/icon/btngoogle.png" alt="" />
+              <img src="@/assets/icon/btnkakao.png" alt="" />
+            </li>
             <li style="font-size: small">
               아직 회원이 아니신가요?
               <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal"
@@ -67,12 +72,19 @@ export default {
   name: "LoginModal",
   components: {},
   data() {
-    return {};
+    return {
+      useremail: null,
+      userpwd: null,
+    };
   },
   setup() {},
   created() {},
   mounted() {},
-  methods: {},
+  methods: {
+    resetval() {
+      (this.useremail = null), (this.userpwd = null);
+    },
+  },
 };
 </script>
 
@@ -91,6 +103,12 @@ ul {
 }
 li {
   margin-bottom: 1vh;
+}
+.btngrp {
+  display: flex;
+}
+.btngrp p:nth-child(1):hover {
+  border: 1px solid red;
 }
 </style>
 
