@@ -5,18 +5,19 @@ import com.sixsense.liargame.common.model.request.SettingDto;
 import com.sixsense.liargame.common.model.response.RoomResp;
 import com.sixsense.liargame.db.entity.Room;
 import org.springframework.data.domain.Pageable;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 public interface RoomService {
-    Long insert(Long userId, RoomReq roomReq);
+    Integer insert(RoomReq roomReq);
 
-    void enter(Long userId, Long roomId);
+    Integer enter(String email, Integer id);
 
-    void exit(Long userId, Long roomId);
+    void exit(String email, Integer id);
 
-    void changeSetting(Long userId, SettingDto settingDto);
+    void normalStart(String email, Integer id);
+
+    void changeSetting(String email, SettingDto settingDto);
 
     List<RoomResp> selectAll(Pageable pageable);
 
@@ -28,7 +29,7 @@ public interface RoomService {
                 .curCount(room.getCurCount())
                 .maxCount(room.getMaxCount())
                 .isPlaying(room.getIsPlaying())
-                .isPrivate(StringUtils.hasText(room.getPassword()))
+                .password(room.getPassword())
                 .build();
     }
 
