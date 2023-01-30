@@ -4,6 +4,7 @@
     <!-- <user-comp-speak> -->
         <div class="m-0 p-0 row" style="height:70%;">
             <!-- 화상 화면 및 닉네임 -->
+            <user-display></user-display>
             <img src="@/assets/ingame/접속.png" v-if="$store.state.sessions[curIdx].isJoin" alt="">
             <img src="@/assets/ingame/headphone.png" v-else alt="">
         </div>
@@ -28,8 +29,6 @@
 </template>
 
 <script>
-import { BIconMicFill } from "bootstrap-icons-vue";
-import { BIconHeadset } from "bootstrap-icons-vue";
 export default {
   name: "RoomComp",
   components: { BIconMicFill, BIconHeadset},
@@ -38,10 +37,6 @@ export default {
   props: {
     curIdx : String
   },
-  data(){
-    return {
-    }
-  }
 }
 </script>
 
