@@ -39,6 +39,29 @@ public class UserController {
 		return userService.login(login);
 	}
 
+	@PostMapping("/reissue")
+	public ResponseEntity<?> reissue(@Validated UserRequestDto.Reissue reissue, Errors errors) {
+		// validation check
+		if (errors.hasErrors()) {
+			return response.invalidFields(Helper.refineErrors(errors));
+		}
+		return userService.reissue(reissue);
+	}
+
+	@PostMapping("/logout")
+	public ResponseEntity<?> logout(@Validated UserRequestDto.Logout logout, Errors errors) {
+		// validation check
+		if (errors.hasErrors()) {
+			return response.invalidFields(Helper.refineErrors(errors));
+		}
+		return userService.logout(logout);
+	}
+
+	@GetMapping("/authority")
+	public ResponseEntity<?> authority() {
+		return userService.authority();
+	}
+
 	@GetMapping("/duplicate")
 	public ResponseEntity<?> duplication(String email, String name){
 		return new ResponseEntity<Boolean>(userService.isDuplication(email, name), HttpStatus.OK);

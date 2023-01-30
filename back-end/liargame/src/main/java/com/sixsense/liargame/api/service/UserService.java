@@ -7,5 +7,8 @@ public interface UserService {
 
     public ResponseEntity<?> signUp(UserRequestDto.SignUp signUp);
     public ResponseEntity<?> login(UserRequestDto.Login login);
+    public ResponseEntity<?> reissue(UserRequestDto.Reissue reissue);
+    public ResponseEntity<?> logout(UserRequestDto.Logout logout);
+    public ResponseEntity<?> authority();
     public boolean isDuplication(String email, String name);
 }
