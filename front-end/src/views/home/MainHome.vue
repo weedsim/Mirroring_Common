@@ -1,7 +1,8 @@
 <template>
+  <!-- <navbar style="height: 5vh" /> -->
   <navbar />
   <div class="m-0 p-0 maintest">
-    <div class="m-0 p-0 maintop" style="height: 100vh">
+    <div class="m-0 p-0 maintop" style="height: 95vh">
       <div class="m-0 p-0 maintopwrapper">
         <h1>Liar Game</h1>
         <button type="button" class="btn btn-light">게임 시작</button>
@@ -49,19 +50,20 @@
       <!-- </div> -->
     </div>
   </div>
-  <LoginModal />
+  <!-- <LoginModal />
   <SignupModal />
-  <PwdModal />
+  <PwdModal /> -->
 </template>
 
 <script>
 import navbar from "@/components/NavView.vue";
-import LoginModal from "@/components/home/LoginModal.vue";
-import SignupModal from "@/components/home/SignupModal.vue";
-import PwdModal from "@/components/home/PwdModal.vue";
+// import LoginModal from "@/components/home/LoginModal.vue";
+// import SignupModal from "@/components/home/SignupModal.vue";
+// import PwdModal from "@/components/home/PwdModal.vue";
 
 export default {
-  components: { navbar, LoginModal, SignupModal, PwdModal },
+  // components: { navbar, LoginModal, SignupModal, PwdModal },
+  components: { navbar },
   data() {
     return {};
   },
