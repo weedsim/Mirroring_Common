@@ -1,11 +1,9 @@
 package com.sixsense.liargame.api.controller;
 
-import com.sixsense.liargame.api.response.RoomIdResp;
 import com.sixsense.liargame.api.service.RoomService;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
 import com.sixsense.liargame.common.model.response.RoomResp;
-import com.sixsense.liargame.security.auth.JwtProperties;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -30,35 +28,41 @@ public class RoomController {
     }
 
     @PatchMapping("/{roomId}/enter")
-    public ResponseEntity<?> enter(HttpServletRequest request, @PathVariable Long roomId) {
-        String accessToken = request.getHeader(JwtProperties.ACCESS_TOKEN);
-        Long userId = jwtTokenProvider.getUserId(accessToken);
-        roomService.enter(userId, roomId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Integer> enter(HttpServletRequest request, @PathVariable Integer roomId) {
+        String accessToken = request.getHeader("access-token");
+        String email = jwtTokenProvider.getEmail(accessToken);
+        roomId = roomService.enter(email, roomId);
+        return ResponseEntity.ok(roomId);
     }
 
     @PatchMapping("/{roomId}/exit")
-    public ResponseEntity<?> exit(HttpServletRequest request, @PathVariable Long roomId) {
-        String accessToken = request.getHeader(JwtProperties.ACCESS_TOKEN);
-        Long userId = jwtTokenProvider.getUserId(accessToken);
-        roomService.exit(userId, roomId);
+    public ResponseEntity<?> exit(HttpServletRequest request, @PathVariable Integer roomId) {
+        String accessToken = request.getHeader("access-token");
+        String email = jwtTokenProvider.getEmail(accessToken);
+        roomService.exit(email, roomId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{roomId}/start")
+    public ResponseEntity<?> start(HttpServletRequest request, @PathVariable Integer roomId) {
+        String accessToken = request.getHeader("access-token");
+        String email = jwtTokenProvider.getEmail(accessToken);
+        roomService.normalStart(email, roomId);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{roomId}")
-    public ResponseEntity<?> changeSetting(HttpServletRequest request, @PathVariable Long roomId, @RequestBody SettingDto settingDto) {
-        String accessToken = request.getHeader(JwtProperties.ACCESS_TOKEN);
-        Long userId = jwtTokenProvider.getUserId(accessToken);
+    public ResponseEntity<?> changeSetting(HttpServletRequest request, @PathVariable Integer roomId, @RequestBody SettingDto settingDto) {
+        String accessToken = request.getHeader("access-token");
+        String email = jwtTokenProvider.getEmail(accessToken);
         settingDto.setId(roomId);
-        roomService.changeSetting(userId, settingDto);
+        roomService.changeSetting(email, settingDto);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping
-    public ResponseEntity<RoomIdResp> create(HttpServletRequest request, @RequestBody RoomReq roomReq) {
-        String accessToken = request.getHeader(JwtProperties.ACCESS_TOKEN);
-        Long userId = jwtTokenProvider.getUserId(accessToken);
-        Long roomId = roomService.insert(userId, roomReq);
-        return ResponseEntity.ok(new RoomIdResp(roomId));
+    public ResponseEntity<?> create(@RequestBody RoomReq roomReq) {
+        Integer roomId = roomService.insert(roomReq);
+        return ResponseEntity.ok(roomId);
     }
 }
