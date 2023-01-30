@@ -13,4 +13,5 @@ public class SettingDto {
     private String mode;
     private String password;
     private Integer maxCount;
+    private Integer timeout;
 }

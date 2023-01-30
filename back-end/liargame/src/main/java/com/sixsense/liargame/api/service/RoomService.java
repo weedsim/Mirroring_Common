@@ -9,17 +9,15 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface RoomService {
-    void insert(RoomReq roomReq);
+    Integer insert(RoomReq roomReq);
 
-    void enter(Integer id);
+    Integer enter(String email, Integer id);
 
-    void exit(Integer id);
+    void exit(String email, Integer id);
 
-    void start(Integer id);
+    void normalStart(String email, Integer id);
 
-    void end(Integer id);
-
-    void changeSetting(SettingDto settingDto);
+    void changeSetting(String email, SettingDto settingDto);
 
     List<RoomResp> selectAll(Pageable pageable);
 
