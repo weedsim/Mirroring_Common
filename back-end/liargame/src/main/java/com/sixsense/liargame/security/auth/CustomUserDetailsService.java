@@ -23,6 +23,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	// 해당하는 User 의 데이터가 존재한다면 UserDetails 객체로 만들어서 리턴
 	private UserDetails createUserDetails(com.sixsense.liargame.db.entity.User user) {
-		return new User(user.getUsername(), user.getPassword(), user.getAuthorities());
+		return new UserDetailsCustom(user);
 	}
 }
