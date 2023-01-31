@@ -64,11 +64,12 @@ export default {
   data() {
     return {
       // OpenVidu objects
-      OV: undefined,
-      session: undefined,
-      mainStreamManager: undefined,
-      publisher: undefined,
-      subscribers: [],
+      
+        OV: undefined,
+        session: undefined,
+        mainStreamManager: undefined,
+        publisher: undefined,
+        
 
       // Join form
       mySessionId: "SessionA",
@@ -97,11 +98,19 @@ created(){
       // On every new Stream received...
       this.session.on("streamCreated", ({ stream }) => {
         const subscriber = this.session.subscribe(stream);
-        this.store.state.sessions[this.curIdx].ovSession = subscriber
+        
+        for(let i=0;i<10;i++){
+            console.log(this.$store.state.sessions[i].isJoin)
+            if(this.$store.state.sessions[i].isJoin){
+                this.$store.state.sessions[i].ovSession = subscriber
+                this.$store.state.sessions[i].isJoin = true;
+                break;
+            }
+        }
         // console.log("this.curIdx",this.curIdx)
-        this.subscribers.push(subscriber);
+        // this.$state.store.sessions[this.curIdx].ovSession = subscriber
         // console.log("this.subscribers",this.subscribers)
-        console.log("this.curIdx", this.curIdx)
+        // console.log("this.curIdx", this.curIdx)
       });
 
       // On every Stream destroyed...
@@ -114,12 +123,29 @@ created(){
         // if (index >= 0) {
         //   this.subscribers.splice(index, 1);
         // }
+
         // for(let i=0;i<10;i++){
-            // curIdx
-            // this.store.state.sessions[this.curIdx]
-            // if
-            // this.store.state.sessions[this.curIdx]
+        //     // let session = this.$store.state.sessions[i].ovSession
+        //     console.log(333333, index)
+        //     if(index === i) {
+        //         console.log(222222)
+        //         this.$state.store.sessions[i].isJoin = false
+        //         this.$store.state.sessions[i].ovSession = {}
+        //     //     // this.$state.store.sessions[i].ovSession = subscriber
+        //     //     // this.$state.store.sessions[i].isJoin = true;
+        //         break;
+        //     }
         // }
+        
+        // axios.get().then(
+        //     axios.
+        //     c
+        // ).catch()
+        // const index = this.subscribers.indexOf(stream.streamManager, 0);
+        // if (index >= 0) {
+        //   this.subscribers.splice(index, 1);
+        // }
+        
       });
 
       // On every asynchronous exception...
@@ -155,7 +181,15 @@ created(){
             // Set the main video in the page to display our webcam and store our Publisher
             // this.mainStreamManager = publisher;
             this.publisher = publisher;
-
+            // console.log(this.curIdx)
+            // console.log("this.$store", this.$store.state.sessions[this.curIdx])
+            this.$store.state.sessions[this.curIdx].ovSession = publisher
+            this.$store.state.sessions[this.curIdx].isJoin = true
+            
+            for(let i=0;i<10;i++){
+                console.log(this.$store.state.sessions[i].isJoin)
+            }
+            
             // --- 6) Publish your stream ---
 
             this.session.publish(this.publisher);
@@ -165,7 +199,7 @@ created(){
           });
       });
 
-      window.addEventListener("beforeunload", this.leaveSession);
+    //   window.addEventListener("beforeunload", this.leaveSession);
     },
 
     leaveSession() {
@@ -178,6 +212,16 @@ created(){
       this.publisher = undefined;
       this.subscribers = [];
       this.OV = undefined;
+
+        let ovSession = {
+            "OV":this.OV,
+            "session":this.session,
+            "mainStreamManager":this.mainStreamManager,
+            "publisher":this.publisher,
+            "sessions":this.sessions,
+        }
+        
+        this.$store.state.sessions[this.curIdx].ovSession = ovSession
 
       // Remove beforeunload listener
       window.removeEventListener("beforeunload", this.leaveSession);

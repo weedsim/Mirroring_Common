@@ -33,7 +33,7 @@ export default {
         // console.log(this.$store.state.isShow)
     //   this.$store.state.isShow = !this.$store.state.isShow
     let myIdx = this.$store.state.myIdx
-    console.log(myIdx)
+    // console.log(myIdx)
     this.$store.state.sessions[myIdx].isReady = !this.$store.state.sessions[myIdx].isReady
      }
     }

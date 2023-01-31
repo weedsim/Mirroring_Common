@@ -19,7 +19,7 @@ let bits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 for (let i = 0; i < 10; i++) {
   if (bits[i]) {
     // 접속테스트
-    sessions[i].isJoin = true;
+    // sessions[i].isJoin = true;
     // 레디 테스트
     // sessions[i].isReady = false;
   }

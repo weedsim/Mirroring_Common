@@ -4,7 +4,7 @@
     <!-- <user-comp-speak> -->
         <div class="m-0 p-0 row" style="height:70%;">
             <!-- 화상 화면 및 닉네임 -->
-            <user-display curIdx="curIdx" v-if="$store.state.sessions[curIdx].isJoin" alt="">
+            <user-display :curIdx="curIdx" v-if="$store.state.sessions[curIdx].isJoin" alt="">
             </user-display>
             
             <img src="@/assets/ingame/headphone.png" v-else alt="">
