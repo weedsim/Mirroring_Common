@@ -7,7 +7,7 @@
             b_chat_input
         </div>
         <div class="m-0 p-0 col-3" style="color:white">
-            b_chat_btn
+            <button type="button" class="btn btn-info btn-sm" >b_chat_btn</button>
         </div>
         
     </div>

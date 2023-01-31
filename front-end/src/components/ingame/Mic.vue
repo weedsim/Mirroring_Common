@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <BIconMicFill style="color:blue" v-if="$store.state.isShow_mic" @click="togglem()"></BIconMicFill>
     <BIconMicFill style="color:white" v-else></BIconMicFill>
     <BIconHeadset style="color:blue" v-if="$store.state.isShow_headset" @click="toggleh()"></BIconHeadset>
@@ -32,4 +32,4 @@ export default {
 
 <style>
 
-</style>
+</style> -->
