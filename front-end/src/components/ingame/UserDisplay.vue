@@ -1,6 +1,6 @@
 <template>
   <div id="main-container" class="container">
-    <div id="join" v-if="!session">
+    <!-- <div id="join" v-if="!session">
       <div id="img-div">
         <img src="resources/images/openvidu_grey_bg_transp_cropped.png" />
       </div>
@@ -16,24 +16,24 @@
             <input v-model="mySessionId" class="form-control" type="text" required />
           </p>
           <p class="text-center">
-            <!-- <button class="btn btn-lg btn-success" @click="joinSession()">
+            <button class="btn btn-lg btn-success" @click="joinSession()">
               Join!
-            </button> -->
+            </button>
           </p>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div id="session" v-if="session">
-      <div id="session-header">
+      <!-- <div id="session-header">
         <h1 id="session-title">{{ mySessionId }}</h1>
         <input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession"
           value="Leave session" />
-      </div>
-      <div id="main-video" class="col-md-6">
+      </div> -->
+      <!-- <div id="main-video" class="col-md-6">
         <user-video :stream-manager="mainStreamManager" />
-      </div>
-      <div id="video-container" class="col-md-6">
+      </div> -->
+      <div id="video-container">
         <user-video :stream-manager="publisher" @click="updateMainVideoStreamManager(publisher)" />
         <user-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub"
           @click="updateMainVideoStreamManager(sub)" />
@@ -58,6 +58,9 @@ export default {
     UserVideo,
   },
 
+    props:{
+        curIdx:String
+    },
   data() {
     return {
       // OpenVidu objects
@@ -74,7 +77,12 @@ export default {
   },
 created(){
     this.joinSession()
-    // console.log(1)
+    // console.log("OV,", this.OV)
+    // console.log("session,", this.session,)
+    // console.log("mainStreamManager,", this.mainStreamManager,)
+    // console.log("publisher,", this.publisher,)
+    // console.log("subscribers", this.subscribers)
+
 },
   methods: {
     joinSession() {
@@ -85,19 +93,33 @@ created(){
       this.session = this.OV.initSession();
 
       // --- 3) Specify the actions when events take place in the session ---
-
+        
       // On every new Stream received...
       this.session.on("streamCreated", ({ stream }) => {
         const subscriber = this.session.subscribe(stream);
+        this.store.state.sessions[this.curIdx].ovSession = subscriber
+        // console.log("this.curIdx",this.curIdx)
         this.subscribers.push(subscriber);
+        // console.log("this.subscribers",this.subscribers)
+        console.log("this.curIdx", this.curIdx)
       });
 
       // On every Stream destroyed...
       this.session.on("streamDestroyed", ({ stream }) => {
-        const index = this.subscribers.indexOf(stream.streamManager, 0);
-        if (index >= 0) {
-          this.subscribers.splice(index, 1);
-        }
+        // 채팅이벤트
+        // https://docs.openvidu.io/en/stable/cheatsheet/send-messages/
+        // console.log("USER DATA: " + stream.connection.data);
+
+        // const index = this.subscribers.indexOf(stream.streamManager, 0);
+        // if (index >= 0) {
+        //   this.subscribers.splice(index, 1);
+        // }
+        // for(let i=0;i<10;i++){
+            // curIdx
+            // this.store.state.sessions[this.curIdx]
+            // if
+            // this.store.state.sessions[this.curIdx]
+        // }
       });
 
       // On every asynchronous exception...
@@ -131,7 +153,7 @@ created(){
             });
 
             // Set the main video in the page to display our webcam and store our Publisher
-            this.mainStreamManager = publisher;
+            // this.mainStreamManager = publisher;
             this.publisher = publisher;
 
             // --- 6) Publish your stream ---
