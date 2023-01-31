@@ -76,4 +76,11 @@ public class UserRequestDto {
 		@Pattern(regexp = "^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$", message = "3자 이상 16자 이하, 영어 또는 숫자로 구성해야합니다.")
 		private String name;
 	}
+	
+	@Getter
+	@Setter
+	public static class UserInfo {
+		@NotEmpty(message = "accessToken 을 입력해주세요.")
+		private String accessToken;
+	}
 }

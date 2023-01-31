@@ -4,6 +4,7 @@ import com.sixsense.liargame.api.enums.Authority;
 import com.sixsense.liargame.api.service.UserService;
 import com.sixsense.liargame.common.model.Response;
 import com.sixsense.liargame.common.model.request.UserRequestDto;
+import com.sixsense.liargame.common.model.response.UserInfoDto;
 import com.sixsense.liargame.db.entity.User;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
 import com.sixsense.liargame.security.auth.TokenInfo;
@@ -138,6 +139,17 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByEmail(authentication.getName()).get();
         user.changePasswordName(passwordEncoder.encode(modify.getPassword()), modify.getName());
         return response.success("회원정보가 수정되었습니다.");
+    }
+
+    @Override
+    public ResponseEntity<?> getUserInfo(UserRequestDto.UserInfo userInfo) {
+        Authentication authentication = jwtTokenProvider.getAuthentication(userInfo.getAccessToken());
+        User user = userRepository.findByEmail(authentication.getName()).get();
+        UserInfoDto userInfoDto = UserInfoDto.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .build();
+        return new ResponseEntity<UserInfoDto>(userInfoDto, HttpStatus.OK);
     }
 
     public ResponseEntity<?> authority() {

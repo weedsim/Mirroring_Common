@@ -11,5 +11,6 @@ public interface UserService {
     public ResponseEntity<?> logout(UserRequestDto.Logout logout);
     public ResponseEntity<?> authority();
     public ResponseEntity<?> modify(UserRequestDto.Modify modify);
+    public ResponseEntity<?> getUserInfo(UserRequestDto.UserInfo userInfo);
     public boolean isDuplication(String email, String name);
 }

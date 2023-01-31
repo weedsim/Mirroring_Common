@@ -66,6 +66,15 @@ public class UserController {
 		return userService.modify(modify);
 	}
 
+	@GetMapping
+	public ResponseEntity<?> getUserInfo(@Validated UserRequestDto.UserInfo userInfo, Errors errors) {
+		// validation check
+		if(errors.hasErrors()) {
+			return response.invalidFields(Helper.refineErrors(errors));
+		}
+		return userService.getUserInfo(userInfo);
+	}
+
 	@GetMapping("/authority")
 	public ResponseEntity<?> authority() {
 		return userService.authority();
