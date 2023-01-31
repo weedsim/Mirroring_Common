@@ -11,10 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.redis.core.RedisHash;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.persistence.*;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,12 +27,14 @@ public class Room {
     Map<Long, String> userInfos;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "room_id")
     private Integer id;
     private String title;
     private Integer maxCount;
     @Setter
     private String word;
     private Integer timeout;
+    @Setter
     private Boolean isPlaying;
     private String mode;
     private String password;
@@ -84,14 +84,17 @@ public class Room {
     public GameResultResp start() {
         isPlaying = true;
         game = new Game(emitters.getParticipants());
-        //게임 시작 알리기
-        emitters.sendMessage("msg", "game start");
+        emitters.setLiar(game.getLiar());
+        //시민들에게 단어 알려주고 게임 시작 알리기
+        emitters.sendToCitizens("word", word);
+        emitters.sendToLiar("word", "liar");
+        emitters.sendToAll("msg", "game start");
         //timeout 만큼 쉼
         waitTimeout(timeout);
         //차례대로 발언
         Integer curSpeaker = game.getCurSpeaking();
         while (curSpeaker != null) {
-            emitters.sendMessage("curSpeaking", curSpeaker.toString());
+            emitters.sendToAll("curSpeaking", curSpeaker.toString());
             waitTimeout(timeout);
             curSpeaker = game.changeSpeaker();
         }
@@ -107,15 +110,8 @@ public class Room {
         String winner = "LIAR";
         //시민인 경우 바로 게임종료, 라이어인 경우 정답 입력 시간 알림
         if (Objects.equals(game.getLiar(), result)) {
-            emitters.sendMessage("msg", "selected liar");
-            CustomEmitter liar = emitters.findLiar(game.getLiar());
-            try {
-                liar.send(SseEmitter.event()
-                        .name("msg")
-                        .data("write answer"));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            emitters.sendToCitizens("msg", "selected liar");
+            emitters.sendToLiar("msg", "write answer");
             waitTimeout(1000 * 10); // 정답 입력시간 10초
             if (!answer.equals(word))
                 winner = "CITIZEN";
@@ -124,7 +120,7 @@ public class Room {
         List<VoteResp> votes = game.getVotes().stream().map(this::toVoteResp).collect(Collectors.toList());
         String liarName = userInfos.get(game.getLiar());
         List<String> citizens = userInfos.values().stream().filter(name -> !name.equals(liarName)).collect(Collectors.toList());
-
+        end();
         return GameResultResp.builder()
                 .winner(winner)
                 .votes(votes)
@@ -139,10 +135,10 @@ public class Room {
     }
 
     private void noticeVote() {
-        emitters.sendMessage("msg", "vote start");
+        emitters.sendToAll("msg", "vote start");
         waitTimeout(30 * 1000); // 30초
         //투표종료 알림
-        emitters.sendMessage("msg", "vote end");
+        emitters.sendToAll("msg", "vote end");
     }
 
     private Long getResult(List<Vote> votes) {
