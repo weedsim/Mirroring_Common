@@ -12,26 +12,55 @@ import java.util.stream.Collectors;
 
 public class Emitters {
     @Getter
-    private final List<CustomEmitter> emitters = new CopyOnWriteArrayList<>();
+    private final List<CustomEmitter> emitterList = new CopyOnWriteArrayList<>();
+    private CustomEmitter liar;
+    private CustomEmitter spy;
 
     public void add(CustomEmitter emitter) {
-        this.emitters.add(emitter);
+        this.emitterList.add(emitter);
         emitter.onCompletion(() -> {
-            this.emitters.remove(emitter);    // 만료되면 리스트에서 삭제
+            this.emitterList.remove(emitter);    // 만료되면 리스트에서 삭제
         });
         emitter.onTimeout(emitter::complete);
     }
 
     public void remove(Long userId) {
-        emitters.removeIf(emitter -> Objects.equals(emitter.getUserId(), userId));
+        emitterList.removeIf(emitter -> Objects.equals(emitter.getUserId(), userId));
     }
 
     public int size() {
-        return emitters.size();
+        return emitterList.size();
     }
 
-    public void sendMessage(String name, String message) {
-        emitters.forEach(emitter -> {
+    public void sendToAll(String name, String message) {
+        sendToCitizens(name, message);
+        sendToLiar(name, message);
+        if (spy != null)
+            sendToSpy(name, message);
+    }
+
+    public void sendToLiar(String name, String message) {
+        try {
+            liar.send(SseEmitter.event()
+                    .name(name)
+                    .data(message));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void sendToSpy(String name, String message) {
+        try {
+            spy.send(SseEmitter.event()
+                    .name(name)
+                    .data(message));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void sendToCitizens(String name, String message) {
+        emitterList.forEach(emitter -> {
             try {
                 emitter.send(SseEmitter.event()
                         .name(name)
@@ -42,15 +71,31 @@ public class Emitters {
         });
     }
 
-    public CustomEmitter findLiar(Long userId) {
-        for (CustomEmitter emitter : emitters) {
-            if (Objects.equals(emitter.getUserId(), userId))
-                return emitter;
-        }
-        return null;
+    public CustomEmitter getLiar() {
+        return liar;
+    }
+
+    public void setLiar(Long liarId) {
+        this.liar = this.emitterList.stream()
+                .filter(emitter -> emitter.getUserId().equals(liarId))
+                .findFirst()
+                .orElse(null);
+        emitterList.remove(liar);
+    }
+
+    public CustomEmitter getSpy() {
+        return spy;
+    }
+
+    public void setSpy(Long spyId) {
+        this.spy = this.emitterList.stream()
+                .filter(emitter -> emitter.getUserId().equals(spyId))
+                .findFirst()
+                .orElse(null);
+        emitterList.remove(spy);
     }
 
     public List<Long> getParticipants() {
-        return emitters.stream().map(CustomEmitter::getUserId).collect(Collectors.toList());
+        return emitterList.stream().map(CustomEmitter::getUserId).collect(Collectors.toList());
     }
 }
