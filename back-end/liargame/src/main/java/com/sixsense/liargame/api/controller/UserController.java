@@ -17,6 +17,7 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<?> signUp(@RequestBody UserDto userDto){
 		userService.signUp(userDto);
+//		System.out.println(userDto);
 		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 

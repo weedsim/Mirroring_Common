@@ -46,7 +46,10 @@
             <hr />
             <li class="btngrp">
               <img src="@/assets/icon/btngoogle.png" alt="" />
-              <img src="@/assets/icon/btnkakao.png" alt="" />
+              <a
+                href="https://kauth.kakao.com/oauth/authorize?client_id=1ff9c0d8399e2993bcc0f81a9c899269&redirect_uri=http://localhost:8081/kakao&response_type=code"
+                ><img src="@/assets/icon/btnkakao.png" alt=""
+              /></a>
             </li>
             <li style="font-size: small">
               아직 회원이 아니신가요?
@@ -84,6 +87,11 @@ export default {
     resetval() {
       (this.useremail = null), (this.userpwd = null);
     },
+    logIn() {
+      const email = this.useremail;
+      const password = this.userpwd;
+    },
+    kakaoLogIn() {},
   },
 };
 </script>

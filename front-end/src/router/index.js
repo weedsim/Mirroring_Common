@@ -37,6 +37,12 @@ const routes = [
         /* webpackChunkName: "about" */ "../views/community/Community.vue"
       ),
   },
+  {
+    path: "/kakao",
+    name: "kakao",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/auth/kakao.vue"),
+  },
 ];
 
 const router = createRouter({
