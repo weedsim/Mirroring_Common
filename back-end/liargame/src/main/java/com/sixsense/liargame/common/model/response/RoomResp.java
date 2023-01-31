@@ -13,16 +13,16 @@ public class RoomResp {
     private Integer curCount;
     private Boolean isPlaying;
     private String mode;
-    private String password;
+    private Boolean isPrivate;
 
     @Builder
-    public RoomResp(Integer id, String title, Integer maxCount, Integer curCount, Boolean isPlaying, String mode, String password) {
+    public RoomResp(Integer id, String title, Integer maxCount, Integer curCount, Boolean isPlaying, String mode, Boolean isPrivate) {
         this.id = id;
         this.title = title;
         this.maxCount = maxCount;
         this.curCount = curCount;
         this.isPlaying = isPlaying;
         this.mode = mode;
-        this.password = password;
+        this.isPrivate = isPrivate;
     }
 }

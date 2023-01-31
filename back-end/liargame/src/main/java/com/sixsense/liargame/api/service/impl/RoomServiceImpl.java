@@ -91,7 +91,7 @@ public class RoomServiceImpl implements RoomService {
 
         if (Objects.equals(room.getMaster(), userId)) {
             GameResultResp result = room.start();
-            List<CustomEmitter> emittersList = emitters.getEmitters();
+            List<CustomEmitter> emittersList = emitters.getEmitterList();
             Long liar = getUserId(emittersList, result.getLiar());
             List<GameUserReq> userReqList = new ArrayList<>();
             emittersList.forEach(emitter -> {

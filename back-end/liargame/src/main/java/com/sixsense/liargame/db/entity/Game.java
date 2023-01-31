@@ -22,9 +22,9 @@ public class Game {
 
     public Game(List<Long> participants) {
         this.participants = participants;
-        startPerson = (int) (Math.random() * participants.size()) + 1;
+        startPerson = (int) (Math.random() * participants.size());
         curSpeaking = startPerson;
-        liar = participants.get((int) (Math.random() * participants.size()) + 1);
+        liar = participants.get((int) (Math.random() * participants.size()));
         votes = new CopyOnWriteArrayList<>();
     }
 
@@ -44,9 +44,9 @@ public class Game {
     }
 
     public Integer changeSpeaker() {
-        curSpeaking = curSpeaking % participants.size() + 1;
+        curSpeaking = (curSpeaking + 1) % participants.size();
         if (curSpeaking.equals(startPerson)) {
-            if (isTurned)
+            if (!isTurned)
                 return curSpeaking;
             isTurned = true;
         }
