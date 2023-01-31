@@ -5,6 +5,7 @@ import com.sixsense.liargame.common.model.request.SettingDto;
 import com.sixsense.liargame.common.model.response.RoomResp;
 import com.sixsense.liargame.db.entity.Room;
 import org.springframework.data.domain.Pageable;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public interface RoomService {
                 .curCount(room.getCurCount())
                 .maxCount(room.getMaxCount())
                 .isPlaying(room.getIsPlaying())
-                .password(room.getPassword())
+                .isPrivate(StringUtils.hasText(room.getPassword()))
                 .build();
     }
 

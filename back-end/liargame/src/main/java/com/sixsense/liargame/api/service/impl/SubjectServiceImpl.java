@@ -30,12 +30,11 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     @Transactional
-    public WordResp selectRandomWord(Long subjectId, Integer roomId) {
+    public void selectRandomWord(Long subjectId, Integer roomId) {
         Subject subject = subjectRepository.findById(subjectId).orElseThrow();
         int size = subject.getWords().size();
         int idx = (int) (Math.random() * size);
         WordResp wordResp = toWordDto(subject.getWords().get(idx));
         roomRepository.findById(roomId).orElseThrow().setWord(wordResp.getName());
-        return wordResp;
     }
 }

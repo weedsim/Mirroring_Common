@@ -16,9 +16,6 @@ public class Emitters {
     private CustomEmitter liar;
     private CustomEmitter spy;
 
-    public Emitters() {
-    }
-
     public void add(CustomEmitter emitter) {
         this.emitterList.add(emitter);
         emitter.onCompletion(() -> {
@@ -100,12 +97,5 @@ public class Emitters {
 
     public List<Long> getParticipants() {
         return emitterList.stream().map(CustomEmitter::getUserId).collect(Collectors.toList());
-    }
-
-    public Long getUserIdByName(String name) {
-        for (CustomEmitter emitter : emitterList)
-            if (emitter.getName().equals(name))
-                return emitter.getUserId();
-        return null;
     }
 }
