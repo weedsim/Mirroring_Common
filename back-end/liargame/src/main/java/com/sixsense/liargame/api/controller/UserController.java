@@ -57,6 +57,15 @@ public class UserController {
 		return userService.logout(logout);
 	}
 
+	@PutMapping("/modify")
+	public ResponseEntity<?> updateUserInfo(@Validated UserRequestDto.Modify modify, Errors errors) {
+		// validation check
+		if (errors.hasErrors()) {
+			return response.invalidFields(Helper.refineErrors(errors));
+		}
+		return userService.modify(modify);
+	}
+
 	@GetMapping("/authority")
 	public ResponseEntity<?> authority() {
 		return userService.authority();

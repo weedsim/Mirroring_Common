@@ -1,10 +1,10 @@
 package com.sixsense.liargame.db.entity;
 
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 @ToString
+@DynamicUpdate
 public class User implements UserDetails {
 
     @Id
@@ -37,6 +38,11 @@ public class User implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> role = new ArrayList<>();
+
+    public void changePasswordName(String password, String name) {
+        this.password = password;
+        this.name = name;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

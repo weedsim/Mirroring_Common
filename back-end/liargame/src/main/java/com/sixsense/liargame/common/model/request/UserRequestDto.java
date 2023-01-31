@@ -60,4 +60,20 @@ public class UserRequestDto {
 		@NotEmpty(message = "잘못된 요청입니다.")
 		private String refreshToken;
 	}
+
+	@Getter
+	@Setter
+	public static class Modify {
+
+		@NotEmpty(message = "accessToken 을 입력해주세요.")
+		private String accessToken;
+
+		@NotEmpty(message = "비밀번호는 필수 입력값입니다.")
+		@Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,16}$", message = "비밀번호는 8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.")
+		private String password;
+
+		@NotEmpty(message = "이름은 필수 입력값입니다.")
+		@Pattern(regexp = "^(?=.*[a-z0-9가-힣])[a-z0-9가-힣]{2,16}$", message = "3자 이상 16자 이하, 영어 또는 숫자로 구성해야합니다.")
+		private String name;
+	}
 }

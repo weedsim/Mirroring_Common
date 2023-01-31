@@ -10,5 +10,6 @@ public interface UserService {
     public ResponseEntity<?> reissue(UserRequestDto.Reissue reissue);
     public ResponseEntity<?> logout(UserRequestDto.Logout logout);
     public ResponseEntity<?> authority();
+    public ResponseEntity<?> modify(UserRequestDto.Modify modify);
     public boolean isDuplication(String email, String name);
 }

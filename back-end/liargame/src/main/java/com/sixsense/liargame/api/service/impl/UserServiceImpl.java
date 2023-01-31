@@ -131,6 +131,15 @@ public class UserServiceImpl implements UserService {
         return response.success("로그아웃 되었습니다.");
     }
 
+    @Override
+    @Transactional
+    public ResponseEntity<?> modify(UserRequestDto.Modify modify) {
+        Authentication authentication = jwtTokenProvider.getAuthentication(modify.getAccessToken());
+        User user = userRepository.findByEmail(authentication.getName()).get();
+        user.changePasswordName(passwordEncoder.encode(modify.getPassword()), modify.getName());
+        return response.success("회원정보가 수정되었습니다.");
+    }
+
     public ResponseEntity<?> authority() {
         // SecurityContext에 담겨 있는 authentication userEamil 정보
         String userEmail = getCurrentUserEmail();
