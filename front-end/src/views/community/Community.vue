@@ -14,14 +14,9 @@
             <!-- <h1>main</h1> -->
             <!-- 헤드 -->
             <div class="m-0 p-0 row">
-              <div class="m-0 p-0 col-3">
+              <div class="m-0 p-0 col-6">
                 <h1>커뮤니티</h1>
 
-                  
-
-                
-                
-                
                 <!-- <div style="right" class="input-group">
                   <h1>커뮤니티</h1> 
                   <div class="form-outline">
@@ -33,26 +28,20 @@
                   </button>
                 </div> -->
               </div>
-              <div class="m-0 p-0 col-3">
-                asd
-                    </div>
-              <div class="m-0 p-0 col-6">
+              <div class="m-0 p-0 col-3" style="text-align:right">
                 <div class="dropdown">
-                <button
-                  class="btn btn-primary dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-mdb-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Dropdown button
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    제목
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="#">제목</a></li>
+                    <li><a class="dropdown-item" href="#">작성자</a></li>
+                    <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                  </ul>
+                </div>
               </div>
+              <div class="m-0 p-0 col-3">
+                
                 
                 <div class="wrap">
                   <div class="search">
@@ -75,39 +64,39 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <th scope="row">운영자님 부탁드립니다</th>
-                      <td>호에에엥</td>
-                      <td>9</td>
+                      <th scope="row"><BIconBellFill></BIconBellFill>공지합니다!</th>
+                      <td>운영자1</td>
+                      <td>539</td>
                       <td>14분전</td>
                     </tr>
                     <tr>
-                      <th scope="row">완전 처음인 뉴비입니다</th>
-                      <td>빈따리</td>
-                      <td>22</td>
+                      <th scope="row"><BIconBellFill></BIconBellFill>필독! 가입 시 중요사항</th>
+                      <td>운영자2</td>
+                      <td>622</td>
                       <td>4시간전</td>
                     </tr>
                     <tr>
-                      <th scope="row">폰게임 할만한거 추천좀 받을수 있나요</th>
-                      <td>증권사</td>
+                      <th scope="row"> 운영자님 부탁드립니다</th>
+                      <td>호에에엥</td>
                       <td>32</td>
                       <td>2023.01.30</td>
                     </tr>
                     <tr>
                       <th scope="row">폰게임 할만한거 추천좀 받을수 있나요</th>
-                      <td>증권사</td>
+                      <td>엘사</td>
                       <td>32</td>
                       <td>2023.01.30</td>
                     </tr>
                     <tr>
                       <th scope="row">폰게임 할만한거 추천좀 받을수 있나요</th>
-                      <td>증권사</td>
-                      <td>32</td>
+                      <td>미구엘</td>
+                      <td>11</td>
                       <td>2023.01.30</td>
                     </tr>
                     <tr>
                       <th scope="row">폰게임 할만한거 추천좀 받을수 있나요</th>
                       <td>증권사</td>
-                      <td>32</td>
+                      <td>6</td>
                       <td>2023.01.30</td>
                     </tr>
                     <tr>
@@ -137,18 +126,21 @@
                     
                   </tbody>
                 </table>
-                    <nav aria-label="Page navigation example" id="nav_page" style=" text-align: center;">
-                      <ul class="pagination" style=" display:inline-flex;">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                      <div class="m-0 p-0 col-11">
+                          <nav aria-label="Page navigation example" id="nav_page" style=" text-align: center;">
+                          <ul class="pagination" style=" display:inline-flex;">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                            
+                          </ul>
+                        </nav>
+                      </div>
+                      <div class="m-0 p-0 col-1">
                         <button type="button" class="btn btn-secondary btn-sm" >글쓰기</button>
-                      
-                      </ul>
-                    </nav>
-              
+                      </div>
                     
               </div>
               
@@ -177,6 +169,7 @@
 
 <script>
 import navbar from "@/components/NavView.vue";
+import { BIconBellFill } from "bootstrap-icons-vue";
 
 export default {
   name: "Community",
