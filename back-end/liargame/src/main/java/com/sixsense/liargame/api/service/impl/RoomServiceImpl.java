@@ -1,6 +1,7 @@
 package com.sixsense.liargame.api.service.impl;
 
 import com.sixsense.liargame.api.service.RoomService;
+import com.sixsense.liargame.api.sse.Emitters;
 import com.sixsense.liargame.api.sse.GlobalEmitter;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
@@ -39,10 +40,11 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Long insert(RoomReq roomReq) {
-        Room room = roomRepository.save(toEntity(roomReq));
-        Long roomId = room.getId();
-        globalEmitter.addEmitters(roomId, room.getEmitters());
+    public Long insert(Long userId, RoomReq roomReq) {
+        Room room = toEntity(roomReq);
+        Emitters emitters = room.getEmitters();
+        Long roomId = roomRepository.save(room).getId();
+        globalEmitter.addEmitters(roomId, emitters);
         return roomId;
     }
 
@@ -59,8 +61,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     @Transactional
-    public void exit(String email, Long roomId) {
-        Long userId = userRepository.findByEmail(email).orElseThrow().getId();
+    public void exit(Long userId, Long roomId) {
         Room room = roomRepository.findById(roomId).orElseThrow();
         room.setEmitters(globalEmitter.getEmitters(roomId));
         room.exit(userId);
@@ -72,8 +73,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     @Transactional
-    public void changeSetting(String email, SettingDto settingDto) {
-        Long userId = userRepository.findByEmail(email).orElseThrow().getId();
+    public void changeSetting(Long userId, SettingDto settingDto) {
         Room room = roomRepository.findById(settingDto.getId()).orElseThrow();
         if (Objects.equals(userId, room.getMaster()))
             room.changeSetting(settingDto);

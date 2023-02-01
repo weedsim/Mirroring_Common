@@ -10,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
@@ -125,7 +124,7 @@ public class JwtTokenProvider {
         return (expiration.getTime() - now);
     }
 
-    public String getEmail(String accessToken) {
-        return parseClaims(accessToken).get("email").toString();
+    public Long getUserId(String accessToken) {
+        return Long.getLong(parseClaims(accessToken).get("id").toString());
     }
 }

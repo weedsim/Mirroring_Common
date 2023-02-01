@@ -10,13 +10,13 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 public interface RoomService {
-    Long insert(RoomReq roomReq);
+    Long insert(Long userId, RoomReq roomReq);
 
     void enter(Long userId, Long roomId);
 
-    void exit(String email, Long roomId);
+    void exit(Long userId, Long roomId);
 
-    void changeSetting(String email, SettingDto settingDto);
+    void changeSetting(Long userId, SettingDto settingDto);
 
     List<RoomResp> selectAll(Pageable pageable);
 
