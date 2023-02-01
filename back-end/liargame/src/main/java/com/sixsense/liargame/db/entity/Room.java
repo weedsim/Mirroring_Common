@@ -36,6 +36,7 @@ public class Room {
     @Setter
     private Emitters emitters;
     private List<UserInfo> participants;
+    private Long gameId;
 
     @Builder
     public Room(Long id, String title, Integer maxCount, Integer timeout, String mode, String password, Long master) {

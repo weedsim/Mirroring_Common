@@ -10,7 +10,7 @@ import java.util.List;
 public interface SubjectService {
     List<SubjectResp> selectAllSubjects();
 
-    void selectRandomWord(Long subjectId, Integer roomId);
+    void selectRandomWord(Long subjectId, Long roomId);
 
     default SubjectResp toSubjectDto(Subject subject) {
         return SubjectResp.builder()
