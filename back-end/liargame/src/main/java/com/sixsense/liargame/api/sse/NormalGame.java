@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.redis.core.RedisHash;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +19,6 @@ import java.util.stream.Collectors;
 @RedisHash("normal_game")
 public class NormalGame {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Setter
     private String word;
@@ -36,7 +33,8 @@ public class NormalGame {
     @Setter
     private String winner;
 
-    public NormalGame(int size) {
+    public NormalGame(Long roomId, int size) {
+        this.id = roomId;
         this.participants = new UserInfo[size];
         startPerson = (int) (Math.random() * participants.length);
         curSpeaker = startPerson;
