@@ -36,6 +36,7 @@ public class Room {
     @Setter
     private Emitters emitters;
     private List<UserInfo> participants;
+    @Setter
     private Long gameId;
 
     @Builder

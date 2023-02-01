@@ -12,6 +12,7 @@ import com.sixsense.liargame.db.entity.NormalPlay;
 import com.sixsense.liargame.db.entity.Room;
 import com.sixsense.liargame.db.repository.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -79,12 +80,14 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    @Transactional
     public void vote(Vote vote, Long GameId) {
         NormalGame game = normalGameRepository.findById(GameId).orElseThrow();
         gameManager.vote(vote.getVoter(), vote.getTarget(), game.getVotes());
     }
 
     @Override
+    @Transactional
     public void insertAnswer(String answer, Long GameId) {
         NormalGame game = normalGameRepository.findById(GameId).orElseThrow();
         game.setAnswer(answer);
