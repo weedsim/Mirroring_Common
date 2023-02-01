@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import axios from "axios";
 import router from "@/router";
+import VueCookies from "vue-cookies";
 
 const API_URL = "http://127.0.0.1:8080";
 
@@ -39,9 +40,10 @@ export default createStore({
   },
   mutations: {
     // 회원가입 && 로그인
-    SAVE_TOKEN(state, accessToken, refreshToken) {
-      state.accessToken = accessToken;
-      state.refreshToken = refreshToken;
+    SAVE_TOKEN(state, payload) {
+      state.accessToken = payload.token;
+      state.refreshToken = payload.refreshToken;
+      VueCookies.set("refreshToken", payload.refreshToken);
       router.push({ name: "main" });
     },
     DELETE_TOKEN(state) {
@@ -96,7 +98,8 @@ export default createStore({
       });
     },
     logInKakao(context, payload) {
-      context.commit("SAVE_TOKEN", payload.token, payload.refreshToken);
+      console.log(payload);
+      context.commit("SAVE_TOKEN", payload);
     },
     logOut(context) {
       axios({

@@ -25,9 +25,9 @@ export default {
       axios({
         method: "post",
         url: `${URL}/auth/login/kakao?state=kakao&code=${code}`,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
       })
         .then((res) => {
           console.log(res.data.accessToken);
