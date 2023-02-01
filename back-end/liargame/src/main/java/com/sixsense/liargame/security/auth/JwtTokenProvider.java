@@ -1,5 +1,7 @@
 package com.sixsense.liargame.security.auth;
 
+import com.sixsense.liargame.db.entity.User;
+import com.sixsense.liargame.db.repository.UserRepository;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -8,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -24,11 +25,13 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 public class JwtTokenProvider {
+    private final UserRepository userRepository;
     private final Key key;
 
-    public JwtTokenProvider() {
+    public JwtTokenProvider(UserRepository userRepository) {
         byte[] keyBytes = Decoders.BASE64.decode(JwtProperties.SECRET);
         this.key = Keys.hmacShaKeyFor(keyBytes);
+        this.userRepository = userRepository;
     }
 
     /**
@@ -40,12 +43,14 @@ public class JwtTokenProvider {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
+        User user = userRepository.findByEmail(authentication.getName()).orElseThrow();
         long now = (new Date()).getTime();
 
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + JwtProperties.ACCESS_TOKEN_TIME);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
+                .claim("id", user.getId())
                 .claim(JwtProperties.AUTHORITIES_KEY, authorities)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -81,7 +86,8 @@ public class JwtTokenProvider {
                         .collect(Collectors.toList());
 
         // UserDetails 객체를 만들어서 Authentication 리턴
-        UserDetails principal = new User(claims.getSubject(), "", authorities);
+        User user = userRepository.findById(Long.getLong(claims.get("id").toString())).orElseThrow();
+        UserDetailsCustom principal = new UserDetailsCustom(user);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
