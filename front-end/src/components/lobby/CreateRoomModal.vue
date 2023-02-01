@@ -113,6 +113,7 @@
             <button
               type="button"
               class="btn btn-primary btn-sm"
+              data-bs-dismiss="modal"
               v-on:click="createGame"
             >
               생성
@@ -125,6 +126,11 @@
 </template>
 
 <script>
+import axios from "axios";
+import router from "@/router";
+
+const API_URL = "http://127.0.0.1:8080";
+
 export default {
   components: {},
   data() {
@@ -163,6 +169,47 @@ export default {
       console.log(this.playercnt);
       console.log(this.talktime);
       console.log(this.gamemode);
+      if (
+        this.roomtitle === null ||
+        this.playercnt === null ||
+        this.talktime === null ||
+        (this.roomchk === true && this.roompwd === null)
+      ) {
+        alert("미입력된 설정값이 있습니다.");
+      } else {
+        axios({
+          method: "post",
+          url: `${API_URL}/rooms`,
+          data: {
+            title: this.roomtitle,
+            mode: this.gamemode,
+            password: this.roompwd,
+            maxCount: this.playercnt,
+            timeout: this.talktime,
+          },
+        })
+          .then((res) => {
+            console.log(res.data);
+            // 만약 성공을했다면... room/${roomId}로 인게임.vue로 보낸다.
+            // 1. state 방진입 isEnter -> true 단, 방진입직후에는 isEnter를 false로 바꿔줘야된다.
+            this.roomPwd = null;
+            this.$store.dispatch("setIsEnter");
+            // 응답결과로는 토큰과 roomId가 올것이다.
+            // router.push({ name: "room", params: { roomId: res.data.id } });
+            // 테스트용으로는 임의로 roomId를 설정한다.
+            router.push({ name: "room", params: { roomId: 13 } });
+          })
+          .catch((err) => {
+            this.roomPwd = null;
+
+            console.log("실패");
+            console.log(err);
+            // 테스트용
+            this.$store.dispatch("setIsEnter");
+            router.push({ name: "room", params: { roomId: 13 } });
+            // alert("게임방 진입에 실패하셨습니다");
+          });
+      }
     },
   },
 };

@@ -34,7 +34,7 @@ nav a.router-link-exact-active {
   border-style: solid;
   border-width: 1px;
 } */
-div {
+/* div {
   box-shadow: 0 0 0 1px #f00 inset;
-}
+} */
 </style>

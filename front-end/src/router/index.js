@@ -44,6 +44,12 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/auth/kakao.vue"),
   },
   {
+    path: "/google",
+    name: "google",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/auth/google.vue"),
+  },
+  {
     path: "/room/:roomId",
     name: "room",
     component: () =>

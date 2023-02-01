@@ -45,7 +45,10 @@
             </li>
             <hr />
             <li class="btngrp">
-              <img src="@/assets/icon/btngoogle.png" alt="" />
+              <a
+                href="https://accounts.google.com/o/oauth2/v2/auth?client_id=379257368587-calfpqn6bh9ehcfqtd3po48r2ohhpr1l.apps.googleusercontent.com&redirect_uri=http://localhost:8081/google&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+                ><img src="@/assets/icon/btngoogle.png" alt="" />
+              </a>
               <a
                 href="https://kauth.kakao.com/oauth/authorize?client_id=1ff9c0d8399e2993bcc0f81a9c899269&redirect_uri=http://localhost:8081/kakao&response_type=code"
                 ><img src="@/assets/icon/btnkakao.png" alt=""

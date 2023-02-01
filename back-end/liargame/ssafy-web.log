@@ -2764,3 +2764,555 @@ java.util.NoSuchElementException: No value present
 2023-02-01 10:26:01.473 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
 2023-02-01 10:26:01.473 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed Feb 01 10:26:01 KST 2023, status=500, error=Internal Server Error, path=/rooms/1/ente (truncated)...]
 2023-02-01 10:26:01.474 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 500
+2023-02-01 10:30:28.457 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 10:30:28.457 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 10:30:28.460 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 10:30:28.461 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[]]
+2023-02-01 10:30:28.461 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 11:17:42.801 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 11:17:42.801 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 11:17:42.806 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 11:17:42.806 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[]]
+2023-02-01 11:17:42.807 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 11:18:55.407 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.servlet.DispatcherServlet        : POST "/rooms", parameters={}
+2023-02-01 11:18:55.407 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#create(RoomReq)
+2023-02-01 11:18:55.443 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [RoomReq(title=ㅁㄴㅇㅁㄴㅇ, maxCount=8, mode=spy, password=ㅁㄴㅇㄴㅁㅇ)]
+2023-02-01 11:18:55.488 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [*/*]
+2023-02-01 11:18:55.488 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 11:18:59.719 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 11:18:59.719 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 11:18:59.733 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 11:18:59.740 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[RoomResp(id=212212791, title=ㅁㄴㅇㅁㄴㅇ, maxCount=8, curCount=null, isPlaying=null, mode=spy, password= (truncated)...]
+2023-02-01 11:18:59.742 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 12:27:45.031 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 12:27:45.031 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 12:27:45.035 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 12:27:45.036 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[RoomResp(id=212212791, title=ㅁㄴㅇㅁㄴㅇ, maxCount=8, curCount=null, isPlaying=null, mode=spy, password= (truncated)...]
+2023-02-01 12:27:45.037 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 12:29:10.082 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] o.s.web.servlet.DispatcherServlet        : PATCH "/rooms/2/enter", parameters={}
+2023-02-01 12:29:10.082 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#enter(Integer)
+2023-02-01 12:29:10.085 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Failed to complete request: java.util.NoSuchElementException: No value present
+2023-02-01 12:29:10.087 ERROR 14060 --- [http-nio-127.0.0.1-8080-exec-3] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.util.NoSuchElementException: No value present] with root cause
+
+java.util.NoSuchElementException: No value present
+	at java.base/java.util.Optional.orElseThrow(Optional.java:382) ~[na:na]
+	at com.sixsense.liargame.api.service.impl.RoomServiceImpl.enter(RoomServiceImpl.java:32) ~[main/:na]
+	at com.sixsense.liargame.api.service.impl.RoomServiceImpl$$FastClassBySpringCGLIB$$14956292.invoke(<generated>) ~[main/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.24.jar:5.3.24]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793) ~[spring-aop-5.3.24.jar:5.3.24]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-5.3.24.jar:5.3.24]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763) ~[spring-aop-5.3.24.jar:5.3.24]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123) ~[spring-tx-5.3.24.jar:5.3.24]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388) ~[spring-tx-5.3.24.jar:5.3.24]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-5.3.24.jar:5.3.24]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.24.jar:5.3.24]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763) ~[spring-aop-5.3.24.jar:5.3.24]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708) ~[spring-aop-5.3.24.jar:5.3.24]
+	at com.sixsense.liargame.api.service.impl.RoomServiceImpl$$EnhancerBySpringCGLIB$$25746499.enter(<generated>) ~[main/:na]
+	at com.sixsense.liargame.api.controller.RoomController.enter(RoomController.java:27) ~[main/:na]
+	at jdk.internal.reflect.GeneratedMethodAccessor40.invoke(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:880) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779) ~[tomcat-embed-core-9.0.70.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:111) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter.doFilterInternal(DefaultLogoutPageGeneratingFilter.java:58) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter.doFilter(DefaultLoginPageGeneratingFilter.java:237) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter.doFilter(DefaultLoginPageGeneratingFilter.java:223) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at com.sixsense.liargame.security.auth.JwtAuthenticationFilter.doFilter(JwtAuthenticationFilter.java:28) ~[main/:na]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at com.sixsense.liargame.security.auth.JwtExceptionFilter.doFilterInternal(JwtExceptionFilter.java:22) ~[main/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.doFilterInternal(OAuth2AuthorizationRequestRedirectFilter.java:178) ~[spring-security-oauth2-client-5.7.6.jar:5.7.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at java.base/java.lang.Thread.run(Thread.java:829) ~[na:na]
+
+2023-02-01 12:29:10.088 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for PATCH "/error", parameters={}
+2023-02-01 12:29:10.088 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2023-02-01 12:29:10.088 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 12:29:10.089 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed Feb 01 12:29:10 KST 2023, status=500, error=Internal Server Error, path=/rooms/2/ente (truncated)...]
+2023-02-01 12:29:10.089 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 500
+2023-02-01 12:29:26.002 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-2] o.s.web.servlet.DispatcherServlet        : PATCH "/rooms/2/enter", parameters={}
+2023-02-01 12:29:26.003 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#enter(Integer)
+2023-02-01 12:29:26.005 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Failed to complete request: java.util.NoSuchElementException: No value present
+2023-02-01 12:29:26.006 ERROR 14060 --- [http-nio-127.0.0.1-8080-exec-2] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.util.NoSuchElementException: No value present] with root cause
+
+java.util.NoSuchElementException: No value present
+	at java.base/java.util.Optional.orElseThrow(Optional.java:382) ~[na:na]
+	at com.sixsense.liargame.api.service.impl.RoomServiceImpl.enter(RoomServiceImpl.java:32) ~[main/:na]
+	at com.sixsense.liargame.api.service.impl.RoomServiceImpl$$FastClassBySpringCGLIB$$14956292.invoke(<generated>) ~[main/:na]
+	at org.springframework.cglib.proxy.MethodProxy.invoke(MethodProxy.java:218) ~[spring-core-5.3.24.jar:5.3.24]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.invokeJoinpoint(CglibAopProxy.java:793) ~[spring-aop-5.3.24.jar:5.3.24]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-5.3.24.jar:5.3.24]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763) ~[spring-aop-5.3.24.jar:5.3.24]
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123) ~[spring-tx-5.3.24.jar:5.3.24]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388) ~[spring-tx-5.3.24.jar:5.3.24]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-5.3.24.jar:5.3.24]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186) ~[spring-aop-5.3.24.jar:5.3.24]
+	at org.springframework.aop.framework.CglibAopProxy$CglibMethodInvocation.proceed(CglibAopProxy.java:763) ~[spring-aop-5.3.24.jar:5.3.24]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:708) ~[spring-aop-5.3.24.jar:5.3.24]
+	at com.sixsense.liargame.api.service.impl.RoomServiceImpl$$EnhancerBySpringCGLIB$$25746499.enter(<generated>) ~[main/:na]
+	at com.sixsense.liargame.api.controller.RoomController.enter(RoomController.java:27) ~[main/:na]
+	at jdk.internal.reflect.GeneratedMethodAccessor40.invoke(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:205) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:150) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:117) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:895) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1071) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:964) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:880) ~[spring-webmvc-5.3.24.jar:5.3.24]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:779) ~[tomcat-embed-core-9.0.70.jar:4.0.FR]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53) ~[tomcat-embed-websocket-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:111) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:337) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.invoke(FilterSecurityInterceptor.java:115) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.access.intercept.FilterSecurityInterceptor.doFilter(FilterSecurityInterceptor.java:81) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:122) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:116) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:126) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:81) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:109) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:149) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter.doFilterInternal(DefaultLogoutPageGeneratingFilter.java:58) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter.doFilter(DefaultLoginPageGeneratingFilter.java:237) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter.doFilter(DefaultLoginPageGeneratingFilter.java:223) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at com.sixsense.liargame.security.auth.JwtAuthenticationFilter.doFilter(JwtAuthenticationFilter.java:28) ~[main/:na]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at com.sixsense.liargame.security.auth.JwtExceptionFilter.doFilterInternal(JwtExceptionFilter.java:22) ~[main/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:223) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:217) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter.doFilterInternal(OAuth2AuthorizationRequestRedirectFilter.java:178) ~[spring-security-oauth2-client-5.7.6.jar:5.7.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:103) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:89) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:112) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:82) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:55) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:346) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:221) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:186) ~[spring-security-web-5.7.6.jar:5.7.6]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117) ~[spring-web-5.3.24.jar:5.3.24]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:541) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:360) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:399) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:891) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1784) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
+	at java.base/java.lang.Thread.run(Thread.java:829) ~[na:na]
+
+2023-02-01 12:29:26.007 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-2] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for PATCH "/error", parameters={}
+2023-02-01 12:29:26.007 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2023-02-01 12:29:26.008 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 12:29:26.008 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed Feb 01 12:29:26 KST 2023, status=500, error=Internal Server Error, path=/rooms/2/ente (truncated)...]
+2023-02-01 12:29:26.008 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 500
+2023-02-01 12:31:29.547 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 12:31:29.548 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 12:31:29.551 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 12:31:29.551 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[RoomResp(id=212212791, title=ㅁㄴㅇㅁㄴㅇ, maxCount=8, curCount=null, isPlaying=null, mode=spy, password= (truncated)...]
+2023-02-01 12:31:29.551 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 12:31:36.864 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.web.servlet.DispatcherServlet        : POST "/rooms", parameters={}
+2023-02-01 12:31:36.865 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#create(RoomReq)
+2023-02-01 12:31:36.865 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [RoomReq(title=sdasda, maxCount=8, mode=normal, password=asdasd)]
+2023-02-01 12:31:36.869 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [*/*]
+2023-02-01 12:31:36.869 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 12:31:43.444 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 12:31:43.444 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 12:31:43.449 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 12:31:43.450 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[RoomResp(id=-1400459746, title=sdasda, maxCount=8, curCount=null, isPlaying=null, mode=normal, pass (truncated)...]
+2023-02-01 12:31:43.450 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 12:34:23.936 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 12:34:23.936 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 12:34:23.941 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 12:34:23.941 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[RoomResp(id=-1400459746, title=sdasda, maxCount=8, curCount=null, isPlaying=null, mode=normal, pass (truncated)...]
+2023-02-01 12:34:23.942 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 12:34:25.403 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 12:34:25.404 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 12:34:25.408 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 12:34:25.408 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[RoomResp(id=-1400459746, title=sdasda, maxCount=8, curCount=null, isPlaying=null, mode=normal, pass (truncated)...]
+2023-02-01 12:34:25.409 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 12:34:26.667 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 12:34:26.668 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 12:34:26.672 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 12:34:26.672 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[RoomResp(id=-1400459746, title=sdasda, maxCount=8, curCount=null, isPlaying=null, mode=normal, pass (truncated)...]
+2023-02-01 12:34:26.673 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 12:34:28.819 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 12:34:28.820 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 12:34:28.823 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 12:34:28.823 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[RoomResp(id=-1400459746, title=sdasda, maxCount=8, curCount=null, isPlaying=null, mode=normal, pass (truncated)...]
+2023-02-01 12:34:28.823 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 12:35:11.412 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 12:35:11.412 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 12:35:11.416 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 12:35:11.416 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-2] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[RoomResp(id=-1400459746, title=sdasda, maxCount=8, curCount=null, isPlaying=null, mode=normal, pass (truncated)...]
+2023-02-01 12:35:11.417 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 12:39:35.739 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.client.RestTemplate              : HTTP POST https://kauth.kakao.com/oauth/token
+2023-02-01 12:39:35.740 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2023-02-01 12:39:35.740 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.client.RestTemplate              : Writing [{grant_type=[authorization_code], code=[3wDME_mTyWEC_zYvmvBwJn9qrirrz9n1Uvy4oJGnEV5N35TOI5Tr5nxuMTz6Hr38X5e5aAorDSAAAAGGCw-QtA], redirect_uri=[http://localhost:8081/kakao], client_id=[1ff9c0d8399e2993bcc0f81a9c899269], client_secret=[x6mhYRdS6YOfSwF5E9ESS6vCrBxEotvQ]}] as "application/x-www-form-urlencoded;charset=UTF-8"
+2023-02-01 12:39:35.835 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.client.RestTemplate              : Response 200 OK
+2023-02-01 12:39:35.835 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.client.RestTemplate              : Reading to [org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse] as "application/json;charset=utf-8"
+2023-02-01 12:39:35.837 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.client.RestTemplate              : HTTP GET https://kapi.kakao.com/v2/user/me
+2023-02-01 12:39:35.837 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2023-02-01 12:39:35.964 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.client.RestTemplate              : Response 200 OK
+2023-02-01 12:39:35.965 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.client.RestTemplate              : Reading to [java.util.Map<java.lang.String, java.lang.Object>]
+2023-02-01 12:58:07.033  INFO 11320 --- [main] c.sixsense.liargame.LiargameApplication  : Starting LiargameApplication using Java 11.0.18 on DESKTOP-DOGVPUB with PID 11320 (C:\Users\SSAFY\OneDrive\바탕 화면\ssafy\1_pjt\4_pjt2\back-end\liargame\build\classes\java\main started by SSAFY in C:\Users\SSAFY\OneDrive\바탕 화면\ssafy\1_pjt\4_pjt2\back-end\liargame)
+2023-02-01 12:58:07.035  INFO 11320 --- [main] c.sixsense.liargame.LiargameApplication  : No active profile set, falling back to 1 default profile: "default"
+2023-02-01 12:58:07.880  INFO 11320 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-02-01 12:58:07.880  INFO 11320 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-02-01 12:58:07.944  INFO 11320 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data JPA - Could not safely identify store assignment for repository candidate interface com.sixsense.liargame.db.repository.RoomRepository; If you want this repository to be a JPA repository, consider annotating your entities with one of these annotations: javax.persistence.Entity, javax.persistence.MappedSuperclass (preferred), or consider extending one of the following types with your repository: org.springframework.data.jpa.repository.JpaRepository
+2023-02-01 12:58:07.978  INFO 11320 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 91 ms. Found 6 JPA repository interfaces.
+2023-02-01 12:58:07.994  INFO 11320 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-02-01 12:58:07.995  INFO 11320 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2023-02-01 12:58:08.008  INFO 11320 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data MongoDB - Could not safely identify store assignment for repository candidate interface com.sixsense.liargame.db.repository.NormalHistoryRepository; If you want this repository to be a MongoDB repository, consider annotating your entities with one of these annotations: org.springframework.data.mongodb.core.mapping.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.mongodb.repository.MongoRepository
+2023-02-01 12:58:08.009  INFO 11320 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data MongoDB - Could not safely identify store assignment for repository candidate interface com.sixsense.liargame.db.repository.NormalPlayRepository; If you want this repository to be a MongoDB repository, consider annotating your entities with one of these annotations: org.springframework.data.mongodb.core.mapping.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.mongodb.repository.MongoRepository
+2023-02-01 12:58:08.010  INFO 11320 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data MongoDB - Could not safely identify store assignment for repository candidate interface com.sixsense.liargame.db.repository.RoomRepository; If you want this repository to be a MongoDB repository, consider annotating your entities with one of these annotations: org.springframework.data.mongodb.core.mapping.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.mongodb.repository.MongoRepository
+2023-02-01 12:58:08.010  INFO 11320 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data MongoDB - Could not safely identify store assignment for repository candidate interface com.sixsense.liargame.db.repository.SpyHistoryRepository; If you want this repository to be a MongoDB repository, consider annotating your entities with one of these annotations: org.springframework.data.mongodb.core.mapping.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.mongodb.repository.MongoRepository
+2023-02-01 12:58:08.010  INFO 11320 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data MongoDB - Could not safely identify store assignment for repository candidate interface com.sixsense.liargame.db.repository.SpyPlayRepository; If you want this repository to be a MongoDB repository, consider annotating your entities with one of these annotations: org.springframework.data.mongodb.core.mapping.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.mongodb.repository.MongoRepository
+2023-02-01 12:58:08.010  INFO 11320 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data MongoDB - Could not safely identify store assignment for repository candidate interface com.sixsense.liargame.db.repository.SubjectRepository; If you want this repository to be a MongoDB repository, consider annotating your entities with one of these annotations: org.springframework.data.mongodb.core.mapping.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.mongodb.repository.MongoRepository
+2023-02-01 12:58:08.011  INFO 11320 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data MongoDB - Could not safely identify store assignment for repository candidate interface com.sixsense.liargame.db.repository.UserRepository; If you want this repository to be a MongoDB repository, consider annotating your entities with one of these annotations: org.springframework.data.mongodb.core.mapping.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.mongodb.repository.MongoRepository
+2023-02-01 12:58:08.011  INFO 11320 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 15 ms. Found 0 MongoDB repository interfaces.
+2023-02-01 12:58:08.019  INFO 11320 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-02-01 12:58:08.020  INFO 11320 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-02-01 12:58:08.037  INFO 11320 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.sixsense.liargame.db.repository.NormalHistoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-02-01 12:58:08.037  INFO 11320 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.sixsense.liargame.db.repository.NormalPlayRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-02-01 12:58:08.039  INFO 11320 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.sixsense.liargame.db.repository.SpyHistoryRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-02-01 12:58:08.039  INFO 11320 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.sixsense.liargame.db.repository.SpyPlayRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-02-01 12:58:08.039  INFO 11320 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.sixsense.liargame.db.repository.SubjectRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-02-01 12:58:08.039  INFO 11320 --- [main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.sixsense.liargame.db.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-02-01 12:58:08.050  INFO 11320 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 25 ms. Found 1 Redis repository interfaces.
+2023-02-01 12:58:08.473  INFO 11320 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2023-02-01 12:58:08.480  INFO 11320 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-02-01 12:58:08.480  INFO 11320 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.70]
+2023-02-01 12:58:08.582  INFO 11320 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2023-02-01 12:58:08.582  INFO 11320 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1517 ms
+2023-02-01 12:58:08.624 DEBUG 11320 --- [main] o.springframework.web.filter.CorsFilter  : Filter 'corsFilter' configured for use
+2023-02-01 12:58:08.721  INFO 11320 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-02-01 12:58:08.757  INFO 11320 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.14.Final
+2023-02-01 12:58:08.864  INFO 11320 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-02-01 12:58:08.937  INFO 11320 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-02-01 12:58:09.100  INFO 11320 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-02-01 12:58:09.116  INFO 11320 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-02-01 12:58:09.715  INFO 11320 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-02-01 12:58:09.723  INFO 11320 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-02-01 12:58:10.461  WARN 11320 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-02-01 12:58:10.502 DEBUG 11320 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : 22 mappings in 'requestMappingHandlerMapping'
+2023-02-01 12:58:10.629  INFO 11320 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@68bef3df, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@6aeb769d, org.springframework.security.web.context.SecurityContextPersistenceFilter@3f213e97, org.springframework.security.web.header.HeaderWriterFilter@157ff8f8, org.springframework.web.filter.CorsFilter@54247647, org.springframework.security.web.authentication.logout.LogoutFilter@47184859, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@5379488c, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@744c16fb, com.sixsense.liargame.security.auth.JwtExceptionFilter@51f412e6, com.sixsense.liargame.security.auth.JwtAuthenticationFilter@7234db3, com.sixsense.liargame.security.auth.JwtLoginFilter@189c6683, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@74f54f8e, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@2972b493, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@7d3b4646, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@175c4ae5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@58e0f079, org.springframework.security.web.session.SessionManagementFilter@67263db7, org.springframework.security.web.access.ExceptionTranslationFilter@1a345c6c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6d0fe80c]
+2023-02-01 12:58:10.736 DEBUG 11320 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2023-02-01 12:58:10.758 DEBUG 11320 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/] in 'viewControllerHandlerMapping'
+2023-02-01 12:58:10.763 DEBUG 11320 --- [main] o.s.w.s.c.annotation.WebMvcConfigurer    : Default resource handling disabled
+2023-02-01 12:58:10.766 DEBUG 11320 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/swagger-ui/**] in 'resourceHandlerMapping'
+2023-02-01 12:58:10.770 DEBUG 11320 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 0 @ExceptionHandler, 1 ResponseBodyAdvice
+2023-02-01 12:58:10.876  INFO 11320 --- [main] org.mongodb.driver.client                : MongoClient with metadata {"driver": {"name": "mongo-java-driver|sync|spring-boot", "version": "4.6.1"}, "os": {"type": "Windows", "name": "Windows 10", "architecture": "amd64", "version": "10.0"}, "platform": "Java/Eclipse Adoptium/11.0.18+10"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=MongoCredential{mechanism=null, userName='', source='admin', password=<hidden>, mechanismProperties=<hidden>}, streamFactoryFactory=null, commandListeners=[], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.Jep395RecordCodecProvider@738da6f2]}, clusterSettings={hosts=[localhost:27017], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='30000 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, sendBufferSize=0}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, sendBufferSize=0}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=false, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=JAVA_LEGACY, serverApi=null, autoEncryptionSettings=null, contextProvider=null}
+2023-02-01 12:58:10.887  INFO 11320 --- [cluster-ClusterId{value='63d9e3521f6af8598eb75d11', description='null'}-localhost:27017] org.mongodb.driver.cluster               : Exception in monitor thread while connecting to server localhost:27017
+
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:70) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:180) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.lookupServerDescription(DefaultServerMonitor.java:193) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitorRunnable.run(DefaultServerMonitor.java:157) ~[mongodb-driver-core-4.6.1.jar:na]
+	at java.base/java.lang.Thread.run(Thread.java:829) ~[na:na]
+Caused by: java.net.ConnectException: Connection refused: connect
+	at java.base/java.net.PlainSocketImpl.waitForConnect(Native Method) ~[na:na]
+	at java.base/java.net.PlainSocketImpl.socketConnect(PlainSocketImpl.java:107) ~[na:na]
+	at java.base/java.net.AbstractPlainSocketImpl.doConnect(AbstractPlainSocketImpl.java:412) ~[na:na]
+	at java.base/java.net.AbstractPlainSocketImpl.connectToAddress(AbstractPlainSocketImpl.java:255) ~[na:na]
+	at java.base/java.net.AbstractPlainSocketImpl.connect(AbstractPlainSocketImpl.java:237) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:392) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:609) ~[na:na]
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:107) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:79) ~[mongodb-driver-core-4.6.1.jar:na]
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:65) ~[mongodb-driver-core-4.6.1.jar:na]
+	... 4 common frames omitted
+
+2023-02-01 12:58:11.042  WARN 11320 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+2023-02-01 12:58:11.277  INFO 11320 --- [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-02-01 12:58:11.277  INFO 11320 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-02-01 12:58:11.286  INFO 11320 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2023-02-01 12:58:11.287  INFO 11320 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2023-02-01 12:58:11.297  INFO 11320 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-02-01 12:58:11.314 ERROR 11320 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2023-02-01 13:29:28.153 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.client.RestTemplate              : HTTP POST https://www.googleapis.com/oauth2/v4/token
+2023-02-01 13:29:28.154 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2023-02-01 13:29:28.154 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.client.RestTemplate              : Writing [{grant_type=[authorization_code], code=[4/0AWtgzh4xkuL9-CEn5A1z4eCHPNRrFVeJo8S_NjX5IYiAlu1QWr5JUdTxmR2zXnyhebHQtQ], redirect_uri=[http://127.0.0.1:5500/public/index.html]}] as "application/x-www-form-urlencoded;charset=UTF-8"
+2023-02-01 13:29:28.449 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.client.RestTemplate              : Response 401 UNAUTHORIZED
+2023-02-01 13:29:28.467 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for POST "/error?state=google&code=4/0AWtgzh4xkuL9-CEn5A1z4eCHPNRrFVeJo8S_NjX5IYiAlu1QWr5JUdTxmR2zXnyhebHQtQ", parameters={masked}
+2023-02-01 13:29:28.467 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2023-02-01 13:29:28.468 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 13:29:28.468 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed Feb 01 13:29:28 KST 2023, status=401, error=Unauthorized, path=/auth/login/google}]
+2023-02-01 13:29:28.469 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 401
+2023-02-01 13:30:25.525 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.client.RestTemplate              : HTTP POST https://www.googleapis.com/oauth2/v4/token
+2023-02-01 13:30:25.526 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2023-02-01 13:30:25.526 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.client.RestTemplate              : Writing [{grant_type=[authorization_code], code=[4/0AWtgzh5ahze0--1I2i5qZnh99Lw4FCsINOUV9McH0LfayAc2yP1WPwIJwuXAZzOZViYi6A], redirect_uri=[http://127.0.0.1:5500/public/index.html]}] as "application/x-www-form-urlencoded;charset=UTF-8"
+2023-02-01 13:30:25.790 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.client.RestTemplate              : Response 401 UNAUTHORIZED
+2023-02-01 13:30:25.792 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for POST "/error?state=google&code=4/0AWtgzh5ahze0--1I2i5qZnh99Lw4FCsINOUV9McH0LfayAc2yP1WPwIJwuXAZzOZViYi6A", parameters={masked}
+2023-02-01 13:30:25.792 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2023-02-01 13:30:25.793 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 13:30:25.793 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed Feb 01 13:30:25 KST 2023, status=401, error=Unauthorized, path=/auth/login/google}]
+2023-02-01 13:30:25.794 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 401
+2023-02-01 13:31:47.427 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.client.RestTemplate              : HTTP POST https://www.googleapis.com/oauth2/v4/token
+2023-02-01 13:31:47.427 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2023-02-01 13:31:47.427 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.client.RestTemplate              : Writing [{grant_type=[authorization_code], code=[4/0AWtgzh5ahze0--1I2i5qZnh99Lw4FCsINOUV9McH0LfayAc2yP1WPwIJwuXAZzOZViYi6A], redirect_uri=[http://127.0.0.1:5500/public/index.html]}] as "application/x-www-form-urlencoded;charset=UTF-8"
+2023-02-01 13:31:47.667 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.client.RestTemplate              : Response 400 BAD_REQUEST
+2023-02-01 13:31:47.671 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for POST "/error?state=google&code=4/0AWtgzh5ahze0--1I2i5qZnh99Lw4FCsINOUV9McH0LfayAc2yP1WPwIJwuXAZzOZViYi6A", parameters={masked}
+2023-02-01 13:31:47.671 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2023-02-01 13:31:47.673 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 13:31:47.673 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed Feb 01 13:31:47 KST 2023, status=401, error=Unauthorized, path=/auth/login/google}]
+2023-02-01 13:31:47.674 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 401
+2023-02-01 13:35:24.066 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.client.RestTemplate              : HTTP POST https://www.googleapis.com/oauth2/v4/token
+2023-02-01 13:35:24.067 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2023-02-01 13:35:24.067 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.client.RestTemplate              : Writing [{grant_type=[authorization_code], code=[4/0AWtgzh5ahze0--1I2i5qZnh99Lw4FCsINOUV9McH0LfayAc2yP1WPwIJwuXAZzOZViYi6A], redirect_uri=[http://127.0.0.1:5500/public/index.html]}] as "application/x-www-form-urlencoded;charset=UTF-8"
+2023-02-01 13:35:24.356 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.client.RestTemplate              : Response 400 BAD_REQUEST
+2023-02-01 13:35:24.358 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for POST "/error?state=google&code=4/0AWtgzh5ahze0--1I2i5qZnh99Lw4FCsINOUV9McH0LfayAc2yP1WPwIJwuXAZzOZViYi6A", parameters={masked}
+2023-02-01 13:35:24.359 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2023-02-01 13:35:24.360 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 13:35:24.360 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed Feb 01 13:35:24 KST 2023, status=401, error=Unauthorized, path=/auth/login/google}]
+2023-02-01 13:35:24.360 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 401
+2023-02-01 13:35:54.728 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 13:35:54.729 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 13:35:54.733 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 13:35:54.734 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[RoomResp(id=-1400459746, title=sdasda, maxCount=8, curCount=null, isPlaying=null, mode=normal, pass (truncated)...]
+2023-02-01 13:35:54.737 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 13:38:33.210 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] o.s.web.servlet.DispatcherServlet        : POST "/rooms", parameters={}
+2023-02-01 13:38:33.211 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#create(RoomReq)
+2023-02-01 13:38:33.212 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [RoomReq(title=asdasd, maxCount=8, mode=spy, password=)]
+2023-02-01 13:38:33.216 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [*/*]
+2023-02-01 13:38:33.216 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 13:38:51.492 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 13:38:51.492 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 13:38:51.496 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 13:38:51.496 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[RoomResp(id=-1400459746, title=sdasda, maxCount=8, curCount=null, isPlaying=null, mode=normal, pass (truncated)...]
+2023-02-01 13:38:51.497 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 13:40:15.343 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-6] o.s.web.client.RestTemplate              : HTTP POST https://www.googleapis.com/oauth2/v4/token
+2023-02-01 13:40:15.343 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-6] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2023-02-01 13:40:15.343 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-6] o.s.web.client.RestTemplate              : Writing [{grant_type=[authorization_code], code=[4/0AWtgzh4K2kbRkNthtNQyxYkAJ6FlmjZO_gtYt2dtPret9FUqfY4-AdzhxWkT70wJrjMJ5w], redirect_uri=[http://127.0.0.1:5500/public/index.html]}] as "application/x-www-form-urlencoded;charset=UTF-8"
+2023-02-01 13:40:15.638 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-6] o.s.web.client.RestTemplate              : Response 401 UNAUTHORIZED
+2023-02-01 13:40:15.640 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-6] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for POST "/error?state=google&code=4/0AWtgzh4K2kbRkNthtNQyxYkAJ6FlmjZO_gtYt2dtPret9FUqfY4-AdzhxWkT70wJrjMJ5w", parameters={masked}
+2023-02-01 13:40:15.641 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2023-02-01 13:40:15.641 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 13:40:15.641 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed Feb 01 13:40:15 KST 2023, status=401, error=Unauthorized, path=/auth/login/google}]
+2023-02-01 13:40:15.642 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 401
+2023-02-01 13:42:12.600 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.client.RestTemplate              : HTTP POST https://www.googleapis.com/oauth2/v4/token
+2023-02-01 13:42:12.601 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2023-02-01 13:42:12.601 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.client.RestTemplate              : Writing [{grant_type=[authorization_code], code=[4/0AWtgzh4K2kbRkNthtNQyxYkAJ6FlmjZO_gtYt2dtPret9FUqfY4-AdzhxWkT70wJrjMJ5w], redirect_uri=[http://127.0.0.1:5500/public/index.html]}] as "application/x-www-form-urlencoded;charset=UTF-8"
+2023-02-01 13:42:12.897 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.client.RestTemplate              : Response 400 BAD_REQUEST
+2023-02-01 13:42:12.900 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for POST "/error?state=google&code=4/0AWtgzh4K2kbRkNthtNQyxYkAJ6FlmjZO_gtYt2dtPret9FUqfY4-AdzhxWkT70wJrjMJ5w", parameters={masked}
+2023-02-01 13:42:12.901 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2023-02-01 13:42:12.901 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 13:42:12.901 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed Feb 01 13:42:12 KST 2023, status=401, error=Unauthorized, path=/auth/login/google}]
+2023-02-01 13:42:12.902 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 401
+2023-02-01 13:42:23.690 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-5] o.s.web.client.RestTemplate              : HTTP POST https://www.googleapis.com/oauth2/v4/token
+2023-02-01 13:42:23.691 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-5] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2023-02-01 13:42:23.691 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-5] o.s.web.client.RestTemplate              : Writing [{grant_type=[authorization_code], code=[4/0AWtgzh4K2kbRkNthtNQyxYkAJ6FlmjZO_gtYt2dtPret9FUqfY4-AdzhxWkT70wJrjMJ5w], redirect_uri=[http://127.0.0.1:5500/public/index.html]}] as "application/x-www-form-urlencoded;charset=UTF-8"
+2023-02-01 13:42:23.921 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-5] o.s.web.client.RestTemplate              : Response 400 BAD_REQUEST
+2023-02-01 13:42:23.923 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-5] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for POST "/error?state=google&code=4/0AWtgzh4K2kbRkNthtNQyxYkAJ6FlmjZO_gtYt2dtPret9FUqfY4-AdzhxWkT70wJrjMJ5w", parameters={masked}
+2023-02-01 13:42:23.924 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2023-02-01 13:42:23.924 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 13:42:23.925 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed Feb 01 13:42:23 KST 2023, status=401, error=Unauthorized, path=/auth/login/google}]
+2023-02-01 13:42:23.925 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 401
+2023-02-01 13:42:38.219 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.client.RestTemplate              : HTTP POST https://www.googleapis.com/oauth2/v4/token
+2023-02-01 13:42:38.219 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2023-02-01 13:42:38.220 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.client.RestTemplate              : Writing [{grant_type=[authorization_code], code=[4/0AWtgzh4g1rbgGcHly60X-__M6RlIcJxG4k4dFVl5rrQOZe9mnPtHPRE2JplAaAcVCokQXQ], redirect_uri=[http://127.0.0.1:5500/public/index.html]}] as "application/x-www-form-urlencoded;charset=UTF-8"
+2023-02-01 13:42:38.468 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.client.RestTemplate              : Response 401 UNAUTHORIZED
+2023-02-01 13:42:38.470 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for POST "/error?state=google&code=4/0AWtgzh4g1rbgGcHly60X-__M6RlIcJxG4k4dFVl5rrQOZe9mnPtHPRE2JplAaAcVCokQXQ", parameters={masked}
+2023-02-01 13:42:38.470 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2023-02-01 13:42:38.471 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 13:42:38.471 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed Feb 01 13:42:38 KST 2023, status=401, error=Unauthorized, path=/auth/login/google}]
+2023-02-01 13:42:38.471 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 401
+2023-02-01 13:43:08.591 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.web.client.RestTemplate              : HTTP POST https://www.googleapis.com/oauth2/v4/token
+2023-02-01 13:43:08.591 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2023-02-01 13:43:08.591 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.web.client.RestTemplate              : Writing [{grant_type=[authorization_code], code=[4/0AWtgzh4g1rbgGcHly60X-__M6RlIcJxG4k4dFVl5rrQOZe9mnPtHPRE2JplAaAcVCokQXQ], redirect_uri=[http://127.0.0.1:5500/public/index.html]}] as "application/x-www-form-urlencoded;charset=UTF-8"
+2023-02-01 13:43:08.822 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.web.client.RestTemplate              : Response 400 BAD_REQUEST
+2023-02-01 13:43:08.823 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.web.servlet.DispatcherServlet        : "ERROR" dispatch for POST "/error?state=google&code=4/0AWtgzh4g1rbgGcHly60X-__M6RlIcJxG4k4dFVl5rrQOZe9mnPtHPRE2JplAaAcVCokQXQ", parameters={masked}
+2023-02-01 13:43:08.824 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController#error(HttpServletRequest)
+2023-02-01 13:43:08.824 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 13:43:08.824 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [{timestamp=Wed Feb 01 13:43:08 KST 2023, status=401, error=Unauthorized, path=/auth/login/google}]
+2023-02-01 13:43:08.825 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Exiting from "ERROR" dispatch, status 401
+2023-02-01 13:43:26.920 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 13:43:26.920 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 13:43:26.926 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 13:43:26.926 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[RoomResp(id=-1400459746, title=sdasda, maxCount=8, curCount=null, isPlaying=null, mode=normal, pass (truncated)...]
+2023-02-01 13:43:26.927 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 13:44:53.460 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/rooms?pageNumber=1", parameters={masked}
+2023-02-01 13:44:53.461 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#getAll(Pageable)
+2023-02-01 13:44:53.466 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json, application/json, application/*+json]
+2023-02-01 13:44:53.467 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [[RoomResp(id=-1400459746, title=sdasda, maxCount=8, curCount=null, isPlaying=null, mode=normal, pass (truncated)...]
+2023-02-01 13:44:53.468 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2023-02-01 13:45:00.736 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.servlet.DispatcherServlet        : POST "/rooms", parameters={}
+2023-02-01 13:45:00.737 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.sixsense.liargame.api.controller.RoomController#create(RoomReq)
+2023-02-01 13:45:00.738 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Read "application/json;charset=UTF-8" to [RoomReq(title=asdasdad, maxCount=9, mode=spy, password=null)]
+2023-02-01 13:45:00.742 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [*/*]
+2023-02-01 13:45:00.742 DEBUG 14060 --- [http-nio-127.0.0.1-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
