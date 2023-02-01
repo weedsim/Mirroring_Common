@@ -1,5 +1,6 @@
 package com.sixsense.liargame.security.oauth2;
 
+import com.sixsense.liargame.api.enums.Authority;
 import com.sixsense.liargame.db.entity.User;
 import com.sixsense.liargame.db.repository.UserRepository;
 import com.sixsense.liargame.security.auth.UserDetailsCustom;
@@ -13,6 +14,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
@@ -71,7 +73,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             user = User.builder()
                     .email(email)
                     .password(bCryptPasswordEncoder.encode("식스센스"))
-                    .role("USER")
+                    .role(Collections.singletonList(Authority.ROLE_USER.name()))
                     .name(email)
                     .build();
             user = userRepository.save(user);

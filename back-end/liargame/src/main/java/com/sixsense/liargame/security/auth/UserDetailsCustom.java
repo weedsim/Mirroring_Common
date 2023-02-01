@@ -3,6 +3,7 @@ package com.sixsense.liargame.security.auth;
 import com.sixsense.liargame.db.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
@@ -10,9 +11,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Data
-public class UserDetailsCustom implements UserDetails, OAuth2User {
+public class UserDetailsCustom implements OAuth2User, UserDetails {
     private final User user;
     private Map<String, Object> attributes;
 
@@ -30,6 +32,13 @@ public class UserDetailsCustom implements UserDetails, OAuth2User {
     @Override
     public Map<String, Object> getAttributes() {
         return attributes;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return user.getRole().stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -62,13 +71,6 @@ public class UserDetailsCustom implements UserDetails, OAuth2User {
         return true;
     }
 
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(user::getRole);
-        return authorities;
-    }
 
     @Override
     public String getName() {
