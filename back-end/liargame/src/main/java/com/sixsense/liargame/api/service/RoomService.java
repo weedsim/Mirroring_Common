@@ -10,13 +10,11 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 public interface RoomService {
-    Integer insert(RoomReq roomReq);
+    Long insert(RoomReq roomReq);
 
-    Integer enter(String email, Integer id);
+    void enter(Long userId, Long roomId);
 
-    void exit(String email, Integer id);
-
-    void normalStart(String email, Integer id);
+    void exit(String email, Long roomId);
 
     void changeSetting(String email, SettingDto settingDto);
 

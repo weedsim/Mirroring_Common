@@ -1,6 +1,5 @@
 package com.sixsense.liargame.api.service.impl;
 
-import com.sixsense.liargame.api.request.NormalGameHistoryReq;
 import com.sixsense.liargame.api.request.SpyGameHistoryReq;
 import com.sixsense.liargame.api.response.HistoryResp;
 import com.sixsense.liargame.api.service.HistoryService;
@@ -26,23 +25,6 @@ public class HistoryServiceImpl implements HistoryService {
         this.spyPlayRepository = spyPlayRepository;
         this.spyHistoryRepository = spyHistoryRepository;
         this.userRepository = userRepository;
-    }
-
-    @Override
-    public void insertNormalPlay(NormalGameHistoryReq history) {
-        NormalHistory normalHistory = NormalHistory.builder()
-                .liar(history.getLiar())
-                .winner(history.getWinner())
-                .build();
-        Long historyId = normalHistoryRepository.save(normalHistory).getId();
-        List<NormalPlay> list = history.getUsers().stream().map(user ->
-                        NormalPlay.builder()
-                                .historyId(historyId)
-                                .userId(user.getUserId())
-                                .role(user.getRole())
-                                .build())
-                .collect(Collectors.toList());
-        normalPlayRepository.saveAll(list);
     }
 
     @Override
