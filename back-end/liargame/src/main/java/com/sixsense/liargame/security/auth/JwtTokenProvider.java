@@ -14,9 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -44,14 +42,17 @@ public class JwtTokenProvider {
                 .collect(Collectors.joining(","));
 
         User user = userRepository.findByEmail(authentication.getName()).orElseThrow();
+        Map<String, Object> userInfo = new HashMap<>();
+        userInfo.put("id", user.getId());
+        userInfo.put("name", user.getName());
+        userInfo.put(JwtProperties.AUTHORITIES_KEY, authorities);
         long now = (new Date()).getTime();
 
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + JwtProperties.ACCESS_TOKEN_TIME);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim("id", user.getId())
-                .claim(JwtProperties.AUTHORITIES_KEY, authorities)
+                .claim("userinfo", userInfo)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
