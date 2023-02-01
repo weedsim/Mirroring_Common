@@ -4,7 +4,6 @@ import com.sixsense.liargame.common.model.Vote;
 import com.sixsense.liargame.db.entity.Room;
 import com.sixsense.liargame.db.repository.NormalGameRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +21,8 @@ public class GameManager {
 
     public NormalGame start(Room room) {
         NormalGame normalGame = new NormalGame((room.getParticipants().size()));
-        normalGameRepository.save(normalGame);
+        Long gameId = normalGameRepository.save(normalGame).getId();
+        room.setGameId(gameId);
         Emitters emitters = room.getEmitters();
         int timeout = room.getTimeout();
 
@@ -90,7 +90,6 @@ public class GameManager {
         }
     }
 
-    @Transactional
     public void vote(Integer voter, Integer target, List<Vote> votes) {
         boolean voted = false;
         for (Vote vote : votes) {
