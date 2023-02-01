@@ -4,7 +4,7 @@
   <div class="m-0 p-0 col-6 roomwrapper">
     <!-- 일반방일때 -->
     <div
-      v-if="isPrivate !== false"
+      v-if="isPrivate === false"
       class="card m-0 p-0"
       style="width: 95%; height: 95%"
       v-on:click="joinRoom(id)"
@@ -26,24 +26,23 @@
         </div>
         <div class="col-md-10">
           <div class="card-body m-0 px-2">
-            <!-- <h5 class="card-title">No.12345 &nbsp;&nbsp;&nbsp; 즐겜해요~</h5> -->
-            <!-- <p class="card-title">No.12345 즐겜해요~</p> -->
             <ul class="card-title m-0 p-0">
               <li>No.{{ id }}</li>
-              <li class="ellipsis">{{ title }} {{ roomIdx }} {{ this.id }}</li>
+              <li class="ellipsis">{{ title }}</li>
             </ul>
             <p class="card-text">{{ curCount }}/{{ maxCount }}</p>
           </div>
         </div>
       </div>
     </div>
+
     <!-- 비밀방일때 -->
-    <!-- <div
-      v-if="isPrivate !== true"
-      class="card m-0 p-0 nav-link"
+    <div
+      v-if="isPrivate === true"
+      class="card m-0 p-0"
       style="width: 95%; height: 95%"
       data-bs-toggle="modal"
-      data-bs-target="#roomPwdModal"
+      data-bs-target="#secretRoomModal"
     >
       <div class="row g-0">
         <div class="col-md-2 imgwrapper">
@@ -64,52 +63,62 @@
           <div class="card-body m-0 px-2">
             <ul class="card-title m-0 p-0">
               <li>No.{{ id }}</li>
-              <li class="ellipsis">{{ title }} {{ roomIdx }} {{ this.id }}</li>
+              <li class="ellipsis">{{ title }}</li>
             </ul>
             <p class="card-text">{{ curCount }}/{{ maxCount }}</p>
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
   </div>
 
-  <!-- <div
+  <!-- 비밀방 들어가는 모달 -->
+  <div
     class="modal fade"
-    id="roomPwdModal"
+    id="secretRoomModal"
     tabindex="-1"
-    aria-labelledby="roomPwdModalLabel"
+    aria-labelledby="secretRoomModalLabel"
     aria-hidden="true"
+    data-bs-backdrop="static"
   >
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="roomPwdModalLabel">
-            게임방 비밀번호
+          <h1 class="modal-title fs-5" id="secretRoomModalLabel">
+            비밀번호 입력
           </h1>
           <button
             type="button"
             class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
+            v-on:click="resetRoomData"
           ></button>
         </div>
         <div class="modal-body" style="text-align: left">
           <ul style="list-style: none">
-            <li>비밀번호</li>
             <li style="display: flex; justify-content: space-between">
               <input
                 type="text"
-                placeholder="비밀번호 입력"
+                placeholder="비밀번호를 입력해주세요"
                 class="form-control"
                 style="width: 70%"
+                v-model="rommPwd"
               />
-              <button type="button" class="btn btn-primary btn-sm">입력</button>
+              <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                v-on:click="joinRoom(id)"
+                data-bs-dismiss="modal"
+              >
+                입력
+              </button>
             </li>
           </ul>
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 </template>
 
 <script>
@@ -131,13 +140,12 @@ export default {
       isPlaying: null,
       mode: null,
       isPrivate: null,
-      pwd: null,
+      rommPwd: null,
     };
   },
   setup() {},
   created() {},
   mounted() {
-    console.log(this.roomIdx);
     if (this.roomIdx < this.$store.state.rooms.length) {
       this.id = this.$store.state.rooms[this.roomIdx].id;
       this.title = this.$store.state.rooms[this.roomIdx].title;
@@ -150,6 +158,9 @@ export default {
   },
   computed: {},
   methods: {
+    resetRoomData() {
+      this.rommPwd = null;
+    },
     // 게임방 진입 메서드
     // 1. patch로 방진입을 '시도'한다.
     // 2. 응답결과가 성공일 경우에는 해당 게임방 room/{roomId}로 보내준다.
@@ -159,20 +170,23 @@ export default {
         method: "patch",
         url: `${API_URL}/rooms/${roomId}/enter`,
         data: {
-          password: this.pwd,
+          password: this.rommPwd,
         },
       })
         .then((res) => {
           console.log(res.data);
           // 만약 성공을했다면... room/${roomId}로 인게임.vue로 보낸다.
           // 1. state 방진입 isEnter -> true 단, 방진입직후에는 isEnter를 false로 바꿔줘야된다.
-
+          (this.tmpid = null), (this.roomPwd = null);
+          this.$store.dispatch("setIsEnter");
           router.push({ name: "room", params: { id: this.id } });
         })
         .catch((err) => {
           console.log("실패");
           console.log(err);
-          router.push({ name: "room", params: { id: this.id } });
+          // 테스트용
+          this.$store.dispatch("setIsEnter");
+          router.push({ name: "room", params: { roomId: this.id } });
         });
     },
   },

@@ -19,7 +19,7 @@ export default createStore({
         curCount: 3,
         isPlaying: false,
         mode: "spy",
-        isPriavte: true,
+        isPrivate: true,
       },
       {
         id: 2,
@@ -28,7 +28,7 @@ export default createStore({
         curCount: 4,
         isPlaying: true,
         mode: "normal",
-        isPriavte: false,
+        isPrivate: false,
       },
     ],
   },
@@ -59,7 +59,7 @@ export default createStore({
     SET_ISENTER(state) {
       state.isEnter = true;
     },
-    // 라우터가드를 위한 isEnter 값 초기화
+    // 라우터가드를 위한 isEnter 값 초기화 - 인게임에 들어가면 실행시킬것.
     RESET_ISENTER(state) {
       state.isEnter = false;
     },

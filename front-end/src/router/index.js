@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-
+import store from "../store/index.js";
 const routes = [
   {
     path: "/",
@@ -48,6 +48,17 @@ const routes = [
     name: "room",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/room/Room.vue"),
+    beforeEnter(to, from, next) {
+      try {
+        if (store.state.isEnter) {
+          next();
+        } else {
+          next("/lobby");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 ];
 
