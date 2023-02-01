@@ -1,5 +1,6 @@
 package com.sixsense.liargame.api.controller;
 
+import com.sixsense.liargame.api.response.RoomIdResp;
 import com.sixsense.liargame.api.service.RoomService;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
