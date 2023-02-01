@@ -39,8 +39,7 @@ public class SubjectServiceImpl implements SubjectService {
         int size = subject.getWords().size();
         int idx = (int) (Math.random() * size);
         WordResp wordResp = toWordDto(subject.getWords().get(idx));
-        Long gameId = roomRepository.findById(roomId).orElseThrow().getGameId();
-        NormalGame normalGame = normalGameRepository.findById(gameId).orElseThrow();
+        NormalGame normalGame = normalGameRepository.findById(roomId).orElseThrow();
         normalGame.setWord(wordResp.getName());
     }
 }
