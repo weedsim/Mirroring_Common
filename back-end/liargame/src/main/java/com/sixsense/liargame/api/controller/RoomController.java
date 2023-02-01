@@ -1,5 +1,6 @@
 package com.sixsense.liargame.api.controller;
 
+import com.sixsense.liargame.api.response.RoomIdResp;
 import com.sixsense.liargame.api.service.RoomService;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
@@ -44,7 +45,7 @@ public class RoomController {
     }
 
     @PatchMapping("/{roomId}/start")
-    public ResponseEntity<?> start(HttpServletRequest request, @PathVariable Integer roomId) {
+    public ResponseEntity<?> start(HttpServletRequest request, @PathVariable Long roomId) {
         String accessToken = request.getHeader("access-token");
         String email = jwtTokenProvider.getEmail(accessToken);
         roomService.normalStart(email, roomId);
@@ -52,17 +53,17 @@ public class RoomController {
     }
 
     @PatchMapping("/{roomId}")
-    public ResponseEntity<?> changeSetting(HttpServletRequest request, @PathVariable Integer roomId, @RequestBody SettingDto settingDto) {
+    public ResponseEntity<?> changeSetting(HttpServletRequest request, @PathVariable Long roomId, @RequestBody SettingDto settingDto) {
         String accessToken = request.getHeader("access-token");
-        String email = jwtTokenProvider.getEmail(accessToken);
+        Long userId = jwtTokenProvider.getUserId(accessToken);
         settingDto.setId(roomId);
         roomService.changeSetting(email, settingDto);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody RoomReq roomReq) {
-        Integer roomId = roomService.insert(roomReq);
-        return ResponseEntity.ok(roomId);
+    public ResponseEntity<RoomIdResp> create(@RequestBody RoomReq roomReq) {
+        Long roomId = roomService.insert(roomReq);
+        return ResponseEntity.ok(new RoomIdResp(roomId));
     }
 }
