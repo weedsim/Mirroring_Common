@@ -20,9 +20,8 @@ public class GameManager {
     }
 
     public NormalGame start(Room room) {
-        NormalGame normalGame = new NormalGame((room.getParticipants().size()));
+        NormalGame normalGame = new NormalGame(room.getId(), room.getParticipants().size());
         Long gameId = normalGameRepository.save(normalGame).getId();
-        room.setGameId(gameId);
         Emitters emitters = room.getEmitters();
         int timeout = room.getTimeout();
 
