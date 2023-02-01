@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 
 const session = {
+  myIdx: -1,
   isJoin: false,
   isReady: false,
   ovSession: {
@@ -37,7 +38,7 @@ export default createStore({
     sessions: sessions,
     // Object.assign(dest, this.state.session)
 
-    myIdx: -1,
+    // myIdx: -1,
   },
   getters: {},
   mutations: {},

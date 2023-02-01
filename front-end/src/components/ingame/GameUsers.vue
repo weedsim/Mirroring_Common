@@ -59,6 +59,8 @@ export default {
             mainStreamManager: undefined,
             publisher: undefined,
 
+
+            myIdx : -1,
             // Join form
             mySessionId: "SessionA",
             myUserName: "Participant" + Math.floor(Math.random() * 100),
@@ -69,10 +71,7 @@ export default {
         // console.log(this.$store.state.sessions[i].ovSession)
         // this.mySession = Object.assign({}, this.$store.modules.session),
         this.initFrontSession()
-        // 1초마다 통신하여 세션 싱크
-        // setInterval(()=>{
-            // this.syncFrontSession()
-        // }, 1000)
+        
     },
     methods:{
         joinSession(myIdx) {
@@ -83,16 +82,16 @@ export default {
             this.$store.state.sessions[myIdx].ovSession.session = 
             this.$store.state.sessions[myIdx].ovSession.OV.initSession();
 
-            console.log(222, this.$store.state.sessions[myIdx].ovSession.session)
+            // console.log(222, this.$store.state.sessions[myIdx].ovSession.session)
             // console.log(this.session)
         //     // --- 3) Specify the actions when events take place in the session ---
 
         //     // On every new Stream received...
             
             this.$store.state.sessions[myIdx].ovSession.session.on("streamCreated", ({ stream }) => {
-                console.log(555, this.$store.state.sessions[myIdx].ovSession.session)
+                // console.log(555, this.$store.state.sessions[myIdx].ovSession.session)
                 const subscriber = this.$store.state.sessions[myIdx].ovSession.session.subscribe(stream);
-                for(let i=myIdx+1;i < 10;i++){
+                for(let i=0;i < 10;i++){
                     if(!this.$store.state.sessions[i].isJoin){
                         this.$store.state.sessions[i].ovSession.publisher = subscriber
                         // this.subscribers.push(subscriber);
@@ -106,8 +105,14 @@ export default {
 
             this.$store.state.sessions[myIdx].ovSession.session.on("streamDestroyed", ({ stream }) => {
                 // const index = this.subscribers.indexOf(stream.streamManager, 0);
+                for(let i=0;i<10;i++){
+                    console.log(
+                        // this.$store.state.sessions[i].ovSession.publisher == stream.streamManager
+                        this.$store.state.sessions[i].ovSession.publisher
+                    )
+                }
                 // if (index >= 0) {
-                // this.subscribers.splice(index, 1);
+                //     this.subscribers.splice(index, 1);
                 // }
             });
 
@@ -131,7 +136,7 @@ export default {
 
                     // this.mainStreamManager = publisher;
                     this.$store.state.sessions[myIdx].ovSession.publisher = publisher
-
+                    
                     this.$store.state.sessions[myIdx].ovSession.session.publish(publisher);
                 })
                 .catch((error) => {
@@ -139,22 +144,27 @@ export default {
                 });
             });
 
-        //     window.addEventListener("beforeunload", this.leaveSession);
+            window.addEventListener("beforeunload", this.leaveSession);
         },
 
-        // leaveSession() {
-        //     if (this.session) this.session.disconnect();
+        leaveSession() {
+            // console.log(this.myIdx)
+            if (this.$store.state.sessions[this.myIdx].ovSession.session) this.$store.state.sessions[this.myIdx].ovSession.session.disconnect();
 
-        //     // Empty all properties...
-        //     this.session = undefined;
-        //     this.mainStreamManager = undefined;
-        //     this.publisher = undefined;
-        //     this.subscribers = [];
-        //     this.OV = undefined;
+            // Empty all properties...
+            
+            this.$store.state.sessions[this.myIdx].isJoin= false
+            this.$store.state.sessions[this.myIdx].isReady= false
+            this.$store.state.sessions[this.myIdx].ovSession = {
+                OV: undefined,
+                session: undefined,
+                publisher: undefined,
+            }
+            this.$store.state.sessions[this.myIdx].myIdx= -1
 
-        //     // Remove beforeunload listener
-        //     window.removeEventListener("beforeunload", this.leaveSession);
-        // },
+            // Remove beforeunload listener
+            window.removeEventListener("beforeunload", this.leaveSession);
+        },
 
         // updateMainVideoStreamManager(stream) {
         //     if (this.mainStreamManager === stream) return;
@@ -165,13 +175,17 @@ export default {
             for(let i = 0; i < 10; i++) {
                 if(!this.$store.state.sessions[i].isJoin){
                     this.$store.state.sessions[i].isJoin = true;
-                    this.$store.state.myIdx = i;
+                    this.$store.state.sessions[i].myIdx = i;
+                    this.myIdx = i
+                    console.log(this.myIdx)
                     this.joinSession(i)
                     // myIdx에 유저 접속했다고 백에 알리기(x)
                     break;
                 }
             }
-            console.log(this.$store.state.myIdx)
+            for(let i = 0; i < 10; i++) {
+                console.log("myidx",this.$store.state.sessions[i].myIdx)
+            }
         },
 
         // 세션 통신 부분
