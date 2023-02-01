@@ -2,35 +2,30 @@
   <navbar />
   <div class="m-0 p-0">
     <div class="m-0 p-0 row">
-      <div class="m-0 p-0 col-3"></div>
-      <div class="m-0 p-0 col-6">
+      <div class="m-0 p-0 col-2">
+        <h1>dddd</h1>
+      </div>
+      <div class="m-0 p-0 col-8">
         <!-- 메인커뮤니티 -->
         <div style="width: 100%; height: 95vh">
           <!-- 헤드 -->
           <div class="m-0 p-0 row" style="height: 20%">
             <div class="m-0 p-0 row" style="height: 60%">11</div>
             <div class="m-0 p-0 row" style="height: 40%">
-              <h1>커뮤니티</h1>
-
               <div class="input-group">
-                <select
-                  class="form-select"
-                  id="floatingSelect"
-                  aria-label="Floating label select example"
-                >
-                  <option value="1" selected>제목</option>
-                  <option value="2">작성자</option>
-                </select>
-                <div class="form-floating">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="floatingInputGroup1"
-                  />
+                <div class="form-outline">
+                  <input type="search" id="form1" class="form-control" />
+                  <label class="form-label" for="form1">Search</label>
                 </div>
-                <span class="input-group-text">@</span>
+                <button type="button" class="btn btn-primary">
+                  <i class="fas fa-search"></i>
+                </button>
               </div>
             </div>
+            
+              
+             
+          </div>
             <hr />
           </div>
           <!-- 게시글 -->
@@ -39,9 +34,11 @@
           <div class="m-0 p-0 row" style="height: 20%"></div>
         </div>
       </div>
-      <div class="m-0 p-0 col-3"></div>
+      <div class="m-0 p-0 col-2">
+
+      </div>
     </div>
-  </div>
+  
 </template>
 
 <script>
