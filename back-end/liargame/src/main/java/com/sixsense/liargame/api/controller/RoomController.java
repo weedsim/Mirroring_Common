@@ -28,15 +28,15 @@ public class RoomController {
     }
 
     @PatchMapping("/{roomId}/enter")
-    public ResponseEntity<Integer> enter(HttpServletRequest request, @PathVariable Integer roomId) {
+    public ResponseEntity<?> enter(HttpServletRequest request, @PathVariable Long roomId) {
         String accessToken = request.getHeader("access-token");
         String email = jwtTokenProvider.getEmail(accessToken);
         roomId = roomService.enter(email, roomId);
-        return ResponseEntity.ok(roomId);
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{roomId}/exit")
-    public ResponseEntity<?> exit(HttpServletRequest request, @PathVariable Integer roomId) {
+    public ResponseEntity<?> exit(HttpServletRequest request, @PathVariable Long roomId) {
         String accessToken = request.getHeader("access-token");
         String email = jwtTokenProvider.getEmail(accessToken);
         roomService.exit(email, roomId);

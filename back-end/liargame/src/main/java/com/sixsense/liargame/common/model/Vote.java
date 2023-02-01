@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class Vote {
-    private Long voter;
+    private Integer voter;
     @Setter
-    private Long target;
+    private Integer target;
 }
