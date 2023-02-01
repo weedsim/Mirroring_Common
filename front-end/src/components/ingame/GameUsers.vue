@@ -42,6 +42,11 @@
 <script>
 import UserComp from "@/components/ingame/UserComp.vue"
 import axios from "axios";
+import { OpenVidu } from "openvidu-browser";
+
+axios.defaults.headers.post["Content-Type"] = "application/json";
+
+const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
 
 export default {
     components: { UserComp },
@@ -49,26 +54,119 @@ export default {
     el:'#liar',
     data(){
         return{
-            
+            OV: undefined,
+            session: undefined,
+            mainStreamManager: undefined,
+            publisher: undefined,
+
+            // Join form
+            mySessionId: "SessionA",
+            myUserName: "Participant" + Math.floor(Math.random() * 100),
         }
     },
     created() {
         // 세션 구조 복사
-        // console.log(this.$store.state.session)
+        // console.log(this.$store.state.sessions[i].ovSession)
         // this.mySession = Object.assign({}, this.$store.modules.session),
         this.initFrontSession()
         // 1초마다 통신하여 세션 싱크
-        setInterval(()=>{
+        // setInterval(()=>{
             // this.syncFrontSession()
-        }, 1000)
+        // }, 1000)
     },
     methods:{
+        joinSession(myIdx) {
+            // --- 1) Get an OpenVidu object ---
+            this.$store.state.sessions[myIdx].ovSession.OV = new OpenVidu();
+
+            // --- 2) Init a session ---
+            this.$store.state.sessions[myIdx].ovSession.session = 
+            this.$store.state.sessions[myIdx].ovSession.OV.initSession();
+
+            console.log(222, this.$store.state.sessions[myIdx].ovSession.session)
+            // console.log(this.session)
+        //     // --- 3) Specify the actions when events take place in the session ---
+
+        //     // On every new Stream received...
+            
+            this.$store.state.sessions[myIdx].ovSession.session.on("streamCreated", ({ stream }) => {
+                console.log(555, this.$store.state.sessions[myIdx].ovSession.session)
+                const subscriber = this.$store.state.sessions[myIdx].ovSession.session.subscribe(stream);
+                for(let i=myIdx+1;i < 10;i++){
+                    if(!this.$store.state.sessions[i].isJoin){
+                        this.$store.state.sessions[i].ovSession.publisher = subscriber
+                        // this.subscribers.push(subscriber);
+                        this.$store.state.sessions[i].isJoin = true
+                        break;
+                    }
+                }
+                
+                // console.log("subscribers",this.subscribers)
+            });
+
+            this.$store.state.sessions[myIdx].ovSession.session.on("streamDestroyed", ({ stream }) => {
+                // const index = this.subscribers.indexOf(stream.streamManager, 0);
+                // if (index >= 0) {
+                // this.subscribers.splice(index, 1);
+                // }
+            });
+
+            this.$store.state.sessions[myIdx].ovSession.session.on("exception", ({ exception }) => {
+                console.warn(exception);
+            });
+
+            this.getToken(this.mySessionId).then((token) => {
+                this.$store.state.sessions[myIdx].ovSession.session.connect(token, { clientData: this.myUserName })
+                .then(() => {
+                    let publisher = this.$store.state.sessions[myIdx].ovSession.OV.initPublisher(undefined, {
+                        audioSource: undefined, // The source of audio. If undefined default microphone
+                        videoSource: undefined, // The source of video. If undefined default webcam
+                        publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+                        publishVideo: true, // Whether you want to start publishing with your video enabled or not
+                        resolution: "640x480", // The resolution of your video
+                        frameRate: 30, // The frame rate of your video
+                        insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+                        mirror: false, // Whether to mirror your local video or not
+                    });
+
+                    // this.mainStreamManager = publisher;
+                    this.$store.state.sessions[myIdx].ovSession.publisher = publisher
+
+                    this.$store.state.sessions[myIdx].ovSession.session.publish(publisher);
+                })
+                .catch((error) => {
+                    console.log("There was an error connecting to the session:", error.code, error.message);
+                });
+            });
+
+        //     window.addEventListener("beforeunload", this.leaveSession);
+        },
+
+        // leaveSession() {
+        //     if (this.session) this.session.disconnect();
+
+        //     // Empty all properties...
+        //     this.session = undefined;
+        //     this.mainStreamManager = undefined;
+        //     this.publisher = undefined;
+        //     this.subscribers = [];
+        //     this.OV = undefined;
+
+        //     // Remove beforeunload listener
+        //     window.removeEventListener("beforeunload", this.leaveSession);
+        // },
+
+        // updateMainVideoStreamManager(stream) {
+        //     if (this.mainStreamManager === stream) return;
+        //         this.mainStreamManager = stream;
+        // },
         initFrontSession(){
-            let sessions = this.$store.state.sessions
+            // let sessions = this.$store.state.sessions
             for(let i = 0; i < 10; i++) {
-                if(!sessions[i].isJoin){
-                    sessions[i].isJoin = true;
+                if(!this.$store.state.sessions[i].isJoin){
+                    this.$store.state.sessions[i].isJoin = true;
                     this.$store.state.myIdx = i;
+                    this.joinSession(i)
                     // myIdx에 유저 접속했다고 백에 알리기(x)
                     break;
                 }
@@ -98,22 +196,24 @@ export default {
             // axios로 세션보내기(x)
         },
         
-        async getToken() {
-            const sessionId = await this.createSession(this.state.mySessionId);
-            return await this.createToken(sessionId);
-        },
-        async createSession(sessionId) {
-            const response = await axios.post(this.APPLICATION_SERVER_URL + 'api/sessions', { customSessionId: sessionId }, {
-                headers: { 'Content-Type': 'application/json', },
-            });
-            return response.data; // The sessionId
-        },
-        async createToken(sessionId) {
-            const response = await axios.post(this.APPLICATION_SERVER_URL + 'api/sessions/' + sessionId + '/connections', {}, {
-                headers: { 'Content-Type': 'application/json', },
-            });
-            return response.data; // The token
-        }
+        async getToken(mySessionId) {
+      const sessionId = await this.createSession(mySessionId);
+      return await this.createToken(sessionId);
+    },
+
+    async createSession(sessionId) {
+      const response = await axios.post(APPLICATION_SERVER_URL + 'api/sessions', { customSessionId: sessionId }, {
+        headers: { 'Content-Type': 'application/json', },
+      });
+      return response.data; // The sessionId
+    },
+
+    async createToken(sessionId) {
+      const response = await axios.post(APPLICATION_SERVER_URL + 'api/sessions/' + sessionId + '/connections', {}, {
+        headers: { 'Content-Type': 'application/json', },
+      });
+      return response.data; // The token
+    },
     }
 }
 </script>

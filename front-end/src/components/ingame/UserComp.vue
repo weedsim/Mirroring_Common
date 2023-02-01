@@ -38,6 +38,7 @@ export default {
   name: "RoomComp",
   components: { BIconMicFill, BIconHeadset, UserDisplay},
   created() {
+    // console.log(11111111,this.curIdx)
   },
   props: {
     curIdx : String

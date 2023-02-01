@@ -1,10 +1,14 @@
 import { createStore } from "vuex";
 
-// 오픈비두 넣기(x)
 const session = {
   isJoin: false,
   isReady: false,
-  ovSession: {},
+  ovSession: {
+    OV: undefined,
+    session: undefined,
+    // mainStreamManager: undefined,
+    publisher: undefined,
+  },
 };
 
 const sessions = [];

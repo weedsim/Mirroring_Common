@@ -24,7 +24,7 @@
       </div>
     </div> -->
 
-    <div id="session" v-if="session">
+    <!-- <div id="session" v-if="session"> -->
       <!-- <div id="session-header">
         <h1 id="session-title">{{ mySessionId }}</h1>
         <input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession"
@@ -34,11 +34,12 @@
         <user-video :stream-manager="mainStreamManager" />
       </div> -->
       <div id="video-container">
-        <user-video :stream-manager="publisher" @click="updateMainVideoStreamManager(publisher)" />
-        <user-video v-for="sub in subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub"
-          @click="updateMainVideoStreamManager(sub)" />
+        <user-video :stream-manager="$store.state.sessions[curIdx].ovSession.publisher"/>
+        <!-- @click="updateMainVideoStreamManager(publisher)"  -->
+        <!-- <user-video v-for="sub in $store.state.sessions[curIdx].ovSession.subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub"
+          @click="updateMainVideoStreamManager(sub)" /> -->
       </div>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -65,11 +66,10 @@ export default {
     return {
       // OpenVidu objects
       
-        OV: undefined,
-        session: undefined,
-        mainStreamManager: undefined,
-        publisher: undefined,
-        
+    OV: undefined,
+    session: undefined,
+    mainStreamManager: undefined,
+    publisher: undefined,
 
       // Join form
       mySessionId: "SessionA",
@@ -77,7 +77,8 @@ export default {
     };
   },
 created(){
-    this.joinSession()
+    console.log(444, this.$store.state.sessions[this.curIdx].ovSession)
+    // this.joinSession()
     // console.log("OV,", this.OV)
     // console.log("session,", this.session,)
     // console.log("mainStreamManager,", this.mainStreamManager,)
@@ -95,19 +96,20 @@ created(){
 
       // --- 3) Specify the actions when events take place in the session ---
         
+
+        // 새로운 유저가 어느 위치에 들어오는지 확인
       // On every new Stream received...
       this.session.on("streamCreated", ({ stream }) => {
-        const subscriber = this.session.subscribe(stream);
+        // const subscriber = this.session.subscribe(stream);
         
         for(let i=0;i<10;i++){
-            console.log(this.$store.state.sessions[i].isJoin)
-            if(this.$store.state.sessions[i].isJoin){
-                this.$store.state.sessions[i].ovSession = subscriber
-                this.$store.state.sessions[i].isJoin = true;
+        //     console.log(this.$store.state.sessions[i].isJoin)
+            if(!this.$store.state.sessions[i].isJoin){
+                this.$store.state.sessions[i].ovSession.session.subscribe(stream)
                 break;
             }
         }
-        // console.log("this.curIdx",this.curIdx)
+        // console.log("this.$state.store.sessions", this.$store.state.sessions)
         // this.$state.store.sessions[this.curIdx].ovSession = subscriber
         // console.log("this.subscribers",this.subscribers)
         // console.log("this.curIdx", this.curIdx)
@@ -183,7 +185,7 @@ created(){
             this.publisher = publisher;
             // console.log(this.curIdx)
             // console.log("this.$store", this.$store.state.sessions[this.curIdx])
-            this.$store.state.sessions[this.curIdx].ovSession = publisher
+            this.$store.state.sessions[this.curIdx].ovSession.session = publisher
             this.$store.state.sessions[this.curIdx].isJoin = true
             
             for(let i=0;i<10;i++){
@@ -222,6 +224,7 @@ created(){
         }
         
         this.$store.state.sessions[this.curIdx].ovSession = ovSession
+        this.$store.state.sessions[this.curIdx].isJoin = false
 
       // Remove beforeunload listener
       window.removeEventListener("beforeunload", this.leaveSession);
