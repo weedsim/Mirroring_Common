@@ -41,17 +41,15 @@ public class JwtTokenProvider {
                 .collect(Collectors.joining(","));
 
         User user = userRepository.findByEmail(authentication.getName()).orElseThrow();
-        Map<String, Object> userInfo = new HashMap<>();
-        userInfo.put("id", user.getId());
-        userInfo.put("name", user.getName());
-        userInfo.put(JwtProperties.AUTHORITIES_KEY, authorities);
         long now = (new Date()).getTime();
 
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + JwtProperties.ACCESS_TOKEN_TIME);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim("userinfo", userInfo)
+                .claim("id", user.getId())
+                .claim("name", user.getName())
+                .claim(JwtProperties.AUTHORITIES_KEY, authorities)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -75,7 +73,7 @@ public class JwtTokenProvider {
         // 토큰 복호화
         Claims claims = parseClaims(accessToken);
 
-        if (claims.get("auth") == null) {
+        if (claims.get(JwtProperties.AUTHORITIES_KEY) == null) {
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
         }
 
@@ -86,7 +84,7 @@ public class JwtTokenProvider {
                         .collect(Collectors.toList());
 
         // UserDetails 객체를 만들어서 Authentication 리턴
-        User user = userRepository.findById(Long.getLong(claims.get("id").toString())).orElseThrow();
+        User user = userRepository.findById(Long.parseLong(claims.get("id").toString())).orElseThrow();
         UserDetailsCustom principal = new UserDetailsCustom(user);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }

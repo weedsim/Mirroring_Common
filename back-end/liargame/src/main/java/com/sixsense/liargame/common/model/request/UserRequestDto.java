@@ -54,10 +54,10 @@ public class UserRequestDto {
 	@Getter
 	@Setter
 	public static class Logout {
-		@NotEmpty(message = "잘못된 요청입니다.")
+		@NotEmpty(message = "accessToken null.")
 		private String accessToken;
 
-		@NotEmpty(message = "잘못된 요청입니다.")
+		@NotEmpty(message = "refreshToken null")
 		private String refreshToken;
 	}
 
