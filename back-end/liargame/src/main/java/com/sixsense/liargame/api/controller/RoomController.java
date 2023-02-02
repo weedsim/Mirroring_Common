@@ -1,12 +1,14 @@
 package com.sixsense.liargame.api.controller;
 
-import com.sixsense.liargame.api.response.RoomIdResp;
+import com.sixsense.liargame.api.response.RoomTokenResp;
 import com.sixsense.liargame.api.service.RoomService;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
 import com.sixsense.liargame.common.model.response.RoomResp;
 import com.sixsense.liargame.security.auth.JwtProperties;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
+import io.openvidu.java.client.OpenViduHttpException;
+import io.openvidu.java.client.OpenViduJavaClientException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -25,21 +27,19 @@ public class RoomController {
 
     @GetMapping
     public ResponseEntity<List<RoomResp>> getAll(Pageable pageable) {
-        List<RoomResp> rooms = roomService.selectAll(pageable);
+        List<com.sixsense.liargame.common.model.response.RoomResp> rooms = roomService.selectAll(pageable);
         return ResponseEntity.ok(rooms);
     }
 
     @PatchMapping("/{roomId}/enter")
-    public ResponseEntity<?> enter(HttpServletRequest request, @PathVariable Long roomId) {
-        String accessToken = request.getHeader(JwtProperties.ACCESS_TOKEN);
+    public ResponseEntity<?> enter(@RequestHeader(name = JwtProperties.ACCESS_TOKEN) String accessToken, @PathVariable Long roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         roomService.enter(userId, roomId);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{roomId}/exit")
-    public ResponseEntity<?> exit(HttpServletRequest request, @PathVariable Long roomId) {
-        String accessToken = request.getHeader(JwtProperties.ACCESS_TOKEN);
+    public ResponseEntity<?> exit(@RequestHeader(name = JwtProperties.ACCESS_TOKEN) String accessToken, @PathVariable Long roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         roomService.exit(userId, roomId);
         return ResponseEntity.ok().build();
@@ -55,10 +55,15 @@ public class RoomController {
     }
 
     @PostMapping
-    public ResponseEntity<RoomIdResp> create(HttpServletRequest request, @RequestBody RoomReq roomReq) {
+    public ResponseEntity<RoomTokenResp> create(HttpServletRequest request, @RequestBody RoomReq roomReq) {
         String accessToken = request.getHeader(JwtProperties.ACCESS_TOKEN);
         Long userId = jwtTokenProvider.getUserId(accessToken);
-        Long roomId = roomService.insert(userId, roomReq);
-        return ResponseEntity.ok(new RoomIdResp(roomId));
+        RoomTokenResp roomTokenResp = null;
+        try {
+            roomTokenResp = roomService.insert(userId, roomReq);
+        } catch (OpenViduJavaClientException | OpenViduHttpException e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(roomTokenResp);
     }
 }
