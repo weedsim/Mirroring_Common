@@ -13481,3 +13481,6 @@ java.lang.RuntimeException: 권한 정보가 없는 토큰입니다.
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.70.jar:9.0.70]
 	at java.base/java.lang.Thread.run(Thread.java:829) ~[na:na]
 
+2023-02-02 15:12:21.588  INFO 1148 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-02-02 15:12:21.588  INFO 1148 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-02-02 15:12:21.598  INFO 1148 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
