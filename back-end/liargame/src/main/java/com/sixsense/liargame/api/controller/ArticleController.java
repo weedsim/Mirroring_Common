@@ -29,7 +29,6 @@ public class ArticleController {
 
     @GetMapping("/{articleId}")
     public ResponseEntity<?> getArticle(@PathVariable Long articleId) {
-
         Article article = articleService.getArticle(articleId);
 //        System.out.println(article.getViewCnt());
         return ResponseEntity.ok().body(article);
