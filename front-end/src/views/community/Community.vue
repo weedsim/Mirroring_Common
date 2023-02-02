@@ -28,21 +28,17 @@
                   </button>
                 </div> -->
               </div>
-              <div class="m-0 p-0 col-3" style="text-align:right">
-                <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    제목
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">제목</a></li>
-                    <li><a class="dropdown-item" href="#">작성자</a></li>
-                    <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
-                  </ul>
+              <div class="m-0 p-0 col-2" style="text-align:right">
+                <div class="form">
+                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                    <option selected>제목</option>
+                    <option value="2">작성자</option>
+                    <!-- <option value="3">Three</option> -->
+                  </select>
+                  <!-- <label for="floatingSelect">Works with selects</label> -->
                 </div>
               </div>
-              <div class="m-0 p-0 col-3">
-                
-                
+              <div class="m-0 p-0 col-4">
                 <div class="wrap">
                   <div class="search">
                       <input type="text" class="searchTerm" placeholder="What are you looking for?">
