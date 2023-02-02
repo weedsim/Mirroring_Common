@@ -6,8 +6,46 @@ import VueCookies from "vue-cookies";
 // const API_URL = "http://127.0.0.1:8080";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
 
+const session = {
+  myIdx: -1,
+  isJoin: false,
+  isReady: false,
+  ovSession: {
+    OV: undefined,
+    session: undefined,
+    // mainStreamManager: undefined,
+    publisher: undefined,
+  },
+};
+
+const sessions = [];
+
+for (let i = 0; i < 10; i++) {
+  let temp = Object.assign({}, session);
+  sessions.push(temp);
+}
+
+// idx test
+let bits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+for (let i = 0; i < 10; i++) {
+  if (bits[i]) {
+    // 접속테스트
+    // sessions[i].isJoin = true;
+    // 레디 테스트
+    // sessions[i].isReady = false;
+  }
+}
+
 export default createStore({
   state: {
+    // 세션 구조(깊은 복사해서 사용)
+    session: session,
+    // idx위치의 세션의 상태
+    sessions: sessions,
+    // Object.assign(dest, this.state.session)
+
+    // myIdx: -1,
+
     API_URL: "http://127.0.0.1:8080",
     // API_URL: "http://i8a706.p.ssafy.io:8080",
     isEnter: false, // 게임방 진입시 라우터가드를 위한 state
