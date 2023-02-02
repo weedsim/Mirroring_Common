@@ -18,6 +18,14 @@ export default {
     MainLobby,
     OuterContainer,
   },
+  created() {
+    this.test();
+  },
+  methods: {
+    test() {
+      console.log(this.$store.state.accessToken);
+    },
+  },
 };
 </script>
 

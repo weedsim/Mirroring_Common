@@ -30,7 +30,7 @@
         <div class="mt-5 p-0 col-2"></div>
 
         <div class="mt-5 p-0 card col-4">
-          <div class="m-0 p-0 card">
+          <div class="m-0 p-0 card" v-on:mousemove="tmp(event)">
             <div class="m-0 p-0 card-img-top modetwo">
               <div class="m-0 p-0 cardframe"></div>
             </div>
@@ -68,6 +68,9 @@ export default {
       let refreshToken = this.$store.state.refreshToken;
       console.log(accessToken);
       console.log(refreshToken);
+    },
+    tmp(event) {
+      console.log(event);
     },
   },
 };

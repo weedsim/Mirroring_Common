@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
+@Validated
 public class UserController {
 
 	private final UserService userService;
@@ -22,7 +23,7 @@ public class UserController {
 	private final Response response;
 
 	@PostMapping("/sign-up")
-	public ResponseEntity<?> signUp(@Validated UserRequestDto.SignUp signUp, Errors errors) {
+	public ResponseEntity<?> signUp(@RequestBody UserRequestDto.SignUp signUp, Errors errors) {
 		// validation check
 		if (errors.hasErrors()) {
 			return response.invalidFields(Helper.refineErrors(errors));
@@ -31,7 +32,7 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@Validated UserRequestDto.Login login, Errors errors) {
+	public ResponseEntity<?> login(@RequestBody UserRequestDto.Login login, Errors errors) {
 		// validation check
 		if (errors.hasErrors()){
 			return response.invalidFields(Helper.refineErrors(errors));
@@ -40,7 +41,7 @@ public class UserController {
 	}
 
 	@PostMapping("/reissue")
-	public ResponseEntity<?> reissue(@Validated UserRequestDto.Reissue reissue, Errors errors) {
+	public ResponseEntity<?> reissue(@RequestHeader UserRequestDto.Reissue reissue, Errors errors) {
 		// validation check
 		if (errors.hasErrors()) {
 			return response.invalidFields(Helper.refineErrors(errors));
@@ -49,7 +50,7 @@ public class UserController {
 	}
 
 	@PostMapping("/logout")
-	public ResponseEntity<?> logout(@Validated UserRequestDto.Logout logout, Errors errors) {
+	public ResponseEntity<?> logout(@RequestHeader UserRequestDto.Logout logout, Errors errors) {
 		// validation check
 		if (errors.hasErrors()) {
 			return response.invalidFields(Helper.refineErrors(errors));
@@ -58,16 +59,17 @@ public class UserController {
 	}
 
 	@PutMapping("/modify")
-	public ResponseEntity<?> updateUserInfo(@Validated UserRequestDto.Modify modify, Errors errors) {
+	public ResponseEntity<?> updateUserInfo(@RequestHeader String accessToken, @RequestBody UserRequestDto.Modify modify, Errors errors) {
 		// validation check
 		if (errors.hasErrors()) {
 			return response.invalidFields(Helper.refineErrors(errors));
 		}
+		modify.setAccessToken(accessToken);
 		return userService.modify(modify);
 	}
 
 	@GetMapping
-	public ResponseEntity<?> getUserInfo(@Validated UserRequestDto.UserInfo userInfo, Errors errors) {
+	public ResponseEntity<?> getUserInfo(@RequestHeader UserRequestDto.UserInfo userInfo, Errors errors) {
 		// validation check
 		if(errors.hasErrors()) {
 			return response.invalidFields(Helper.refineErrors(errors));

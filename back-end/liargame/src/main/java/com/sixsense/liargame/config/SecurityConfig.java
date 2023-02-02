@@ -55,7 +55,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/swagger-resources/", "/**").permitAll()
-                .antMatchers("/users/login", "/users", "/users/duplicate", "/users/sign-up").permitAll()
+                .antMatchers("/users/login", "/users", "/users/duplicate", "/users/sign-up", "/rooms" ).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login()

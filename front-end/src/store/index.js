@@ -3,7 +3,7 @@ import axios from "axios";
 import router from "@/router";
 import VueCookies from "vue-cookies";
 
-// const API_URL = "http://127.0.0.1:8080";
+const API_URL = "http://127.0.0.1:8080";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
 
 export default createStore({
@@ -13,27 +13,27 @@ export default createStore({
     isEnter: false, // 게임방 진입시 라우터가드를 위한 state
     isShow: false,
     accessToken: null,
-    refreshToken: null,
+    refreshToken: VueCookies.get("refreshToken"),
     // rooms: null, // rooms는 로비에서 방목록 8개 받아서 저장할곳.
     rooms: [
-      {
-        id: 1,
-        title: "감자고구마",
-        maxCount: 6,
-        curCount: 3,
-        isPlaying: false,
-        mode: "spy",
-        isPrivate: true,
-      },
-      {
-        id: 2,
-        title: "감자고구마22",
-        maxCount: 6,
-        curCount: 4,
-        isPlaying: true,
-        mode: "normal",
-        isPrivate: false,
-      },
+      // {
+      //   id: 1,
+      //   title: "감자고구마",
+      //   maxCount: 6,
+      //   curCount: 3,
+      //   isPlaying: false,
+      //   mode: "spy",
+      //   isPrivate: true,
+      // },
+      // {
+      //   id: 2,
+      //   title: "감자고구마22",
+      //   maxCount: 6,
+      //   curCount: 4,
+      //   isPlaying: true,
+      //   mode: "normal",
+      //   isPrivate: false,
+      // },
     ],
   },
   getters: {
@@ -46,15 +46,15 @@ export default createStore({
     SAVE_TOKEN(state, payload) {
       state.accessToken = payload.token;
       // state.refreshToken = payload.refreshToken;
+      // VueCookies.set("accessToken", payload.token);
       VueCookies.set("refreshToken", payload.refreshToken);
-      VueCookies.set("accessToken", payload.token);
       router.push({ name: "main" });
     },
     DELETE_TOKEN(state) {
-      state.token = null;
-      state.user_pk = null;
-      state.username = null;
-      router.push({ name: "home" }).catch(() => {});
+      state.accessToken = null;
+      state.refreshToken = null;
+      VueCookies.remove("refreshToken");
+      router.push({ name: "main" }).catch(() => {});
     },
     // 방목록 저장할 뮤테이션(rooms)
     SET_ROOMS(state, rooms) {
@@ -105,10 +105,14 @@ export default createStore({
       // console.log(payload);
       context.commit("SAVE_TOKEN", payload);
     },
-    logOut(context) {
+    logOut(context, payload) {
+      console.log(API_URL);
       axios({
         method: "post",
-        url: `${this.$store.API_URL}/accounts/logout/`,
+        url: `${API_URL}/logout`,
+        headers: {
+          Authorization: `Bearer ${payload.accessToken}`,
+        },
       }).then((res) => {
         if (res) {
           console.log(res);

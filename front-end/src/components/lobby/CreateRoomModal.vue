@@ -171,6 +171,7 @@ export default {
       // console.log(this.playercnt);
       // console.log(this.talktime);
       // console.log(this.gamemode);
+      // console.log(`${this.$store.state.accessToken}`);
       if (
         this.roomtitle === null ||
         this.playercnt === null ||
@@ -184,14 +185,15 @@ export default {
           // url: `${API_URL}/rooms`,
           url: `${this.API_URL}/rooms`,
           headers: {
-            accessToken: this.$cookies.get("accessToken"),
+            // accessToken: this.$cookies.get("accessToken"),
+            Authorization: `Bearer ${this.$store.state.accessToken}`,
           },
           data: {
             title: this.roomtitle,
             mode: this.gamemode,
             password: this.roompwd,
             maxCount: this.playercnt,
-            // timeout: this.talktime,
+            timeout: this.talktime,
           },
         })
           .then((res) => {
@@ -201,7 +203,7 @@ export default {
             this.roomPwd = null;
             this.$store.dispatch("setIsEnter");
             // 응답결과로는 토큰과 roomId가 올것이다.
-            // router.push({ name: "room", params: { roomId: res.data.id } });
+            // router.push({ name: "room", params: { roomId: 1 } });
             // 테스트용으로는 임의로 roomId를 설정한다.
             router.push({ name: "room", params: { roomId: res.data.roomId } });
           })
