@@ -42,17 +42,15 @@ public class JwtTokenProvider {
                 .collect(Collectors.joining(","));
 
         User user = userRepository.findByEmail(authentication.getName()).orElseThrow();
-        Map<String, Object> userInfo = new HashMap<>();
-        userInfo.put("id", user.getId());
-        userInfo.put("name", user.getName());
-        userInfo.put(JwtProperties.AUTHORITIES_KEY, authorities);
         long now = (new Date()).getTime();
 
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + JwtProperties.ACCESS_TOKEN_TIME);
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
-                .claim("userinfo", userInfo)
+                .claim("id", user.getId())
+                .claim("name", user.getName())
+                .claim(JwtProperties.AUTHORITIES_KEY, authorities)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();

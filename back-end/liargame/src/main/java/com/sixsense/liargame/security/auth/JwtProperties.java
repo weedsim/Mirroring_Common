@@ -1,6 +1,7 @@
 package com.sixsense.liargame.security.auth;
 
 public interface JwtProperties {
+    String ACCESS_TOKEN = "access-token";
     String SECRET = "zPT5HqJxqJPsetlB6rnsQGCcoWP5T2M9sdjfjaslkjfle"; // 우리 서버만 알고 있는 비밀값
     long ACCESS_TOKEN_TIME =  1000L * 60 * 30;
     long REFRESH_TOKEN_TIME = 7 * 24 * 60 * 60 * 1000L;
