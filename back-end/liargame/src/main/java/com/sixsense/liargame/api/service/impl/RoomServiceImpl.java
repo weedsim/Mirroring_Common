@@ -1,6 +1,8 @@
 package com.sixsense.liargame.api.service.impl;
 
+import com.sixsense.liargame.api.response.RoomTokenResp;
 import com.sixsense.liargame.api.service.RoomService;
+import com.sixsense.liargame.api.sse.Emitters;
 import com.sixsense.liargame.api.sse.GlobalEmitter;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
@@ -11,11 +13,16 @@ import com.sixsense.liargame.db.repository.NormalHistoryRepository;
 import com.sixsense.liargame.db.repository.NormalPlayRepository;
 import com.sixsense.liargame.db.repository.RoomRepository;
 import com.sixsense.liargame.db.repository.UserRepository;
+import io.openvidu.java.client.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -29,6 +36,13 @@ public class RoomServiceImpl implements RoomService {
     private final String LIAR = "liar";
     private final String SPY = "spy";
     private final GlobalEmitter globalEmitter;
+    @Value("${openvidu.hostname}")
+    private String OPENVIDU_URL;
+
+    @Value("${openvidu.secret}")
+    private String OPENVIDU_SECRET;
+
+    private OpenVidu openvidu;
 
     public RoomServiceImpl(UserRepository userRepository, RoomRepository roomRepository, NormalHistoryRepository normalHistoryRepository, NormalPlayRepository normalPlayRepository, GlobalEmitter globalEmitter) {
         this.userRepository = userRepository;
@@ -38,12 +52,30 @@ public class RoomServiceImpl implements RoomService {
         this.globalEmitter = globalEmitter;
     }
 
+    @PostConstruct
+    public void init() {
+        this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
+    }
+
+    private RoomTokenResp getToken(Long roomId)
+            throws OpenViduJavaClientException, OpenViduHttpException {
+        Map<String, Object> map = new HashMap<>();
+        map.put("customSessionId", roomId.toString());
+        SessionProperties properties = SessionProperties.fromJson(map).build();
+        Session session = openvidu.createSession(properties);
+        ConnectionProperties connectionProperties = ConnectionProperties.fromJson(map).build();
+        Connection connection = session.createConnection(connectionProperties);
+        String token = connection.getToken();
+        return new RoomTokenResp(roomId, token);
+    }
+
     @Override
-    public Long insert(RoomReq roomReq) {
-        Room room = roomRepository.save(toEntity(roomReq));
-        Long roomId = room.getId();
-        globalEmitter.addEmitters(roomId, room.getEmitters());
-        return roomId;
+    public RoomTokenResp insert(Long userId, RoomReq roomReq) throws OpenViduJavaClientException, OpenViduHttpException {
+        Room room = toEntity(roomReq);
+        Emitters emitters = room.getEmitters();
+        Long roomId = roomRepository.save(room).getId();
+        globalEmitter.addEmitters(roomId, emitters);
+        return getToken(roomId);
     }
 
     @Override
@@ -59,8 +91,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     @Transactional
-    public void exit(String email, Long roomId) {
-        Long userId = userRepository.findByEmail(email).orElseThrow().getId();
+    public void exit(Long userId, Long roomId) {
         Room room = roomRepository.findById(roomId).orElseThrow();
         room.setEmitters(globalEmitter.getEmitters(roomId));
         room.exit(userId);
@@ -72,8 +103,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     @Transactional
-    public void changeSetting(String email, SettingDto settingDto) {
-        Long userId = userRepository.findByEmail(email).orElseThrow().getId();
+    public void changeSetting(Long userId, SettingDto settingDto) {
         Room room = roomRepository.findById(settingDto.getId()).orElseThrow();
         if (Objects.equals(userId, room.getMaster()))
             room.changeSetting(settingDto);

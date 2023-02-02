@@ -13,9 +13,9 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
-    configureEach {
-        exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
-    }
+//    configureEach {
+//        exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
+//    }
 }
 
 repositories {
@@ -64,8 +64,8 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
 
     //mongo db
-    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-    implementation 'org.mongodb:mongodb-driver-sync'
+//    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+//    implementation 'org.mongodb:mongodb-driver-sync'
 
     //swagger
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
@@ -74,12 +74,16 @@ dependencies {
     //redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+    //openvidu
+    implementation 'io.openvidu:openvidu-java-client:2.25.0'
+
+
     //log4j2
-    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-    implementation 'org.apache.logging.log4j:log4j-mongodb4'
+//    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+//    implementation 'org.apache.logging.log4j:log4j-mongodb4'
 
     //slf4j
-    implementation 'org.slf4j:slf4j-api'
+//    implementation 'org.slf4j:slf4j-api'
 
     // test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

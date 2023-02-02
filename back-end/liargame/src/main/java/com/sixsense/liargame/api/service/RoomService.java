@@ -1,22 +1,25 @@
 package com.sixsense.liargame.api.service;
 
+import com.sixsense.liargame.api.response.RoomTokenResp;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
 import com.sixsense.liargame.common.model.response.RoomResp;
 import com.sixsense.liargame.db.entity.Room;
+import io.openvidu.java.client.OpenViduHttpException;
+import io.openvidu.java.client.OpenViduJavaClientException;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 
 public interface RoomService {
-    Long insert(RoomReq roomReq);
+    RoomTokenResp insert(Long userId, RoomReq roomReq) throws OpenViduJavaClientException, OpenViduHttpException;
 
     void enter(Long userId, Long roomId);
 
-    void exit(String email, Long roomId);
+    void exit(Long userId, Long roomId);
 
-    void changeSetting(String email, SettingDto settingDto);
+    void changeSetting(Long userId, SettingDto settingDto);
 
     List<RoomResp> selectAll(Pageable pageable);
 
