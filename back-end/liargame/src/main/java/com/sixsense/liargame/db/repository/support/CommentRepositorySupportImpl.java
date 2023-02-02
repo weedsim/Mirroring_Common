@@ -3,7 +3,9 @@ package com.sixsense.liargame.db.repository.support;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.sixsense.liargame.api.response.CommentResp;
 import com.sixsense.liargame.db.entity.Comment;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,7 +20,7 @@ public class CommentRepositorySupportImpl implements CommentRepositorySupport {
         this.queryFactory = queryFactory;
     }
     @Override
-    public Comment findByArticleIdAndCommentId(Long articleId, Long commentId) {
+    public Comment findAllComments(Long articleId, Long commentId) {
         return queryFactory
                 .select(comment)
                 .from(comment)
@@ -33,6 +35,16 @@ public class CommentRepositorySupportImpl implements CommentRepositorySupport {
                 .from(comment)
                 .where(comment.articleId.eq(articleId))
                 .orderBy(new OrderSpecifier<>(Order.DESC, comment.updatedAt))
+                .fetch();
+    }
+
+    @Override
+    public List<CommentResp> findAllByArticleId(Long articleId, Sort sort) {
+        return queryFactory
+                .select(comment)
+                .from(comment)
+                .where(comment.articleId.eq(articleId))
+                .orderBy(new OrderSpecifier<>(sort, comment.updatedAt))
                 .fetch();
     }
 }

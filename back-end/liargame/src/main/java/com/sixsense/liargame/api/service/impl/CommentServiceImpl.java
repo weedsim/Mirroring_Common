@@ -21,16 +21,33 @@ public class CommentServiceImpl implements CommentService {
         this.userRepository = userRepository;
     }
 
+    //댓글 생성
     @Override
     public Comment insertComment(Long articleId, CommentReq commentReq) {
         Comment comment = commentRepository.save(commentReq.commentToEntity(articleId));
         return comment;
     }
 
+    //댓글 삭제
+    @Override
+    public void deleteComment(Long commentId) {
+        commentRepository.deleteById(commentId);
+    }
+
+    //댓글 업데이트
+    @Override
+    public Long updateComment(Long articleId, Long commentId, CommentReq commentReq){
+        Comment comment = commentRepository.findById(commentId).orElseThrow();
+        comment.updateComment(commentReq.getCommentContent());
+        commentRepository.save(comment);
+        return commentId;
+    }
+
+    //게시글의 댓글 전부 가져오기
     @Override
     public List<CommentResp> findAllComments(Long articleId) {
         Sort sort = Sort.by(Sort.Direction.DESC, "updatedAt");
-        List<Comment> comments = commentRepository.findAllByArticleId(articleId, sort);
-        return comments.stream().map(CommentResp::new).collect(Collectors.toList());
+        List<CommentResp> comments = commentRepository.findAllByArticleId(articleId, sort);
+        return comments;
     }
 }
