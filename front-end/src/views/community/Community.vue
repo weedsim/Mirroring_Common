@@ -11,22 +11,13 @@
       <div class="m-0 p-0 col-8">
         <!-- 메인커뮤니티 -->
           <div style="width: 100%; height:95vh;" >
-            <!-- <h1>main</h1> -->
+            
             <!-- 헤드 -->
             <div class="m-0 p-0 row">
               <div class="m-0 p-0 col-6">
                 <h1>커뮤니티</h1>
 
-                <!-- <div style="right" class="input-group">
-                  <h1>커뮤니티</h1> 
-                  <div class="form-outline">
-                    <input type="search" id="form1" class="form-control"/>
-                    <label class="form-label" for="form1">Search</label>
-                  </div>
-                  <button type="button" class="btn btn-primary">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div> -->
+                
               </div>
               <div class="m-0 p-0 col-3" style="text-align:right">
                 <div class="dropdown">
@@ -122,7 +113,7 @@
                       <td>증권사</td>
                       <td>32</td>
                       <td>2023.01.30</td>
-                    </tr>
+                    </tr> 
                     
                   </tbody>
                 </table>
@@ -139,7 +130,7 @@
                         </nav>
                       </div>
                       <div class="m-0 p-0 col-1">
-                        <button type="button" class="btn btn-secondary btn-sm" >글쓰기</button>
+                        <a class="btn btn-secondary" href="./CreateArticle.vue" >글Tmrl</a>
                       </div>
                     
               </div>
@@ -147,7 +138,7 @@
               
               
             </div>
-              <!-- <hr /> -->
+              
           </div>
           <!-- 게시글 -->
           
