@@ -54,6 +54,7 @@ const routes = [
     name: "room",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/room/Room.vue"),
+    // axios로 방에대한 토큰값을 받아온다. 유저가 들고있는 토큰값이 일치하면 그방에대한 입장 ok
     beforeEnter(to, from, next) {
       try {
         if (store.state.isEnter) {

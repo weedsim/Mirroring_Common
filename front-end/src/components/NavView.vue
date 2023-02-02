@@ -44,6 +44,9 @@
               >회원가입</a
             >
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" v-on:click="logout">로그아웃</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -111,6 +114,14 @@ import PwdModal from "@/components/home/PwdModal.vue";
 export default {
   components: { LoginModal, SignupModal, PwdModal },
   name: "navbar",
+  methods: {
+    logout() {
+      const payload = {
+        accessToken: this.$store.state.accessToken,
+      };
+      this.$store.dispatch("logOut", payload);
+    },
+  },
 };
 </script>
 <style scoped>

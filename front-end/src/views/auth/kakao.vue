@@ -10,7 +10,7 @@ export default {
   components: {},
   data() {
     return {
-      API_URL: this.$state.API_URL,
+      API_URL: this.$store.state.API_URL,
     };
   },
   setup() {},
@@ -28,9 +28,9 @@ export default {
       axios({
         method: "post",
         url: `${this.API_URL}/auth/login/kakao?state=kakao&code=${code}`,
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
         .then((res) => {
           // console.log(res.data.accessToken);
@@ -44,6 +44,7 @@ export default {
         })
         .catch((err) => {
           console.log("실패");
+          console.log(err);
         });
     },
   },
