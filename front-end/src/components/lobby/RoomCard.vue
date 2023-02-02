@@ -125,7 +125,8 @@
 import axios from "axios";
 import router from "@/router";
 
-const API_URL = "http://127.0.0.1:8080";
+// const API_URL = "http://127.0.0.1:8080";
+const API_URL = "http://i8a706.p.ssafy.io:8080";
 
 export default {
   name: "RoomCard",
@@ -141,6 +142,7 @@ export default {
       mode: null,
       isPrivate: null,
       rommPwd: null,
+      API_URL: this.$store.state.API_URL,
     };
   },
   setup() {},
@@ -168,7 +170,7 @@ export default {
     joinRoom(roomId) {
       axios({
         method: "patch",
-        url: `${API_URL}/rooms/${roomId}/enter`,
+        url: `${this.API_URL}/rooms/${roomId}/enter`,
         data: {
           password: this.rommPwd,
         },

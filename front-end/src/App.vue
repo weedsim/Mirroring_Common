@@ -7,6 +7,19 @@
   <router-view />
 </template>
 
+<script>
+export default {
+  components: {},
+  data() {
+    return {};
+  },
+  setup() {},
+  created() {},
+  mounted() {},
+  methods: {},
+};
+</script>
+
 <style>
 /* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

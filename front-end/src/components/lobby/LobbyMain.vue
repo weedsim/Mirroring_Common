@@ -30,7 +30,8 @@
 import RoomCard from "@/components/lobby/RoomCard.vue";
 import axios from "axios";
 
-const API_URL = "http://127.0.0.1:8080";
+// const API_URL = "http://127.0.0.1:8080";
+// const API_URL = "http://i8a706.p.ssafy.io:8080";
 
 export default {
   components: { RoomCard },
@@ -38,6 +39,7 @@ export default {
   data() {
     return {
       NowPageNum: 1,
+      API_URL: this.$store.state.API_URL,
     };
   },
   created() {
@@ -49,7 +51,7 @@ export default {
       axios({
         method: "get",
         // url: `${API_URL}/rooms?pageNumber=${페이지네이션 번호}`,
-        url: `${API_URL}/rooms?pageNumber=${this.NowPageNum}`,
+        url: `${this.API_URL}/rooms?pageNumber=${this.NowPageNum}`,
       })
         .then((res) => {
           console.log(res.data);

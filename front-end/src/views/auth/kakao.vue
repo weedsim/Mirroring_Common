@@ -9,7 +9,9 @@ export default {
   name: "kakao",
   components: {},
   data() {
-    return {};
+    return {
+      API_URL: this.$state.API_URL,
+    };
   },
   setup() {},
   created() {
@@ -18,21 +20,22 @@ export default {
   mounted() {},
   methods: {
     kakaoLogIn() {
-      const URL = "http://localhost:8080";
+      // const URL = "http://localhost:8080";
+      // const URL = "http://i8a706.p.ssafy.io:8080";
       let query = window.location.search;
       let param = new URLSearchParams(query);
       let code = param.get("code");
       axios({
         method: "post",
-        url: `${URL}/auth/login/kakao?state=kakao&code=${code}`,
+        url: `${this.API_URL}/auth/login/kakao?state=kakao&code=${code}`,
         // headers: {
         //   "Content-Type": "application/json",
         // },
       })
         .then((res) => {
-          console.log(res.data.accessToken);
-          console.log(res.data.refreshToken);
-          console.log(res);
+          // console.log(res.data.accessToken);
+          // console.log(res.data.refreshToken);
+          // console.log(res);
           const payload = {
             token: res.data.accessToken,
             refreshToken: res.data.refreshToken,
