@@ -1,71 +1,87 @@
 package com.sixsense.liargame.api.service.impl;
 
 import com.sixsense.liargame.api.service.RoomService;
+import com.sixsense.liargame.api.sse.Emitters;
+import com.sixsense.liargame.api.sse.GlobalEmitter;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
 import com.sixsense.liargame.common.model.response.RoomResp;
 import com.sixsense.liargame.db.entity.Room;
+import com.sixsense.liargame.db.entity.User;
+import com.sixsense.liargame.db.repository.NormalHistoryRepository;
+import com.sixsense.liargame.db.repository.NormalPlayRepository;
 import com.sixsense.liargame.db.repository.RoomRepository;
+import com.sixsense.liargame.db.repository.UserRepository;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class RoomServiceImpl implements RoomService {
+    private final UserRepository userRepository;
     private final RoomRepository roomRepository;
+    private final NormalHistoryRepository normalHistoryRepository;
+    private final NormalPlayRepository normalPlayRepository;
+    private final String CITIZEN = "citizen";
+    private final String LIAR = "liar";
+    private final String SPY = "spy";
+    private final GlobalEmitter globalEmitter;
 
-    public RoomServiceImpl(RoomRepository roomRepository) {
+    public RoomServiceImpl(UserRepository userRepository, RoomRepository roomRepository, NormalHistoryRepository normalHistoryRepository, NormalPlayRepository normalPlayRepository, GlobalEmitter globalEmitter) {
+        this.userRepository = userRepository;
         this.roomRepository = roomRepository;
+        this.normalHistoryRepository = normalHistoryRepository;
+        this.normalPlayRepository = normalPlayRepository;
+        this.globalEmitter = globalEmitter;
     }
 
     @Override
-    public void insert(RoomReq roomReq) {
-        roomRepository.save(toEntity(roomReq));
+    public Long insert(Long userId, RoomReq roomReq) {
+        Room room = toEntity(roomReq);
+        Emitters emitters = room.getEmitters();
+        Long roomId = roomRepository.save(room).getId();
+        globalEmitter.addEmitters(roomId, emitters);
+        return roomId;
     }
 
     @Override
     @Transactional
-    public void enter(Integer id) {
-        Room room = roomRepository.findById(id).orElseThrow();
-        if (room.getMaxCount() > room.getCurCount())
-            room.enter();
+    public void enter(Long userId, Long roomId) {
+        Room room = roomRepository.findById(roomId).orElseThrow();
+        room.setEmitters(globalEmitter.getEmitters(roomId));
+        if (room.getMaxCount() > room.getCurCount()) {
+            User user = userRepository.findById(userId).orElseThrow();
+            room.enter(user.getId(), user.getName());
+        }
     }
 
     @Override
     @Transactional
-    public void exit(Integer id) {
-        Room room = roomRepository.findById(id).orElseThrow();
-        room.exit();
-        if (room.getCurCount() <= 0)
+    public void exit(Long userId, Long roomId) {
+        Room room = roomRepository.findById(roomId).orElseThrow();
+        room.setEmitters(globalEmitter.getEmitters(roomId));
+        room.exit(userId);
+        if (room.getCurCount() <= 0) {
             roomRepository.delete(room);
+            globalEmitter.removeEmitters(roomId);
+        }
     }
 
     @Override
     @Transactional
-    public void start(Integer id) {
-        Room room = roomRepository.findById(id).orElseThrow();
-        room.start();
-    }
-
-    @Override
-    @Transactional
-    public void end(Integer id) {
-        Room room = roomRepository.findById(id).orElseThrow();
-        room.end();
-    }
-
-    @Override
-    @Transactional
-    public void changeSetting(SettingDto settingDto) {
+    public void changeSetting(Long userId, SettingDto settingDto) {
         Room room = roomRepository.findById(settingDto.getId()).orElseThrow();
-        room.changeSetting(settingDto);
+        if (Objects.equals(userId, room.getMaster()))
+            room.changeSetting(settingDto);
     }
 
     @Override
     public List<RoomResp> selectAll(Pageable pageable) {
         return roomRepository.findAll(pageable).stream().map(this::toDto).collect(Collectors.toList());
     }
+
 }

@@ -17,7 +17,9 @@
     "core-js": "^3.8.3",
     "mdb-ui-kit": "^6.1.0",
     "openvidu-browser": "^2.25.0",
+    "cors": "^2.8.5",
     "vue": "^3.2.45",
+    "vue-cookies": "^1.8.2",
     "vue-router": "^4.1.6",
     "vuex": "^4.1.0"
   },

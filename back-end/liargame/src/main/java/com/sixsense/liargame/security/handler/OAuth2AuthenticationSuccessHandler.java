@@ -1,14 +1,9 @@
 package com.sixsense.liargame.security.handler;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sixsense.liargame.db.entity.User;
-import com.sixsense.liargame.security.auth.JwtProperties;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
 import com.sixsense.liargame.security.auth.TokenInfo;
-import com.sixsense.liargame.security.auth.UserDetailsCustom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;

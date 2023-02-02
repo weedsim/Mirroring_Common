@@ -7,6 +7,19 @@
   <router-view />
 </template>
 
+<script>
+export default {
+  components: {},
+  data() {
+    return {};
+  },
+  setup() {},
+  created() {},
+  mounted() {},
+  methods: {},
+};
+</script>
+
 <style>
 /* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -34,7 +47,7 @@ nav a.router-link-exact-active {
   border-style: solid;
   border-width: 1px;
 } */
-div {
+/* div {
   box-shadow: 0 0 0 1px #f00 inset;
-}
+} */
 </style>

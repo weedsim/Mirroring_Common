@@ -1,14 +1,13 @@
 <template>
   <navbar />
   <div class="m-0 p-0 maintest">
-    <div class="m-0 p-0 maintop" style="height: 100vh">
+    <div class="m-0 p-0 maintop" style="height: 95vh">
       <div class="m-0 p-0 maintopwrapper">
         <h1>Liar Game</h1>
         <button type="button" class="btn btn-light">게임 시작</button>
       </div>
     </div>
     <div class="m-0 p-0 mainbottom" style="height: 100vh">
-      <!-- <div class="m-0 p-0"> -->
       <div class="mb-3 pt-5 mainbottomtitle">
         <h1>게임 모드</h1>
       </div>
@@ -46,29 +45,31 @@
         </div>
         <div class="mt-5 p-0 col-1"></div>
       </div>
-      <!-- </div> -->
     </div>
   </div>
-  <LoginModal />
-  <SignupModal />
-  <PwdModal />
 </template>
 
 <script>
 import navbar from "@/components/NavView.vue";
-import LoginModal from "@/components/home/LoginModal.vue";
-import SignupModal from "@/components/home/SignupModal.vue";
-import PwdModal from "@/components/home/PwdModal.vue";
 
 export default {
-  components: { navbar, LoginModal, SignupModal, PwdModal },
+  components: { navbar },
   data() {
     return {};
   },
   setup() {},
-  created() {},
+  created() {
+    this.test();
+  },
   mounted() {},
-  methods: {},
+  methods: {
+    test() {
+      let accessToken = this.$store.state.accessToken;
+      let refreshToken = this.$store.state.refreshToken;
+      console.log(accessToken);
+      console.log(refreshToken);
+    },
+  },
 };
 </script>
 

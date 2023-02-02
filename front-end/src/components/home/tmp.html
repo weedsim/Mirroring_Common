@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <a
+      href="https://kauth.kakao.com/oauth/authorize?client_id=b7f2f677a799001df26efe608fba28f4&redirect_uri=http://localhost:5500/public/index.html&response_type=code"
+      >카카오 로그인</a
+    >
+    <button id="kakao">카카오 백엔드 연결</button>
+    <a
+      href="https://accounts.google.com/o/oauth2/v2/auth?client_id=221898714674-m4aacsrc3lah7ac1c4k47jlo8vs43e1f.apps.googleusercontent.com&redirect_uri=http://127.0.0.1:5500/public/index.html&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+      >구글 로그인</a
+    >
+    <button id="google">구글 백엔드 연결</button>
+
+    <script>
+      function getParameter(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+          results = regex.exec(location.search);
+        return results === null
+          ? ""
+          : decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
+
+      document.getElementById("kakao").addEventListener("click", () => {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = (e) => {
+          let req = e.target;
+          console.log(req);
+          if (req.readyState === XMLHttpRequest.DONE) {
+            if (req.status === 200) {
+              console.log(req.response);
+              console.log(JSON.parse(req.responseText));
+            }
+          }
+        };
+        // http 요청 타입과 주소, 동기식 여부
+        xhttp.open(
+          "POST",
+          "http://localhost:8080/auth/login/kakao?state=kakao&code=" +
+            getParameter("code")
+        );
+        xhttp.send();
+      });
+
+      document.getElementById("google").addEventListener("click", () => {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = (e) => {
+          let req = e.target;
+          console.log(req);
+          if (req.readyState === XMLHttpRequest.DONE) {
+            if (req.status === 200) {
+              console.log(req.response);
+              console.log(JSON.parse(req.responseText));
+            }
+          }
+        };
+        // http 요청 타입과 주소, 동기식 여부
+        xhttp.open(
+          "POST",
+          "http://localhost:8080/auth/login/google?state=google&code=" +
+            getParameter("code")
+        );
+        xhttp.send();
+      });
+    </script>
+  </body>
+</html>

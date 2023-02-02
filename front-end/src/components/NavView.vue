@@ -1,7 +1,7 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <router-link to="/main" class="navbar-brand nav-link"
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
+    <div class="container-fluid m-0 p-0">
+      <router-link to="/main" class="navbar-brand nav-link m-0 p-0"
         ><img src="@/assets/nav/logo.jpg" alt="logo" id="logo"
       /></router-link>
       <button
@@ -22,7 +22,7 @@
             <router-link to="/lobby" class="nav-link">게임로비</router-link>
           </li>
           <li class="nav-item">
-            <router-link to="/lobby" class="nav-link">커뮤니티</router-link>
+            <router-link to="/community" class="nav-link">커뮤니티</router-link>
           </li>
         </ul>
         <ul class="navbar-nav d-flex">
@@ -98,21 +98,40 @@
       </div>
     </div>
   </nav> -->
+  <LoginModal />
+  <SignupModal />
+  <PwdModal />
 </template>
 
 <script>
+import LoginModal from "@/components/home/LoginModal.vue";
+import SignupModal from "@/components/home/SignupModal.vue";
+import PwdModal from "@/components/home/PwdModal.vue";
+
 export default {
+  components: { LoginModal, SignupModal, PwdModal },
   name: "navbar",
 };
 </script>
 <style scoped>
 #logo {
-  height: 30px;
+  height: 5vh;
   margin: 0px;
   padding: 0px;
-  border: 1px red solid;
 }
-.navbar {
+img {
+  margin: 0px;
+  padding: 0px;
+}
+/* .navbar {
+  padding: 0px !important;
+  margin: 0px !important;
+} */
+li {
+  padding: 0px;
+  margin: 0px;
+}
+.nav-link {
   padding: 0px;
 }
 </style>

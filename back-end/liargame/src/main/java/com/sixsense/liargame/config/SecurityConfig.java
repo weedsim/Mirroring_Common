@@ -46,14 +46,16 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager, CustomOAuth2UserService customOAuth2UserService) throws Exception {
         http
                 .addFilter(corsConfig.corsFilter()) // cors 설정. 일단 전부 풀어놓음
+//                .cors().disable()
                 .httpBasic().disable() // 기본 로그인 화면 비활성화
+
                 .formLogin().disable()
                 .csrf().disable()   // csrf 보안 비활성화
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt사용으로 session 비활성화
                 .and()
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/swagger-resources/", "/**").permitAll()
-                .antMatchers("/login", "/users", "/users/duplicate").permitAll()
+                .antMatchers("/users/login", "/users", "/users/duplicate", "/users/sign-up").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login()
@@ -67,8 +69,6 @@ public class SecurityConfig {
                 .loginProcessingUrl("/auth/login/*")
                 .successHandler(oAuth2AuthenticationSuccessHandler)
                 .failureHandler(oAuth2AuthenticationFailureHandler)
-                .and()
-                .logout() // 로그아웃 로직 추가해야함
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class)
                 .addFilter(new JwtLoginFilter(authenticationManager, jwtTokenProvider))

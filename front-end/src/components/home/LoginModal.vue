@@ -24,8 +24,8 @@
               <input
                 type="text"
                 placeholder="이메일을 입력해주세요"
-                id="useremain"
                 class="form-control"
+                v-model="useremail"
               />
             </li>
             <li style="margin-top: 3vh">비밀번호</li>
@@ -35,6 +35,7 @@
                 placeholder="비밀번호를 입력해주세요"
                 id="userpwd"
                 class="form-control"
+                v-model="userpwd"
               />
             </li>
             <li style="text-align: center; margin-top: 3vh">
@@ -43,6 +44,16 @@
               </button>
             </li>
             <hr />
+            <li class="btngrp">
+              <a
+                href="https://accounts.google.com/o/oauth2/v2/auth?client_id=379257368587-calfpqn6bh9ehcfqtd3po48r2ohhpr1l.apps.googleusercontent.com&redirect_uri=http://localhost:8081/google&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+                ><img src="@/assets/icon/btngoogle.png" alt="" />
+              </a>
+              <a
+                href="https://kauth.kakao.com/oauth/authorize?client_id=1ff9c0d8399e2993bcc0f81a9c899269&redirect_uri=http://localhost:8081/kakao&response_type=code"
+                ><img src="@/assets/icon/btnkakao.png" alt=""
+              /></a>
+            </li>
             <li style="font-size: small">
               아직 회원이 아니신가요?
               <a href="#" data-bs-toggle="modal" data-bs-target="#signupModal"
@@ -67,12 +78,24 @@ export default {
   name: "LoginModal",
   components: {},
   data() {
-    return {};
+    return {
+      useremail: null,
+      userpwd: null,
+    };
   },
   setup() {},
   created() {},
   mounted() {},
-  methods: {},
+  methods: {
+    resetval() {
+      (this.useremail = null), (this.userpwd = null);
+    },
+    logIn() {
+      const email = this.useremail;
+      const password = this.userpwd;
+    },
+    kakaoLogIn() {},
+  },
 };
 </script>
 
@@ -91,6 +114,12 @@ ul {
 }
 li {
   margin-bottom: 1vh;
+}
+.btngrp {
+  display: flex;
+}
+.btngrp p:nth-child(1):hover {
+  border: 1px solid red;
 }
 </style>
 

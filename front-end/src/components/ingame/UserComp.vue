@@ -16,9 +16,11 @@
                 <button type="button" class="btn btn-success" v-else style="width:100%"><div class="m-0 p-0" style="font-size: 2vw;">준비완료</div></button>
             </div>
           <!-- <img src="@/assets/icon/icon_headset.jpg" alt="" id="icon_headset"><img src="@/assets/icon/icon_camera.png" alt="" id="icon_camera"> -->
-          <BIconMicFill style="color:white"></BIconMicFill>
-          <BIconHeadset style="color:white"></BIconHeadset>
-          <div class="m-0 p-0 row" style="height:%;">
+          <button @click="togglev()" style="background:black"><BIconVolumeUpFill style="color:blue" v-if="$store.state.isShow_vol"></BIconVolumeUpFill>
+          <BIconVolumeMuteFill style="color:white" v-else></BIconVolumeMuteFill></button>
+          <button @click="togglec()" style="background:black"><BIconCameraVideoFill style="color:blue" v-if="$store.state.isShow_cam"></BIconCameraVideoFill>
+            <BIconCameraVideoOffFill style="color:white" v-else></BIconCameraVideoOffFill></button>
+            <div class="m-0 p-0 row" style="height:%;">
           
         </div>
         <!-- <div class="m-0 p-0 row" style="height:10%;">
@@ -30,29 +32,57 @@
 </template>
 
 <script>
-import { BIconMicFill } from "bootstrap-icons-vue";
-import { BIconHeadset } from "bootstrap-icons-vue";
-import UserDisplay from "@/components/ingame/UserDisplay.vue"
+
+
+=======
+import { BIconVolumeUpFill } from "bootstrap-icons-vue";
+import { BIconCameraVideoFill } from "bootstrap-icons-vue";
+import { BIconVolumeMuteFill } from "bootstrap-icons-vue";
+import { BIconCameraVideoOffFill } from "bootstrap-icons-vue";
+import UserDisplay from "@/components/ingame/UserDisplay.vue";
 
 export default {
+  data(){
+    return {
+      isShow_vol: false,
+      isShow_cam: false
+    
+    }
+  },
   name: "RoomComp",
+<<<<<<< front-end/src/components/ingame/UserComp.vue
   components: { BIconMicFill, BIconHeadset, UserDisplay},
+=======
+  components: { BIconVolumeUpFill, BIconCameraVideoOffFill, BIconCameraVideoFill, BIconVolumeMuteFill},
+>>>>>>> front-end/src/components/ingame/UserComp.vue
   created() {
     // console.log(11111111,this.curIdx)
   },
   props: {
     curIdx : String
   },
+<<<<<<< front-end/src/components/ingame/UserComp.vue
+=======
+  methods:{
+    togglev(){
+      this.$store.state.isShow_vol = !this.$store.state.isShow_vol
+     },
+     togglec(){
+      this.$store.state.isShow_cam = !this.$store.state.isShow_cam
+     }
+    }
+  
+>>>>>>> front-end/src/components/ingame/UserComp.vue
 }
 </script>
 
 <style>
-#icon_camera{
+/* #icon_camera{
   width:50%;
   height:30px;
 }
 #icon_headset{
   width:50%;
   height:30px;
-}
+} */
 </style>

@@ -7,22 +7,22 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class RoomResp {
-    private Integer id;
+    private Long id;
     private String title;
     private Integer maxCount;
     private Integer curCount;
     private Boolean isPlaying;
     private String mode;
-    private String password;
+    private Boolean isPrivate;
 
     @Builder
-    public RoomResp(Integer id, String title, Integer maxCount, Integer curCount, Boolean isPlaying, String mode, String password) {
+    public RoomResp(Long id, String title, Integer maxCount, Integer curCount, Boolean isPlaying, String mode, Boolean isPrivate) {
         this.id = id;
         this.title = title;
         this.maxCount = maxCount;
         this.curCount = curCount;
         this.isPlaying = isPlaying;
         this.mode = mode;
-        this.password = password;
+        this.isPrivate = isPrivate;
     }
 }

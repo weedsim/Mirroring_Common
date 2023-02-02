@@ -11,4 +11,11 @@ import "bootstrap"; // [bootstrap]
 
 import { BootstrapIconsPlugin } from "bootstrap-icons-vue"; // [bootstrap vue icon]
 
-createApp(App).use(store).use(router).use(BootstrapIconsPlugin).mount("#app");
+import VueCookies from "vue-cookies"; // [vue cookies]
+
+createApp(App)
+  .use(store)
+  .use(router)
+  .use(BootstrapIconsPlugin)
+  .use(VueCookies)
+  .mount("#app");
