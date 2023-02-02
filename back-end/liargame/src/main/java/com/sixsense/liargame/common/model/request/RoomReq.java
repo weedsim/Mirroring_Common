@@ -12,4 +12,5 @@ public class RoomReq {
     private Integer maxCount;
     private String mode;
     private String password;
+    private Integer timeout;
 }
