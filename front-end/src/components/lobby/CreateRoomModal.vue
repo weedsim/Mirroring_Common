@@ -129,7 +129,8 @@
 import axios from "axios";
 import router from "@/router";
 
-const API_URL = "http://127.0.0.1:8080";
+// const API_URL = "http://127.0.0.1:8080";
+// const API_URL = "http://i8a706.p.ssafy.io:8080";
 
 export default {
   components: {},
@@ -141,6 +142,7 @@ export default {
       roomtitle: null, // 게임방 제목
       playercnt: null, // 참가인원
       talktime: null, // 발언시간
+      API_URL: this.$store.state.API_URL,
     };
   },
   setup() {},
@@ -164,11 +166,11 @@ export default {
     },
     // 생성버튼 클릭시 이벤트
     createGame() {
-      console.log(this.roompwd);
-      console.log(this.roomtitle);
-      console.log(this.playercnt);
-      console.log(this.talktime);
-      console.log(this.gamemode);
+      // console.log(this.roompwd);
+      // console.log(this.roomtitle);
+      // console.log(this.playercnt);
+      // console.log(this.talktime);
+      // console.log(this.gamemode);
       if (
         this.roomtitle === null ||
         this.playercnt === null ||
@@ -179,13 +181,17 @@ export default {
       } else {
         axios({
           method: "post",
-          url: `${API_URL}/rooms`,
+          // url: `${API_URL}/rooms`,
+          url: `${this.API_URL}/rooms`,
+          headers: {
+            accessToken: this.$cookies.get("accessToken"),
+          },
           data: {
             title: this.roomtitle,
             mode: this.gamemode,
             password: this.roompwd,
             maxCount: this.playercnt,
-            timeout: this.talktime,
+            // timeout: this.talktime,
           },
         })
           .then((res) => {
@@ -197,7 +203,7 @@ export default {
             // 응답결과로는 토큰과 roomId가 올것이다.
             // router.push({ name: "room", params: { roomId: res.data.id } });
             // 테스트용으로는 임의로 roomId를 설정한다.
-            router.push({ name: "room", params: { roomId: 13 } });
+            router.push({ name: "room", params: { roomId: res.data.roomId } });
           })
           .catch((err) => {
             this.roomPwd = null;
@@ -205,9 +211,9 @@ export default {
             console.log("실패");
             console.log(err);
             // 테스트용
-            this.$store.dispatch("setIsEnter");
-            router.push({ name: "room", params: { roomId: 13 } });
-            // alert("게임방 진입에 실패하셨습니다");
+            // this.$store.dispatch("setIsEnter");
+            // router.push({ name: "room", params: { roomId: 13 } });
+            alert("게임방 진입에 실패하셨습니다");
           });
       }
     },

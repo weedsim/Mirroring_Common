@@ -1,11 +1,15 @@
 import { createStore } from "vuex";
 import axios from "axios";
 import router from "@/router";
+import VueCookies from "vue-cookies";
 
-const API_URL = "http://127.0.0.1:8080";
+// const API_URL = "http://127.0.0.1:8080";
+// const API_URL = "http://i8a706.p.ssafy.io:8080";
 
 export default createStore({
   state: {
+    API_URL: "http://127.0.0.1:8080",
+    // API_URL: "http://i8a706.p.ssafy.io:8080",
     isEnter: false, // 게임방 진입시 라우터가드를 위한 state
     isShow: false,
     accessToken: null,
@@ -39,9 +43,11 @@ export default createStore({
   },
   mutations: {
     // 회원가입 && 로그인
-    SAVE_TOKEN(state, accessToken, refreshToken) {
-      state.accessToken = accessToken;
-      state.refreshToken = refreshToken;
+    SAVE_TOKEN(state, payload) {
+      state.accessToken = payload.token;
+      // state.refreshToken = payload.refreshToken;
+      VueCookies.set("refreshToken", payload.refreshToken);
+      VueCookies.set("accessToken", payload.token);
       router.push({ name: "main" });
     },
     DELETE_TOKEN(state) {
@@ -69,7 +75,7 @@ export default createStore({
       try {
         await axios({
           method: "post",
-          url: `${API_URL}/users/`,
+          url: `${this.$store.API_URL}/users/`,
           data: {
             name: payload.name,
             password: payload.password,
@@ -86,7 +92,7 @@ export default createStore({
     logIn(context, payload) {
       axios({
         method: "post",
-        url: `${API_URL}/accounts/login/`,
+        url: `${this.$store.API_URL}/accounts/login/`,
         data: {
           username: payload.username,
           password: payload.password,
@@ -96,12 +102,13 @@ export default createStore({
       });
     },
     logInKakao(context, payload) {
-      context.commit("SAVE_TOKEN", payload.token, payload.refreshToken);
+      // console.log(payload);
+      context.commit("SAVE_TOKEN", payload);
     },
     logOut(context) {
       axios({
         method: "post",
-        url: `${API_URL}/accounts/logout/`,
+        url: `${this.$store.API_URL}/accounts/logout/`,
       }).then((res) => {
         if (res) {
           console.log(res);

@@ -9,7 +9,9 @@ export default {
   name: "kakao",
   components: {},
   data() {
-    return {};
+    return {
+      API_URL: this.$store.state.API_URL,
+    };
   },
   setup() {},
   created() {
@@ -18,14 +20,16 @@ export default {
   mounted() {},
   methods: {
     googleLogIn() {
-      const URL = "http://localhost:8080";
+      // const URL = "http://localhost:8080";
+      // const URL = "http://i8a706.p.ssafy.io:8080";
+
       let query = window.location.search;
       let param = new URLSearchParams(query);
       let code = param.get("code");
       console.log(code);
       axios({
         method: "post",
-        url: `${URL}/auth/login/google?state=google&code=${code}`,
+        url: `${this.API_URL}/auth/login/google?state=google&code=${code}`,
         headers: {
           "Content-Type": "application/json",
         },
