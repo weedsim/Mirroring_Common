@@ -46,7 +46,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager, CustomOAuth2UserService customOAuth2UserService) throws Exception {
         http
                 .addFilter(corsConfig.corsFilter()) // cors 설정. 일단 전부 풀어놓음
+//                .cors().disable()
                 .httpBasic().disable() // 기본 로그인 화면 비활성화
+
                 .formLogin().disable()
                 .csrf().disable()   // csrf 보안 비활성화
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt사용으로 session 비활성화

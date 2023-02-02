@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-
+import store from "../store/index.js";
 const routes = [
   {
     path: "/",
@@ -36,6 +36,35 @@ const routes = [
       import(
         /* webpackChunkName: "about" */ "../views/community/Community.vue"
       ),
+  },
+  {
+    path: "/kakao",
+    name: "kakao",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/auth/kakao.vue"),
+  },
+  {
+    path: "/google",
+    name: "google",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/auth/google.vue"),
+  },
+  {
+    path: "/room/:roomId",
+    name: "room",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/room/Room.vue"),
+    beforeEnter(to, from, next) {
+      try {
+        if (store.state.isEnter) {
+          next();
+        } else {
+          next("/lobby");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 ];
 

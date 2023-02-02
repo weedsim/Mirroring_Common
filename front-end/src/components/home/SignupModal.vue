@@ -82,7 +82,11 @@
             </li>
             <li>비밀번호가 일치하지 않습니다.</li>
             <li style="text-align: center; margin-top: 3vh">
-              <button type="button" class="btn btn-primary btn-sm">
+              <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                v-on:click="signUp()"
+              >
                 회원가입
               </button>
             </li>
@@ -132,6 +136,20 @@ export default {
       if (this.userpwd !== this.userpwdtwo) {
         console.log(this.userpwd + this.userpwdtwo);
       }
+    },
+    // 회원가입
+    signUp() {
+      const name = this.usernickname;
+      const password = this.userpwd;
+      const email = this.useremail;
+
+      const payload = {
+        name: name,
+        password: password,
+        email: email,
+      };
+
+      this.$store.dispatch("signUp", payload);
     },
   },
 };
