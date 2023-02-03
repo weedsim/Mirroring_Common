@@ -6,12 +6,7 @@ import com.sixsense.liargame.security.auth.JwtProperties;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,8 +16,7 @@ public class GameController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/start")
-    public ResponseEntity<?> start(HttpServletRequest request, @PathVariable Long roomId) {
-        String accessToken = request.getHeader(JwtProperties.ACCESS_TOKEN);
+    public ResponseEntity<?> start(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         gameService.normalGameStart(userId, roomId);
         return ResponseEntity.ok().build();

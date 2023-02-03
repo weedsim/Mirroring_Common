@@ -89,7 +89,6 @@ export default {
   props: {
     curIdx: String,
   },
-
   methods: {
     togglev() {
       this.$store.state.isShow_vol = !this.$store.state.isShow_vol;
