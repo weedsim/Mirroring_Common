@@ -23,7 +23,8 @@ public class UserController {
     private final Response response;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@Validated UserRequestDto.SignUp signUp, Errors errors) {
+    public ResponseEntity<?> signUp(@Validated UserRequestDto.SignUp signUp,
+                                    Errors errors) {
         // validation check
         if (errors.hasErrors()) {
             return response.invalidFields(Helper.refineErrors(errors));
@@ -32,7 +33,8 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Validated UserRequestDto.Login login, Errors errors) {
+    public ResponseEntity<?> login(@Validated UserRequestDto.Login login,
+                                   Errors errors) {
         // validation check
         if (errors.hasErrors()) {
             return response.invalidFields(Helper.refineErrors(errors));
@@ -41,7 +43,8 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestHeader("access-token") String accessToken, @RequestHeader("refresh-token") String refreshToken) {
+    public ResponseEntity<?> logout(@RequestHeader("access-token") String accessToken,
+                                    @RequestHeader("refresh-token") String refreshToken) {
         UserRequestDto.Logout logout = UserRequestDto.Logout.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
@@ -52,7 +55,8 @@ public class UserController {
 
 
     @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@RequestHeader UserRequestDto.Reissue reissue, Errors errors) {
+    public ResponseEntity<?> reissue(@RequestHeader UserRequestDto.Reissue reissue,
+                                     Errors errors) {
         // validation check
         if (errors.hasErrors()) {
             return response.invalidFields(Helper.refineErrors(errors));
@@ -60,19 +64,26 @@ public class UserController {
         return userService.reissue(reissue);
     }
 
-    @PutMapping("/modify")
-    public ResponseEntity<?> updateUserInfo(@RequestHeader("access-token") String accessToken,
-                                            String name,
-                                            String password) {
-        System.out.println(name);
-        System.out.println(password);
-        UserRequestDto.Modify modify = UserRequestDto.Modify.builder()
+    @PutMapping("/modify/name")
+    public ResponseEntity<?> updateUserName(@RequestHeader("access-token") String accessToken,
+                                            String name) {
+        UserRequestDto.ModifyName modify = UserRequestDto.ModifyName.builder()
                 .accessToken(accessToken)
                 .name(name)
+                .build();
+
+        return userService.updateName(modify);
+    }
+
+    @PutMapping("/modify/password")
+    public ResponseEntity<?> updateUserPassword(@RequestHeader("access-token") String accessToken,
+                                            String password) {
+        UserRequestDto.ModifyPassword modify = UserRequestDto.ModifyPassword.builder()
+                .accessToken(accessToken)
                 .password(password)
                 .build();
 
-        return userService.modify(modify);
+        return userService.updatePassword(modify);
     }
 
     @GetMapping

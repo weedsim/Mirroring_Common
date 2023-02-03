@@ -134,11 +134,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public ResponseEntity<?> modify(UserRequestDto.Modify modify) {
-        Authentication authentication = jwtTokenProvider.getAuthentication(modify.getAccessToken());
+    public ResponseEntity<?> updateName(UserRequestDto.ModifyName name) {
+        Authentication authentication = jwtTokenProvider.getAuthentication(name.getAccessToken());
         User user = userRepository.findByEmail(authentication.getName()).get();
-        user.changePasswordName(passwordEncoder.encode(modify.getPassword()), modify.getName());
-        return response.success("회원정보가 수정되었습니다.");
+        user.updateName(name.getName());
+        return response.success("이름이 이름이변경되었습니다.");
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<?> updatePassword(UserRequestDto.ModifyPassword password) {
+        Authentication authentication = jwtTokenProvider.getAuthentication(password.getAccessToken());
+        User user = userRepository.findByEmail(authentication.getName()).get();
+        user.updatePassword(passwordEncoder.encode(password.getPassword()));
+        return response.success("비밀번호가 변경되었습니다.");
     }
 
     @Override

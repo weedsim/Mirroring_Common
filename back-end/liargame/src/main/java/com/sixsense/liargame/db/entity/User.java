@@ -39,8 +39,11 @@ public class User {
     @Builder.Default
     private List<String> role = new ArrayList<>();
 
-    public void changePasswordName(String password, String name) {
+    public void updatePassword(String password) {
         this.password = password;
+    }
+
+    public void updateName(String name) {
         this.name = name;
     }
 }
