@@ -69,8 +69,9 @@ public class UserController {
 	}
 
 	@GetMapping
-	public ResponseEntity<?> getUserInfo(@RequestHeader UserRequestDto.UserInfo userInfo, Errors errors) {
+	public ResponseEntity<?> getUserInfo(@RequestBody UserRequestDto.UserInfo userInfo, Errors errors) {
 		// validation check
+		System.out.println(userInfo.toString());
 		if(errors.hasErrors()) {
 			return response.invalidFields(Helper.refineErrors(errors));
 		}

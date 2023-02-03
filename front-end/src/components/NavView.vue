@@ -45,6 +45,9 @@
             >
           </li>
           <li class="nav-item">
+            <router-link to="/mypage" class="nav-link">마이페이지</router-link>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="#" v-on:click="logout">로그아웃</a>
           </li>
         </ul>
@@ -110,6 +113,7 @@
 import LoginModal from "@/components/home/LoginModal.vue";
 import SignupModal from "@/components/home/SignupModal.vue";
 import PwdModal from "@/components/home/PwdModal.vue";
+import VueCookies from "vue-cookies";
 
 export default {
   components: { LoginModal, SignupModal, PwdModal },
@@ -118,6 +122,7 @@ export default {
     logout() {
       const payload = {
         accessToken: this.$store.state.accessToken,
+        refreshToken: VueCookies.get("refreshToken"),
       };
       this.$store.dispatch("logOut", payload);
     },

@@ -3,7 +3,7 @@ import axios from "axios";
 import router from "@/router";
 import VueCookies from "vue-cookies";
 
-const API_URL = "http://127.0.0.1:8080";
+const API_URL = "http://127.0.0.1:5000";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
 
 const session = {
@@ -46,9 +46,9 @@ export default createStore({
 
     // myIdx: -1,
 
-    API_URL: "http://127.0.0.1:8080",
+    API_URL: "http://127.0.0.1:5000",
     // API_URL: "http://i8a706.p.ssafy.io:8080",
-    isEnter: false, // 게임방 진입시 라우터가드를 위한 state
+    isEnter: true, // 게임방 진입시 라우터가드를 위한 state
     isShow: false,
     accessToken: null,
     refreshToken: VueCookies.get("refreshToken"),
@@ -109,34 +109,37 @@ export default createStore({
     },
   },
   actions: {
-    async signUp(context, payload) {
-      try {
-        await axios({
-          method: "post",
-          url: `${this.$store.API_URL}/users/`,
-          data: {
-            name: payload.name,
-            password: payload.password,
-            email: payload.email,
-          },
-        }).then((res) => {
-          console.log(res);
-          // context.commit("SAVE_TOKEN", res.data.key);
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    logIn(context, payload) {
+    signUp(context, payload) {
       axios({
         method: "post",
-        url: `${this.$store.API_URL}/accounts/login/`,
+        url: `${API_URL}/users/sign-up/`,
         data: {
-          username: payload.username,
+          name: payload.name,
+          password: payload.password,
+          email: payload.email,
+        },
+      }).then((res) => {
+        console.log(res);
+        console.log(res.data);
+      });
+    },
+    logIn(context, payload) {
+      // console.log("test");
+      axios({
+        method: "post",
+        url: `${API_URL}/users/login/`,
+        data: {
+          email: payload.email,
           password: payload.password,
         },
       }).then((res) => {
-        context.commit("SAVE_TOKEN", res.data.key);
+        // context.commit("SAVE_TOKEN", res.data.key);
+        // console.log(res.data.data.accessToken);
+        const payload = {
+          token: res.data.data.accessToken,
+          refreshToken: res.data.data.refreshToken,
+        };
+        context.commit("SAVE_TOKEN", payload);
       });
     },
     logInKakao(context, payload) {
@@ -145,11 +148,16 @@ export default createStore({
     },
     logOut(context, payload) {
       console.log(API_URL);
+      console.log(payload);
       axios({
         method: "post",
         url: `${API_URL}/logout`,
         headers: {
           Authorization: `Bearer ${payload.accessToken}`,
+        },
+        data: {
+          accessToken: payload.accessToken,
+          refreshToken: payload.refreshToken,
         },
       }).then((res) => {
         if (res) {

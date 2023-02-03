@@ -215,7 +215,7 @@ export default {
             // 테스트용
             // this.$store.dispatch("setIsEnter");
             // router.push({ name: "room", params: { roomId: 13 } });
-            alert("게임방 진입에 실패하셨습니다");
+            // alert("게임방 진입에 실패하셨습니다");
           });
       }
     },

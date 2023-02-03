@@ -39,7 +39,11 @@
               />
             </li>
             <li style="text-align: center; margin-top: 3vh">
-              <button type="button" class="btn btn-primary btn-sm">
+              <button
+                type="button"
+                class="btn btn-primary btn-sm"
+                v-on:click="logIn"
+              >
                 로그인
               </button>
             </li>
@@ -91,10 +95,12 @@ export default {
       (this.useremail = null), (this.userpwd = null);
     },
     logIn() {
-      const email = this.useremail;
-      const password = this.userpwd;
+      const payload = {
+        email: this.useremail,
+        password: this.userpwd,
+      };
+      this.$store.dispatch("logIn", payload);
     },
-    kakaoLogIn() {},
   },
 };
 </script>
