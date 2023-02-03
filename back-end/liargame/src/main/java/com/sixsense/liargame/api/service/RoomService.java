@@ -1,8 +1,6 @@
 package com.sixsense.liargame.api.service;
 
 import com.sixsense.liargame.api.response.RoomTokenResp;
-import com.sixsense.liargame.api.sse.Emitters;
-import com.sixsense.liargame.api.sse.GlobalEmitter;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
 import com.sixsense.liargame.common.model.response.RoomResp;
@@ -17,17 +15,15 @@ import java.util.List;
 public interface RoomService {
     RoomTokenResp insert(Long userId, RoomReq roomReq) throws OpenViduJavaClientException, OpenViduHttpException;
 
-    void enter(Long userId, Long roomId);
+    void enter(Long userId, Integer roomId);
 
-    void exit(Long userId, Long roomId);
+    void exit(Long userId, Integer roomId);
 
     void changeSetting(Long userId, SettingDto settingDto);
 
     List<RoomResp> selectAll(Pageable pageable);
 
-    default RoomResp toDto(Room room, GlobalEmitter globalEmitter) {
-        Emitters emitters = globalEmitter.getEmitters(room.getId());
-        room.setEmitters(emitters);
+    default RoomResp toDto(Room room) {
         return RoomResp.builder()
                 .id(room.getId())
                 .title(room.getTitle())
