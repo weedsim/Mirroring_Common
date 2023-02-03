@@ -44,6 +44,7 @@ public class UserRequestDto {
 
 	@Getter
 	@Setter
+	@Builder
 	public static class Reissue {
 		@NotEmpty(message = "accessToken 을 입력해주세요.")
 		private String accessToken;

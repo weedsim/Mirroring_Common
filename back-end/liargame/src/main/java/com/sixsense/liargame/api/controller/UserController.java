@@ -55,12 +55,13 @@ public class UserController {
 
 
     @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@RequestHeader UserRequestDto.Reissue reissue,
-                                     Errors errors) {
-        // validation check
-        if (errors.hasErrors()) {
-            return response.invalidFields(Helper.refineErrors(errors));
-        }
+    public ResponseEntity<?> reissue(@RequestHeader("access-token") String accessToken,
+                                     @RequestHeader("refresh-token") String refreshToken) {
+        UserRequestDto.Reissue reissue = UserRequestDto.Reissue.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+
         return userService.reissue(reissue);
     }
 

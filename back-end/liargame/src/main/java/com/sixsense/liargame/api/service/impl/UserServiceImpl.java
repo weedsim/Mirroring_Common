@@ -138,7 +138,7 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = jwtTokenProvider.getAuthentication(name.getAccessToken());
         User user = userRepository.findByEmail(authentication.getName()).get();
         user.updateName(name.getName());
-        return response.success("이름이 이름이변경되었습니다.");
+        return response.success("이름이 변경되었습니다.");
     }
 
     @Override
