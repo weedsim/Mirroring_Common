@@ -13,7 +13,10 @@ import com.sixsense.liargame.db.repository.NormalHistoryRepository;
 import com.sixsense.liargame.db.repository.NormalPlayRepository;
 import com.sixsense.liargame.db.repository.RoomRepository;
 import com.sixsense.liargame.db.repository.UserRepository;
-import io.openvidu.java.client.*;
+import io.openvidu.java.client.OpenVidu;
+import io.openvidu.java.client.OpenViduHttpException;
+import io.openvidu.java.client.OpenViduJavaClientException;
+import io.openvidu.java.client.SessionProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -62,11 +65,8 @@ public class RoomServiceImpl implements RoomService {
         Map<String, Object> map = new HashMap<>();
         map.put("customSessionId", roomId.toString());
         SessionProperties properties = SessionProperties.fromJson(map).build();
-        Session session = openvidu.createSession(properties);
-        ConnectionProperties connectionProperties = ConnectionProperties.fromJson(map).build();
-        Connection connection = session.createConnection(connectionProperties);
-        String token = connection.getToken();
-        return new RoomTokenResp(roomId, token);
+        openvidu.createSession(properties);
+        return new RoomTokenResp(roomId);
     }
 
     @Override
