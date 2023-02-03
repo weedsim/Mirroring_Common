@@ -12,11 +12,12 @@ import java.util.stream.Collectors;
 
 public class Emitters {
     @Getter
-    private final List<CustomEmitter> emitterList = new CopyOnWriteArrayList<>();
+    private final List<CustomEmitter> emitterList;
     private CustomEmitter liar;
     private CustomEmitter spy;
 
     public Emitters() {
+        emitterList = new CopyOnWriteArrayList<>();
     }
 
     public void add(CustomEmitter emitter) {
