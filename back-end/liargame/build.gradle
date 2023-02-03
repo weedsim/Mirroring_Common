@@ -73,6 +73,7 @@ dependencies {
 
     //redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    compile 'org.springframework.session:spring-session-data-redis'
 
     //openvidu
     implementation 'io.openvidu:openvidu-java-client:2.25.0'

@@ -8,20 +8,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.redis.core.RedisHash;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
-@RedisHash(value = "room")
 public class Room {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "room_id")
-    private Long id;
+    @Setter
+    private Integer id;
     private String title;
     private Integer maxCount;
     private Integer timeout;
@@ -32,13 +27,12 @@ public class Room {
     private Long master;
     @Setter
     private String answer;
-    @Transient
     @Setter
     private Emitters emitters;
     private List<UserInfo> participants;
 
     @Builder
-    public Room(Long id, String title, Integer maxCount, Integer timeout, String mode, String password, Long master) {
+    public Room(Integer id, String title, Integer maxCount, Integer timeout, String mode, String password, Long master) {
         this.id = id;
         this.title = title;
         this.maxCount = maxCount;

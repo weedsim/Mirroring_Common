@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @RedisHash("normal_game")
 public class NormalGame {
     @Id
-    private Long id;
+    private Integer id;
     @Setter
     private String word;
     @Setter
@@ -33,7 +33,7 @@ public class NormalGame {
     @Setter
     private String winner;
 
-    public NormalGame(Long roomId, int size) {
+    public NormalGame(Integer roomId, int size) {
         this.id = roomId;
         this.participants = new UserInfo[size];
         startPerson = (int) (Math.random() * participants.length);

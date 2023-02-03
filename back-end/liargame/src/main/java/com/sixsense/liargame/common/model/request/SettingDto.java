@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SettingDto {
-    private Long id;
+    private Integer id;
     private String title;
     private String mode;
     private String password;
