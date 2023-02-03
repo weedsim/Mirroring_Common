@@ -111,7 +111,7 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public List<RoomResp> selectAll(Pageable pageable) {
-        return roomRepository.findAll(pageable).stream().map(this::toDto).collect(Collectors.toList());
+        return roomRepository.findAll(pageable).stream().map(r -> this.toDto(r, globalEmitter)).collect(Collectors.toList());
     }
 
 }
