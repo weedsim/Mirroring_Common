@@ -1,6 +1,7 @@
 package com.sixsense.liargame.api.service.impl;
 
 import com.sixsense.liargame.api.request.CommentReq;
+import com.sixsense.liargame.api.response.ArticleResp;
 import com.sixsense.liargame.api.response.CommentResp;
 import com.sixsense.liargame.api.service.CommentService;
 import com.sixsense.liargame.db.entity.Comment;
@@ -47,7 +48,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentResp> findAllComments(Long articleId) {
         Sort sort = Sort.by(Sort.Direction.DESC, "updatedAt");
-        List<CommentResp> comments = commentRepository.findAllByArticleId(articleId, sort);
-        return comments;
+        List<Comment> comments = commentRepository.findByArticleId(articleId);
+        return comments.stream().map(CommentResp::new).collect(Collectors.toList());
     }
 }

@@ -17,12 +17,12 @@ public class CommentReq {
     private Long articleId;
     private LocalDateTime updatedAt;
 
-    public Comment commentToEntity(Long articleId){
+    public Comment commentToEntity(Long id){
         return Comment.builder()
                 .commentContent(commentContent)
                 .userId(userId)
                 .userName(userName)
-                .articleId(articleId)
+                .articleId(id)
                 .build();
     }
 }

@@ -10,5 +10,5 @@ import java.util.Set;
 public interface CommentRepositorySupport {
     List<Comment> findByArticleId(Long articleId);
     Comment findAllComments(Long articleId, Long commentId);
-    List<CommentResp> findAllByArticleId(Long articleId, Sort sort);
+//    List<CommentResp> findAllByArticleId(Long articleId, Sort sort);
 }

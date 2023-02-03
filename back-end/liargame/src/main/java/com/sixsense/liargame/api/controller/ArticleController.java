@@ -17,13 +17,15 @@ import java.util.List;
 public class ArticleController {
     private final ArticleService articleService;
 
+    //게시판 목록 가져오기, id는 게시글 번호 용도
     @GetMapping
     public ResponseEntity<List<ArticleResp>> getArticles(Pageable pageable) {
         return ResponseEntity.ok().body(articleService.getArticles(pageable));
     }
 
+    //게시글 생성
     @PostMapping
-    public Article createArticle(@RequestBody ArticleDetailReq article) {
+    public Article createArticle(@RequestHeader String accessToken, @RequestBody ArticleDetailReq article) {
         return articleService.insertArticle(article);
     }
 
