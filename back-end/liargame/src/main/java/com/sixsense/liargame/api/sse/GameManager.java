@@ -2,7 +2,6 @@ package com.sixsense.liargame.api.sse;
 
 import com.sixsense.liargame.common.model.Vote;
 import com.sixsense.liargame.db.entity.Room;
-import com.sixsense.liargame.db.repository.NormalGameRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -13,15 +12,12 @@ import java.util.stream.Collectors;
 
 @Component
 public class GameManager {
-    private final NormalGameRepository normalGameRepository;
 
-    public GameManager(NormalGameRepository normalGameRepository) {
-        this.normalGameRepository = normalGameRepository;
+    public GameManager() {
     }
 
     public NormalGame start(Room room) {
         NormalGame normalGame = new NormalGame(room.getId(), room.getParticipants().size());
-        Long gameId = normalGameRepository.save(normalGame).getId();
         Emitters emitters = room.getEmitters();
         int timeout = room.getTimeout();
 

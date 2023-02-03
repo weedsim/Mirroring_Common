@@ -8,8 +8,8 @@ public interface GameService {
 
     GameResultResp spyGameStart(Long userId);
 
-    void vote(Vote vote, Long GameId);
+    void vote(Vote vote, Integer gameId);
 
-    void insertAnswer(String answer, Long GameId);
+    void insertAnswer(String answer, Integer gameId);
 
 }

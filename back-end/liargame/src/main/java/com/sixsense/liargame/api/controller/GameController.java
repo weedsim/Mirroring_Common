@@ -23,13 +23,13 @@ public class GameController {
     }
 
     @PostMapping("/vote")
-    public ResponseEntity<?> vote(@PathVariable Long roomId, Vote vote) {
+    public ResponseEntity<?> vote(@PathVariable Integer roomId, Vote vote) {
         gameService.vote(vote, roomId);
         return ResponseEntity.ok(vote);
     }
 
     @PostMapping("/answer")
-    public ResponseEntity<?> insertAnswer(@PathVariable Long roomId, String answer) {
+    public ResponseEntity<?> insertAnswer(@PathVariable Integer roomId, String answer) {
         gameService.insertAnswer(answer, roomId);
         return ResponseEntity.ok(answer);
     }
