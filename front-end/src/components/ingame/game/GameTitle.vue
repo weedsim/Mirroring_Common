@@ -16,7 +16,32 @@
                     </div>
                     <div class="m-10 p-10 col-5" style="color:white">
                         setting
-                        <BIconGearFill v-on:click="test"></BIconGearFill>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                          모달내놔!
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                ...
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <BIconGearFill v-on:click="test">
+                          
+                        </BIconGearFill>
                     </div>
                 </div>
             </div>
@@ -38,7 +63,8 @@ export default {
   },
   methods:{
     test(){
-      console.log("test!!!~")
+      console.log("test!!!~") 
+      // 모달켜기를 넣어야함
     }
   }
 }
