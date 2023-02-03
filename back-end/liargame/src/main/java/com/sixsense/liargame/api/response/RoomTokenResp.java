@@ -5,10 +5,8 @@ import lombok.Data;
 @Data
 public class RoomTokenResp {
     private Long roomId;
-    private String token;
 
-    public RoomTokenResp(Long roomId, String token) {
+    public RoomTokenResp(Long roomId) {
         this.roomId = roomId;
-        this.token = token;
     }
 }
