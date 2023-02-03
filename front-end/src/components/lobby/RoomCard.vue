@@ -181,7 +181,7 @@ export default {
           // 1. state 방진입 isEnter -> true 단, 방진입직후에는 isEnter를 false로 바꿔줘야된다.
           this.roomPwd = null;
           this.$store.dispatch("setIsEnter");
-          router.push({ name: "room", params: { roomId: this.id } });
+          router.push({ name: "room", params: { roomId: res.data.roomId } });
         })
         .catch((err) => {
           this.roomPwd = null;
@@ -189,8 +189,8 @@ export default {
           console.log("실패");
           console.log(err);
           // 테스트용
-          this.$store.dispatch("setIsEnter");
-          router.push({ name: "room", params: { roomId: this.id } });
+          // this.$store.dispatch("setIsEnter");
+          // router.push({ name: "room", params: { roomId: this.id } });
           // alert("게임방 진입에 실패하셨습니다");
         });
     },

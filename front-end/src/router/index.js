@@ -50,10 +50,11 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/auth/google.vue"),
   },
   {
-    path: "/room/:roomId",
+    path: "/game/room/:roomId",
     name: "room",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/room/Room.vue"),
+      // import(/* webpackChunkName: "about" */ "../views/room/Room.vue"),
+      import(/* webpackChunkName: "about" */ "../views/InGame.vue"),
     // axios로 방에대한 토큰값을 받아온다. 유저가 들고있는 토큰값이 일치하면 그방에대한 입장 ok
     beforeEnter(to, from, next) {
       try {
@@ -66,6 +67,19 @@ const routes = [
         console.error(error);
       }
     },
+  },
+  {
+    // path: "/game/room/:roomId/play",
+    path: "/test/playgame",
+    name: "playgame",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/room/PlayRoom.vue"),
+  },
+  {
+    path: "/mypage",
+    name: "mypage",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/user/Mypage.vue"),
   },
 ];
 
