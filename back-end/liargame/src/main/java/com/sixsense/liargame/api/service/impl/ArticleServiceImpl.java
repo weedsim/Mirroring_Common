@@ -1,66 +1,66 @@
 package com.sixsense.liargame.api.service.impl;
 
-import com.sixsense.liargame.api.request.ArticleDetailReq;
+import com.sixsense.liargame.api.request.ArticleReq;
 import com.sixsense.liargame.api.response.ArticleResp;
 import com.sixsense.liargame.api.service.ArticleService;
 import com.sixsense.liargame.db.entity.Article;
 import com.sixsense.liargame.db.repository.ArticleRepository;
-import com.sixsense.liargame.db.repository.UserRepository;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Getter
 @Service
 public class ArticleServiceImpl implements ArticleService {
-    private ArticleRepository articleRepository;
-    private UserRepository userRepository;
+    private final ArticleRepository articleRepository;
 
-    public ArticleServiceImpl(ArticleRepository articleRepository, UserRepository userRepository) {
+    public ArticleServiceImpl(ArticleRepository articleRepository) {
         this.articleRepository = articleRepository;
-        this.userRepository = userRepository;
-    }
-
-    @Override
-    @Transactional
-    public Article insertArticle(ArticleDetailReq articleDetailReq) {
-        Article article = articleRepository.save(articleDetailReq.articleToEntity());
-        return article;
-    }
-
-    @Override
-    public Article getArticle(Long id) {
-        articleRepository.updateViewCnt(id);
-        Article article = articleRepository.findById(id).orElseThrow(null);
-        return article;
     }
 
     @Override
     public List<ArticleResp> getArticles(Pageable pageable) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "updatedAt");
-        List<Article> articles = articleRepository.findAll(sort);
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+        PageRequest pageRequest = (PageRequest) pageable;
+        pageRequest.withSort(sort);
+        Page<Article> articles = articleRepository.findAll(pageRequest);
         return articles.stream().map(ArticleResp::new).collect(Collectors.toList());
     }
 
     @Override
-    public void deleteArticle(Long id) {
-        Optional<Article> article = articleRepository.findById(id);
-        articleRepository.delete(article.get());
-        //articleRepository.deleteById(id);
+    @Transactional
+    public Article getArticle(Long articleId) {
+        Article article = articleRepository.findById(articleId).orElseThrow();
+        article.updateViewCnt();
+        return article;
+    }
+
+    @Override
+    public void insertArticle(Long userId, ArticleReq articleReq) {
+        articleRepository.save(toEntity(articleReq, userId));
+    }
+
+
+    @Override
+    public void deleteArticle(Long userId, Long articleId) {
+        Article article = articleRepository.findById(articleId).orElseThrow();
+        if (Objects.equals(article.getUserId(), userId))
+            articleRepository.delete(article);
     }
 
     @Override
     @Transactional
-    public Long updateArticle(Long id, ArticleDetailReq article) {
-        Article article1 = articleRepository.findById(id).orElseThrow(null);
-        article1.updateArticle(article.getTitle(), article.getContent(), article.getIsNotice());
-        articleRepository.save(article1);
-        return id;
+    public void updateArticle(Long userId, Long articleId, ArticleReq articleReq) {
+        Article article = articleRepository.findById(userId).orElseThrow();
+        if (Objects.equals(article.getUserId(), userId))
+            article.updateArticle(articleReq);
     }
 }

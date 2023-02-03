@@ -1,10 +1,11 @@
 package com.sixsense.liargame.api.controller;
 
-import com.sixsense.liargame.api.request.CommentReq;
 import com.sixsense.liargame.api.response.CommentResp;
 import com.sixsense.liargame.api.service.CommentService;
-import com.sixsense.liargame.db.entity.Comment;
+import com.sixsense.liargame.security.auth.JwtProperties;
+import com.sixsense.liargame.security.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,29 +13,34 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/articles/{articleId}/comment")
+@RequestMapping("/articles/{articleId}/comments")
 public class CommentController {
     private final CommentService commentService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping
-    public Comment insertComment(@PathVariable Long articleId, @RequestBody CommentReq commentReq) {
-        return commentService.insertComment(articleId, commentReq);
+    public ResponseEntity<?> insertComment(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @PathVariable Long articleId, String content) {
+        Long userId = jwtTokenProvider.getUserId(accessToken);
+        commentService.insertComment(userId, articleId, content);
+        return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{commentId}")
-    public ResponseEntity<?> updateComment(@PathVariable Long articleId, @PathVariable Long commentId, @RequestBody CommentReq commentReq) {
-        commentService.updateComment(articleId, commentId, commentReq);
+    public ResponseEntity<?> updateComment(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @PathVariable Long commentId, String content) {
+        Long userId = jwtTokenProvider.getUserId(accessToken);
+        commentService.updateComment(userId, commentId, content);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<CommentResp> deleteComment(@PathVariable Long commentId) {
-        commentService.deleteComment(commentId);
+    public ResponseEntity<CommentResp> deleteComment(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @PathVariable Long commentId) {
+        Long userId = jwtTokenProvider.getUserId(accessToken);
+        commentService.deleteComment(userId, commentId);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping
-    public List<CommentResp> findAllComments(@PathVariable Long articleId) {
-        return commentService.findAllComments(articleId);
+    public ResponseEntity<List<CommentResp>> findAllComments(@PathVariable Long articleId, Pageable pageable) {
+        return ResponseEntity.ok(commentService.findAllComments(articleId, pageable));
     }
 }
