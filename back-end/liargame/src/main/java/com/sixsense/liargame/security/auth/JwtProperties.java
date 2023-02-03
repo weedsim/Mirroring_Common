@@ -8,4 +8,5 @@ public interface JwtProperties {
     String BEARER_TYPE = "Bearer";
     String ACCESS_TOKEN = "access-token";
     String REFRESH_TOKEN = "refresh-token";
+    String AUTHORIAZATION = "authorization";
 }
