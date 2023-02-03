@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestHeader(JwtProperties.ACCESS_TOKEN) String accessToken,
+    public ResponseEntity<?> logout(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
                                     @RequestHeader(JwtProperties.REFRESH_TOKEN) String refreshToken) {
         UserRequestDto.Logout logout = UserRequestDto.Logout.builder()
                 .accessToken(accessToken)
@@ -54,7 +54,7 @@ public class UserController {
 
 
     @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@RequestHeader(JwtProperties.ACCESS_TOKEN) String accessToken,
+    public ResponseEntity<?> reissue(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
                                      @RequestHeader(JwtProperties.REFRESH_TOKEN) String refreshToken) {
         UserRequestDto.Reissue reissue = UserRequestDto.Reissue.builder()
                 .accessToken(accessToken)
@@ -65,7 +65,7 @@ public class UserController {
     }
 
     @PutMapping("/modify/name")
-    public ResponseEntity<?> updateUserName(@RequestHeader(JwtProperties.ACCESS_TOKEN) String accessToken,
+    public ResponseEntity<?> updateUserName(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
                                             String name) {
         UserRequestDto.ModifyName modify = UserRequestDto.ModifyName.builder()
                 .accessToken(accessToken)
@@ -76,7 +76,7 @@ public class UserController {
     }
 
     @PutMapping("/modify/password")
-    public ResponseEntity<?> updateUserPassword(@RequestHeader(JwtProperties.ACCESS_TOKEN) String accessToken,
+    public ResponseEntity<?> updateUserPassword(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
                                             String password) {
         UserRequestDto.ModifyPassword modify = UserRequestDto.ModifyPassword.builder()
                 .accessToken(accessToken)
@@ -87,7 +87,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getUserInfo(@RequestHeader(JwtProperties.ACCESS_TOKEN) String accessToken) {
+    public ResponseEntity<?> getUserInfo(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken) {
         UserRequestDto.UserInfo userInfo = UserRequestDto.UserInfo
                 .builder()
                 .accessToken(accessToken)

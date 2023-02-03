@@ -21,13 +21,13 @@ public class HistoryController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/normal")
-    public ResponseEntity<List<HistoryResp>> getNormalGame(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken) {
+    public ResponseEntity<List<HistoryResp>> getNormalGame(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         return ResponseEntity.ok().body(historyService.selectNormalGameHistory(userId));
     }
 
     @GetMapping("/spy")
-    public ResponseEntity<List<HistoryResp>> getSpyGame(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken) {
+    public ResponseEntity<List<HistoryResp>> getSpyGame(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         return ResponseEntity.ok().body(historyService.selectSpyGameHistory(userId));
     }
