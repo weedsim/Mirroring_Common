@@ -60,7 +60,7 @@
             <li>
               <input type="text" class="form-control" v-model="roomtitle" />
             </li>
-            <!-- <li>
+            <li>
               비밀번호
               <input type="checkbox" v-model="roomchk" v-on:click="chksecret" />
             </li>
@@ -71,7 +71,7 @@
                 class="form-control"
                 v-model="roompwd"
               />
-            </li> -->
+            </li>
           </ul>
           <div class="optionwrapper">
             <div class="m-0 p-0" style="width: 50%">
