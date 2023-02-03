@@ -1,6 +1,8 @@
 package com.sixsense.liargame.api.service;
 
 import com.sixsense.liargame.api.response.RoomTokenResp;
+import com.sixsense.liargame.api.sse.Emitters;
+import com.sixsense.liargame.api.sse.GlobalEmitter;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
 import com.sixsense.liargame.common.model.response.RoomResp;
@@ -23,7 +25,9 @@ public interface RoomService {
 
     List<RoomResp> selectAll(Pageable pageable);
 
-    default RoomResp toDto(Room room) {
+    default RoomResp toDto(Room room, GlobalEmitter globalEmitter) {
+        Emitters emitters = globalEmitter.getEmitters(room.getId());
+        room.setEmitters(emitters);
         return RoomResp.builder()
                 .id(room.getId())
                 .title(room.getTitle())
