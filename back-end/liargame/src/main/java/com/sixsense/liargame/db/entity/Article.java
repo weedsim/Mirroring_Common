@@ -2,13 +2,14 @@ package com.sixsense.liargame.db.entity;
 
 //import com.sixsense.liargame.db.entity.User;
 
+import com.sixsense.liargame.api.request.ArticleReq;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Entity
@@ -22,31 +23,33 @@ public class Article extends CommunityBaseTime {
     private String title;
     private String content;
     private Boolean isNotice;
+    @Column(name = "user_id")
     private Long userId;
-    private String userName;
-    @Column(nullable = false, columnDefinition = "integer default 0")
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
     private Integer viewCnt;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "user_id")
-//    private User user;
-//    @Builder
-//    public Article(Long id, String title, String content, Boolean isNotice, Long userId, String userName, Integer viewCnt, User user) {
-//
-//    }
+    private LocalDateTime updatedAt;
+
     @Builder
-    public Article(Long id, String title, String content, Boolean isNotice, Long userId, String userName, Integer viewCnt) {
+    public Article(Long id, String title, String content, Boolean isNotice, Long userId, Integer viewCnt) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.isNotice = isNotice;
         this.userId = userId;
-        this.userName = userName;
         this.viewCnt = viewCnt;
+        this.updatedAt = LocalDateTime.now();
     }
 
-    public void updateArticle(String title, String content, Boolean isNotice){
-        this.title = title;
-        this.content = content;
-        this.isNotice = isNotice;
+    public void updateArticle(ArticleReq articleReq) {
+        this.title = articleReq.getTitle();
+        this.content = articleReq.getContent();
+        this.isNotice = articleReq.getIsNotice();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void updateViewCnt() {
+        viewCnt++;
     }
 }

@@ -14,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -32,22 +31,21 @@ public class RoomController {
     }
 
     @PatchMapping("/{roomId}/enter")
-    public ResponseEntity<?> enter(@RequestHeader(name = JwtProperties.ACCESS_TOKEN) String accessToken, @PathVariable Long roomId) {
+    public ResponseEntity<?> enter(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @PathVariable Long roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         roomService.enter(userId, roomId);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{roomId}/exit")
-    public ResponseEntity<?> exit(@RequestHeader(name = JwtProperties.ACCESS_TOKEN) String accessToken, @PathVariable Long roomId) {
+    public ResponseEntity<?> exit(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @PathVariable Long roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         roomService.exit(userId, roomId);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{roomId}")
-    public ResponseEntity<?> changeSetting(HttpServletRequest request, @PathVariable Long roomId, @RequestBody SettingDto settingDto) {
-        String accessToken = request.getHeader(JwtProperties.ACCESS_TOKEN);
+    public ResponseEntity<?> changeSetting(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @PathVariable Long roomId, @RequestBody SettingDto settingDto) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         settingDto.setId(roomId);
         roomService.changeSetting(userId, settingDto);
@@ -55,10 +53,9 @@ public class RoomController {
     }
 
     @PostMapping
-    public ResponseEntity<RoomTokenResp> create(HttpServletRequest request, @RequestBody RoomReq roomReq) {
-        String accessToken = request.getHeader(JwtProperties.ACCESS_TOKEN);
+    public ResponseEntity<RoomTokenResp> create(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @RequestBody RoomReq roomReq) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
-        RoomTokenResp roomTokenResp = null;
+        RoomTokenResp roomTokenResp;
         try {
             roomTokenResp = roomService.insert(userId, roomReq);
         } catch (OpenViduJavaClientException | OpenViduHttpException e) {
