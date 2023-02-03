@@ -1,5 +1,6 @@
 package com.sixsense.liargame.api.controller;
 
+import com.sixsense.liargame.api.lib.Helper;
 import com.sixsense.liargame.api.service.UserService;
 import com.sixsense.liargame.common.model.Response;
 import com.sixsense.liargame.common.model.request.UserRequestDto;
@@ -7,6 +8,8 @@ import com.sixsense.liargame.security.auth.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,42 +22,77 @@ public class UserController {
     private final Response response;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@RequestBody UserRequestDto.SignUp signUp) {
+    public ResponseEntity<?> signUp(@Validated UserRequestDto.SignUp signUp,
+                                    Errors errors) {
         // validation check
+        if (errors.hasErrors()) {
+            return response.invalidFields(Helper.refineErrors(errors));
+        }
         return userService.signUp(signUp);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody UserRequestDto.Login login) {
+    public ResponseEntity<?> login(@Validated UserRequestDto.Login login,
+                                   Errors errors) {
         // validation check
+        if (errors.hasErrors()) {
+            return response.invalidFields(Helper.refineErrors(errors));
+        }
         return userService.login(login);
     }
 
-    @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@RequestHeader(name = JwtProperties.REFRESH_TOKEN) String refreshToken, @RequestHeader(name = JwtProperties.ACCESS_TOKEN) String accessToken) {
-        // validation check
-        UserRequestDto.Reissue reissue = new UserRequestDto.Reissue(accessToken, refreshToken);
-        return userService.reissue(reissue);
-    }
-
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestHeader(name = JwtProperties.REFRESH_TOKEN) String refreshToken, @RequestHeader(name = JwtProperties.ACCESS_TOKEN) String accessToken) {
-        // validation check
-        UserRequestDto.Logout logout = new UserRequestDto.Logout(accessToken, refreshToken);
+    public ResponseEntity<?> logout(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
+                                    @RequestHeader(JwtProperties.REFRESH_TOKEN) String refreshToken) {
+        UserRequestDto.Logout logout = UserRequestDto.Logout.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+
         return userService.logout(logout);
     }
 
-    @PutMapping("/modify")
-    public ResponseEntity<?> updateUserInfo(@RequestHeader(name = JwtProperties.REFRESH_TOKEN) String accessToken, @RequestBody UserRequestDto.Modify modify) {
-        // validation check
-        modify.setAccessToken(accessToken);
-        return userService.modify(modify);
+
+    @PostMapping("/reissue")
+    public ResponseEntity<?> reissue(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
+                                     @RequestHeader(JwtProperties.REFRESH_TOKEN) String refreshToken) {
+        UserRequestDto.Reissue reissue = UserRequestDto.Reissue.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+
+        return userService.reissue(reissue);
+    }
+
+    @PutMapping("/modify/name")
+    public ResponseEntity<?> updateUserName(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
+                                            String name) {
+        UserRequestDto.ModifyName modify = UserRequestDto.ModifyName.builder()
+                .accessToken(accessToken)
+                .name(name)
+                .build();
+
+        return userService.updateName(modify);
+    }
+
+    @PutMapping("/modify/password")
+    public ResponseEntity<?> updateUserPassword(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
+                                            String password) {
+        UserRequestDto.ModifyPassword modify = UserRequestDto.ModifyPassword.builder()
+                .accessToken(accessToken)
+                .password(password)
+                .build();
+
+        return userService.updatePassword(modify);
     }
 
     @GetMapping
-    public ResponseEntity<?> getUserInfo(@RequestHeader(name = JwtProperties.ACCESS_TOKEN) String accessToken) {
-        // validation check
-        UserRequestDto.UserInfo userInfo = new UserRequestDto.UserInfo(accessToken);
+    public ResponseEntity<?> getUserInfo(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken) {
+        UserRequestDto.UserInfo userInfo = UserRequestDto.UserInfo
+                .builder()
+                .accessToken(accessToken)
+                .build();
+
         return userService.getUserInfo(userInfo);
     }
 

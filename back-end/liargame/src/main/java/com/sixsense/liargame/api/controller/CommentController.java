@@ -19,21 +19,21 @@ public class CommentController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping
-    public ResponseEntity<?> insertComment(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @PathVariable Long articleId, String content) {
+    public ResponseEntity<?> insertComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long articleId, String content) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         commentService.insertComment(userId, articleId, content);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{commentId}")
-    public ResponseEntity<?> updateComment(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @PathVariable Long commentId, String content) {
+    public ResponseEntity<?> updateComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long commentId, String content) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         commentService.updateComment(userId, commentId, content);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<CommentResp> deleteComment(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @PathVariable Long commentId) {
+    public ResponseEntity<CommentResp> deleteComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long commentId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         commentService.deleteComment(userId, commentId);
         return ResponseEntity.ok().build();
