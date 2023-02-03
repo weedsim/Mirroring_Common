@@ -76,19 +76,13 @@ export default {
     }
   },
   name: "RoomComp",
-<<<<<<< front-end/src/components/ingame/UserComp.vue
-  components: { BIconMicFill, BIconHeadset, UserDisplay},
-=======
   components: { BIconVolumeUpFill, BIconCameraVideoOffFill, BIconCameraVideoFill, BIconVolumeMuteFill},
->>>>>>> front-end/src/components/ingame/UserComp.vue
   created() {
     // console.log(11111111,this.curIdx)
   },
   props: {
     curIdx : String
   },
-<<<<<<< front-end/src/components/ingame/UserComp.vue
-=======
   methods:{
     togglev(){
       this.$store.state.isShow_vol = !this.$store.state.isShow_vol
@@ -98,7 +92,6 @@ export default {
      }
     }
 
->>>>>>> front-end/src/components/ingame/UserComp.vue
 }
 </script>
 
