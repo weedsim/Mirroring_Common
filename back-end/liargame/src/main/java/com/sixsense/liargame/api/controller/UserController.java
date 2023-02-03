@@ -4,6 +4,7 @@ import com.sixsense.liargame.api.lib.Helper;
 import com.sixsense.liargame.api.service.UserService;
 import com.sixsense.liargame.common.model.Response;
 import com.sixsense.liargame.common.model.request.UserRequestDto;
+import com.sixsense.liargame.security.auth.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,8 +44,8 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestHeader("access-token") String accessToken,
-                                    @RequestHeader("refresh-token") String refreshToken) {
+    public ResponseEntity<?> logout(@RequestHeader(JwtProperties.ACCESS_TOKEN) String accessToken,
+                                    @RequestHeader(JwtProperties.REFRESH_TOKEN) String refreshToken) {
         UserRequestDto.Logout logout = UserRequestDto.Logout.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
@@ -55,8 +56,8 @@ public class UserController {
 
 
     @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@RequestHeader("access-token") String accessToken,
-                                     @RequestHeader("refresh-token") String refreshToken) {
+    public ResponseEntity<?> reissue(@RequestHeader(JwtProperties.ACCESS_TOKEN) String accessToken,
+                                     @RequestHeader(JwtProperties.REFRESH_TOKEN) String refreshToken) {
         UserRequestDto.Reissue reissue = UserRequestDto.Reissue.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
@@ -66,7 +67,7 @@ public class UserController {
     }
 
     @PutMapping("/modify/name")
-    public ResponseEntity<?> updateUserName(@RequestHeader("access-token") String accessToken,
+    public ResponseEntity<?> updateUserName(@RequestHeader(JwtProperties.ACCESS_TOKEN) String accessToken,
                                             String name) {
         UserRequestDto.ModifyName modify = UserRequestDto.ModifyName.builder()
                 .accessToken(accessToken)
@@ -77,7 +78,7 @@ public class UserController {
     }
 
     @PutMapping("/modify/password")
-    public ResponseEntity<?> updateUserPassword(@RequestHeader("access-token") String accessToken,
+    public ResponseEntity<?> updateUserPassword(@RequestHeader(JwtProperties.ACCESS_TOKEN) String accessToken,
                                             String password) {
         UserRequestDto.ModifyPassword modify = UserRequestDto.ModifyPassword.builder()
                 .accessToken(accessToken)
@@ -88,7 +89,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getUserInfo(@RequestHeader("access-token") String accessToken) {
+    public ResponseEntity<?> getUserInfo(@RequestHeader(JwtProperties.ACCESS_TOKEN) String accessToken) {
         UserRequestDto.UserInfo userInfo = UserRequestDto.UserInfo
                 .builder()
                 .accessToken(accessToken)
