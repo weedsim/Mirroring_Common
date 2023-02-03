@@ -1,5 +1,6 @@
 package com.sixsense.liargame.common.model.request;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -53,6 +54,7 @@ public class UserRequestDto {
 
 	@Getter
 	@Setter
+	@Builder
 	public static class Logout {
 		@NotEmpty(message = "accessToken null.")
 		private String accessToken;
@@ -63,6 +65,7 @@ public class UserRequestDto {
 
 	@Getter
 	@Setter
+	@Builder
 	public static class Modify {
 
 		@NotEmpty(message = "accessToken 을 입력해주세요.")
@@ -79,6 +82,7 @@ public class UserRequestDto {
 	
 	@Getter
 	@Setter
+	@Builder
 	public static class UserInfo {
 		@NotEmpty(message = "accessToken 을 입력해주세요.")
 		private String accessToken;
