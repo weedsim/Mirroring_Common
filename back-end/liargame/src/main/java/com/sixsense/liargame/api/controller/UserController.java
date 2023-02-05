@@ -52,18 +52,6 @@ public class UserController {
         return userService.logout(logout);
     }
 
-
-<<<<<<< HEAD
-	@GetMapping
-	public ResponseEntity<?> getUserInfo(@RequestBody UserRequestDto.UserInfo userInfo, Errors errors) {
-		// validation check
-		System.out.println(userInfo.toString());
-		if(errors.hasErrors()) {
-			return response.invalidFields(Helper.refineErrors(errors));
-		}
-		return userService.getUserInfo(userInfo);
-	}
-=======
     @PostMapping("/reissue")
     public ResponseEntity<?> reissue(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
                                      @RequestHeader(JwtProperties.REFRESH_TOKEN) String refreshToken) {
@@ -71,8 +59,6 @@ public class UserController {
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
->>>>>>> 1a4eefd452d57800ac43925184109859c1be3b79
-
         return userService.reissue(reissue);
     }
 
