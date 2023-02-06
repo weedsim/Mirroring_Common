@@ -31,7 +31,7 @@ public class RoomController {
     }
 
     @PatchMapping("/{roomId}/enter")
-    public ResponseEntity<?> enter(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @PathVariable Integer roomId) {
+    public ResponseEntity<?> enter(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         roomService.enter(userId, roomId);
         return ResponseEntity.ok().build();
@@ -45,7 +45,7 @@ public class RoomController {
     }
 
     @PatchMapping("/{roomId}")
-    public ResponseEntity<?> changeSetting(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @PathVariable Integer roomId, @RequestBody SettingDto settingDto) {
+    public ResponseEntity<?> changeSetting(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId, @RequestBody SettingDto settingDto) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         settingDto.setId(roomId);
         roomService.changeSetting(userId, settingDto);
