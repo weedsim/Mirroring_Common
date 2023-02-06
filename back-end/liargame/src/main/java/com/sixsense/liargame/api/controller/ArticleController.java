@@ -32,7 +32,7 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createArticle(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @RequestBody ArticleReq articleReq) {
+    public ResponseEntity<?> createArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @RequestBody ArticleReq articleReq) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.insertArticle(userId, articleReq);
         return ResponseEntity.ok().build();
@@ -40,14 +40,14 @@ public class ArticleController {
 
 
     @DeleteMapping("/{articleId}")
-    public ResponseEntity<?> deleteArticle(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @PathVariable Long articleId) {
+    public ResponseEntity<?> deleteArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long articleId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.deleteArticle(userId, articleId);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{articleId}")
-    public ResponseEntity<?> patchArticle(@RequestHeader(name = JwtProperties.AUTHORIAZATION) String accessToken, @PathVariable Long articleId, @RequestBody ArticleReq article) {
+    public ResponseEntity<?> patchArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long articleId, @RequestBody ArticleReq article) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.updateArticle(userId, articleId, article);
         return ResponseEntity.ok().build();
