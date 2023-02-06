@@ -53,10 +53,10 @@ import UserVideo from "@/components/UserVideo";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const APPLICATION_SERVER_URL =
-  process.env.NODE_ENV === "production"
-    ? "http://192.168.32.171:5000/"
-    : "http://localhost:5000/";
-
+  // process.env.NODE_ENV === "production"
+  //   ? "http://192.168.32.171:5000/"
+  //   : "http://localhost:5000/";
+  "http://192.168.32.171:5000/";
 export default {
   name: "UserDisplay",
 

@@ -84,6 +84,7 @@ export default createStore({
   mutations: {
     // 회원가입 && 로그인
     SAVE_TOKEN(state, payload) {
+      console.log(payload);
       state.accessToken = payload.token;
       // state.refreshToken = payload.refreshToken;
       // VueCookies.set("accessToken", payload.token);
@@ -166,8 +167,6 @@ export default createStore({
       context.commit("SAVE_TOKEN", payload);
     },
     logOut(context, payload) {
-      console.log(API_URL);
-      console.log(payload);
       axios({
         method: "post",
         url: `${API_URL}/logout`,
@@ -204,6 +203,34 @@ export default createStore({
     // 게임플레이방 진입후 playgames false
     resetPlaygames(context) {
       context.commit("RESET_ISPLAY");
+    },
+    // REISSUE요청
+    reIssue(context, payload) {
+      console.log(payload);
+      axios({
+        method: "get",
+        url: `${API_URL}/users/reissue`,
+        headers: {
+          Authorization: `Bearer ${payload.refreshToken}`,
+          // "refresh-token": payload.refreshToken,
+        },
+        // data: {
+        //   accessToken: payload.accessToken,
+        //   refreshToken: payload.refreshToken,
+        // },
+      })
+        .then((res) => {
+          console.log("reissue 테스트중입니다. ");
+          console.log(res);
+          // const payload = {
+          //   token: res.data,
+          //   refreshToken: payload.refreshToken,
+          // };
+          // context.commit("SAVE_TOKEN", payload);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   modules: {},

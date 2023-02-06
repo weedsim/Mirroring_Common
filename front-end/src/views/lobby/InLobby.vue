@@ -10,6 +10,7 @@
 import navbar from "@/components/NavView.vue";
 import MainLobby from "@/components/lobby/MainLobby.vue";
 import OuterContainer from "@/components/OuterContainer.vue";
+import VueCookies from "vue-cookies";
 
 export default {
   name: "InLobby",
@@ -19,11 +20,16 @@ export default {
     OuterContainer,
   },
   created() {
-    this.test();
+    this.getReIssue();
   },
   methods: {
-    test() {
+    getReIssue() {
       console.log(this.$store.state.accessToken);
+      const payload = {
+        accessToken: null,
+        refreshToken: VueCookies.get("refreshToken"),
+      };
+      this.$store.dispatch("reIssue", payload);
     },
   },
 };
