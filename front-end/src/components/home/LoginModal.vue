@@ -42,7 +42,8 @@
               <button
                 type="button"
                 class="btn btn-primary btn-sm"
-                v-on:click="logIn"
+                v-on:click="logIn()"
+                data-bs-dismiss="modal"
               >
                 로그인
               </button>
@@ -54,9 +55,10 @@
                 ><img src="@/assets/icon/btngoogle.png" alt="" />
               </a>
               <a
-                href="https://kauth.kakao.com/oauth/authorize?client_id=1ff9c0d8399e2993bcc0f81a9c899269&redirect_uri=http://localhost:8081/kakao&response_type=code"
+                href="https://kauth.kakao.com/oauth/authorize?client_id=1ff9c0d8399e2993bcc0f81a9c899269&redirect_uri=http://192.168.32.111:8081/kakao&response_type=code"
                 ><img src="@/assets/icon/btnkakao.png" alt=""
               /></a>
+              <!-- <div id="kakaoAnckor"></div> -->
             </li>
             <li style="font-size: small">
               아직 회원이 아니신가요?
@@ -88,9 +90,22 @@ export default {
     };
   },
   setup() {},
-  created() {},
+  created() {
+    this.setAnchor();
+  },
   mounted() {},
   methods: {
+    setAnchor() {
+      //   const APPLICATION_SERVER_URL =
+      //     process.env.NODE_ENV === "production"
+      //       ? "http://192.168.32.171:5000/"
+      //       : "http://localhost:5000/";
+      //   let ka = document.getElementById("kakaoAnckor");
+      //   let link = document.createElement("a");
+      //   link.href = `https://kauth.kakao.com/oauth/authorize?client_id=1ff9c0d8399e2993bcc0f81a9c899269&redirect_uri=${APPLICATION_SERVER_URL}/kakao&response_type=code`;
+      //   link.img = "@/assets/icon/btnkakao.png";
+      //   ka.appendChild(link);
+    },
     resetval() {
       (this.useremail = null), (this.userpwd = null);
     },

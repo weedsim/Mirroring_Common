@@ -25,20 +25,22 @@
     </div> -->
 
     <!-- <div id="session" v-if="session"> -->
-      <!-- <div id="session-header">
+    <!-- <div id="session-header">
         <h1 id="session-title">{{ mySessionId }}</h1>
         <input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession"
           value="Leave session" />
       </div> -->
-      <!-- <div id="main-video" class="col-md-6">
+    <!-- <div id="main-video" class="col-md-6">
         <user-video :stream-manager="mainStreamManager" />
       </div> -->
-      <div id="video-container">
-        <user-video :stream-manager="$store.state.sessions[curIdx].ovSession.publisher"/>
-        <!-- @click="updateMainVideoStreamManager(publisher)"  -->
-        <!-- <user-video v-for="sub in $store.state.sessions[curIdx].ovSession.subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub"
+    <div id="video-container">
+      <user-video
+        :stream-manager="$store.state.sessions[curIdx].ovSession.publisher"
+      />
+      <!-- @click="updateMainVideoStreamManager(publisher)"  -->
+      <!-- <user-video v-for="sub in $store.state.sessions[curIdx].ovSession.subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub"
           @click="updateMainVideoStreamManager(sub)" /> -->
-      </div>
+    </div>
     <!-- </div> -->
   </div>
 </template>
@@ -50,7 +52,10 @@ import UserVideo from "@/components/UserVideo";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000/';
+const APPLICATION_SERVER_URL =
+  process.env.NODE_ENV === "production"
+    ? "http://192.168.32.171:5000/"
+    : "http://localhost:5000/";
 
 export default {
   name: "UserDisplay",
@@ -59,33 +64,32 @@ export default {
     UserVideo,
   },
 
-    props:{
-        curIdx:String
-    },
+  props: {
+    curIdx: String,
+  },
   data() {
     return {
       // OpenVidu objects
-      
-    OV: undefined,
-    session: undefined,
-    mainStreamManager: undefined,
-    publisher: undefined,
+
+      OV: undefined,
+      session: undefined,
+      mainStreamManager: undefined,
+      publisher: undefined,
 
       // Join form
       mySessionId: "SessionA",
       myUserName: "Participant" + Math.floor(Math.random() * 100),
     };
   },
-created(){
-    console.log(444, this.$store.state.sessions[this.curIdx].ovSession)
+  created() {
+    console.log(444, this.$store.state.sessions[this.curIdx].ovSession);
     // this.joinSession()
     // console.log("OV,", this.OV)
     // console.log("session,", this.session,)
     // console.log("mainStreamManager,", this.mainStreamManager,)
     // console.log("publisher,", this.publisher,)
     // console.log("subscribers", this.subscribers)
-
-},
+  },
   methods: {
     joinSession() {
       // --- 1) Get an OpenVidu object ---
@@ -95,19 +99,18 @@ created(){
       this.session = this.OV.initSession();
 
       // --- 3) Specify the actions when events take place in the session ---
-        
 
-        // 새로운 유저가 어느 위치에 들어오는지 확인
+      // 새로운 유저가 어느 위치에 들어오는지 확인
       // On every new Stream received...
       this.session.on("streamCreated", ({ stream }) => {
         // const subscriber = this.session.subscribe(stream);
-        
-        for(let i=0;i<10;i++){
-        //     console.log(this.$store.state.sessions[i].isJoin)
-            if(!this.$store.state.sessions[i].isJoin){
-                this.$store.state.sessions[i].ovSession.session.subscribe(stream)
-                break;
-            }
+
+        for (let i = 0; i < 10; i++) {
+          //     console.log(this.$store.state.sessions[i].isJoin)
+          if (!this.$store.state.sessions[i].isJoin) {
+            this.$store.state.sessions[i].ovSession.session.subscribe(stream);
+            break;
+          }
         }
         // console.log("this.$state.store.sessions", this.$store.state.sessions)
         // this.$state.store.sessions[this.curIdx].ovSession = subscriber
@@ -120,12 +123,10 @@ created(){
         // 채팅이벤트
         // https://docs.openvidu.io/en/stable/cheatsheet/send-messages/
         // console.log("USER DATA: " + stream.connection.data);
-
         // const index = this.subscribers.indexOf(stream.streamManager, 0);
         // if (index >= 0) {
         //   this.subscribers.splice(index, 1);
         // }
-
         // for(let i=0;i<10;i++){
         //     // let session = this.$store.state.sessions[i].ovSession
         //     console.log(333333, index)
@@ -138,7 +139,6 @@ created(){
         //         break;
         //     }
         // }
-        
         // axios.get().then(
         //     axios.
         //     c
@@ -147,7 +147,6 @@ created(){
         // if (index >= 0) {
         //   this.subscribers.splice(index, 1);
         // }
-        
       });
 
       // On every asynchronous exception...
@@ -159,12 +158,11 @@ created(){
 
       // Get a token from the OpenVidu deployment
       this.getToken(this.mySessionId).then((token) => {
-
         // First param is the token. Second param can be retrieved by every user on event
         // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
-        this.session.connect(token, { clientData: this.myUserName })
+        this.session
+          .connect(token, { clientData: this.myUserName })
           .then(() => {
-
             // --- 5) Get your own camera stream with the desired properties ---
 
             // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
@@ -185,23 +183,28 @@ created(){
             this.publisher = publisher;
             // console.log(this.curIdx)
             // console.log("this.$store", this.$store.state.sessions[this.curIdx])
-            this.$store.state.sessions[this.curIdx].ovSession.session = publisher
-            this.$store.state.sessions[this.curIdx].isJoin = true
-            
-            for(let i=0;i<10;i++){
-                console.log(this.$store.state.sessions[i].isJoin)
+            this.$store.state.sessions[this.curIdx].ovSession.session =
+              publisher;
+            this.$store.state.sessions[this.curIdx].isJoin = true;
+
+            for (let i = 0; i < 10; i++) {
+              console.log(this.$store.state.sessions[i].isJoin);
             }
-            
+
             // --- 6) Publish your stream ---
 
             this.session.publish(this.publisher);
           })
           .catch((error) => {
-            console.log("There was an error connecting to the session:", error.code, error.message);
+            console.log(
+              "There was an error connecting to the session:",
+              error.code,
+              error.message
+            );
           });
       });
 
-    //   window.addEventListener("beforeunload", this.leaveSession);
+      //   window.addEventListener("beforeunload", this.leaveSession);
     },
 
     leaveSession() {
@@ -215,16 +218,16 @@ created(){
       this.subscribers = [];
       this.OV = undefined;
 
-        let ovSession = {
-            "OV":this.OV,
-            "session":this.session,
-            "mainStreamManager":this.mainStreamManager,
-            "publisher":this.publisher,
-            "sessions":this.sessions,
-        }
-        
-        this.$store.state.sessions[this.curIdx].ovSession = ovSession
-        this.$store.state.sessions[this.curIdx].isJoin = false
+      let ovSession = {
+        OV: this.OV,
+        session: this.session,
+        mainStreamManager: this.mainStreamManager,
+        publisher: this.publisher,
+        sessions: this.sessions,
+      };
+
+      this.$store.state.sessions[this.curIdx].ovSession = ovSession;
+      this.$store.state.sessions[this.curIdx].isJoin = false;
 
       // Remove beforeunload listener
       window.removeEventListener("beforeunload", this.leaveSession);
@@ -256,16 +259,25 @@ created(){
     },
 
     async createSession(sessionId) {
-      const response = await axios.post(APPLICATION_SERVER_URL + 'api/sessions', { customSessionId: sessionId }, {
-        headers: { 'Content-Type': 'application/json', },
-      });
+      console.log(APPLICATION_SERVER_URL);
+      const response = await axios.post(
+        APPLICATION_SERVER_URL + "api/sessions",
+        { customSessionId: sessionId },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       return response.data; // The sessionId
     },
 
     async createToken(sessionId) {
-      const response = await axios.post(APPLICATION_SERVER_URL + 'api/sessions/' + sessionId + '/connections', {}, {
-        headers: { 'Content-Type': 'application/json', },
-      });
+      const response = await axios.post(
+        APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
+        {},
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
       return response.data; // The token
     },
   },

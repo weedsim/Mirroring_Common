@@ -3,7 +3,8 @@ import axios from "axios";
 import router from "@/router";
 import VueCookies from "vue-cookies";
 
-const API_URL = "http://127.0.0.1:5000";
+// const API_URL = "http://127.0.0.1:5000";
+const API_URL = "http://192.168.32.171:5000";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
 
 const session = {
@@ -46,13 +47,14 @@ export default createStore({
 
     // myIdx: -1,
 
-    API_URL: "http://127.0.0.1:5000",
+    API_URL: "http://192.168.32.171:5000",
     // API_URL: "http://i8a706.p.ssafy.io:8080",
     isEnter: true, // 게임방 진입시 라우터가드를 위한 state
     isShow: false,
     accessToken: null,
     refreshToken: VueCookies.get("refreshToken"),
     // rooms: null, // rooms는 로비에서 방목록 8개 받아서 저장할곳.
+    playgames: false,
     rooms: [
       // {
       //   id: 1,
@@ -107,9 +109,19 @@ export default createStore({
     RESET_ISENTER(state) {
       state.isEnter = false;
     },
+    // 게임플레이 진입시 playgames 값 변경
+    SET_ISPLAY(state) {
+      state.playgames = true;
+    },
+    // 게임진입후 playgames 초기화
+    RESET_ISPLAY(state) {
+      state.playgames = false;
+    },
   },
   actions: {
     signUp(context, payload) {
+      console.log("감자");
+      console.log(payload);
       axios({
         method: "post",
         url: `${API_URL}/users/sign-up/`,
@@ -124,23 +136,30 @@ export default createStore({
       });
     },
     logIn(context, payload) {
-      // console.log("test");
       axios({
-        method: "post",
-        url: `${API_URL}/users/login/`,
+        method: "POST",
+        url: `${API_URL}/users/login`,
+        // headers: {
+        //   "Content-Type": "application/json",
+        // },
         data: {
           email: payload.email,
           password: payload.password,
         },
-      }).then((res) => {
-        // context.commit("SAVE_TOKEN", res.data.key);
-        // console.log(res.data.data.accessToken);
-        const payload = {
-          token: res.data.data.accessToken,
-          refreshToken: res.data.data.refreshToken,
-        };
-        context.commit("SAVE_TOKEN", payload);
-      });
+      })
+        .then((res) => {
+          console.log(res);
+          // context.commit("SAVE_TOKEN", res.data.key);
+          // console.log(res.data.data.accessToken);
+          const payload = {
+            token: res.data.data.accessToken,
+            refreshToken: res.data.data.refreshToken,
+          };
+          context.commit("SAVE_TOKEN", payload);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     logInKakao(context, payload) {
       // console.log(payload);
@@ -177,6 +196,14 @@ export default createStore({
     // 방진입 직후 토큰 false
     resetIsEnter(context) {
       context.commit("RESET_ISENTER");
+    },
+    // 게임플레이시 playgames true
+    setPlaygames(context) {
+      context.commit("SET_ISPLAY");
+    },
+    // 게임플레이방 진입후 playgames false
+    resetPlaygames(context) {
+      context.commit("RESET_ISPLAY");
     },
   },
   modules: {},
