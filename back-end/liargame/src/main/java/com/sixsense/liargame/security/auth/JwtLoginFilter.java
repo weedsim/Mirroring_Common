@@ -37,13 +37,14 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         assert loginReq != null;
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginReq.getEmail(), loginReq.getPassword());
-
+        System.out.println("여기는 로그인필터");
         return this.getAuthenticationManager().authenticate(authenticationToken);
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         TokenInfo tokenInfo = jwtTokenProvider.generateToken(authResult);
+        System.out.println("여기는 로그인필터");
         ObjectMapper om = new ObjectMapper();
         String jsonStr = null;
         PrintWriter writer = response.getWriter();

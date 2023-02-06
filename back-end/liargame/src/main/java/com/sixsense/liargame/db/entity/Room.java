@@ -1,19 +1,16 @@
 package com.sixsense.liargame.db.entity;
 
 import com.sixsense.liargame.api.sse.Emitters;
-import com.sixsense.liargame.common.model.CustomEmitter;
 import com.sixsense.liargame.common.model.UserInfo;
 import com.sixsense.liargame.common.model.request.SettingDto;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @NoArgsConstructor
+@ToString
 public class Room {
     @Setter
     private Integer id;
@@ -24,6 +21,7 @@ public class Room {
     private Boolean isPlaying;
     private String mode;
     private String password;
+    @Setter
     private Long master;
     @Setter
     private String answer;
@@ -40,6 +38,7 @@ public class Room {
         this.mode = mode;
         this.password = password;
         this.master = master;
+        this.isPlaying = false;
         this.emitters = new Emitters();
         this.participants = new ArrayList<>();
     }
@@ -58,7 +57,6 @@ public class Room {
 
     public void enter(Long userId, String name) {
         participants.add(new UserInfo(userId, name));
-        emitters.add(new CustomEmitter(userId, 1000 * 60 * 30L, name));
     }
 
     public void exit(Long userId) {

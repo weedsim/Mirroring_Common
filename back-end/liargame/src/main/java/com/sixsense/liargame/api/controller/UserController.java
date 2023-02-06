@@ -22,7 +22,7 @@ public class UserController {
     private final Response response;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@Validated UserRequestDto.SignUp signUp,
+    public ResponseEntity<?> signUp(@Validated @RequestBody UserRequestDto.SignUp signUp,
                                     Errors errors) {
         // validation check
         if (errors.hasErrors()) {
@@ -37,12 +37,15 @@ public class UserController {
         return userService.registerEmail(email, key);
     }
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Validated UserRequestDto.Login login,
+    public ResponseEntity<?> login(@Validated @RequestBody UserRequestDto.Login login,
                                    Errors errors) {
         // validation check
+        System.out.println(login.toString());
+        System.out.println("로그인 시작");
         if (errors.hasErrors()) {
             return response.invalidFields(Helper.refineErrors(errors));
         }
+        System.out.println("로그인중");
         return userService.login(login);
     }
 
@@ -58,10 +61,8 @@ public class UserController {
     }
 
     @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
-                                     @RequestHeader(JwtProperties.REFRESH_TOKEN) String refreshToken) {
+    public ResponseEntity<?> reissue(@RequestHeader(JwtProperties.AUTHORIZATION) String refreshToken) {
         UserRequestDto.Reissue reissue = UserRequestDto.Reissue.builder()
-                .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
         return userService.reissue(reissue);
@@ -80,7 +81,7 @@ public class UserController {
 
     @PutMapping("/modify/password")
     public ResponseEntity<?> updateUserPassword(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
-                                            String password) {
+                                                String password) {
         UserRequestDto.ModifyPassword modify = UserRequestDto.ModifyPassword.builder()
                 .accessToken(accessToken)
                 .password(password)
