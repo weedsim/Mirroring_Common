@@ -3,6 +3,7 @@ package com.sixsense.liargame.api.sse;
 import com.sixsense.liargame.common.model.Vote;
 import com.sixsense.liargame.db.entity.Room;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,22 +18,22 @@ public class GameManager {
     }
 
     public NormalGame start(Room room) {
-        NormalGame normalGame = new NormalGame(room.getId(), room.getParticipants().size());
+        NormalGame normalGame = new NormalGame(room);
         Emitters emitters = room.getEmitters();
         int timeout = room.getTimeout();
 
         room.getEmitters().setLiar(normalGame.getLiarUserId());
         //시민들에게 단어 알려주고 게임 시작 알리기
-        emitters.sendToCitizens("word", normalGame.getWord());
-        emitters.sendToLiar("word", "liar");
-        emitters.sendToAll("msg", "game start");
+        emitters.sendToCitizens("message", "word : " + normalGame.getWord());
+        emitters.sendToLiar("message", "word : " + "liar");
+        emitters.sendToAll("message", "msg : " + "game start");
         //timeout 만큼 쉼
-        waitTimeout(timeout);
+        waitTimeout(timeout * 1000);
         //차례대로 발언
         Integer curSpeaker = normalGame.getCurSpeaker();
         while (curSpeaker != null) {
-            emitters.sendToAll("curSpeaking", curSpeaker.toString());
-            waitTimeout(timeout);
+            emitters.sendToAll("message", "curSpeaking : " + curSpeaker.toString());
+            waitTimeout(timeout * 1000);
             curSpeaker = normalGame.changeSpeaker();
         }
         //투표시간 알림
@@ -48,10 +49,10 @@ public class GameManager {
         //시민인 경우 바로 게임종료, 라이어인 경우 정답 입력 시간 알림
         String winner = "LIAR";
         if (Objects.equals(normalGame.getLiar(), result)) {
-            emitters.sendToCitizens("msg", "selected liar");
-            emitters.sendToLiar("msg", "write answer");
+            emitters.sendToCitizens("message", "msg : " + "selected liar");
+            emitters.sendToLiar("message", "msg : " + "write answer");
             waitTimeout(1000 * 10); // 정답 입력시간 10초
-            if (!normalGame.getAnswer().equals(normalGame.getWord()))
+            if (StringUtils.hasText(normalGame.getAnswer()) && !normalGame.getAnswer().equals(normalGame.getWord()))
                 winner = "CITIZEN";
         }
         normalGame.setWinner(winner);
@@ -60,13 +61,16 @@ public class GameManager {
     }
 
     private void noticeVote(Emitters emitters) {
-        emitters.sendToAll("msg", "vote start");
+        emitters.sendToAll("message", "msg : " + "vote start");
         waitTimeout(30 * 1000); // 30초
         //투표종료 알림
-        emitters.sendToAll("msg", "vote end");
+        emitters.sendToAll("message", "msg : " + "vote end");
     }
 
     private Integer getVoteResult(List<Vote> votes) {
+        if (votes.isEmpty()) { // 일단 테스트용
+            return 0;
+        }
         Map<Integer, VoteResult> voteResultMap = new HashMap<>();
         votes.forEach(vote -> {
             voteResultMap.computeIfPresent(vote.getTarget(), (aLong, voteResult) -> voteResult.vote());

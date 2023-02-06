@@ -1,6 +1,5 @@
 package com.sixsense.liargame.api.controller;
 
-import com.sixsense.liargame.api.response.RoomTokenResp;
 import com.sixsense.liargame.api.service.RoomService;
 import com.sixsense.liargame.api.sse.GlobalRoom;
 import com.sixsense.liargame.common.model.UserInfo;
@@ -29,15 +28,19 @@ public class RoomController {
 
     @GetMapping
     public ResponseEntity<List<RoomResp>> getAll(Pageable pageable) {
-        List<com.sixsense.liargame.common.model.response.RoomResp> rooms = roomService.selectAll(pageable);
+        List<RoomResp> rooms = roomService.selectAll(pageable);
         return ResponseEntity.ok(rooms);
     }
 
     @PatchMapping("/{roomId}/enter")
     public ResponseEntity<?> enter(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
+        System.out.println(userId);
         roomService.enter(userId, roomId);
-        return ResponseEntity.ok().build();
+        System.out.println(roomId + "에 " + userId + "님이 입장하셨습니다.");
+        List<UserInfo> participants = globalRoom.getRooms().get(roomId).getParticipants();
+        System.out.println("현재 방 인원 목록 : " + participants.toString());
+        return ResponseEntity.ok(roomId);
     }
 
     @PatchMapping("/{roomId}/exit")
@@ -50,23 +53,26 @@ public class RoomController {
     @PatchMapping("/{roomId}")
     public ResponseEntity<?> changeSetting(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId, @RequestBody SettingDto settingDto) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
+        System.out.println(userId);
         settingDto.setId(roomId);
         roomService.changeSetting(userId, settingDto);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping
-    public ResponseEntity<RoomTokenResp> create(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @RequestBody RoomReq roomReq) {
+    public ResponseEntity<Integer> create(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @RequestBody RoomReq roomReq) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
-        RoomTokenResp roomTokenResp;
+        Integer roomId;
         try {
-            roomTokenResp = roomService.insert(userId, roomReq);
+            roomId = roomService.insert(userId, roomReq);
         } catch (OpenViduJavaClientException | OpenViduHttpException e) {
             throw new RuntimeException(e);
         }
-        System.out.println(roomTokenResp.getRoomId() + "에 " + userId + "님이 입장하셨습니다.");
-        List<UserInfo> participants = globalRoom.getRooms().get(roomTokenResp.getRoomId()).getParticipants();
-        System.out.println("현재 방 인원 목록 : " + participants.toString());
-        return ResponseEntity.ok(roomTokenResp);
+        return ResponseEntity.ok(roomId);
+    }
+
+    @GetMapping("/last")
+    public ResponseEntity<Integer> lastNumber() {
+        return ResponseEntity.ok(roomService.last());
     }
 }

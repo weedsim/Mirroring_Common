@@ -1,6 +1,5 @@
 package com.sixsense.liargame.api.service;
 
-import com.sixsense.liargame.api.response.RoomTokenResp;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
 import com.sixsense.liargame.common.model.response.RoomResp;
@@ -13,7 +12,7 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 public interface RoomService {
-    RoomTokenResp insert(Long userId, RoomReq roomReq) throws OpenViduJavaClientException, OpenViduHttpException;
+    Integer insert(Long userId, RoomReq roomReq) throws OpenViduJavaClientException, OpenViduHttpException;
 
     void enter(Long userId, Integer roomId);
 
@@ -22,6 +21,8 @@ public interface RoomService {
     void changeSetting(Long userId, SettingDto settingDto);
 
     List<RoomResp> selectAll(Pageable pageable);
+
+    Integer last();
 
     default RoomResp toDto(Room room) {
         return RoomResp.builder()
@@ -37,6 +38,7 @@ public interface RoomService {
 
     default Room toEntity(RoomReq roomReq) {
         return Room.builder()
+                .timeout(roomReq.getTimeout())
                 .title(roomReq.getTitle())
                 .mode(roomReq.getMode())
                 .maxCount(roomReq.getMaxCount())

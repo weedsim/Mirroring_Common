@@ -43,7 +43,7 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public GameResultResp normalGameStart(Long userId, Long roomId) {
+    public GameResultResp normalGameStart(Long userId, Integer roomId) {
         Room room = rooms.get(roomId);
 
         if (Objects.equals(room.getMaster(), userId)) {

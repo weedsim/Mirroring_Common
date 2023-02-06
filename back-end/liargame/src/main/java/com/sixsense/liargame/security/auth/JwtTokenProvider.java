@@ -129,6 +129,10 @@ public class JwtTokenProvider {
     }
 
     public Long getUserId(String accessToken) {
-        return Long.getLong(parseClaims(accessToken).get("id").toString());
+        return Long.parseLong(parseClaims(accessToken).get("id").toString());
+    }
+
+    public String getUserName(String accessToken) {
+        return parseClaims(accessToken).get("name").toString();
     }
 }

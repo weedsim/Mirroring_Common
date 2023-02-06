@@ -16,7 +16,7 @@ public class GameController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/start")
-    public ResponseEntity<?> start(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long roomId) {
+    public ResponseEntity<?> start(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         gameService.normalGameStart(userId, roomId);
         return ResponseEntity.ok().build();

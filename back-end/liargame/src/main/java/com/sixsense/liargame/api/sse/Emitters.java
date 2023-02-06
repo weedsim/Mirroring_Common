@@ -38,7 +38,8 @@ public class Emitters {
 
     public void sendToAll(String name, String message) {
         sendToCitizens(name, message);
-        sendToLiar(name, message);
+        if (liar != null)
+            sendToLiar(name, message);
         if (spy != null)
             sendToSpy(name, message);
     }

@@ -4,6 +4,7 @@ import com.sixsense.liargame.common.model.UserInfo;
 import com.sixsense.liargame.common.model.Vote;
 import com.sixsense.liargame.common.model.response.GameResultResp;
 import com.sixsense.liargame.common.model.response.VoteResp;
+import com.sixsense.liargame.db.entity.Room;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.redis.core.RedisHash;
@@ -33,9 +34,9 @@ public class NormalGame {
     @Setter
     private String winner;
 
-    public NormalGame(Integer roomId, int size) {
-        this.id = roomId;
-        this.participants = new UserInfo[size];
+    public NormalGame(Room room) {
+        this.id = room.getId();
+        this.participants = room.getParticipants().toArray(new UserInfo[0]);
         startPerson = (int) (Math.random() * participants.length);
         curSpeaker = startPerson;
         liar = (int) (Math.random() * participants.length);
