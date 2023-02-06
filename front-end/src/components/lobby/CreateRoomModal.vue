@@ -205,7 +205,7 @@ export default {
             // 응답결과로는 토큰과 roomId가 올것이다.
             // router.push({ name: "room", params: { roomId: 1 } });
             // 테스트용으로는 임의로 roomId를 설정한다.
-            router.push({ name: "room", params: { roomId: res.data.roomId } });
+            router.push({ name: "room", params: { roomId: res.data } });
           })
           .catch((err) => {
             this.roomPwd = null;

@@ -67,6 +67,7 @@ const routes = [
     beforeEnter(to, from, next) {
       try {
         if (store.state.isEnter) {
+          console.log("게임플레이~");
           next();
         } else {
           next("/lobby");

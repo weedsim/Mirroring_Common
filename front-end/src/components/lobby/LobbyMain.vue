@@ -51,7 +51,10 @@ export default {
       axios({
         method: "get",
         // url: `${API_URL}/rooms?pageNumber=${페이지네이션 번호}`,
-        url: `${this.API_URL}/rooms?pageNumber=${this.NowPageNum}`,
+        url: `${this.API_URL}/rooms`,
+        data: {
+          pageNumber: `${this.NowPageNum}`,
+        },
       })
         .then((res) => {
           console.log(res.data);
@@ -60,7 +63,8 @@ export default {
             rooms: res.data,
           };
           // 우선 미작동
-          // this.$store.dispatch("setRooms", payload);
+          this.$store.dispatch("setRooms", payload);
+          // console.log(this.$store.state.rooms);
         })
         .catch((err) => {
           console.log("실패");

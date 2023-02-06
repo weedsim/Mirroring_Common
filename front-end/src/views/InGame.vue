@@ -2,7 +2,7 @@
   <div class="m-0 p-0 about" style="width: 100%; height: 100vh">
     <div class="m-0 p-0 row">
       <div class="m-0 p-0 col-1">
-        <button>시작</button>
+        <button v-on:click="startTest">시작 {{ roomId }}</button>
       </div>
       <div class="m-0 p-0 col-7">
         <main-game style="width: 100%; height: 100vh"></main-game>
@@ -52,9 +52,6 @@
           ></button>
         </div>
         <div class="modal-body" style="text-align: left">
-
-         
-
           <ul style="list-style: none" class="m-0 p-0 gameoption">
             <li>방 제목</li>
             <li>
@@ -133,6 +130,8 @@
 // import { mapState } from "vuex";
 import MainChat from "../components/ingame/MainChat.vue";
 import MainGame from "../components/ingame/MainGame.vue";
+import axios from "axios";
+import router from "@/router";
 
 export default {
   name: "InGame",
@@ -140,7 +139,45 @@ export default {
     MainChat,
     MainGame,
   },
-  methods() {},
+  data() {
+    return {
+      roomId: this.$route.params.roomId,
+      API_URL: this.$store.state.API_URL,
+    };
+  },
+  // 이방들어올때 룸ID가 있어야함. 이거받고.
+  methods: {
+    chgflag() {
+      console.log("고구마");
+      this.$store.dispatch("setPlaygames");
+      router.push({ name: "room", params: { roomId: this.roomId } });
+      console.log(this.$store);
+    },
+    startTest() {
+      axios({
+        method: "POST",
+        // url: `${this.API_URL}/rooms/${roomId}/enter`,
+        url: `${this.API_URL}/rooms/${this.roomId}/games/start`,
+        headers: {
+          Authorization: `Bearer ${this.$store.state.accessToken}`,
+        },
+        data: {
+          // 데이터 필요없음
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          // this.$store.dispatch("setPlaygames");
+          // router.push({ name: "room", params: { roomId: res.data.roomId } });
+          // router.push({ name: "room", params: { roomId: this.roomId } });
+        })
+        .catch((err) => {
+          console.log("실패");
+          console.log(err);
+        });
+      this.chgflag();
+    },
+  },
 };
 </script>
 
