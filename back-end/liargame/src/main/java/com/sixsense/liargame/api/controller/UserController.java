@@ -31,6 +31,11 @@ public class UserController {
         return userService.signUp(signUp);
     }
 
+    @GetMapping("/register-email")
+    public ResponseEntity<?> registerEmail(@RequestParam("email") String email,
+                                           @RequestParam("mail-key") String key){
+        return userService.registerEmail(email, key);
+    }
     @PostMapping("/login")
     public ResponseEntity<?> login(@Validated UserRequestDto.Login login,
                                    Errors errors) {
