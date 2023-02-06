@@ -38,6 +38,14 @@ const routes = [
       ),
   },
   {
+    path: "/CreateArticle",
+    name: "CreateArticle",
+    component: () =>
+    import(
+      /* webpackChunkName: "about" */ "../views/community/CreateArticle.vue"
+    )
+  },
+  {
     path: "/kakao",
     name: "kakao",
     component: () =>

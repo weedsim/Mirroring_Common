@@ -126,7 +126,7 @@
                         </nav>
                       </div>
                       <div class="m-0 p-0 col-1">
-                        <a class="btn btn-secondary" href="./CreateArticle.vue" >글Tmrl</a>
+                        <a class="btn btn-secondary" href="./CreateArticle.vue" >글쓰기</a>
                       </div>
                     
               </div>
