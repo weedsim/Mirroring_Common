@@ -146,20 +146,33 @@ export default {
     };
   },
   setup() {},
-  created() {},
+  created() {
+    this.test();
+  },
   mounted() {
-    if (this.roomIdx < this.$store.state.rooms.length) {
-      this.id = this.$store.state.rooms[this.roomIdx].id;
-      this.title = this.$store.state.rooms[this.roomIdx].title;
-      this.maxCount = this.$store.state.rooms[this.roomIdx].maxCount;
-      this.curCount = this.$store.state.rooms[this.roomIdx].curCount;
-      this.isPlaying = this.$store.state.rooms[this.roomIdx].isPlaying;
-      this.mode = this.$store.state.rooms[this.roomIdx].mode;
-      this.isPrivate = this.$store.state.rooms[this.roomIdx].isPrivate;
-    }
+    // if (this.roomIdx < this.$store.state.rooms.length) {
+    //   this.id = this.$store.state.rooms[this.roomIdx].id;
+    //   this.title = this.$store.state.rooms[this.roomIdx].title;
+    //   this.maxCount = this.$store.state.rooms[this.roomIdx].maxCount;
+    //   this.curCount = this.$store.state.rooms[this.roomIdx].curCount;
+    //   this.isPlaying = this.$store.state.rooms[this.roomIdx].isPlaying;
+    //   this.mode = this.$store.state.rooms[this.roomIdx].mode;
+    //   this.isPrivate = this.$store.state.rooms[this.roomIdx].isPrivate;
+    // }
   },
   computed: {},
   methods: {
+    test() {
+      if (this.roomIdx < this.$store.state.rooms.length) {
+        this.id = this.$store.state.rooms[this.roomIdx].id;
+        this.title = this.$store.state.rooms[this.roomIdx].title;
+        this.maxCount = this.$store.state.rooms[this.roomIdx].maxCount;
+        this.curCount = this.$store.state.rooms[this.roomIdx].curCount;
+        this.isPlaying = this.$store.state.rooms[this.roomIdx].isPlaying;
+        this.mode = this.$store.state.rooms[this.roomIdx].mode;
+        this.isPrivate = this.$store.state.rooms[this.roomIdx].isPrivate;
+      }
+    },
     resetRoomData() {
       this.rommPwd = null;
     },
@@ -168,9 +181,14 @@ export default {
     // 2. 응답결과가 성공일 경우에는 해당 게임방 room/{roomId}로 보내준다.
     // 3. 응답결과가 실패일 경우에는 방진입 실패 alert창을 띄워준다.
     joinRoom(roomId) {
+      console.log(roomId);
+      console.log(`${this.$store.state.accessToken}`);
       axios({
         method: "patch",
         url: `${this.API_URL}/rooms/${roomId}/enter`,
+        headers: {
+          Authorization: `Bearer ${this.$store.state.accessToken}`,
+        },
         data: {
           password: this.rommPwd,
         },
@@ -181,7 +199,7 @@ export default {
           // 1. state 방진입 isEnter -> true 단, 방진입직후에는 isEnter를 false로 바꿔줘야된다.
           this.roomPwd = null;
           this.$store.dispatch("setIsEnter");
-          router.push({ name: "room", params: { roomId: res.data.roomId } });
+          router.push({ name: "room", params: { roomId: res.data } });
         })
         .catch((err) => {
           this.roomPwd = null;

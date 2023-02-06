@@ -6,6 +6,8 @@ import com.sixsense.liargame.common.model.Response;
 import com.sixsense.liargame.common.model.request.UserRequestDto;
 import com.sixsense.liargame.common.model.response.UserInfoDto;
 import com.sixsense.liargame.db.entity.User;
+import com.sixsense.liargame.mail.MailHandler;
+import com.sixsense.liargame.mail.TempKey;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
 import com.sixsense.liargame.security.auth.TokenInfo;
 import com.sixsense.liargame.db.repository.UserRepository;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -36,6 +39,7 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate redisTemplate;
+    private final JavaMailSender mailSender;
 
     @Override
     public ResponseEntity<?> signUp(UserRequestDto.SignUp signUp) {
@@ -43,15 +47,52 @@ public class UserServiceImpl implements UserService {
             return response.fail("이미 회원가입된 이메일입니다.", HttpStatus.BAD_REQUEST);
         }
 
+        String mailKey = new TempKey().getKey(30, false);
+
         User user = User.builder()
                 .email(signUp.getEmail())
                 .name(signUp.getName())
                 .password(passwordEncoder.encode(signUp.getPassword()))
                 .role(Collections.singletonList(Authority.ROLE_GUEST.name()))
+                .mailKey(mailKey)
                 .build();
         userRepository.save(user);
+        try {
+            MailHandler sendMail = new MailHandler(mailSender);
+            sendMail.setSubject("[인증메일입니다.]");
+            sendMail.setText("<h1>메일인증</h1>" +
+                    "<br>아래 [이메일 인증 확인]을 눌러주세요." +
+                    "<br><a href='http://localhost:5000/users/register-email?email=" + user.getEmail() +
+                    "&mail-key=" + mailKey +
+                    "' target='_blank'>이메일 인증 확인</a>");
+            sendMail.setFrom("wjswndud53@gmail.com", "관리자");
+            sendMail.setTo(user.getEmail());
+            sendMail.send();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
 
         return response.success("회원가입에 성공했습니다.");
+    }
+
+    @Override
+    public ResponseEntity<?> registerEmail(String email, String key){
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("No authentication information."));
+
+
+        String userKey = user.getMailKey();
+        String msg;
+        if(userKey.equals(key)) {
+            msg = "이메일 인증 성공했습니다. TODO: 메인페이지로";
+            // add ROLE_ADMIN
+            user.getRole().remove(0);
+            user.getRole().add(Authority.ROLE_USER.name());
+            userRepository.save(user);
+        }
+        else msg = "이메일 인증 실패했습니다.";
+        return response.success(msg);
     }
 
     @Transactional

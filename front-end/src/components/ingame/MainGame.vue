@@ -26,8 +26,10 @@ import GameBottom from "@/components/ingame/playgame/GameBottom.vue";
 export default {
   components: { GameUsers, GameTitle, GameConfirm, GameHeader, GameBottom },
   name: "MainGame",
-  props: {
-    playgame: null,
+  data() {
+    return {
+      playgame: this.$store.state.playgames,
+    };
   },
   created() {},
 };

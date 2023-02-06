@@ -14,4 +14,6 @@ public interface UserService {
     public ResponseEntity<?> updatePassword(UserRequestDto.ModifyPassword password);
     public ResponseEntity<?> getUserInfo(UserRequestDto.UserInfo userInfo);
     public boolean isDuplication(String email, String name);
+
+    public ResponseEntity<?> registerEmail(String email, String key);
 }
