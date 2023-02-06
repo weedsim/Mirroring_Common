@@ -1,6 +1,5 @@
 package com.sixsense.liargame.api.service;
 
-import com.sixsense.liargame.api.response.RoomTokenResp;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
 import com.sixsense.liargame.common.model.response.RoomResp;
