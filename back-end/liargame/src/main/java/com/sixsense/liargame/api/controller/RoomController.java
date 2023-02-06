@@ -2,6 +2,8 @@ package com.sixsense.liargame.api.controller;
 
 import com.sixsense.liargame.api.response.RoomTokenResp;
 import com.sixsense.liargame.api.service.RoomService;
+import com.sixsense.liargame.api.sse.GlobalRoom;
+import com.sixsense.liargame.common.model.UserInfo;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
 import com.sixsense.liargame.common.model.response.RoomResp;
@@ -23,6 +25,7 @@ public class RoomController {
     private final RoomService roomService;
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final GlobalRoom globalRoom;
 
     @GetMapping
     public ResponseEntity<List<RoomResp>> getAll(Pageable pageable) {
@@ -61,6 +64,9 @@ public class RoomController {
         } catch (OpenViduJavaClientException | OpenViduHttpException e) {
             throw new RuntimeException(e);
         }
+        System.out.println(roomTokenResp.getRoomId() + "에 " + userId + "님이 입장하셨습니다.");
+        List<UserInfo> participants = globalRoom.getRooms().get(roomTokenResp.getRoomId()).getParticipants();
+        System.out.println("현재 방 인원 목록 : " + participants.toString());
         return ResponseEntity.ok(roomTokenResp);
     }
 }
