@@ -77,17 +77,16 @@ const routes = [
     },
   },
   {
-    // path: "/game/room/:roomId/play",
-    path: "/test/playgame",
-    name: "playgame",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/room/PlayRoom.vue"),
-  },
-  {
     path: "/mypage",
     name: "mypage",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/user/Mypage.vue"),
+  },
+  {
+    path: "/test/module",
+    name: "testmodule",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/lobby/test.vue"),
   },
 ];
 

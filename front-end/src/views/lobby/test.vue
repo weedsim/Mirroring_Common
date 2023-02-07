@@ -1,8 +1,15 @@
 <template>
-  <div></div>
+  <div>
+    module test 중입니다.
+    {{ this.userInfo[0]["name"] }}
+    {{ this.num }}
+    <button v-on:click="one">버튼1</button>
+  </div>
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
+
 export default {
   components: {},
   data() {
@@ -11,7 +18,17 @@ export default {
   setup() {},
   created() {},
   mounted() {},
-  methods: {},
+  computed: {
+    ...mapState("playGameStore", {
+      userInfo: "userInfo",
+      num: "num",
+    }),
+  },
+  methods: {
+    one() {
+      this.$store.dispatch("playGameStore/testone");
+    },
+  },
 };
 </script>
 

@@ -24,9 +24,8 @@ export default {
   },
   methods: {
     getReIssue() {
-      console.log(this.$store.state.accessToken);
       const payload = {
-        accessToken: null,
+        accessToken: VueCookies.get("accessToken"),
         refreshToken: VueCookies.get("refreshToken"),
       };
       this.$store.dispatch("reIssue", payload);

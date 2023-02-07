@@ -2,10 +2,16 @@ import { createStore } from "vuex";
 import axios from "axios";
 import router from "@/router";
 import VueCookies from "vue-cookies";
+import createPersistedState from "vuex-persistedstate";
+import playGameStore from "@/store/modules/playgame.js";
 
 // const API_URL = "http://127.0.0.1:5000";
-const API_URL = "http://192.168.32.171:5000";
+const API_URL = "http://192.168.91.171:5000";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
+
+const storageStata = createPersistedState({
+  paths: ["playGameStore"],
+});
 
 const session = {
   myIdx: -1,
@@ -38,6 +44,10 @@ for (let i = 0; i < 10; i++) {
 }
 
 export default createStore({
+  modules: {
+    playGameStore: playGameStore,
+  },
+  plugins: [storageStata],
   state: {
     // 세션 구조(깊은 복사해서 사용)
     session: session,
@@ -47,34 +57,15 @@ export default createStore({
 
     // myIdx: -1,
 
-    API_URL: "http://192.168.32.171:5000",
+    API_URL: "http://192.168.91.171:5000",
     // API_URL: "http://i8a706.p.ssafy.io:8080",
     isEnter: true, // 게임방 진입시 라우터가드를 위한 state
     isShow: false,
-    accessToken: null,
+    accessToken: VueCookies.get("accessToken"),
     refreshToken: VueCookies.get("refreshToken"),
     // rooms: null, // rooms는 로비에서 방목록 8개 받아서 저장할곳.
     playgames: false,
-    rooms: [
-      // {
-      //   id: 1,
-      //   title: "감자고구마",
-      //   maxCount: 6,
-      //   curCount: 3,
-      //   isPlaying: false,
-      //   mode: "spy",
-      //   isPrivate: true,
-      // },
-      // {
-      //   id: 2,
-      //   title: "감자고구마22",
-      //   maxCount: 6,
-      //   curCount: 4,
-      //   isPlaying: true,
-      //   mode: "normal",
-      //   isPrivate: false,
-      // },
-    ],
+    rooms: [],
   },
   getters: {
     isLogin(state) {
@@ -84,10 +75,9 @@ export default createStore({
   mutations: {
     // 회원가입 && 로그인
     SAVE_TOKEN(state, payload) {
-      console.log(payload);
-      state.accessToken = payload.token;
-      // state.refreshToken = payload.refreshToken;
-      // VueCookies.set("accessToken", payload.token);
+      console.log("토큰저장: ");
+      // state.accessToken = payload.token;
+      VueCookies.set("accessToken", payload.token);
       VueCookies.set("refreshToken", payload.refreshToken);
       router.push({ name: "main" });
     },
@@ -126,13 +116,15 @@ export default createStore({
       axios({
         method: "post",
         url: `${API_URL}/users/sign-up/`,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
         data: {
           name: payload.name,
           password: payload.password,
           email: payload.email,
         },
       }).then((res) => {
-        console.log(res);
         console.log(res.data);
       });
     },
@@ -140,16 +132,17 @@ export default createStore({
       axios({
         method: "POST",
         url: `${API_URL}/users/login`,
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
         data: {
           email: payload.email,
           password: payload.password,
         },
       })
         .then((res) => {
-          console.log(res);
+          console.log("로그인시도중입니다.");
+          console.log(res.data);
           // context.commit("SAVE_TOKEN", res.data.key);
           // console.log(res.data.data.accessToken);
           const payload = {
@@ -208,11 +201,11 @@ export default createStore({
     reIssue(context, payload) {
       console.log(payload);
       axios({
-        method: "get",
+        method: "POST",
         url: `${API_URL}/users/reissue`,
         headers: {
-          Authorization: `Bearer ${payload.refreshToken}`,
-          // "refresh-token": payload.refreshToken,
+          Authorization: `Bearer ${payload.accessToken}`,
+          "refresh-token": payload.refreshToken,
         },
         // data: {
         //   accessToken: payload.accessToken,
@@ -221,7 +214,7 @@ export default createStore({
       })
         .then((res) => {
           console.log("reissue 테스트중입니다. ");
-          console.log(res);
+          console.log(res.data);
           // const payload = {
           //   token: res.data,
           //   refreshToken: payload.refreshToken,
@@ -233,5 +226,4 @@ export default createStore({
         });
     },
   },
-  modules: {},
 });
