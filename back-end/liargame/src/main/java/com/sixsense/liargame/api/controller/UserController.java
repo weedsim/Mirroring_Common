@@ -33,9 +33,10 @@ public class UserController {
 
     @GetMapping("/register-email")
     public ResponseEntity<?> registerEmail(@RequestParam("email") String email,
-                                           @RequestParam("mail-key") String key){
+                                           @RequestParam("mail-key") String key) {
         return userService.registerEmail(email, key);
     }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@Validated @RequestBody UserRequestDto.Login login,
                                    Errors errors) {
@@ -61,8 +62,9 @@ public class UserController {
     }
 
     @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@RequestHeader(JwtProperties.AUTHORIZATION) String refreshToken) {
+    public ResponseEntity<?> reissue(@RequestHeader(JwtProperties.REFRESH_TOKEN) String refreshToken, @RequestHeader(JwtProperties.AUTHORIZATION) String accessToken) {
         UserRequestDto.Reissue reissue = UserRequestDto.Reissue.builder()
+                .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
         return userService.reissue(reissue);
