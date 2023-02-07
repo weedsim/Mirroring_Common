@@ -37,6 +37,14 @@ const routes = [
         /* webpackChunkName: "about" */ "@/components/community/MainCommunity.vue"
       ),
   },
+  {
+    path: "/maininput",
+    name: "maininput",
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "@/components/community/MainInput.vue"
+      ),
+  },
   // {
   //   path: "/CreateArticle",
   //   name: "CreateArticle",

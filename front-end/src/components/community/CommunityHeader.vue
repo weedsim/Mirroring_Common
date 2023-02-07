@@ -14,21 +14,21 @@
       <div class="m-0 p-0 row" style="height: 100%"   >
         <div class="m-0 p-0 col-4">
           <div class="form"> 
-        <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-          <option selected>제목</option>
-          <option value="2">작성자</option>
-        </select>
-      </div>
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+              <option selected>제목</option>
+              <option value="2">작성자</option>
+            </select>
+          </div>
         </div>
         <div class="m-0 p-0 col-8">
           <div class="wrap">
-        <div class="search">
-            <input type="text" class="searchTerm" placeholder="What are you looking for?">
-            <button type="submit" class="searchButton">
-              <i class="fa fa-search"></i>
-          </button>
-        </div>
-      </div>  
+            <div class="search">
+              <input type="text" class="searchTerm" placeholder="What are you looking for?">
+                <button type="submit" class="searchButton">
+                  <i class="fa fa-search"></i>
+                </button>
+            </div>
+          </div>  
         </div>
 
       </div>
@@ -37,7 +37,7 @@
     </div>
       
                 
-                    </div>
+  </div>
                     <!--         
               <div class="m-0 p-0 row">
                 <table class="table" style="color:white">
