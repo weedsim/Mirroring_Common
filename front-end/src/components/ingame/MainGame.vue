@@ -32,6 +32,21 @@ export default {
     };
   },
   created() {},
+  computed: {
+    changedPlaygame() {
+      return this.$store.state.playgames;
+    },
+  },
+  watch: {
+    changedPlaygame(val) {
+      this.playgame = val;
+    },
+  },
+  methods: {
+    test() {
+      console.log();
+    },
+  },
 };
 </script>
 

@@ -55,7 +55,7 @@
                 ><img src="@/assets/icon/btngoogle.png" alt="" />
               </a>
               <a
-                href="https://kauth.kakao.com/oauth/authorize?client_id=1ff9c0d8399e2993bcc0f81a9c899269&redirect_uri=http://192.168.32.111:8081/kakao&response_type=code"
+                href="https://kauth.kakao.com/oauth/authorize?client_id=1ff9c0d8399e2993bcc0f81a9c899269&redirect_uri=http://localhost:8081/kakao&response_type=code"
                 ><img src="@/assets/icon/btnkakao.png" alt=""
               /></a>
               <!-- <div id="kakaoAnckor"></div> -->
@@ -98,7 +98,7 @@ export default {
     setAnchor() {
       //   const APPLICATION_SERVER_URL =
       //     process.env.NODE_ENV === "production"
-      //       ? "http://192.168.32.171:5000/"
+      //       ? "http://192.168.91.171:5000/"
       //       : "http://localhost:5000/";
       //   let ka = document.getElementById("kakaoAnckor");
       //   let link = document.createElement("a");

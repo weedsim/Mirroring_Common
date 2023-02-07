@@ -131,6 +131,7 @@
 import MainChat from "../components/ingame/MainChat.vue";
 import MainGame from "../components/ingame/MainGame.vue";
 import axios from "axios";
+import { NativeEventSource, EventSourcePolyfill } from "event-source-polyfill";
 import router from "@/router";
 
 export default {
@@ -143,15 +144,82 @@ export default {
     return {
       roomId: this.$route.params.roomId,
       API_URL: this.$store.state.API_URL,
+      message: "",
     };
+  },
+  created() {
+    this.linkSSE();
+  },
+  mounted() {
+    // const headers = {
+    //   Authorization: "Bearer " + this.$store.state.accessToken,
+    // };
+    // const source = new EventSource(
+    //   `${this.API_URL}/sse/connect?roomId=${this.roomId}`,
+    //   { headers }
+    // );
+    // source.addEventListener("connect", (event) => {
+    //   console.log(event.data);
+    // });
+    // const sse = new EventSource(
+    //   `http://${this.API_URL}/sse/connect?accessToken=${this.$store.state.accessToken}&roomId=${this.roomId}`
+    // );
+    // sse.addEventListener("connect", (e) => {
+    //   const { data: receivedConnectData } = e;
+    //   console.log("connect event data: ", receivedConnectData); // "connected!"
+    // });
+    // axios
+    //   .get("/sse/connect", {
+    //     headers: {
+    //       Authorization: "Bearer " + this.$store.state.accessToken,
+    //     },
+    //     params: {
+    //       roomId: this.roomId,
+    //     },
+    //   })
+    // axios({
+    //   method: "GET",
+    //   // url: `${this.API_URL}/rooms/${roomId}/enter`,
+    //   url: `${this.API_URL}/sse/connect`,
+    //   headers: {
+    //     Authorization: `Bearer ${this.$store.state.accessToken}`,
+    //   },
+    //   params: {
+    //     // 데이터 필요없음
+    //     roomId: this.roomId,
+    //   },
+    // })
+    //   .then((response) => {
+    //     console.log(response);
+    //     response.data.onmessage = (event) => {
+    //       this.message = event.data;
+    //       console.log("고구마" + event);
+    //       console.log("감자" + this.message);
+    //     };
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
   },
   // 이방들어올때 룸ID가 있어야함. 이거받고.
   methods: {
+    linkSSE() {
+      // console.log(this.$store.state.accessToken);
+      const headers = {
+        Authorization: "Bearer " + this.$store.state.accessToken,
+      };
+      const source = new EventSourcePolyfill(
+        `${this.API_URL}/sse/connect?roomId=${this.roomId}`,
+        { headers }
+      );
+
+      source.addEventListener("message", (event) => {
+        console.log(event.data);
+      });
+    },
     chgflag() {
-      console.log("고구마");
       this.$store.dispatch("setPlaygames");
-      router.push({ name: "room", params: { roomId: this.roomId } });
-      console.log(this.$store);
+      // SSE 받는 방법
     },
     startTest() {
       axios({
@@ -161,9 +229,7 @@ export default {
         headers: {
           Authorization: `Bearer ${this.$store.state.accessToken}`,
         },
-        data: {
-          // 데이터 필요없음
-        },
+        data: {},
       })
         .then((res) => {
           console.log(res.data);

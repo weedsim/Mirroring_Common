@@ -41,9 +41,9 @@ const routes = [
     path: "/CreateArticle",
     name: "CreateArticle",
     component: () =>
-    import(
-      /* webpackChunkName: "about" */ "../views/community/CreateArticle.vue"
-    )
+      import(
+        /* webpackChunkName: "about" */ "../views/community/CreateArticle.vue"
+      ),
   },
   {
     path: "/kakao",
@@ -67,7 +67,6 @@ const routes = [
     beforeEnter(to, from, next) {
       try {
         if (store.state.isEnter) {
-          console.log("게임플레이~");
           next();
         } else {
           next("/lobby");
@@ -78,17 +77,16 @@ const routes = [
     },
   },
   {
-    // path: "/game/room/:roomId/play",
-    path: "/test/playgame",
-    name: "playgame",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/room/PlayRoom.vue"),
-  },
-  {
     path: "/mypage",
     name: "mypage",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/user/Mypage.vue"),
+  },
+  {
+    path: "/test/module",
+    name: "testmodule",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/lobby/test.vue"),
   },
 ];
 
