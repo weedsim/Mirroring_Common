@@ -14,7 +14,7 @@
           </tr>
           <tr>
             <td style="color: white; margin-right: 1%;">유저 이름:</td>
-            <td><input type="text" v-model="username" v-bind:disabled="!isinputActive" /> <button id="namebtn" @click="namedupli">변경</button> </td>
+            <td><input type="text" v-model="this.username" v-bind:disabled="!isinputActive" /><button id="namebtn" @click="namedupli">변경</button> </td>
           </tr>
           <tr>
             <td style="color: white;">수정 비밀번호 입력 : </td>
@@ -72,7 +72,8 @@ export default {
   components: { navbar },
   data() {
     return {
-      username: null,
+      username: this.username,
+      changename: 0,
       email: null,
       pwd: null,
       chkpwd: null,
@@ -109,7 +110,8 @@ export default {
   },
   mounted() {},
   methods: {
-    userInfo() {
+    userInfo() { //처음 유저 정보 불러오기, 전적정보 불러오기
+      console.log(this.$store.state)
       axios({
         method: "get",
         url: `${this.API_URL}/users`,
@@ -118,11 +120,12 @@ export default {
         },
       })
       .then((res) => {
-        this.name = res.data.name;
+        this.username = res.data.name;
         this.email = res.data.email;
         this.role = res.data.role;
-        // console.log(res.data.accessToken);
+        this.isinputActive = false;
         console.log(res);
+        console.log("유저정보 가져왔다.")
       })
       .catch((err) => {
         console.log("유저정보실패");
@@ -192,42 +195,61 @@ export default {
       });
     },
     namedupli() {  //중복확인
+      const username1 = this.username;
+      const data = new FormData();
+      // data.append("name", username1);
       if(this.isinputActive === true){
         axios({
           method: "get",
           url: `${this.API_URL}/users/duplicate`,
+          // data: data,
           headers:{
-            
+            "Content-Type": "Multipart/Form-data"
           },
-          body: {
-            'name': `${this.name}`
-          }
+          data: {
+            name: username1,
+          },
         })
         .then((res) => {
           console.log(res);
-          if(res==true) {
-            console.log("성공")
+          console.log(data.get("name"));
+          if(res === true) {
+            console.log("중복입니다.")
+            alert("중복입니다. 다시 작성해주세요")
           }
-            else{
-              console.log("실패")
-            }
-          })
-          .catch((err) => {
-            console.log("중복확인실패");
-            console.log(err);
-          })
-        }
+          else{
+            console.log("중복이 아닙니다.")
+            this.changename = 1;
+          }
+        })
+        .catch((err) => {
+          console.log("중복확인실패");
+          console.log(err);
+        })
+      }
         this.isinputActive = true;
         const btnElement = document.getElementById('namebtn');
         btnElement.innerText = '중복 확인';
       },
       patchPW() { //비밀번호 변경되게 입력
+        if(this.changename == 1){
+          axios({
+            method: "put",
+            url:`${this.API_URL}/users/modify/name`,
+            headers:{
+              Authorization: `Bearer ${this.$store.state.accessToken}`,
+              "Content-Type": "Multiparts/Form-data"
+            },
+
+          })
+        }
         if(this.modifyPW === this.remodifyPW) {
           axios({
             method: "put",
             url: `${this.API_URL}/users/modify/password`,
             headers:{
               Authorization: `Bearer ${this.$store.state.accessToken}`,
+              "Content-Type": "Multiparts/Form-data"
             },
             body: {
               "password": `{this.remodifyPW}`,
