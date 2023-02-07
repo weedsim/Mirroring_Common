@@ -66,6 +66,7 @@ export default createStore({
     // rooms: null, // rooms는 로비에서 방목록 8개 받아서 저장할곳.
     playgames: false,
     rooms: [],
+    gameinfo: [], // 게임참가자 정보저장
   },
   getters: {
     isLogin(state) {
@@ -108,6 +109,12 @@ export default createStore({
     RESET_ISPLAY(state) {
       state.playgames = false;
     },
+    // 게임진입시 게임참가자 정보저장
+    SET_GAMEINFO(state, payload) {
+      console.log("mutation실행");
+      console.log(payload);
+      state.gameinfo = payload;
+    },
   },
   actions: {
     signUp(context, payload) {
@@ -141,7 +148,6 @@ export default createStore({
         },
       })
         .then((res) => {
-          console.log("로그인시도중입니다.");
           console.log(res.data);
           // context.commit("SAVE_TOKEN", res.data.key);
           // console.log(res.data.data.accessToken);
@@ -196,6 +202,12 @@ export default createStore({
     // 게임플레이방 진입후 playgames false
     resetPlaygames(context) {
       context.commit("RESET_ISPLAY");
+    },
+    // 게임방 진입 및 이벤트 발생시 게임정보 저장
+    setGameInfo(context, payload) {
+      console.log("action실행");
+      console.log(payload);
+      context.commit("SET_GAMEINFO", payload);
     },
     // REISSUE요청
     reIssue(context, payload) {

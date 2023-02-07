@@ -198,14 +198,17 @@ export default {
         })
           .then((res) => {
             console.log(res.data);
+
             // 만약 성공을했다면... room/${roomId}로 인게임.vue로 보낸다.
             // 1. state 방진입 isEnter -> true 단, 방진입직후에는 isEnter를 false로 바꿔줘야된다.
             this.roomPwd = null;
             this.$store.dispatch("setIsEnter");
+            // 2. 기본방정보 저장
+            this.$store.dispatch("setGameInfo", res.data);
             // 응답결과로는 토큰과 roomId가 올것이다.
             // router.push({ name: "room", params: { roomId: 1 } });
             // 테스트용으로는 임의로 roomId를 설정한다.
-            router.push({ name: "room", params: { roomId: res.data } });
+            router.push({ name: "room", params: { roomId: res.data.roomId } });
           })
           .catch((err) => {
             this.roomPwd = null;

@@ -21,7 +21,7 @@
           v-if="$store.state.sessions[curIdx].isReady"
           style="width: 100%"
         >
-          <div class="m-0 p-0" style="font-size: 2vw">준비중</div>
+          <div class="m-0 p-0" style="font-size: 2vw">준비중 {{ curIdx }}</div>
         </button>
 
         <button
@@ -29,8 +29,9 @@
           class="btn btn-success"
           v-else
           style="width: 100%"
+          v-on:click="test"
         >
-          <div class="m-0 p-0" style="font-size: 2vw">준비완료</div>
+          <div class="m-0 p-0" style="font-size: 2vw">준비완료{{ curIdx }}</div>
         </button>
       </div>
       <!-- <img src="@/assets/icon/icon_headset.jpg" alt="" id="icon_headset"><img src="@/assets/icon/icon_camera.png" alt="" id="icon_camera"> -->
@@ -95,6 +96,9 @@ export default {
     },
     togglec() {
       this.$store.state.isShow_cam = !this.$store.state.isShow_cam;
+    },
+    test() {
+      console.log(this.$store.state.gameinfo.participants[this.curIdx]);
     },
   },
 };

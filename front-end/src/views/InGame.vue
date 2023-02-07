@@ -150,57 +150,7 @@ export default {
   created() {
     this.linkSSE();
   },
-  mounted() {
-    // const headers = {
-    //   Authorization: "Bearer " + this.$store.state.accessToken,
-    // };
-    // const source = new EventSource(
-    //   `${this.API_URL}/sse/connect?roomId=${this.roomId}`,
-    //   { headers }
-    // );
-    // source.addEventListener("connect", (event) => {
-    //   console.log(event.data);
-    // });
-    // const sse = new EventSource(
-    //   `http://${this.API_URL}/sse/connect?accessToken=${this.$store.state.accessToken}&roomId=${this.roomId}`
-    // );
-    // sse.addEventListener("connect", (e) => {
-    //   const { data: receivedConnectData } = e;
-    //   console.log("connect event data: ", receivedConnectData); // "connected!"
-    // });
-    // axios
-    //   .get("/sse/connect", {
-    //     headers: {
-    //       Authorization: "Bearer " + this.$store.state.accessToken,
-    //     },
-    //     params: {
-    //       roomId: this.roomId,
-    //     },
-    //   })
-    // axios({
-    //   method: "GET",
-    //   // url: `${this.API_URL}/rooms/${roomId}/enter`,
-    //   url: `${this.API_URL}/sse/connect`,
-    //   headers: {
-    //     Authorization: `Bearer ${this.$store.state.accessToken}`,
-    //   },
-    //   params: {
-    //     // 데이터 필요없음
-    //     roomId: this.roomId,
-    //   },
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //     response.data.onmessage = (event) => {
-    //       this.message = event.data;
-    //       console.log("고구마" + event);
-    //       console.log("감자" + this.message);
-    //     };
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-  },
+  mounted() {},
   // 이방들어올때 룸ID가 있어야함. 이거받고.
   methods: {
     linkSSE() {
