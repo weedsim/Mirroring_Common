@@ -65,11 +65,13 @@ public class NormalGame {
 
     public Integer changeSpeaker() {
         curSpeaker = (curSpeaker + 1) % participants.length;
-        if (curSpeaker.equals(startPerson) && !isTurned) {
-            isTurned = true;
-            return curSpeaker;
+        if (curSpeaker.equals(startPerson)) {
+            if (!isTurned) {
+                isTurned = true;
+                return curSpeaker;
+            }
         }
-        return null;
+        return curSpeaker;
     }
 
     public Long getLiarUserId() {

@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class GameManager {
+    private final int SPARE_TIME = 1000;
 
     public GameManager() {
     }
@@ -28,12 +29,12 @@ public class GameManager {
         emitters.sendToLiar("message", "word : " + "liar");
         emitters.sendToAll("message", "msg : " + "game start");
         //timeout 만큼 쉼
-        waitTimeout(timeout * 1000);
+        waitTimeout(room.getEmitters(), timeout * 1000);
         //차례대로 발언
         Integer curSpeaker = normalGame.getCurSpeaker();
         while (curSpeaker != null) {
             emitters.sendToAll("message", "curSpeaking : " + curSpeaker.toString());
-            waitTimeout(timeout * 1000);
+            waitTimeout(room.getEmitters(), timeout * 1000);
             curSpeaker = normalGame.changeSpeaker();
         }
         //투표시간 알림
@@ -42,7 +43,7 @@ public class GameManager {
         List<Vote> votes = normalGame.getVotes();
         Integer result = getVoteResult(votes);
         int voteCount = 1;
-        while (result == null || voteCount++ < 5) {
+        while (result == null && voteCount++ < 5) {
             noticeVote(emitters);
             result = getVoteResult(votes);
         }
@@ -51,7 +52,7 @@ public class GameManager {
         if (Objects.equals(normalGame.getLiar(), result)) {
             emitters.sendToCitizens("message", "msg : " + "selected liar");
             emitters.sendToLiar("message", "msg : " + "write answer");
-            waitTimeout(1000 * 10); // 정답 입력시간 10초
+            waitTimeout(room.getEmitters(), 1000 * 10); // 정답 입력시간 10초
             if (StringUtils.hasText(normalGame.getAnswer()) && !normalGame.getAnswer().equals(normalGame.getWord()))
                 winner = "CITIZEN";
         }
@@ -62,7 +63,7 @@ public class GameManager {
 
     private void noticeVote(Emitters emitters) {
         emitters.sendToAll("message", "msg : " + "vote start");
-        waitTimeout(30 * 1000); // 30초
+        waitTimeout(emitters, 30 * 1000); // 30초
         //투표종료 알림
         emitters.sendToAll("message", "msg : " + "vote end");
     }
@@ -81,9 +82,10 @@ public class GameManager {
         return voteResult.get(0).getTarget();
     }
 
-    private void waitTimeout(Integer time) {
+    private void waitTimeout(Emitters emitters, Integer time) {
+        emitters.sendToAll("time", "time : " + time.toString());
         try {
-            Thread.sleep(time);
+            Thread.sleep(time + SPARE_TIME);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -1,9 +1,12 @@
 package com.sixsense.liargame.api.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sixsense.liargame.api.service.RoomService;
 import com.sixsense.liargame.api.sse.GlobalRoom;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
+import com.sixsense.liargame.common.model.response.RoomDetail;
 import com.sixsense.liargame.common.model.response.RoomResp;
 import com.sixsense.liargame.db.entity.Room;
 import com.sixsense.liargame.db.entity.User;
@@ -28,14 +31,16 @@ public class RoomServiceImpl implements RoomService {
     private final String LIAR = "liar";
     private final String SPY = "spy";
     private final int MAX_ROOM_SIZE = 200;
+    private final ObjectMapper om;
     private Map<Integer, Room> rooms;
 
 
-    public RoomServiceImpl(UserRepository userRepository, NormalHistoryRepository normalHistoryRepository, NormalPlayRepository normalPlayRepository, GlobalRoom globalRoom) {
+    public RoomServiceImpl(UserRepository userRepository, NormalHistoryRepository normalHistoryRepository, NormalPlayRepository normalPlayRepository, GlobalRoom globalRoom, ObjectMapper om) {
         this.userRepository = userRepository;
         this.normalHistoryRepository = normalHistoryRepository;
         this.normalPlayRepository = normalPlayRepository;
         this.rooms = globalRoom.getRooms();
+        this.om = om;
     }
 
     private Integer getRoomId() {
@@ -49,30 +54,44 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Integer insert(Long userId, RoomReq roomReq) {
         Room room = toEntity(roomReq);
-        room.setMaster(userId);
         Integer roomId = getRoomId();
-        room.setId(roomId);
         rooms.put(roomId, room);
-        System.out.println(room);
+        room.setMaster(userId);
+        room.setId(roomId);
         enter(userId, roomId);
         return roomId;
     }
 
     @Override
-    public void enter(Long userId, Integer roomId) {
+    public RoomDetail enter(Long userId, Integer roomId) {
         Room room = rooms.get(roomId);
         if (room.getMaxCount() > room.getCurCount()) {
             User user = userRepository.findById(userId).orElseThrow();
             room.enter(user.getId(), user.getName());
+            RoomDetail roomDetail = toDetail(room);
+            try {
+                room.getEmitters().sendToAll("message", "room : " + om.writeValueAsString(roomDetail));
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException(e);
+            }
         }
+        return null;
     }
 
     @Override
     public void exit(Long userId, Integer roomId) {
         Room room = rooms.get(roomId);
         room.exit(userId);
+
         if (room.getCurCount() <= 0) {
             rooms.remove(roomId);
+        }
+
+        RoomDetail roomDetail = toDetail(room);
+        try {
+            room.getEmitters().sendToAll("message", "room : " + om.writeValueAsString(roomDetail));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
     }
 
