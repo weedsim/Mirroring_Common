@@ -46,6 +46,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public ResponseEntity<?> registerEmail(String email, String key) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("No authentication information."));
+
+
+        String userKey = user.getMailKey();
+        String msg;
+        if (userKey.equals(key)) {
+            msg = "이메일 인증 성공했습니다. TODO: 메인페이지로";
+            // add ROLE_ADMIN
+            user.getRole().remove(0);
+            user.getRole().add(Authority.ROLE_USER.name());
+            userRepository.save(user);
+        } else msg = "이메일 인증 실패했습니다.";
+        return response.success(msg);
+    }
+
+    @Override
     public ResponseEntity<?> signUp(UserRequestDto.SignUp signUp) {
         if (userRepository.existsByEmail(signUp.getEmail())) {
             return response.fail("이미 회원가입된 이메일입니다.", HttpStatus.BAD_REQUEST);
