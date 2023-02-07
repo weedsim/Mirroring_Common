@@ -4,9 +4,10 @@ services:
  front:
   build: ./front-end
   ports:
-   - "8080:8080"
+   - "8081:8081"
 
  back:
   build: ./back-end/liargame
   ports:
    - "5000:5000"
+
