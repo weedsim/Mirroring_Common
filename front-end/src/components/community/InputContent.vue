@@ -1,5 +1,9 @@
 <template>
-  <div></div>
+  <div class="mb-3">
+    <label for="exampleFormControlTextarea1" class="form-label">내용</label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="6" placeholder="내용을 입력하세요"></textarea>
+</div>
+
 </template>
 
 <script>

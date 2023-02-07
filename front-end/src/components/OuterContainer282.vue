@@ -18,6 +18,7 @@ import MainCommunity from "@/components/community/MainCommunity.vue";
 export default {
   name: "OuterContainer",
   components: {
+    MainLobby,
     MainCommunity,
   },
   data() {
