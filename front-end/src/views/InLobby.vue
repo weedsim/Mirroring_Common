@@ -13,7 +13,7 @@ import MainLobby from "@/components/lobby/MainLobby.vue";
 
 // import LeftContainer from "@/components/LeftContainer.vue";
 // import RightContainer from "@/components/RightContainer.vue";
-import OuterContainer from "@/components/OuterContainer.vue";
+import OuterContainer from "@/components/OuterContainer282.vue";
 
 export default {
     name:"InLobby",

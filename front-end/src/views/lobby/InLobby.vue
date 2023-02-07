@@ -1,7 +1,7 @@
 <template>
   <navbar />
   <div class="m-0 p-0 mainlobby">
-    <outer-container></outer-container>
+    <outer-container282></outer-container282>
   </div>
 </template>
 
@@ -9,7 +9,7 @@
 // import { mapState } from "vuex";
 import navbar from "@/components/NavView.vue";
 import MainLobby from "@/components/lobby/MainLobby.vue";
-import OuterContainer from "@/components/OuterContainer.vue";
+import OuterContainer282 from "@/components/OuterContainer282.vue";
 import VueCookies from "vue-cookies";
 
 export default {
@@ -17,7 +17,7 @@ export default {
   components: {
     navbar,
     MainLobby,
-    OuterContainer,
+    OuterContainer282,
   },
   created() {
     this.getReIssue();
