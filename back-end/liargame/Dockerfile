@@ -1,3 +1,16 @@
 FROM openjdk:11-jre
-COPY build/libs/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+WORKDIR /root/S08P12A706/back-end/liargame
+
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle .
+COPY settings.gradle .
+COPY src src
+RUN chmod +x ./gradlew
+RUN ./gradlew build
+
+COPY --from=builder build/libs/*.jar app.jar
+
+EXPOSE 5000
+ENTRYPOINT ["java","-jar","/app.jar"]
