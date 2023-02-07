@@ -16,20 +16,20 @@ public class GameController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/start")
-    public ResponseEntity<?> start(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long roomId) {
+    public ResponseEntity<?> start(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         gameService.normalGameStart(userId, roomId);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/vote")
-    public ResponseEntity<?> vote(@PathVariable Long roomId, Vote vote) {
+    public ResponseEntity<?> vote(@PathVariable Integer roomId, Vote vote) {
         gameService.vote(vote, roomId);
         return ResponseEntity.ok(vote);
     }
 
     @PostMapping("/answer")
-    public ResponseEntity<?> insertAnswer(@PathVariable Long roomId, String answer) {
+    public ResponseEntity<?> insertAnswer(@PathVariable Integer roomId, String answer) {
         gameService.insertAnswer(answer, roomId);
         return ResponseEntity.ok(answer);
     }

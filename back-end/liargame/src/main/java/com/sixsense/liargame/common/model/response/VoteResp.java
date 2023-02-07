@@ -1,9 +1,9 @@
 package com.sixsense.liargame.common.model.response;
 
 public class VoteResp {
-    String voter;
-    String target;
-    Boolean isCorrect;
+    private String voter;
+    private String target;
+    private Boolean isCorrect;
 
     public VoteResp(String voter, String target, Boolean isCorrect) {
         this.voter = voter;

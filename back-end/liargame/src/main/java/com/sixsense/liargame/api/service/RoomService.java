@@ -1,8 +1,8 @@
 package com.sixsense.liargame.api.service;
 
-import com.sixsense.liargame.api.response.RoomTokenResp;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
+import com.sixsense.liargame.common.model.response.RoomDetail;
 import com.sixsense.liargame.common.model.response.RoomResp;
 import com.sixsense.liargame.db.entity.Room;
 import io.openvidu.java.client.OpenViduHttpException;
@@ -13,15 +13,17 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 public interface RoomService {
-    RoomTokenResp insert(Long userId, RoomReq roomReq) throws OpenViduJavaClientException, OpenViduHttpException;
+    Integer insert(Long userId, RoomReq roomReq) throws OpenViduJavaClientException, OpenViduHttpException;
 
-    void enter(Long userId, Long roomId);
+    RoomDetail enter(Long userId, Integer roomId);
 
-    void exit(Long userId, Long roomId);
+    void exit(Long userId, Integer roomId);
 
     void changeSetting(Long userId, SettingDto settingDto);
 
     List<RoomResp> selectAll(Pageable pageable);
+
+    Integer last();
 
     default RoomResp toDto(Room room) {
         return RoomResp.builder()
@@ -37,10 +39,25 @@ public interface RoomService {
 
     default Room toEntity(RoomReq roomReq) {
         return Room.builder()
+                .timeout(roomReq.getTimeout())
                 .title(roomReq.getTitle())
                 .mode(roomReq.getMode())
                 .maxCount(roomReq.getMaxCount())
                 .password(roomReq.getPassword())
+                .build();
+    }
+
+    default RoomDetail toDetail(Room room) {
+        return RoomDetail.builder()
+                .roomId(room.getId())
+                .title(room.getTitle())
+                .maxCount(room.getMaxCount())
+                .timeout(room.getTimeout())
+                .isPlaying(room.getIsPlaying())
+                .mode(room.getMode())
+                .password(room.getPassword())
+                .master(room.getMaster())
+                .participants(room.getParticipants())
                 .build();
     }
 }

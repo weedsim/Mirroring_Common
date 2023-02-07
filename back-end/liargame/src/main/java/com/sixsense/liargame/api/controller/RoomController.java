@@ -1,9 +1,10 @@
 package com.sixsense.liargame.api.controller;
 
-import com.sixsense.liargame.api.response.RoomTokenResp;
 import com.sixsense.liargame.api.service.RoomService;
+import com.sixsense.liargame.api.sse.GlobalRoom;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
+import com.sixsense.liargame.common.model.response.RoomDetail;
 import com.sixsense.liargame.common.model.response.RoomResp;
 import com.sixsense.liargame.security.auth.JwtProperties;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
@@ -23,44 +24,53 @@ public class RoomController {
     private final RoomService roomService;
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final GlobalRoom globalRoom;
 
     @GetMapping
     public ResponseEntity<List<RoomResp>> getAll(Pageable pageable) {
-        List<com.sixsense.liargame.common.model.response.RoomResp> rooms = roomService.selectAll(pageable);
+        List<RoomResp> rooms = roomService.selectAll(pageable);
         return ResponseEntity.ok(rooms);
     }
 
     @PatchMapping("/{roomId}/enter")
-    public ResponseEntity<?> enter(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long roomId) {
+    public ResponseEntity<RoomDetail> enter(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
-        roomService.enter(userId, roomId);
-        return ResponseEntity.ok().build();
+        RoomDetail roomDetail = roomService.enter(userId, roomId);
+        if (roomDetail == null)
+            return ResponseEntity.internalServerError().build();
+        return ResponseEntity.ok(roomDetail);
     }
 
     @PatchMapping("/{roomId}/exit")
-    public ResponseEntity<?> exit(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long roomId) {
+    public ResponseEntity<?> exit(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         roomService.exit(userId, roomId);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{roomId}")
-    public ResponseEntity<?> changeSetting(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long roomId, @RequestBody SettingDto settingDto) {
+    public ResponseEntity<?> changeSetting(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId, @RequestBody SettingDto settingDto) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
+        System.out.println(userId);
         settingDto.setId(roomId);
         roomService.changeSetting(userId, settingDto);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping
-    public ResponseEntity<RoomTokenResp> create(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @RequestBody RoomReq roomReq) {
+    public ResponseEntity<Integer> create(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @RequestBody RoomReq roomReq) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
-        RoomTokenResp roomTokenResp;
+        Integer roomId;
         try {
-            roomTokenResp = roomService.insert(userId, roomReq);
+            roomId = roomService.insert(userId, roomReq);
         } catch (OpenViduJavaClientException | OpenViduHttpException e) {
             throw new RuntimeException(e);
         }
-        return ResponseEntity.ok(roomTokenResp);
+        return ResponseEntity.ok(roomId);
+    }
+
+    @GetMapping("/last")
+    public ResponseEntity<Integer> lastNumber() {
+        return ResponseEntity.ok(roomService.last());
     }
 }

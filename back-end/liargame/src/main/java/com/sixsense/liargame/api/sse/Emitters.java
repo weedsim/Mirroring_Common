@@ -12,11 +12,12 @@ import java.util.stream.Collectors;
 
 public class Emitters {
     @Getter
-    private final List<CustomEmitter> emitterList = new CopyOnWriteArrayList<>();
+    private final List<CustomEmitter> emitterList;
     private CustomEmitter liar;
     private CustomEmitter spy;
 
     public Emitters() {
+        emitterList = new CopyOnWriteArrayList<>();
     }
 
     public void add(CustomEmitter emitter) {
@@ -37,7 +38,8 @@ public class Emitters {
 
     public void sendToAll(String name, String message) {
         sendToCitizens(name, message);
-        sendToLiar(name, message);
+        if (liar != null)
+            sendToLiar(name, message);
         if (spy != null)
             sendToSpy(name, message);
     }

@@ -1,52 +1,50 @@
 package com.sixsense.liargame.api.service.impl;
 
 import com.sixsense.liargame.api.service.GameService;
-import com.sixsense.liargame.api.sse.Emitters;
 import com.sixsense.liargame.api.sse.GameManager;
-import com.sixsense.liargame.api.sse.GlobalEmitter;
+import com.sixsense.liargame.api.sse.GlobalRoom;
 import com.sixsense.liargame.api.sse.NormalGame;
 import com.sixsense.liargame.common.model.Vote;
 import com.sixsense.liargame.common.model.response.GameResultResp;
 import com.sixsense.liargame.db.entity.NormalHistory;
 import com.sixsense.liargame.db.entity.NormalPlay;
 import com.sixsense.liargame.db.entity.Room;
-import com.sixsense.liargame.db.repository.*;
+import com.sixsense.liargame.db.repository.NormalHistoryRepository;
+import com.sixsense.liargame.db.repository.NormalPlayRepository;
+import com.sixsense.liargame.db.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class GameServiceImpl implements GameService {
     private final UserRepository userRepository;
-    private final RoomRepository roomRepository;
     private final NormalHistoryRepository normalHistoryRepository;
     private final NormalPlayRepository normalPlayRepository;
     private final GameManager gameManager;
     private final String CITIZEN = "citizen";
     private final String LIAR = "liar";
     private final String SPY = "spy";
-    private final GlobalEmitter globalEmitter;
-    private final NormalGameRepository normalGameRepository;
+    private final Map<Integer, Room> rooms;
+    private final Map<Integer, NormalGame> games;
 
-    public GameServiceImpl(UserRepository userRepository, RoomRepository roomRepository, NormalHistoryRepository normalHistoryRepository, NormalPlayRepository normalPlayRepository, GameManager gameManager, GlobalEmitter globalEmitter, NormalGameRepository normalGameRepository) {
+    public GameServiceImpl(UserRepository userRepository, NormalHistoryRepository normalHistoryRepository, NormalPlayRepository normalPlayRepository, GameManager gameManager, GlobalRoom globalRoom) {
         this.userRepository = userRepository;
-        this.roomRepository = roomRepository;
         this.normalHistoryRepository = normalHistoryRepository;
         this.normalPlayRepository = normalPlayRepository;
         this.gameManager = gameManager;
-        this.globalEmitter = globalEmitter;
-        this.normalGameRepository = normalGameRepository;
+        this.rooms = globalRoom.getRooms();
+        this.games = globalRoom.getGames();
     }
 
     @Override
-    public GameResultResp normalGameStart(Long userId, Long roomId) {
-        Room room = roomRepository.findById(roomId).orElseThrow();
-        Emitters emitters = globalEmitter.getEmitters(roomId);
-        room.setEmitters(emitters);
+    public GameResultResp normalGameStart(Long userId, Integer roomId) {
+        Room room = rooms.get(roomId);
 
         if (Objects.equals(room.getMaster(), userId)) {
             NormalGame normalGame = gameManager.start(room);
@@ -81,15 +79,15 @@ public class GameServiceImpl implements GameService {
 
     @Override
     @Transactional
-    public void vote(Vote vote, Long GameId) {
-        NormalGame game = normalGameRepository.findById(GameId).orElseThrow();
+    public void vote(Vote vote, Integer gameId) {
+        NormalGame game = games.get(gameId);
         gameManager.vote(vote.getVoter(), vote.getTarget(), game.getVotes());
     }
 
     @Override
     @Transactional
-    public void insertAnswer(String answer, Long GameId) {
-        NormalGame game = normalGameRepository.findById(GameId).orElseThrow();
+    public void insertAnswer(String answer, Integer gameId) {
+        NormalGame game = games.get(gameId);
         game.setAnswer(answer);
     }
 }

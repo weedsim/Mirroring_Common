@@ -3,11 +3,13 @@ package com.sixsense.liargame.common.model.response;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
+@ToString
 public class RoomResp {
-    private Long id;
+    private Integer id;
     private String title;
     private Integer maxCount;
     private Integer curCount;
@@ -16,7 +18,7 @@ public class RoomResp {
     private Boolean isPrivate;
 
     @Builder
-    public RoomResp(Long id, String title, Integer maxCount, Integer curCount, Boolean isPlaying, String mode, Boolean isPrivate) {
+    public RoomResp(Integer id, String title, Integer maxCount, Integer curCount, Boolean isPlaying, String mode, Boolean isPrivate) {
         this.id = id;
         this.title = title;
         this.maxCount = maxCount;
