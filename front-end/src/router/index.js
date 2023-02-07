@@ -34,17 +34,17 @@ const routes = [
     name: "community",
     component: () =>
       import(
-        /* webpackChunkName: "about" */ "../views/community/Community.vue"
+        /* webpackChunkName: "about" */ "@/components/community/MainCommunity.vue"
       ),
   },
-  {
-    path: "/CreateArticle",
-    name: "CreateArticle",
-    component: () =>
-      import(
-        /* webpackChunkName: "about" */ "../views/community/CreateArticle.vue"
-      ),
-  },
+  // {
+  //   path: "/CreateArticle",
+  //   name: "CreateArticle",
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "about" */ "../views/community/CreateArticle.vue"
+  //     ),
+  // },
   {
     path: "/kakao",
     name: "kakao",
