@@ -1,4 +1,4 @@
-FROM openjdk:11-jre
+FROM openjdk:11-jdk
 
 WORKDIR /root/S08P12A706/back-end/liargame
 
@@ -8,9 +8,10 @@ COPY build.gradle .
 COPY settings.gradle .
 COPY src src
 RUN chmod +x ./gradlew
+RUN ./gradlew cleanQuerydslSourcesDir
 RUN ./gradlew build
 
-COPY --from=builder build/libs/*.jar app.jar
+ONBUILD COPY ./build/libs/*.jar ./app.jar
 
 EXPOSE 5000
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","./app.jar"]
