@@ -40,7 +40,6 @@ public class Room {
         this.password = password;
         this.master = master;
         this.isPlaying = false;
-        this.emitters = new Emitters();
         this.participants = new ArrayList<>();
     }
 
@@ -67,7 +66,7 @@ public class Room {
     }
 
     public void enter(Long userId, String name) {
-        participants.add(new UserInfo(userId, name));
+        participants.add(new UserInfo(userId, name, false));
     }
 
     public void exit(Long userId) {

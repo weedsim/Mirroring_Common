@@ -4,6 +4,7 @@ import com.sixsense.liargame.api.service.SseService;
 import com.sixsense.liargame.api.sse.Emitters;
 import com.sixsense.liargame.api.sse.GlobalRoom;
 import com.sixsense.liargame.common.model.CustomEmitter;
+import com.sixsense.liargame.common.model.SseResponse;
 import com.sixsense.liargame.db.entity.Room;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +25,7 @@ public class SseServiceImpl implements SseService {
         CustomEmitter emitter = new CustomEmitter(userId, 1000 * 60 * 30L, name);
         emitters.add(emitter);
         System.out.println("emitter 생성완료");
-        emitters.sendToAll("message", userId.toString() + "님이 입장하셨습니다.");
+        emitters.sendToAll("message", new SseResponse("message", name + "님이 입장하셨습니다."));
         System.out.println("메세지 보내기");
         return emitter;
     }

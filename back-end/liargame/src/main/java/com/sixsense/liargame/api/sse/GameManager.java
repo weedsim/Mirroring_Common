@@ -1,5 +1,6 @@
 package com.sixsense.liargame.api.sse;
 
+import com.sixsense.liargame.common.model.SseResponse;
 import com.sixsense.liargame.common.model.Vote;
 import com.sixsense.liargame.db.entity.Room;
 import org.springframework.stereotype.Component;
@@ -25,15 +26,17 @@ public class GameManager {
 
         room.getEmitters().setLiar(normalGame.getLiarUserId());
         //시민들에게 단어 알려주고 게임 시작 알리기
-        emitters.sendToCitizens("message", "word : " + normalGame.getWord());
-        emitters.sendToLiar("message", "word : " + "liar");
-        emitters.sendToAll("message", "msg : " + "game start");
+
+        emitters.sendToCitizens("message", new SseResponse("word", normalGame.getWord()));
+        emitters.sendToLiar("message", new SseResponse("word", "liar"));
+        emitters.sendToAll("message", new SseResponse("message", "game start"));
         //timeout 만큼 쉼
         waitTimeout(room.getEmitters(), timeout * 1000);
         //차례대로 발언
         Integer curSpeaker = normalGame.getCurSpeaker();
         while (curSpeaker != null) {
-            emitters.sendToAll("message", "curSpeaking : " + curSpeaker.toString());
+
+            emitters.sendToAll("message", new SseResponse("curSpeaker", curSpeaker.toString()));
             waitTimeout(room.getEmitters(), timeout * 1000);
             curSpeaker = normalGame.changeSpeaker();
         }
@@ -50,8 +53,8 @@ public class GameManager {
         //시민인 경우 바로 게임종료, 라이어인 경우 정답 입력 시간 알림
         String winner = "LIAR";
         if (Objects.equals(normalGame.getLiar(), result)) {
-            emitters.sendToCitizens("message", "msg : " + "selected liar");
-            emitters.sendToLiar("message", "msg : " + "write answer");
+            emitters.sendToCitizens("message", new SseResponse("message", "selected liar"));
+            emitters.sendToLiar("message", new SseResponse("message", "write answer"));
             waitTimeout(room.getEmitters(), 1000 * 10); // 정답 입력시간 10초
             if (StringUtils.hasText(normalGame.getAnswer()) && !normalGame.getAnswer().equals(normalGame.getWord()))
                 winner = "CITIZEN";
@@ -62,10 +65,10 @@ public class GameManager {
     }
 
     private void noticeVote(Emitters emitters) {
-        emitters.sendToAll("message", "msg : " + "vote start");
+        emitters.sendToAll("message", new SseResponse("message", "vote start"));
         waitTimeout(emitters, 30 * 1000); // 30초
         //투표종료 알림
-        emitters.sendToAll("message", "msg : " + "vote end");
+        emitters.sendToAll("message", new SseResponse("message", "vote end"));
     }
 
     private Integer getVoteResult(List<Vote> votes) {
@@ -83,7 +86,7 @@ public class GameManager {
     }
 
     private void waitTimeout(Emitters emitters, Integer time) {
-        emitters.sendToAll("time", "time : " + time.toString());
+        emitters.sendToAll("message", new SseResponse("time", "time.toString()"));
         try {
             Thread.sleep(time + SPARE_TIME);
         } catch (InterruptedException e) {
