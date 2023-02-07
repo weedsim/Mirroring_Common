@@ -30,28 +30,34 @@
       <hr class="my-4 hist ">
       <!-- 전적확인란 -->
       <h3>전적 정보</h3>
-      <table class="historytable thead-dark" style="margin: 0 auto;">
-        <thead>
-          <tr>
-            <th scope="col">normal</th>
-            <th scope="col">spy</th>
-          </tr>
-          <tr>
-            <td>{{ normalhistory }}</td>
-            <td>{{ spyhistory }}</td>
-          </tr>
-          <tr v-for="(item, index) in normallist" :key="index">
-            <td>{{ item.result }}</td>
-            <td>{{ item.role }}</td>
-            <td>{{ item.playedTime }}</td>
-            <td>{{ item.users.join(', ') }}</td>
-            <td v-if="spylist[index]">{{ spylist[index].result }}</td>
-            <td v-if="spylist[index]">{{ spylist[index].role }}</td>
-            <td v-if="spylist[index]">{{ spylist[index].playedTime }}</td>
-            <td v-if="spylist[index]">{{ spylist[index].users.join(', ') }}</td>
-          </tr>
-        </thead>
-      </table>
+      <div style="display: flex;">
+        <ul class="mode" style="margin-bottom: 5px;">
+          <li>Normal Mode : </li>
+          <li>Spy Mode : </li>
+        </ul>
+        <table class="historytable thead-dark" style="flex: 1">
+          <thead>
+            <tr>
+              <th scope="col">normal</th>
+              <td>{{ normalhistory }}</td>
+            </tr>
+            <tr>
+              <th scope="col">spy</th>
+              <td>{{ spyhistory }}</td>
+            </tr>
+            <!-- <tr v-for="(item, index) in normallist" :key="index">
+              <td>{{ item.result }}</td>
+              <td>{{ item.role }}</td>
+              <td>{{ item.playedTime }}</td>
+              <td>{{ item.users.join(', ') }}</td>
+              <td v-if="spylist[index]">{{ spylist[index].result }}</td>
+              <td v-if="spylist[index]">{{ spylist[index].role }}</td>
+              <td v-if="spylist[index]">{{ spylist[index].playedTime }}</td>
+              <td v-if="spylist[index]">{{ spylist[index].users.join(', ') }}</td>
+            </tr> -->
+          </thead>
+        </table>
+      </div>
       <!-- <hr class="my-4 reward">
       리워드란 -->
     </div>
@@ -70,6 +76,7 @@ export default {
       email: null,
       pwd: null,
       chkpwd: null,
+      role: null,
       API_URL: this.$store.state.API_URL,
       remodifyPW: "",
       modifyPW: "",
@@ -110,107 +117,90 @@ export default {
           Authorization: `Bearer ${this.$store.state.accessToken}`,
         },
       })
-        .then((res) => {
-          this.name = res.data.name;
-          this.email = res.data.email;
-          // console.log(res.data.accessToken);
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log("유저정보실패");
-          console.log(err);
-        });
-        axios({
-          method: "get",
-          url: `${this.API_URL}/history/normal`,
-          headers: {
-            Authorization: `Bearer ${this.$store.state.accessToken}`,
-          },
-        })
-        .then((res) => {
-          this.normallist = res;
-          let countwin = 0;
-          let countlose = 0;
-          for(let i = 0; i<res.length; i++){
-            if(res[i].result === "win"){
-              countwin++;
-            }
-            else{
-              countlose++;
-            }
-          }
-          this.normalwin = countwin;
-          this.normallose = countlose;
-          this.normalplayed = res.length;
-          this.normalhistory = this.normalplayed + '전 ' + this.normalwin + '승 ' + this.normallose + '패';
-        })
-        .catch((err) => {
-          console.log("노말모드실패");
-          console.log(err);
-        });
-        axios({
-          method: "get",
-          url: `${this.API_URL}/history/spy`,
-          headers: {
-            Authorization: `Bearer ${this.$store.state.accessToken}`,
-          },
-        })
-        .then((res) => {
-          this.spylist = res;
-          let countwin = 0;
-          let countlose = 0;
-          for(let i = 0; i < res.length; i++){
-            if(res[i].result === "win"){
-              countwin++;
-            }
-            else{
-              countlose++;
-            }
-          }
-          this.spywin = countwin;
-          this.spylose = countlose;
-          this.spyplayed = res.length;
-          this.spyhistory = this.spyplayed + '전 ' + this.spywin + '승 ' + this.spylose + '패';
-        })
-        .catch((err) => {
-          console.log("스파이모드실패");
-          console.log(err);
-        });
-    },
-    namedupli() {  //중복확인
-      this.isinputActive = true;
-      const btnElement = document.getElementById('namebtn');
-      btnElement.innerText = '중복 확인';
+      .then((res) => {
+        this.name = res.data.name;
+        this.email = res.data.email;
+        this.role = res.data.role;
+        // console.log(res.data.accessToken);
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log("유저정보실패");
+        console.log(err);
+      });
       axios({
         method: "get",
-        url: `${this.API_URL}/users/duplicate`,
-        headers:{
-          
+        url: `${this.API_URL}/history/normal`,
+        headers: {
+          Authorization: `Bearer ${this.$store.state.accessToken}`,
         },
-        body: {
-          'name': `${this.name}`
+      })
+      .then((res) => {
+        this.normallist = res;
+        let countwin = 0;
+        let countlose = 0;
+        for(let i = 0; i<res.length; i++){
+          if(res[i].result === "win"){
+            countwin++;
+          }
+          else{
+            countlose++;
+          }
+        }
+        this.normalwin = countwin;
+        this.normallose = countlose;
+        this.normalplayed = res.length;
+        this.normalhistory = this.normalplayed + '전 ' + this.normalwin + '승 ' + this.normallose + '패';
+      })
+      .catch((err) => {
+        console.log("노말모드실패");
+        console.log(err);
+      });
+      axios({
+        method: "get",
+        url: `${this.API_URL}/history/spy`,
+        headers: {
+          Authorization: `Bearer ${this.$store.state.accessToken}`,
+        },
+        params: {
+
+        },
+        bodys: {
+            
         }
       })
       .then((res) => {
-          console.log(res);
-          if(res==true) {
-            console.log("성공")
+        this.spylist = res;
+        let countwin = 0;
+        let countlose = 0;
+        for(let i = 0; i < res.length; i++){
+          if(res[i].result === "win"){
+            countwin++;
           }
           else{
-            console.log("실패")
+            countlose++;
           }
-        })
+        }
+        this.spywin = countwin;
+        this.spylose = countlose;
+        this.spyplayed = res.length;
+        this.spyhistory = this.spyplayed + '전 ' + this.spywin + '승 ' + this.spylose + '패';
+      })
+      .catch((err) => {
+        console.log("스파이모드실패");
+        console.log(err);
+      });
     },
-    patchPW() { //비밀번호 변경되게 입력
-      if(this.modifyPW === this.remodifyPW) {
+    namedupli() {  //중복확인
+      if(this.isinputActive === true){
         axios({
-          method: "put",
-          url: `${this.API_URL}/users/modify/password`,
+          method: "get",
+          url: `${this.API_URL}/users/duplicate`,
           headers:{
-            Authorization: `Bearer ${this.$store.state.accessToken}`,
+            
           },
           body: {
-            "password": `{this.remodifyPW}`,
+            'name': `${this.name}`
           }
         })
         .then((res) => {
@@ -218,13 +208,43 @@ export default {
           if(res==true) {
             console.log("성공")
           }
-          else{
-            console.log("실패")
-          }
-        })
-      } else{
-        console.log("비밀번호가 다르게 입력되었습니다.")
-      }
+            else{
+              console.log("실패")
+            }
+          })
+          .catch((err) => {
+            console.log("중복확인실패");
+            console.log(err);
+          })
+        }
+        this.isinputActive = true;
+        const btnElement = document.getElementById('namebtn');
+        btnElement.innerText = '중복 확인';
+      },
+      patchPW() { //비밀번호 변경되게 입력
+        if(this.modifyPW === this.remodifyPW) {
+          axios({
+            method: "put",
+            url: `${this.API_URL}/users/modify/password`,
+            headers:{
+              Authorization: `Bearer ${this.$store.state.accessToken}`,
+            },
+            body: {
+              "password": `{this.remodifyPW}`,
+            }
+          })
+          .then((res) => {
+            console.log(res);
+            if(res==true) {
+              console.log("성공")
+            }
+            else{
+              console.log("실패")
+            }
+          })        
+        } else{
+          console.log("비밀번호가 다르게 입력되었습니다.")
+        }
     },
   },
 };
@@ -249,6 +269,9 @@ export default {
   th, td{
     border: 1px solid white;
   }
-  
+  .mode{
+    display:inline-block;
+    
+  }
   
 </style>
