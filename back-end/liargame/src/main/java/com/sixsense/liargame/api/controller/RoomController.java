@@ -41,6 +41,13 @@ public class RoomController {
         return ResponseEntity.ok(roomDetail);
     }
 
+    @PatchMapping("/{roomId}/ready")
+    public ResponseEntity<RoomDetail> ready(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
+        Long userId = jwtTokenProvider.getUserId(accessToken);
+        roomService.ready(userId, roomId);
+        return ResponseEntity.ok().build();
+    }
+
     @PatchMapping("/{roomId}/exit")
     public ResponseEntity<?> exit(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);

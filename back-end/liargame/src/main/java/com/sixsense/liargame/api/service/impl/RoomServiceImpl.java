@@ -116,4 +116,18 @@ public class RoomServiceImpl implements RoomService {
         return (rooms.size() - 1) / 8 + 1;
     }
 
+    @Override
+    public void ready(Long userId, Integer roomId) {
+        Room room = rooms.get(roomId);
+        Integer ready = room.ready(userId);
+        if (ready != null) {
+            boolean isReady = room.getParticipants().get(ready).getIsReady();
+            if (isReady) {
+                room.getEmitters().sendToAll("message", "ready : " + ready);
+                return;
+            }
+            room.getEmitters().sendToAll("message", "unready : " + ready);
+        }
+    }
+
 }

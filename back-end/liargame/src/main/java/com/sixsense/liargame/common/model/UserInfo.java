@@ -1,9 +1,6 @@
 package com.sixsense.liargame.common.model;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -14,4 +11,11 @@ import java.io.Serializable;
 public class UserInfo implements Serializable {
     private Long userId;
     private String name;
+    @Setter
+    private Boolean isReady;
+
+    public UserInfo(Long userId, String name) {
+        this.userId = userId;
+        this.name = name;
+    }
 }

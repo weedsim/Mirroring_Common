@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @NoArgsConstructor
@@ -53,6 +54,16 @@ public class Room {
         this.timeout = setting.getTimeout();
         this.password = setting.getPassword();
         this.maxCount = setting.getMaxCount();
+    }
+
+    public Integer ready(Long userId) {
+        for (int i = 0; i < participants.size(); i++) {
+            if (Objects.equals(participants.get(i).getUserId(), userId)) {
+                participants.get(i).setIsReady(!participants.get(i).getIsReady());
+                return i;
+            }
+        }
+        return null;
     }
 
     public void enter(Long userId, String name) {

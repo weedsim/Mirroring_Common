@@ -60,4 +60,6 @@ public interface RoomService {
                 .participants(room.getParticipants())
                 .build();
     }
+
+    void ready(Long userId, Integer roomId);
 }

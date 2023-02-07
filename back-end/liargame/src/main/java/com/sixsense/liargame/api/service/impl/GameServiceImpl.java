@@ -4,6 +4,7 @@ import com.sixsense.liargame.api.service.GameService;
 import com.sixsense.liargame.api.sse.GameManager;
 import com.sixsense.liargame.api.sse.GlobalRoom;
 import com.sixsense.liargame.api.sse.NormalGame;
+import com.sixsense.liargame.common.model.UserInfo;
 import com.sixsense.liargame.common.model.Vote;
 import com.sixsense.liargame.common.model.response.GameResultResp;
 import com.sixsense.liargame.db.entity.NormalHistory;
@@ -46,7 +47,8 @@ public class GameServiceImpl implements GameService {
     public GameResultResp normalGameStart(Long userId, Integer roomId) {
         Room room = rooms.get(roomId);
 
-        if (Objects.equals(room.getMaster(), userId)) {
+        if (Objects.equals(room.getMaster(), userId) && isAllReady(room)) {
+            room.start();
             NormalGame normalGame = gameManager.start(room);
 
             NormalHistory normalHistory =
@@ -60,9 +62,19 @@ public class GameServiceImpl implements GameService {
                             .map(p -> new NormalPlay(p.getUserId(), historyId, getRole(p.getUserId(), normalGame.getLiarUserId())))
                             .collect(Collectors.toList());
             normalPlayRepository.saveAll(playList);
+            room.end();
             return normalGame.getResult();
         }
         return null;
+    }
+
+    private boolean isAllReady(Room room) {
+        List<UserInfo> participants = room.getParticipants();
+        for (UserInfo user : participants) {
+            if (!user.getIsReady() && !Objects.equals(room.getMaster(), user.getUserId()))
+                return false;
+        }
+        return true;
     }
 
     private String getRole(Long userId, Long liar) {
