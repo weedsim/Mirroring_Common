@@ -2,9 +2,9 @@ package com.sixsense.liargame.api.controller;
 
 import com.sixsense.liargame.api.service.RoomService;
 import com.sixsense.liargame.api.sse.GlobalRoom;
-import com.sixsense.liargame.common.model.UserInfo;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
+import com.sixsense.liargame.common.model.response.RoomDetail;
 import com.sixsense.liargame.common.model.response.RoomResp;
 import com.sixsense.liargame.security.auth.JwtProperties;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
@@ -33,14 +33,12 @@ public class RoomController {
     }
 
     @PatchMapping("/{roomId}/enter")
-    public ResponseEntity<?> enter(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
+    public ResponseEntity<RoomDetail> enter(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
-        System.out.println(userId);
-        roomService.enter(userId, roomId);
-        System.out.println(roomId + "에 " + userId + "님이 입장하셨습니다.");
-        List<UserInfo> participants = globalRoom.getRooms().get(roomId).getParticipants();
-        System.out.println("현재 방 인원 목록 : " + participants.toString());
-        return ResponseEntity.ok(roomId);
+        RoomDetail roomDetail = roomService.enter(userId, roomId);
+        if (roomDetail == null)
+            return ResponseEntity.internalServerError().build();
+        return ResponseEntity.ok(roomDetail);
     }
 
     @PatchMapping("/{roomId}/exit")
