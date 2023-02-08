@@ -1,62 +1,58 @@
 <template>
-  <div class="m-1 p-0">
-    <div class="m-0 p-0 user" style="height: 100%">
-      <!-- <user-comp-speak> -->
-      <div class="m-0 p-0 row" style="height: 70%">
-        <!-- 화상 화면 및 닉네임 -->
-        <user-display
-          :curIdx="curIdx"
-          v-if="$store.state.sessions[curIdx].isJoin"
-          alt=""
-        >
-        </user-display>
+  <!-- <user-comp> -->
+  <div class="p-0">
+    <div class="p-3 speaking-blur">
+      <div class="m-0 p-0 user screen speaking" style="border-radius: 20px">
+        <div class="m-0 p-0 row">
+          <!-- 화상 화면 및 닉네임 -->
+          <user-display
+            :curIdx="curIdx"
+            v-if="$store.state.sessions[curIdx].isJoin"
+            alt=""
+          >
+          </user-display>
 
-        <img src="@/assets/ingame/headphone.png" v-else alt="" />
-      </div>
-      <!-- 준비 부분을 컴포넌트로 만들어야되는데 그냥 데이터 상속받아서 처리하겠습니다 -->
-      <div class="ready">
-        <button
-          type="button"
-          class="btn btn-warning"
-          v-if="$store.state.sessions[curIdx].isReady"
-          style="width: 100%"
-        >
-          <div class="m-0 p-0" style="font-size: 2vw">준비중 {{ curIdx }}</div>
-        </button>
+          <img
+            src="@/assets/ingame/headphone.png"
+            style="aspect-ratio: 4/3"
+            v-else
+            alt=""
+          />
+          <div
+            class="ready m-0 p-0"
+            style="background: #008746"
+            v-if="$store.state.sessions[curIdx].isReady"
+          >
+            준비완료
+          </div>
 
-        <button
-          type="button"
-          class="btn btn-success"
-          v-else
-          style="width: 100%"
-          v-on:click="test"
-        >
-          <div class="m-0 p-0" style="font-size: 2vw">준비완료{{ curIdx }}</div>
-        </button>
+          <div class="unready m-0 p-0" style="background: #ffb039" v-else>
+            대기중
+          </div>
+        </div>
+        <!-- 준비 부분을 컴포넌트로 만들어야되는데 그냥 데이터 상속받아서 처리하겠습니다 -->
+
+        <div class="btn-mic-cam mt-1 ms-2 p-0">
+          <button @click="togglev()" style="background: none; border-width: 0">
+            <BIconVolumeMuteFill
+              style="color: red"
+              v-if="$store.state.isShow_vol"
+            ></BIconVolumeMuteFill>
+            <BIconVolumeUpFill style="color: white" v-else></BIconVolumeUpFill>
+          </button>
+          <button @click="togglec()" style="background: none; border-width: 0">
+            <BIconCameraVideoOffFill
+              style="color: red"
+              v-if="$store.state.isShow_cam"
+            ></BIconCameraVideoOffFill>
+            <BIconCameraVideoFill
+              style="color: white"
+              v-else
+            ></BIconCameraVideoFill>
+          </button>
+        </div>
+        <div class="m-0 p-0 row" style="height: %"></div>
       </div>
-      <!-- <img src="@/assets/icon/icon_headset.jpg" alt="" id="icon_headset"><img src="@/assets/icon/icon_camera.png" alt="" id="icon_camera"> -->
-      <button @click="togglev()" style="background: black">
-        <BIconVolumeUpFill
-          style="color: blue"
-          v-if="$store.state.isShow_vol"
-        ></BIconVolumeUpFill>
-        <BIconVolumeMuteFill style="color: white" v-else></BIconVolumeMuteFill>
-      </button>
-      <button @click="togglec()" style="background: black">
-        <BIconCameraVideoFill
-          style="color: blue"
-          v-if="$store.state.isShow_cam"
-        ></BIconCameraVideoFill>
-        <BIconCameraVideoOffFill
-          style="color: white"
-          v-else
-        ></BIconCameraVideoOffFill>
-      </button>
-      <div class="m-0 p-0 row" style="height: %"></div>
-      <!-- <div class="m-0 p-0 row" style="height:10%;">
-            camera & headset
-        </div> -->
-      <!-- </user-comp-speak> -->
     </div>
   </div>
 </template>
@@ -104,7 +100,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 /* #icon_camera{
   width:50%;
   height:30px;
@@ -113,4 +109,51 @@ export default {
   width:50%;
   height:30px;
 } */
+.speaking {
+  border-radius: 20px;
+  outline-style: solid;
+  outline-color: #008c06;
+}
+.speaking-blur {
+  border-radius: 20px;
+  box-shadow: 0 0 5rem -3rem #66f986 inset;
+}
+.ready {
+  position: absolute;
+  top: 80%;
+  left: 1%;
+  opacity: 81%;
+  width: 100%;
+  font-size: 1.5vw;
+  text-align: center;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.unready {
+  position: absolute;
+  bottom: 0%;
+  opacity: 81%;
+  width: 100%;
+  left: 0%;
+  font-size: 1.2vw;
+  text-align: center;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+.screen {
+  position: relative;
+}
+.btn-mic-cam {
+  position: absolute;
+  top: 0%;
+  opacity: 0%;
+}
+
+.screen:hover {
+  background-color: black;
+  opacity: 90%;
+}
+.screen:hover > .btn-mic-cam {
+  opacity: 100%;
+}
 </style>

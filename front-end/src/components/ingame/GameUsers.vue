@@ -1,6 +1,6 @@
 <template>
   <div class="m-0 p-0 users">
-    <div class="m-0 p-0 row" style="height: 40%">
+    <div class="m-0 p-0 row" style="height: 30%">
       <div class="m-0 p-0" style="width: 20%">
         <user-comp curIdx="0"></user-comp>
       </div>
@@ -17,8 +17,8 @@
         <user-comp curIdx="4"></user-comp>
       </div>
     </div>
-    <div class="m-0 p-0 row" style="height: 10%"></div>
-    <div class="m-0 p-0 row" style="height: 40%">
+    <div class="m-0 p-0 row" style="height: 20%"></div>
+    <div class="m-0 p-0 row" style="height: 30%">
       <div class="m-0 p-0" style="width: 20%">
         <user-comp curIdx="5"></user-comp>
       </div>
