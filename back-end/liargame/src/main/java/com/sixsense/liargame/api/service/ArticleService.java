@@ -23,6 +23,7 @@ public interface ArticleService {
                 .title(articleReq.getTitle())
                 .content(articleReq.getContent())
                 .isNotice(articleReq.getIsNotice())
+                .viewCnt(0)
                 .userId(userId)
                 .build();
     }
