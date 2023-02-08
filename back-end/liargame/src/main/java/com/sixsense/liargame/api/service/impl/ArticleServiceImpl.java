@@ -28,10 +28,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleResp> getArticles(Pageable pageable) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
-        PageRequest pageRequest = (PageRequest) pageable;
-        pageRequest.withSort(sort);
-        Page<Article> articles = articleRepository.findAll(pageRequest);
+        Page<Article> articles = articleRepository.findAll(pageable);
         return articles.stream().map(ArticleResp::new).collect(Collectors.toList());
     }
 
