@@ -14,15 +14,15 @@
           </tr>
           <tr>
             <td style="color: white; margin-right: 1%;">유저 이름:</td>
-            <td><input type="text" v-model="username" v-bind:disabled="!isinputActive" /> <button id="namebtn" @click="namedupli">변경</button> </td>
+            <td><input type="text" v-model="this.username" v-bind:disabled="!isinputActive" /><button id="namebtn" @click="namedupli">변경</button> </td>
           </tr>
           <tr>
             <td style="color: white;">수정 비밀번호 입력 : </td>
-            <td><input type="text" v-model="modifyPW" /></td>
+            <td><input type="password" v-model="modifyPW" /></td>
           </tr>
           <tr>
             <td style="color: white;">수정 비밀번호 확인 : </td>
-            <td><input type="text" v-model="remodifyPW" /> <button id="pwbtn" @click="patchPW">수정</button></td>
+            <td><input type="password" v-model="remodifyPW" /> <button id="pwbtn" @click="patchPW">수정</button></td>
           </tr>
         </tbody>
         </table>
@@ -72,7 +72,9 @@ export default {
   components: { navbar },
   data() {
     return {
-      username: null,
+      username: this.username,
+      uaername1: null,
+      changename: 0,
       email: null,
       pwd: null,
       chkpwd: null,
@@ -100,6 +102,9 @@ export default {
       if(this.modifyPW !== newValue){
         console.log("비밀번호 불일치")
       }
+      else {
+        console.log("비밀번호 일치")
+      }
     }
   },
   setup() {},
@@ -109,7 +114,8 @@ export default {
   },
   mounted() {},
   methods: {
-    userInfo() {
+    userInfo() { //처음 유저 정보 불러오기, 전적정보 불러오기
+      console.log(this.$store.state)
       axios({
         method: "get",
         url: `${this.API_URL}/users`,
@@ -118,11 +124,12 @@ export default {
         },
       })
       .then((res) => {
-        this.name = res.data.name;
+        this.username = res.data.name;
         this.email = res.data.email;
         this.role = res.data.role;
-        // console.log(res.data.accessToken);
+        this.isinputActive = false;
         console.log(res);
+        console.log("유저정보 가져왔다.")
       })
       .catch((err) => {
         console.log("유저정보실패");
@@ -192,54 +199,77 @@ export default {
       });
     },
     namedupli() {  //중복확인
+      this.username1 = this.username;
+      // const data = new FormData();
+      // data.append("name", username1);
       if(this.isinputActive === true){
         axios({
           method: "get",
           url: `${this.API_URL}/users/duplicate`,
-          headers:{
-            
+          params: {
+            name: this.username1,
           },
-          body: {
-            'name': `${this.name}`
-          }
         })
         .then((res) => {
-          console.log(res);
-          if(res==true) {
-            console.log("성공")
+          if(res.data === true) {
+            console.log("중복입니다.")
+            alert("중복입니다. 다시 작성해주세요")
           }
-            else{
-              console.log("실패")
-            }
-          })
-          .catch((err) => {
-            console.log("중복확인실패");
-            console.log(err);
-          })
-        }
+          else{
+            console.log("중복이 아닙니다.")
+            this.changename = 1;
+          }
+        })
+        .catch((err) => {
+          console.log("중복확인실패");
+          console.log(err);
+        })
+      }
         this.isinputActive = true;
         const btnElement = document.getElementById('namebtn');
         btnElement.innerText = '중복 확인';
       },
       patchPW() { //비밀번호 변경되게 입력
+        if(this.changename == 1 && this.username1 === this.username){
+          axios({
+            method: "put",
+            url:`${this.API_URL}/users/modify/name`,
+            headers: {
+              Authorization: `Bearer ${this.$store.state.accessToken}`,
+            },
+            params: {
+              name: this.username,
+            },
+          })
+          .then((res) => {
+            if(res.data.result === "success"){
+              console.log("이름 변경 성공")
+            }
+            else {
+              console.log("이름 변경 실패")
+            }
+          })
+        };
+
         if(this.modifyPW === this.remodifyPW) {
           axios({
             method: "put",
             url: `${this.API_URL}/users/modify/password`,
-            headers:{
+            headers: {
               Authorization: `Bearer ${this.$store.state.accessToken}`,
             },
-            body: {
-              "password": `{this.remodifyPW}`,
-            }
+            params: {
+              password: this.remodifyPW
+            },
           })
           .then((res) => {
             console.log(res);
-            if(res==true) {
-              console.log("성공")
+            if(res.data.result === "success") {
+              console.log("비번 변경 성공")
+              location.reload();
             }
             else{
-              console.log("실패")
+              console.log("비번 변경 실패")
             }
           })        
         } else{

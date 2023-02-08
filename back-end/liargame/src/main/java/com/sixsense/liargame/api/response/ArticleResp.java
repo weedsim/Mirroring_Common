@@ -18,6 +18,7 @@ public class ArticleResp {
     private Boolean isNotice;
     private String userName;
     private Integer viewCnt;
+    private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public ArticleResp(Article article) {
@@ -27,6 +28,6 @@ public class ArticleResp {
         this.isNotice = article.getIsNotice();
         this.userName = article.getUser().getName();
         this.viewCnt = article.getViewCnt();
-        this.updatedAt = article.getUpdatedAt();
+        this.createdAt = article.getCreatedAt();
     }
 }
