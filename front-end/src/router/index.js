@@ -38,6 +38,14 @@ const routes = [
       ),
   },
   {
+    path: "/detail",
+    name: "detail",
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "@/components/community/MainDetail.vue"
+      ),
+  },
+  {
     path: "/maininput",
     name: "maininput",
     component: () =>

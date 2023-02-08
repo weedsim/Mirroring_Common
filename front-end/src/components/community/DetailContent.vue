@@ -1,5 +1,10 @@
 <template>
-  <div></div>
+  <hr>
+  <div class="detailcontent">
+    <textarea cols="180" rows="15">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus ipsam et dolore eveniet. Vero maiores perferendis est voluptates hic aspernatur placeat corrupti voluptatibus, quibusdam, neque necessitatibus rerum dolorum? Ducimus, optio?Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus ipsam et dolore eveniet. Vero maiores perferendis est voluptates hic aspernatur placeat corrupti voluptatibus, quibusdam, neque necessitatibus rerum dolorum? Ducimus, optio?Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus ipsam et dolore eveniet. Vero maiores perferendis est voluptates hic aspernatur placeat corrupti voluptatibus, quibusdam, neque necessitatibus rerum dolorum? Ducimus, optio?Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus ipsam et dolore eveniet. Vero maiores perferendis est voluptates hic aspernatur placeat corrupti voluptatibus, quibusdam, neque necessitatibus rerum dolorum? Ducimus, optio?
+    </textarea>
+  </div>
 </template>
 
 <script>
@@ -22,5 +27,7 @@ export default {
 </script>
 
 <style>
-
+.detailcontent{
+  background-color: gray;
+}
 </style>

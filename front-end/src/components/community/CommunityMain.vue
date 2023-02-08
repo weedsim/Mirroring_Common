@@ -1,7 +1,7 @@
 <template>
 <div class="main">
   
-  <h1>1111</h1>
+  <button class="btn btn-secondary"><router-link to="detail"  style="text-decoration:none; color:white">detail 임시</router-link></button>
   <h1>1111</h1>
   <h1>1111</h1>
 
