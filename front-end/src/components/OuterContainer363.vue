@@ -17,7 +17,7 @@ import MainLobby from "@/components/lobby/MainLobby.vue";
 // import MainCommunity from "@/components/community/MainCommunity.vue";
 
 export default {
-  name: "OuterContainer",
+  name: "OuterContainer363",
   components: {
     MainLobby,
   },

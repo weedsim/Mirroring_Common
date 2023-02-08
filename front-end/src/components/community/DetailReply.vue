@@ -1,5 +1,9 @@
 <template>
-  <div></div>
+  <div>
+    <reply-header></reply-header>
+    <reply-write></reply-write>
+    <reply-list></reply-list>
+  </div>
 </template>
 
 <script>

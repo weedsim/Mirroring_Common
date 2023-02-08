@@ -1,24 +1,24 @@
 <template>
   <navbar />
   <div class="maininput">
-  <CommunityHeader></CommunityHeader>
-  <InputTitle></InputTitle>
-  <InputContent></InputContent>
-  <div class="m-0 p-0 row">
-    
-    <div class="m-0 p-0 col-3">
+    <InputHeader></InputHeader>
+    <InputTitle></InputTitle>
+    <InputContent></InputContent>
+    <div class="m-0 p-0 row">
       
+      <div class="m-0 p-0 col-3">
+        
+      </div>
+      <div class="m-0 p-0 col-3">
+        <button class="btn btn-secondary btn-lg"><router-link to="maininput"  style="text-decoration:none; color:white">확인</router-link></button>
+      </div>
+      <div class="m-0 p-0 col-3">
+        <button class="btn btn-secondary btn-lg"><router-link to="maininput"  style="text-decoration:none; color:white">취소</router-link></button>
+      </div>
+      <div class="m-0 p-0 col-3">
+        
+      </div>
     </div>
-    <div class="m-0 p-0 col-3">
-      <button class="btn btn-secondary btn-lg"><router-link to="maininput"  style="text-decoration:none; color:white">확인</router-link></button>
-    </div>
-    <div class="m-0 p-0 col-3">
-      <button class="btn btn-secondary btn-lg"><router-link to="maininput"  style="text-decoration:none; color:white">취소</router-link></button>
-    </div>
-    <div class="m-0 p-0 col-3">
-      
-    </div>
-  </div>
   </div>
 </template>
 
@@ -27,10 +27,11 @@ import InputTitle from './InputTitle.vue';
 import InputContent from './InputContent.vue';
 import navbar from "@/components/NavView.vue";
 import CommunityHeader from './CommunityHeader.vue';
+import InputHeader from './InputHeader.vue';
 
 export default {
 
-  components: { InputTitle, InputContent, navbar, CommunityHeader },
+  components: { InputTitle, InputContent, navbar, CommunityHeader, InputHeader },
   name: "maininput",
   data() {
     return {
