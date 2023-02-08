@@ -1,6 +1,8 @@
 package com.sixsense.liargame.security.auth;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @RequiredArgsConstructor
+@Slf4j
 public class JwtAuthenticationFilter extends GenericFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
@@ -23,15 +26,20 @@ public class JwtAuthenticationFilter extends GenericFilter {
         String token = resolveToken((HttpServletRequest) request);
 
         // 2. validateToken 으로 token 유효성 검사
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            String isLogout = (String)redisTemplate.opsForValue().get(token);
-            // token이 유효할 경우 token에서 Authentication 객체를 가지고 와서 SecurityContext에 저장
-            if (ObjectUtils.isEmpty(isLogout)) {
-                // 토큰이 유효할 경우 토큰에서 Authentication 객체를 가지고 와서 SecurityContext 에 저장
-                Authentication authentication = jwtTokenProvider.getAuthentication(token);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+        try {
+            if (token != null && jwtTokenProvider.validateToken(token)) {
+                String isLogout = (String)redisTemplate.opsForValue().get(token);
+                // token이 유효할 경우 token에서 Authentication 객체를 가지고 와서 SecurityContext에 저장
+                if (ObjectUtils.isEmpty(isLogout)) {
+                    // 토큰이 유효할 경우 토큰에서 Authentication 객체를 가지고 와서 SecurityContext 에 저장
+                    Authentication authentication = jwtTokenProvider.getAuthentication(token);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
             }
+        } catch (ExpiredJwtException e) {
+            log.info("Expired JWT Token", e);
         }
+
         chain.doFilter(request, response);
     }
 
