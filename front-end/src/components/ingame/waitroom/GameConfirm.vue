@@ -1,29 +1,23 @@
 <template>
-  <div class="m-0 p-0 confirm">
-    <div class="m-0 p-0 row" style="height: 100%">
-      <!-- <div class="m-0 p-0 col-2"><button type="button" @click="toggle()" class="btn btn-success btn-lg" id="btn_ready">Ready</button></div> -->
-      <div class="m-0 p-0 col-2">
-        <button
-          type="button"
-          v-on:click="isReady()"
-          class="btn btn-success btn-lg"
-          id="btn_ready"
-        >
-          Ready
-        </button>
-      </div>
-
-      <div class="m-0 p-0 col-5"></div>
-      <div class="m-0 p-0 col-3"></div>
-      <div class="m-0 p-0 col-2">
-        <router-link :to="{ path: 'InLobby' }"
-          ><button type="button" class="btn btn-danger btn-lg" id="btn_quit">
-            Quit
-          </button></router-link
-        >
-      </div>
-    </div>
+  <div
+    class="mt-2 pt-4"
+    style="width: 40%; display: flex; justify-content: flex-end"
+  >
+    <button class="circle me-3 p-0">
+      <BIconVolumeUpFill
+        style="color: black; font-size: 1.5vw"
+      ></BIconVolumeUpFill>
+    </button>
+    <button class="circle">
+      <BIconCameraVideoOffFill
+        style="color: black; font-size: 1.2vw"
+      ></BIconCameraVideoOffFill>
+    </button>
   </div>
+  <div class="m-0 pt-4" style="width: 40%">
+    <button class="btn-ready">준비</button>
+  </div>
+  <div class="m-0 p-0 col-4"></div>
 </template>
 
 <script>
@@ -79,13 +73,20 @@ export default {
 };
 </script>
 
-<style>
-#btn_ready {
-  width: fit-content;
-  margin: auto;
+<style scoped>
+.btn-ready {
+  width: 10vw;
+  height: 6vw;
+  background-color: rgba(158, 158, 158, 30%);
+  border: none;
+  border-radius: 10px;
+  font-size: 1.5vw;
+  font-weight: 400;
+  color: white;
 }
-#btn_quit {
-  width: fit-content;
-  margin: auto;
+.circle {
+  width: 3vw;
+  height: 3vh;
+  border-radius: 1.5vw;
 }
 </style>

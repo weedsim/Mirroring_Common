@@ -5,11 +5,11 @@
       <game-header v-if="playgame === true"></game-header>
     </div>
     <!-- <div class="m-0 p-0 row" style="height:5%">a_blank</div> -->
-    <div class="m-0 p-0 row" style="height: 75%">
+    <div class="m-0 p-0 row" style="height: 60%">
       <game-users></game-users>
     </div>
     <!-- <div class="m-0 p-0 row" style="height:5%">b_blank</div> -->
-    <div class="m-0 p-0 row" style="height: 10%">
+    <div class="m-0 p-0 row" style="height: 25%">
       <game-confirm v-if="playgame !== true"></game-confirm>
       <game-bottom v-if="playgame === true"></game-bottom>
     </div>

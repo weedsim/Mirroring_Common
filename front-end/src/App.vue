@@ -21,6 +21,10 @@ export default {
 </script>
 
 <style>
+@import url("https://webfontworld.github.io/SCoreDream/SCoreDream.css");
+* {
+  font-family: "SCoreDream";
+}
 /* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -47,7 +51,7 @@ nav a.router-link-exact-active {
   border-style: solid;
   border-width: 1px;
 } */
-div {
+/* div {
   box-shadow: 0 0 0 1px #f00 inset;
-}
+} */
 </style>

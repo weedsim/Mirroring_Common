@@ -1,16 +1,12 @@
 <template>
   <div class="m-0 p-0 about" style="width: 100%; height: 100vh">
     <div class="m-0 p-0 row">
-      <div class="m-0 p-0 col-1">
-        <button v-on:click="startTest">시작 {{ roomId }}</button>
-      </div>
-      <div class="m-0 p-0 col-7">
+      <div class="m-0 ps-5 pe-4 col-9">
         <main-game style="width: 100%; height: 100vh"></main-game>
       </div>
-      <div class="m-0 p-0 col-3">
+      <div class="m-0 pe-4 col-3">
         <main-chat style="width: 100%; height: 100vh"></main-chat>
       </div>
-      <div class="m-0 p-0 col-1"></div>
     </div>
   </div>
   <!-- Modal -->
