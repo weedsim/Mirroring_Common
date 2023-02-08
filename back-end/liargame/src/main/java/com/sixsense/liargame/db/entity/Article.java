@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -23,11 +24,13 @@ public class Article extends CommunityBaseTime {
     private String title;
     private String content;
     private Boolean isNotice;
+    private String username;
     @Column(name = "user_id")
     private Long userId;
     @ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
+    @ColumnDefault("0")
     private Integer viewCnt;
     private LocalDateTime updatedAt;
 

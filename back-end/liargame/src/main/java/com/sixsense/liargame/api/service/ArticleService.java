@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ArticleService {
     List<ArticleResp> getArticles(Pageable pageable);
-
+    List<ArticleResp> getArticles2(Integer page, Integer size, String title, String writer);
     Article getArticle(Long articleId);
 
     void insertArticle(Long userId, ArticleReq articleReq);

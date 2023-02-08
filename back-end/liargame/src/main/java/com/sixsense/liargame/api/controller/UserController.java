@@ -81,6 +81,7 @@ public class UserController {
     @PutMapping("/modify/password")
     public ResponseEntity<?> updateUserPassword(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
                                             String password) {
+        System.out.println(password);
         UserRequestDto.ModifyPassword modify = UserRequestDto.ModifyPassword.builder()
                 .accessToken(accessToken)
                 .password(password)

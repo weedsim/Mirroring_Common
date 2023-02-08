@@ -63,4 +63,15 @@ public class ArticleServiceImpl implements ArticleService {
         if (Objects.equals(article.getUserId(), userId))
             article.updateArticle(articleReq);
     }
+
+    @Override
+    public List<ArticleResp> getArticles2(Integer page, Integer size, String title, String writer) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        if(title != null && !title.isEmpty() && writer != null && !writer.isEmpty()){
+
+        }
+        Page<Article> articles = articleRepository.findAll(pageRequest);
+        return articles.stream().map(ArticleResp::new).collect(Collectors.toList());
+    }
 }

@@ -26,6 +26,13 @@ public class ArticleController {
         return ResponseEntity.ok(articleService.getArticles(pageable));
     }
 
+//    @GetMapping
+//    public ResponseEntity<List<ArticleResp>> getArticles2(@RequestParam(name = "page", defaultValue = "0") Integer page, @RequestParam(name = "size", defaultValue = "10") Integer size, @RequestParam(name = "title", required = false) String title, @RequestParam(name = "writer", required = false) String writer) {
+//        PageRequest pagerequest = PageRequest.of(page, size);
+//        Pageable pageable = Pageable.ofSize(pagerequest.getPageSize());
+//        return ResponseEntity.ok(articleService.getArticles2(page, size, title, writer));
+//    }
+
     @GetMapping("/{articleId}")
     public ResponseEntity<?> getArticle(@PathVariable Long articleId) {
         Article article = articleService.getArticle(articleId);
@@ -34,7 +41,10 @@ public class ArticleController {
 
     @PostMapping
     public ResponseEntity<?> createArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @RequestBody ArticleReq articleReq) {
+        System.out.println(accessToken);
+        System.out.println(articleReq);
         Long userId = jwtTokenProvider.getUserId(accessToken);
+        System.out.println("accesstoken success");
         articleService.insertArticle(userId, articleReq);
         return ResponseEntity.ok().build();
     }
