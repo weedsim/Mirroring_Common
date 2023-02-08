@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sixsense.liargame.api.service.RoomService;
 import com.sixsense.liargame.api.sse.Emitters;
 import com.sixsense.liargame.api.sse.GlobalRoom;
-import com.sixsense.liargame.common.model.SseResponse;
+import com.sixsense.liargame.api.sse.SseResponse;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
 import com.sixsense.liargame.common.model.response.RoomDetail;
@@ -73,7 +73,7 @@ public class RoomServiceImpl implements RoomService {
             room.enter(user.getId(), user.getName());
             RoomDetail roomDetail = toDetail(room);
             try {
-                room.getEmitters().sendToAll("message", new SseResponse("message", om.writeValueAsString(roomDetail)));
+                room.getEmitters().sendToAll("message", new SseResponse("room", om.writeValueAsString(roomDetail)));
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }

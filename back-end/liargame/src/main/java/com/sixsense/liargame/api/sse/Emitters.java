@@ -2,8 +2,6 @@ package com.sixsense.liargame.api.sse;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sixsense.liargame.common.model.CustomEmitter;
-import com.sixsense.liargame.common.model.SseResponse;
 import lombok.Getter;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -57,7 +55,7 @@ public class Emitters {
         sendTo(name, sseResponse, spy);
     }
 
-    private void sendTo(String name, SseResponse sseResponse, CustomEmitter spy) {
+    private void sendTo(String name, SseResponse sseResponse, CustomEmitter emitter) {
         String message;
         try {
             message = om.writeValueAsString(sseResponse);
@@ -65,7 +63,7 @@ public class Emitters {
             throw new RuntimeException(e);
         }
         try {
-            spy.send(SseEmitter.event()
+            emitter.send(SseEmitter.event()
                     .name(name)
                     .data(message));
         } catch (IOException e) {

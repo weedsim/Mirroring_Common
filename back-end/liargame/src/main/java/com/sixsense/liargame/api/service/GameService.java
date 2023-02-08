@@ -1,6 +1,6 @@
 package com.sixsense.liargame.api.service;
 
-import com.sixsense.liargame.common.model.Vote;
+import com.sixsense.liargame.api.sse.Vote;
 import com.sixsense.liargame.common.model.response.GameResultResp;
 
 public interface GameService {

@@ -1,7 +1,5 @@
 package com.sixsense.liargame.api.sse;
 
-import com.sixsense.liargame.common.model.SseResponse;
-import com.sixsense.liargame.common.model.Vote;
 import com.sixsense.liargame.db.entity.Room;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -15,12 +13,14 @@ import java.util.stream.Collectors;
 @Component
 public class GameManager {
     private final int SPARE_TIME = 1000;
+    private final Map<Integer, NormalGame> games;
 
-    public GameManager() {
+    public GameManager(GlobalRoom globalRoom) {
+        this.games = globalRoom.getGames();
     }
 
     public NormalGame start(Room room) {
-        NormalGame normalGame = new NormalGame(room);
+        NormalGame normalGame = games.get(room.getId());
         Emitters emitters = room.getEmitters();
         int timeout = room.getTimeout();
 
@@ -86,7 +86,7 @@ public class GameManager {
     }
 
     private void waitTimeout(Emitters emitters, Integer time) {
-        emitters.sendToAll("message", new SseResponse("time", "time.toString()"));
+        emitters.sendToAll("message", new SseResponse("time", time.toString()));
         try {
             Thread.sleep(time + SPARE_TIME);
         } catch (InterruptedException e) {

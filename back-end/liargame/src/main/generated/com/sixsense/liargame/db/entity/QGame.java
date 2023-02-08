@@ -30,7 +30,7 @@ public class QGame extends BeanPath<Game> {
 
     public final NumberPath<Integer> startPerson = createNumber("startPerson", Integer.class);
 
-    public final ListPath<com.sixsense.liargame.common.model.Vote, SimplePath<com.sixsense.liargame.common.model.Vote>> votes = this.<com.sixsense.liargame.common.model.Vote, SimplePath<com.sixsense.liargame.common.model.Vote>>createList("votes", com.sixsense.liargame.common.model.Vote.class, SimplePath.class, PathInits.DIRECT2);
+    public final ListPath<com.sixsense.liargame.api.sse.Vote, SimplePath<com.sixsense.liargame.api.sse.Vote>> votes = this.<com.sixsense.liargame.api.sse.Vote, SimplePath<com.sixsense.liargame.api.sse.Vote>>createList("votes", com.sixsense.liargame.api.sse.Vote.class, SimplePath.class, PathInits.DIRECT2);
 
     public QGame(String variable) {
         super(Game.class, forVariable(variable));

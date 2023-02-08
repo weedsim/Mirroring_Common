@@ -1,7 +1,7 @@
 package com.sixsense.liargame.db.entity;
 
 import com.sixsense.liargame.api.sse.Emitters;
-import com.sixsense.liargame.common.model.UserInfo;
+import com.sixsense.liargame.api.sse.UserInfo;
 import com.sixsense.liargame.common.model.request.SettingDto;
 import lombok.*;
 
