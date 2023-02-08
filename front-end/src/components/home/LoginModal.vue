@@ -114,8 +114,6 @@ export default {
         email: this.useremail,
         password: this.userpwd,
       };
-      console.log("로그인")
-      console.log(payload)
       this.$store.dispatch("logIn", payload);
     },
   },
