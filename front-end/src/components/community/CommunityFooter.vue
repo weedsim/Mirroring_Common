@@ -30,7 +30,9 @@
           </ul>
         </nav> -->
       </div>
-      <div class="m-0 p-0 col-4">
+      <div class="m-0 p-0 col-3">
+      </div>
+      <div class="m-0 p-0 col-1">
         <button class="btn btn-secondary"><router-link :to="{name:'maininput'}"  style="text-decoration:none; color:white">글쓰기</router-link></button>
         <!-- <ul class="findroom" style="list-style: none">
           <li style="display: flex; justify-content: space-between">
