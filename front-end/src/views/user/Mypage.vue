@@ -18,11 +18,11 @@
           </tr>
           <tr>
             <td style="color: white;">수정 비밀번호 입력 : </td>
-            <td><input type="text" v-model="modifyPW" /></td>
+            <td><input type="password" v-model="modifyPW" /></td>
           </tr>
           <tr>
             <td style="color: white;">수정 비밀번호 확인 : </td>
-            <td><input type="text" v-model="remodifyPW" /> <button id="pwbtn" @click="patchPW">수정</button></td>
+            <td><input type="password" v-model="remodifyPW" /> <button id="pwbtn" @click="patchPW">수정</button></td>
           </tr>
         </tbody>
         </table>
