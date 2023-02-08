@@ -1,15 +1,17 @@
 <template>
+
   <navbar />
   <div class="m-0 p-0 mainlobby">
-    <outer-container363></outer-container363>
+    <outer-container282></outer-container282>
   </div>
+
 </template>
 
 <script>
 // import { mapState } from "vuex";
 import navbar from "@/components/NavView.vue";
 import MainLobby from "@/components/lobby/MainLobby.vue";
-import OuterContainer363 from "@/components/OuterContainer363.vue";
+import OuterContainer282 from "@/components/OuterContainer282.vue";
 import VueCookies from "vue-cookies";
 
 export default {
@@ -17,7 +19,7 @@ export default {
   components: {
     navbar,
     MainLobby,
-    OuterContainer363,
+    OuterContainer282,
   },
   created() {
     this.getReIssue();

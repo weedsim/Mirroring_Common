@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import ReplyHeader from './ReplyHeader.vue';
-import ReplyWrite from './ReplyWrite.vue';
-import ReplyList from './ReplyList.vue';
+import ReplyHeader from './reply/ReplyHeader.vue';
+import ReplyWrite from './reply/ReplyWrite.vue';
+import ReplyList from './reply/ReplyList.vue';
 
 export default {
 

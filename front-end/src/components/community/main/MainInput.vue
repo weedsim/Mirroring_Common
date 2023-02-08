@@ -1,9 +1,9 @@
 <template>
-  <navbar />
+  <!-- <navbar /> -->
   <div class="maininput">
-    <InputHeader></InputHeader>
+    <!-- <InputHeader></InputHeader>
     <InputTitle></InputTitle>
-    <InputContent></InputContent>
+    <InputContent></InputContent> -->
     <div class="m-0 p-0 row">
       
       <div class="m-0 p-0 col-3">
@@ -23,15 +23,19 @@
 </template>
 
 <script>
-import InputTitle from './InputTitle.vue';
-import InputContent from './InputContent.vue';
+// import InputTitle from './input/InputTitle.vue';
+// import InputContent from './input/InputContent.vue';
+// import InputHeader from './input/InputHeader.vue';
 import navbar from "@/components/NavView.vue";
-import CommunityHeader from './CommunityHeader.vue';
-import InputHeader from './InputHeader.vue';
+import CommunityHeader from '../CommunityHeader.vue';
+
 
 export default {
 
-  components: { InputTitle, InputContent, navbar, CommunityHeader, InputHeader },
+  components: { 
+    // InputTitle, InputContent, InputHeader 
+    
+    navbar, CommunityHeader, },
   name: "maininput",
   data() {
     return {
@@ -76,7 +80,7 @@ export default {
 
 <style>
 .maininput {
-  background-image: url(../../assets/lobby/lobby.jpg);
+  background-image: url(@/assets/lobby/lobby.jpg);
   background-repeat: no-repeat;
   background-size:cover;  
   color: white;

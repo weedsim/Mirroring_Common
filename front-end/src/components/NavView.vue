@@ -1,4 +1,5 @@
 <template>
+
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
     <div class="container-fluid m-0 p-0">
       <router-link to="/main" class="navbar-brand nav-link m-0 p-0"
@@ -15,7 +16,7 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
-
+    
       <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">

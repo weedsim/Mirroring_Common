@@ -1,5 +1,5 @@
 <template>
-  <navbar />
+
   <div class="community" style="table-layout:fixed;">
   <!-- <div class="m-0 p-0 row" style="height: 20%; background-color: red"> -->
     <div class="m-0 p-0 row" style="height: 10%">
@@ -50,7 +50,7 @@ export default {
 
 <style scoped>
 .community {
-  background-image: url(../../assets/lobby/lobby.jpg);
+  background-image: url(@/assets/lobby/lobby.jpg);
   background-repeat: no-repeat;
   background-size:cover;  
   color: white;

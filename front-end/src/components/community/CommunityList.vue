@@ -1,10 +1,8 @@
 <template>
-<div class="main">  
+<div class="main">
   <button class="btn btn-secondary">
-    <!-- <router-link :to="{name:detail}"  style="text-decoration:none; color:white">detail 임시</router-link> -->
-    </button>
-  <!-- <h1>1111</h1>
-  <h1>1111</h1> -->
+    <router-link :to="{name:detail}"  style="text-decoration:none; color:white">detail 임시</router-link>
+  </button>
 </div>
 </template>
 
@@ -18,7 +16,7 @@ import MainInput from './main/MainInput.vue';
 
 export default {
   components: { MainDetail, MainInput },
-  name: "CommunityMain",
+  name: "CommunityList",
   data() {
     return {
       items: [],

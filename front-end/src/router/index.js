@@ -27,32 +27,35 @@ const routes = [
     path: "/lobby",
     name: "lobby",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/lobby/InLobby.vue"),
+      import(/* webpackChunkName: "about" */ "@/views/lobby/InLobby.vue"),
   },
   {
     path: "/community",
     name: "community",
+    redirect: "/community/detail",
     component: () =>
       import(
-        /* webpackChunkName: "about" */ "@/components/community/MainCommunity.vue"
+        /* webpackChunkName: "about" */ "@/views/community/InCommunity.vue"
       ),
+    children: [
+      {
+        path: "detail",
+        name: "detail",
+        component: () =>
+          import(
+            /* webpackChunkName: "about" */ "@/components/community/MainCommunity.vue"
+          ),
+      },
+    ],
   },
-  {
-    path: "/detail",
-    name: "detail",
-    component: () =>
-      import(
-        /* webpackChunkName: "about" */ "@/components/community/MainDetail.vue"
-      ),
-  },
-  {
-    path: "/maininput",
-    name: "maininput",
-    component: () =>
-      import(
-        /* webpackChunkName: "about" */ "@/components/community/MainInput.vue"
-      ),
-  },
+  //   {
+  //     path: "/maininput",
+  //     name: "maininput",
+  //     component: () =>
+  //       import(
+  //         /* webpackChunkName: "about" */ "@/components/community/main/MainInput.vue"
+  //       ),
+  //   },
   // {
   //   path: "/CreateArticle",
   //   name: "CreateArticle",

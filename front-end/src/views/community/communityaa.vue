@@ -82,7 +82,7 @@
   
   <style scoped>
   .maincommunity {
-    background-image: url(../../assets/lobby/lobby.jpg);
+    background-image: url(@/assets/lobby/lobby.jpg);
     background-repeat: no-repeat;
     background-size:cover;
     color: white;
