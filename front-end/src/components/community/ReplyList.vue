@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>꺅 너무 재밌어요</p>
+    꺅 너무 재밌어요
   </div>
 </template>
 

@@ -1,19 +1,27 @@
 <template>
   <navbar />
-  <div class="community" style="table-layout:fixed;">
+  <div class="community row" style="table-layout:fixed;">
   <!-- <div class="m-0 p-0 row" style="height: 20%; background-color: red"> -->
-    <div class="m-0 p-0 row" style="height: 10%">
-      <community-header></community-header>
-    </div>
-    <!-- <div class="m-0 p-0 row" style="height: 80%; background-color: blue"> -->
-    <div class="m-0 p-0 row" style="height: 80%">
-      <community-main></community-main>
+    <div class="m-0 p-0 col-2"></div>
+    <div class="m-0 p-0 col-8">
+      <!-- 반복문을 통해 컨테이너 추가 가능 -->
+      <component :is="comp" style="width: 100%; height: 95vh"></component>
+    
+    
+      <div class="m-0 p-0 row" style="height: 10vh">
+        <community-header></community-header>
+      </div>
+      <!-- <div class="m-0 p-0 row" style="height: 80%; background-color: blue"> -->
+      <div class="m-0 p-0 row" style="height: 72vh">
+        <community-main></community-main>
 
+      </div>
+      <!-- <div class="m-0 p-0 row" style="height: 20%; background-color: yellow"> -->
+      <div class="m-0 p-0 row" style="height: 10vh">
+        <community-footer></community-footer>
+      </div>
     </div>
-    <!-- <div class="m-0 p-0 row" style="height: 20%; background-color: yellow"> -->
-    <div class="m-0 p-0 row" style="height: 10%">
-      <community-footer></community-footer>
-    </div>
+    <div class="m-0 p-0 col-2"></div>
   </div>
 </template>
 

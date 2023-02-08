@@ -1,16 +1,23 @@
 <template>
   <navbar />
-  <div class="maindetail" >
+  <div class="maindetail" style="height: 94vh;">
     <div class="m-0 p-0 outer">
       <div class="m-0 p-0 row">
         <div class="m-0 p-0 col-2"></div>
         <div class="m-0 p-0 col-8">
           <!-- 반복문을 통해 컨테이너 추가 가능 -->
-          <InputHeader></InputHeader>
-          <DetailTitle></DetailTitle>
-          <DetailContent></DetailContent>
-          <DetailReply></DetailReply>
-          
+          <div style="height: 10vh;">
+            <InputHeader></InputHeader>
+          </div>
+          <div style="height: 15vh;">
+            <DetailTitle></DetailTitle>
+          </div>
+          <div style="height: 30vh;">  
+            <DetailContent style="height:25vh"></DetailContent>
+          </div>
+          <div style="height: 35vh;">
+            <DetailReply></DetailReply>
+          </div>
         </div>
         <div class="m-0 p-0 col-2"></div>
       </div>
