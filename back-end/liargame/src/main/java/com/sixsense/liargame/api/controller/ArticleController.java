@@ -32,7 +32,7 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @RequestBody ArticleReq articleReq) {
+    public ResponseEntity<?> createArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, ArticleReq articleReq) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.insertArticle(userId, articleReq);
         return ResponseEntity.ok().build();
