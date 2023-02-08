@@ -1,6 +1,6 @@
 <template>
-  <div class="comment-create">
-    <textarea name="" id="" cols="180" rows="1"></textarea>
+  <div class="comment-create" >
+    <textarea name="" id="" cols="180" rows="1" style="width:100%; resize:none"></textarea>
     <button class="btn btn-secondary btn-sm">등록</button>
 
   </div>
