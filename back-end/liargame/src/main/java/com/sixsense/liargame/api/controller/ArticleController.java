@@ -17,7 +17,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/articles")
-@Log4j
 public class ArticleController {
     private final ArticleService articleService;
     private final JwtTokenProvider jwtTokenProvider;
