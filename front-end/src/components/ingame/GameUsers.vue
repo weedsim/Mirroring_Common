@@ -1,6 +1,6 @@
 <template>
   <div class="m-0 p-0 users">
-    <div class="m-0 p-0 row" style="height: 40%">
+    <div class="m-0 p-0 row" style="height: 30%">
       <div class="m-0 p-0" style="width: 20%">
         <user-comp curIdx="0"></user-comp>
       </div>
@@ -17,8 +17,8 @@
         <user-comp curIdx="4"></user-comp>
       </div>
     </div>
-    <div class="m-0 p-0 row" style="height: 10%"></div>
-    <div class="m-0 p-0 row" style="height: 40%">
+    <div class="m-0 p-0 row" style="height: 20%"></div>
+    <div class="m-0 p-0 row" style="height: 30%">
       <div class="m-0 p-0" style="width: 20%">
         <user-comp curIdx="5"></user-comp>
       </div>
@@ -74,6 +74,7 @@ export default {
     // this.mySession = Object.assign({}, this.$store.modules.session),
     this.initFrontSession();
   },
+  computed: {},
   methods: {
     joinSession(myIdx) {
       // --- 1) Get an OpenVidu object ---
@@ -198,6 +199,7 @@ export default {
     //         this.mainStreamManager = stream;
     // },
     initFrontSession() {
+      this.mySessionId = this.$store.state.gameinfo.roomId;
       // let sessions = this.$store.state.sessions
       for (let i = 0; i < 10; i++) {
         if (!this.$store.state.sessions[i].isJoin) {
@@ -245,7 +247,7 @@ export default {
     async createSession(sessionId) {
       const response = await axios.post(
         APPLICATION_SERVER_URL + "api/sessions",
-        { customSessionId: sessionId },
+        { customSessionId: String(sessionId) },
         {
           headers: { "Content-Type": "application/json" },
         }

@@ -21,6 +21,10 @@ export default {
 </script>
 
 <style>
+@import url("https://webfontworld.github.io/SCoreDream/SCoreDream.css");
+* {
+  font-family: "SCoreDream";
+}
 /* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

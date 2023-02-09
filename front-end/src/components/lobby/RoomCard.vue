@@ -124,6 +124,7 @@
 <script>
 import axios from "axios";
 import router from "@/router";
+import VueCookies from "vue-cookies";
 
 // const API_URL = "http://127.0.0.1:8080";
 const API_URL = "http://i8a706.p.ssafy.io:8080";
@@ -182,24 +183,25 @@ export default {
     // 3. 응답결과가 실패일 경우에는 방진입 실패 alert창을 띄워준다.
     joinRoom(roomId) {
       console.log(roomId);
-      console.log(`${this.$store.state.accessToken}`);
+      console.log(`${VueCookies.get("accessToken")}`);
       axios({
         method: "patch",
         url: `${this.API_URL}/rooms/${roomId}/enter`,
         headers: {
-          Authorization: `Bearer ${this.$store.state.accessToken}`,
+          Authorization: `Bearer ${VueCookies.get("accessToken")}`,
         },
         data: {
           password: this.rommPwd,
         },
       })
         .then((res) => {
-          console.log(res.data);
+          console.log(res);
           // 만약 성공을했다면... room/${roomId}로 인게임.vue로 보낸다.
           // 1. state 방진입 isEnter -> true 단, 방진입직후에는 isEnter를 false로 바꿔줘야된다.
           this.roomPwd = null;
           this.$store.dispatch("setIsEnter");
-          router.push({ name: "room", params: { roomId: res.data } });
+          this.$store.dispatch("setGameInfo", res.data);
+          router.push({ name: "room", params: { roomId: res.data.roomId } });
         })
         .catch((err) => {
           this.roomPwd = null;

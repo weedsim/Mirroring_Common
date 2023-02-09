@@ -66,19 +66,26 @@ export default createStore({
     // rooms: null, // rooms는 로비에서 방목록 8개 받아서 저장할곳.
     playgames: false,
     rooms: [],
+    gameinfo: [], // 게임참가자 정보저장
   },
   getters: {
     isLogin(state) {
       return state.token ? true : false;
     },
+    isParticipants(state) {
+      return state.gameinfo.participants;
+    },
   },
   mutations: {
     // 회원가입 && 로그인
     SAVE_TOKEN(state, payload) {
-      console.log("토큰저장: ");
+      console.log("토큰저장" + payload);
       // state.accessToken = payload.token;
       VueCookies.set("accessToken", payload.token);
+      state.accessToken = payload.token;
       VueCookies.set("refreshToken", payload.refreshToken);
+      state.refreshToken = payload.refreshToken;
+
       router.push({ name: "main" });
     },
     DELETE_TOKEN(state) {
@@ -107,6 +114,36 @@ export default createStore({
     // 게임진입후 playgames 초기화
     RESET_ISPLAY(state) {
       state.playgames = false;
+    },
+    // 게임진입시 게임참가자 정보저장
+    SET_GAMEINFO(state, payload) {
+      console.log("mutation실행");
+      console.log(payload);
+      state.gameinfo = payload;
+      var participants = payload.participants;
+      // this.$store.state.sessions[curIdx].isReady
+      for (var i = 0; i < participants.length; i++) {
+        state.sessions[i].isReady = participants[i].isReady;
+      }
+    },
+    // 게임레디상태변경(ready)
+    CHG_ISREADY(state, payload) {
+      console.log("CHG_ISREADY 뮤테이션");
+      state.gameinfo.participants[payload].isReady = true;
+      state.sessions[payload].isReady = true;
+    },
+    CHG_ISUNREADY(state, payload) {
+      console.log("CHG_ISUNREADY 뮤테이션");
+      state.gameinfo.participants[payload].isReady = false;
+      state.sessions[payload].isReady = false;
+    },
+    // 게임시작시(playing)
+    SET_ISPLAYING(state) {
+      state.gameinfo.isPlaying = true;
+    },
+    // 게임종료시(result창받고 난뒤)
+    RESET_ISPLAYING(state) {
+      state.gameinfo.isPlaying = false;
     },
   },
   actions: {
@@ -141,7 +178,6 @@ export default createStore({
         },
       })
         .then((res) => {
-          console.log("로그인시도중입니다.");
           console.log(res.data);
           // context.commit("SAVE_TOKEN", res.data.key);
           // console.log(res.data.data.accessToken);
@@ -196,6 +232,24 @@ export default createStore({
     // 게임플레이방 진입후 playgames false
     resetPlaygames(context) {
       context.commit("RESET_ISPLAY");
+    },
+    // 게임방 진입 및 이벤트 발생시 게임정보 저장
+    setGameInfo(context, payload) {
+      console.log("action실행");
+      console.log(payload);
+      context.commit("SET_GAMEINFO", payload);
+    },
+    // 게임레디상태 변경
+    chgReady(context, payload) {
+      context.commit("CHG_ISREADY", payload);
+    },
+    // 게임레디상태 변경
+    chgUnReady(context, payload) {
+      context.commit("CHG_ISUNREADY", payload);
+    },
+    // 게임플레이상태 변경
+    setIsPlaying(context) {
+      context.commit("SET_ISPLAYING");
     },
     // REISSUE요청
     reIssue(context, payload) {

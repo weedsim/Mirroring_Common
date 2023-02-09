@@ -1,16 +1,12 @@
 <template>
   <div class="m-0 p-0 about" style="width: 100%; height: 100vh">
     <div class="m-0 p-0 row">
-      <div class="m-0 p-0 col-1">
-        <button v-on:click="startTest">시작 {{ roomId }}</button>
-      </div>
-      <div class="m-0 p-0 col-7">
+      <div class="m-0 ps-5 pe-4 col-9">
         <main-game style="width: 100%; height: 100vh"></main-game>
       </div>
-      <div class="m-0 p-0 col-3">
+      <div class="m-0 pe-4 col-3">
         <main-chat style="width: 100%; height: 100vh"></main-chat>
       </div>
-      <div class="m-0 p-0 col-1"></div>
     </div>
   </div>
   <!-- Modal -->
@@ -150,57 +146,7 @@ export default {
   created() {
     this.linkSSE();
   },
-  mounted() {
-    // const headers = {
-    //   Authorization: "Bearer " + this.$store.state.accessToken,
-    // };
-    // const source = new EventSource(
-    //   `${this.API_URL}/sse/connect?roomId=${this.roomId}`,
-    //   { headers }
-    // );
-    // source.addEventListener("connect", (event) => {
-    //   console.log(event.data);
-    // });
-    // const sse = new EventSource(
-    //   `http://${this.API_URL}/sse/connect?accessToken=${this.$store.state.accessToken}&roomId=${this.roomId}`
-    // );
-    // sse.addEventListener("connect", (e) => {
-    //   const { data: receivedConnectData } = e;
-    //   console.log("connect event data: ", receivedConnectData); // "connected!"
-    // });
-    // axios
-    //   .get("/sse/connect", {
-    //     headers: {
-    //       Authorization: "Bearer " + this.$store.state.accessToken,
-    //     },
-    //     params: {
-    //       roomId: this.roomId,
-    //     },
-    //   })
-    // axios({
-    //   method: "GET",
-    //   // url: `${this.API_URL}/rooms/${roomId}/enter`,
-    //   url: `${this.API_URL}/sse/connect`,
-    //   headers: {
-    //     Authorization: `Bearer ${this.$store.state.accessToken}`,
-    //   },
-    //   params: {
-    //     // 데이터 필요없음
-    //     roomId: this.roomId,
-    //   },
-    // })
-    //   .then((response) => {
-    //     console.log(response);
-    //     response.data.onmessage = (event) => {
-    //       this.message = event.data;
-    //       console.log("고구마" + event);
-    //       console.log("감자" + this.message);
-    //     };
-    //   })
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-  },
+  mounted() {},
   // 이방들어올때 룸ID가 있어야함. 이거받고.
   methods: {
     linkSSE() {
@@ -210,11 +156,34 @@ export default {
       };
       const source = new EventSourcePolyfill(
         `${this.API_URL}/sse/connect?roomId=${this.roomId}`,
-        { headers }
+        // 기본45000 -> 1시간으로 변경
+        { headers, heartbeatTimeout: 1000 * 60 * 60 }
       );
 
       source.addEventListener("message", (event) => {
-        console.log(event.data);
+        // console.log(JSON.parse(event.data));
+        console.log(JSON.parse(event.data));
+        const type = JSON.parse(event.data).type;
+        const val = JSON.parse(event.data).value;
+        // 레디상태
+        if (type === "ready") {
+          this.$store.dispatch("chgReady", Number(val));
+        }
+        // 언레디상태
+        if (type === "unready") {
+          this.$store.dispatch("chgUnReady", Number(val));
+        }
+        // 방정보 업데이트
+        if (type === "room") {
+          const gameinfo = JSON.parse(JSON.parse(event.data).value);
+          this.$store.dispatch("setGameInfo", gameinfo);
+        }
+        // 게임시작시 isPlaying == true
+        if (type === "message") {
+          if (val === "game start") {
+            this.$store.dispatch("setIsPlaying");
+          }
+        }
       });
     },
     chgflag() {
