@@ -32,18 +32,14 @@ public class ArticleController {
     @GetMapping("/{articleId}")
     public ResponseEntity<?> getArticle(@PathVariable Long articleId) {
         ArticleResp article = articleService.getArticle(articleId);
-        System.out.println(article);
         return ResponseEntity.ok(article);
     }
 
     @PostMapping
     public ResponseEntity<?> createArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
                                            @RequestBody ArticleReq articleReq) {
-        System.out.println(accessToken);
-        System.out.println(articleReq);
         Long userId = jwtTokenProvider.getUserId(accessToken);
         String userName = jwtTokenProvider.getUserName(accessToken);
-        System.out.println("accesstoken success");
         articleService.insertArticle(userId, userName, articleReq);
         return ResponseEntity.ok().build();
     }
