@@ -1,5 +1,7 @@
 package com.sixsense.liargame.api.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sixsense.liargame.api.request.ArticleReq;
 import com.sixsense.liargame.api.response.ArticleResp;
 import com.sixsense.liargame.api.service.ArticleService;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -27,25 +30,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleResp> getArticles(Pageable pageable) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
-        PageRequest pageRequest = (PageRequest) pageable;
-        pageRequest.withSort(sort);
-        Page<Article> articles = articleRepository.findAll(pageRequest);
-        return articles.stream().map(ArticleResp::new).collect(Collectors.toList());
-    }
-
-    @Override
     @Transactional
-    public Article getArticle(Long articleId) {
+    public ArticleResp getArticle(Long articleId) {
         Article article = articleRepository.findById(articleId).orElseThrow();
         article.updateViewCnt();
-        return article;
+        ArticleResp articleResp = new ArticleResp(article);
+        return articleResp;
     }
 
     @Override
-    public void insertArticle(Long userId, ArticleReq articleReq) {
-        articleRepository.save(toEntity(articleReq, userId));
+    public void insertArticle(Long userId, String userName, ArticleReq articleReq) {
+        articleRepository.save(toEntity(articleReq, userId, userName));
     }
 
 
@@ -59,19 +54,27 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional
     public void updateArticle(Long userId, Long articleId, ArticleReq articleReq) {
-        Article article = articleRepository.findById(userId).orElseThrow();
-        if (Objects.equals(article.getUserId(), userId))
+        Article article = articleRepository.findById(articleId).orElse(null);
+        if (Objects.equals(article.getUserId(), userId)) {
             article.updateArticle(articleReq);
+        }
     }
 
     @Override
-    public List<ArticleResp> getArticles2(Integer page, Integer size, String title, String writer) {
+    public List<ArticleResp> getArticles(Integer page, Integer size, String title, String writer) {
         Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
-        PageRequest pageRequest = PageRequest.of(page, size, sort);
-        if(title != null && !title.isEmpty() && writer != null && !writer.isEmpty()){
-
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Article> articles = articleRepository.findAll(pageable);
+        if(title!= null && !title.isEmpty()){
+            articles = articleRepository.findByTitle(title, pageable);
         }
-        Page<Article> articles = articleRepository.findAll(pageRequest);
+        else if(writer!= null && !writer.isEmpty()){
+            articles = articleRepository.findByUserName(writer, pageable);
+        }
+        else {
+            articles = articleRepository.findAll(pageable);
+        }
+        System.out.println(articles.stream().map(ArticleResp::new).collect(Collectors.toList()));
         return articles.stream().map(ArticleResp::new).collect(Collectors.toList());
     }
 }

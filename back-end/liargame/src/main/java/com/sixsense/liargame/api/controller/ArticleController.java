@@ -22,20 +22,14 @@ public class ArticleController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping
-    public ResponseEntity<List<ArticleResp>> getArticles(Pageable pageable) {
-        return ResponseEntity.ok(articleService.getArticles(pageable));
+    public ResponseEntity<List<ArticleResp>> getArticles(@RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "size", defaultValue = "10")Integer size, @RequestParam(value = "title", required = false)String title, @RequestParam(value = "writer", required = false)String writer) {
+        return ResponseEntity.ok(articleService.getArticles(page, size, title, writer));
     }
-
-//    @GetMapping
-//    public ResponseEntity<List<ArticleResp>> getArticles2(@RequestParam(name = "page", defaultValue = "0") Integer page, @RequestParam(name = "size", defaultValue = "10") Integer size, @RequestParam(name = "title", required = false) String title, @RequestParam(name = "writer", required = false) String writer) {
-//        PageRequest pagerequest = PageRequest.of(page, size);
-//        Pageable pageable = Pageable.ofSize(pagerequest.getPageSize());
-//        return ResponseEntity.ok(articleService.getArticles2(page, size, title, writer));
-//    }
 
     @GetMapping("/{articleId}")
     public ResponseEntity<?> getArticle(@PathVariable Long articleId) {
-        Article article = articleService.getArticle(articleId);
+        ArticleResp article = articleService.getArticle(articleId);
+        System.out.println(article);
         return ResponseEntity.ok(article);
     }
 
@@ -44,8 +38,9 @@ public class ArticleController {
         System.out.println(accessToken);
         System.out.println(articleReq);
         Long userId = jwtTokenProvider.getUserId(accessToken);
+        String userName = jwtTokenProvider.getUserName(accessToken);
         System.out.println("accesstoken success");
-        articleService.insertArticle(userId, articleReq);
+        articleService.insertArticle(userId, userName, articleReq);
         return ResponseEntity.ok().build();
     }
 
