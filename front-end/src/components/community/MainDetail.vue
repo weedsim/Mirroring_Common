@@ -33,6 +33,7 @@ import DetailContent from './DetailContent.vue';
 import DetailReply from './DetailReply.vue';
 import navbar from '@/components/NavView.vue';
 import InputHeader from './InputHeader.vue';
+import { BIconArrowRight } from "bootstrap-icons-vue";
 
 
 export default {
@@ -59,5 +60,8 @@ export default {
   background-repeat: no-repeat;
   background-size:cover;  
   color: white;
+}
+.arrow{
+  size: 5px;
 }
 </style>
