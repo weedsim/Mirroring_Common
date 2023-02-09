@@ -38,7 +38,7 @@ public class ArticleController {
                                            @RequestBody ArticleReq articleReq) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.insertArticle(userId, articleReq);
-        return ResponseEntity.ok("성공");
+        return ResponseEntity.ok("등록 성공");
     }
 
 
@@ -47,7 +47,7 @@ public class ArticleController {
                                            @PathVariable Long articleId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.deleteArticle(userId, articleId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("삭제 성공");
     }
 
     @PatchMapping("/{articleId}")
@@ -56,6 +56,6 @@ public class ArticleController {
                                           @RequestBody ArticleReq article) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.updateArticle(userId, articleId, article);
-        return ResponseEntity.ok("성공");
+        return ResponseEntity.ok("수정 성공");
     }
 }
