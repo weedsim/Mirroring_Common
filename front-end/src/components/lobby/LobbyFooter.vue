@@ -10,21 +10,17 @@
           방 생성
         </button>
       </div>
-      <div class="m-0 p-0 col-4 navwrapper">
+      <div>
         <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
+          <ul class="pagination justify-content-center">
+            <li class="page-item" :class="{ disabled: currentPage === 1 }">
+              <a class="page-link" href="#" @click.prevent="previousPage">Previous</a>
             </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
+            <li class="page-item" v-for="page in totalPages" :key="page" :class="{ active: currentPage === page }">
+              <a class="page-link" href="#" @click.prevent="goToPage(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+              <a class="page-link" href="#" @click.prevent="nextPage">Next</a>
             </li>
           </ul>
         </nav>
@@ -53,7 +49,51 @@ import CreateRoomModal from "@/components/lobby/CreateRoomModal.vue";
 export default {
   name: "LobbyFooter",
   components: { CreateRoomModal },
-  created() {},
+  created() {},data() {
+    return {
+      items: [
+        { id: 1, name: 'Item 1' },
+        { id: 2, name: 'Item 2' },
+        { id: 3, name: 'Item 3' },
+        { id: 4, name: 'Item 3' },
+        { id: 5, name: 'Item 3' },
+        { id: 6, name: 'Item 3' },
+        { id: 7, name: 'Item 3' },
+        { id: 8, name: 'Item 3' },
+        { id: 9, name: 'Item 3' },
+        { id: 10, name: 'Item 3' },
+        { id: 11, name: 'Item 3' },
+        // ... more items
+      ],
+      itemsPerPage: 2,
+      currentPage: 1
+    }
+  },
+  computed: {
+    itemsToShow() {
+      const start = (this.currentPage - 1) * this.itemsPerPage
+      const end = start + this.itemsPerPage
+      return this.items.slice(start, end)
+    },
+    totalPages() {
+      return Math.ceil(this.items.length / this.itemsPerPage)
+    }
+  },
+  methods: {
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--
+      }
+    },
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++
+      }
+    },
+    goToPage(page) {
+      this.currentPage = page
+    }
+  },
 };
 </script>
 
