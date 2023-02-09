@@ -22,7 +22,10 @@ public class ArticleController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping
-    public ResponseEntity<List<ArticleResp>> getArticles(@RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "size", defaultValue = "10")Integer size, @RequestParam(value = "title", required = false)String title, @RequestParam(value = "writer", required = false)String writer) {
+    public ResponseEntity<List<ArticleResp>> getArticles(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                         @RequestParam(value = "size", defaultValue = "10")Integer size,
+                                                         @RequestParam(value = "title", required = false)String title,
+                                                         @RequestParam(value = "writer", required = false)String writer) {
         return ResponseEntity.ok(articleService.getArticles(page, size, title, writer));
     }
 
@@ -34,7 +37,8 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<?> createArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @RequestBody ArticleReq articleReq) {
+    public ResponseEntity<?> createArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
+                                           @RequestBody ArticleReq articleReq) {
         System.out.println(accessToken);
         System.out.println(articleReq);
         Long userId = jwtTokenProvider.getUserId(accessToken);
@@ -46,14 +50,17 @@ public class ArticleController {
 
 
     @DeleteMapping("/{articleId}")
-    public ResponseEntity<?> deleteArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long articleId) {
+    public ResponseEntity<?> deleteArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
+                                           @PathVariable Long articleId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.deleteArticle(userId, articleId);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{articleId}")
-    public ResponseEntity<?> patchArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long articleId, @RequestBody ArticleReq article) {
+    public ResponseEntity<?> patchArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
+                                          @PathVariable Long articleId,
+                                          @RequestBody ArticleReq article) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.updateArticle(userId, articleId, article);
         return ResponseEntity.ok().build();

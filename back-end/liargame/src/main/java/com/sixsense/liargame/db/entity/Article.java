@@ -30,7 +30,6 @@ public class Article extends CommunityBaseTime {
     @ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private User user;
-    @ColumnDefault("0")
     private Integer viewCnt;
     private LocalDateTime updatedAt;
 
@@ -42,7 +41,7 @@ public class Article extends CommunityBaseTime {
         this.isNotice = isNotice;
         this.userId = userId;
         this.userName = userName;
-        this.viewCnt = viewCnt;
+        this.viewCnt = 1;
         this.updatedAt = LocalDateTime.now();
     }
 
