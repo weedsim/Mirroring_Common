@@ -128,6 +128,7 @@
 <script>
 import axios from "axios";
 import router from "@/router";
+import VueCookies from "vue-cookies";
 
 // const API_URL = "http://127.0.0.1:8080";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
@@ -172,6 +173,7 @@ export default {
       // console.log(this.talktime);
       // console.log(this.gamemode);
       // console.log(`${this.$store.state.accessToken}`);
+      console.log(VueCookies.get("accessToken"));
       if (
         this.roomtitle === null ||
         this.playercnt === null ||
@@ -186,7 +188,7 @@ export default {
           url: `${this.API_URL}/rooms`,
           headers: {
             // accessToken: this.$cookies.get("accessToken"),
-            Authorization: `Bearer ${this.$store.state.accessToken}`,
+            Authorization: `Bearer ${VueCookies.get("accessToken")}`,
           },
           data: {
             title: this.roomtitle,

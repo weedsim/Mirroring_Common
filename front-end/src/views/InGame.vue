@@ -156,11 +156,34 @@ export default {
       };
       const source = new EventSourcePolyfill(
         `${this.API_URL}/sse/connect?roomId=${this.roomId}`,
-        { headers }
+        // 기본45000 -> 1시간으로 변경
+        { headers, heartbeatTimeout: 1000 * 60 * 60 }
       );
 
       source.addEventListener("message", (event) => {
-        console.log(event.data);
+        // console.log(JSON.parse(event.data));
+        console.log(JSON.parse(event.data));
+        const type = JSON.parse(event.data).type;
+        const val = JSON.parse(event.data).value;
+        // 레디상태
+        if (type === "ready") {
+          this.$store.dispatch("chgReady", Number(val));
+        }
+        // 언레디상태
+        if (type === "unready") {
+          this.$store.dispatch("chgUnReady", Number(val));
+        }
+        // 방정보 업데이트
+        if (type === "room") {
+          const gameinfo = JSON.parse(JSON.parse(event.data).value);
+          this.$store.dispatch("setGameInfo", gameinfo);
+        }
+        // 게임시작시 isPlaying == true
+        if (type === "message") {
+          if (val === "game start") {
+            this.$store.dispatch("setIsPlaying");
+          }
+        }
       });
     },
     chgflag() {

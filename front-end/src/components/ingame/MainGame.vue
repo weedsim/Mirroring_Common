@@ -9,7 +9,7 @@
       <game-users></game-users>
     </div>
     <!-- <div class="m-0 p-0 row" style="height:5%">b_blank</div> -->
-    <div class="m-0 p-0 row" style="height: 25%">
+    <div class="mt-5 p-0 row" style="height: 25%">
       <game-confirm v-if="playgame !== true"></game-confirm>
       <game-bottom v-if="playgame === true"></game-bottom>
     </div>
@@ -28,13 +28,13 @@ export default {
   name: "MainGame",
   data() {
     return {
-      playgame: this.$store.state.playgames,
+      playgame: false,
     };
   },
   created() {},
   computed: {
     changedPlaygame() {
-      return this.$store.state.playgames;
+      return this.$store.state.gameinfo.isPlaying;
     },
   },
   watch: {

@@ -1,6 +1,7 @@
 <template>
+  <modal v-if="showModal" v-on:close="closeModal" />
   <div
-    class="mt-2 pt-4"
+    class="mt-3 pt-4"
     style="width: 40%; display: flex; justify-content: flex-end"
   >
     <button class="circle me-3 p-0">
@@ -15,17 +16,26 @@
     </button>
   </div>
   <div class="m-0 pt-4" style="width: 40%">
-    <button class="btn-ready">준비</button>
+    <button class="btn-ready" v-on:click="isReady()" v-if="!Master">
+      준비
+    </button>
+    <button class="btn-ready" v-on:click="isStart()" v-else>시작</button>
   </div>
-  <div class="m-0 p-0 col-4"></div>
 </template>
 
 <script>
 import axios from "axios";
+import jwtDecode from "vue-jwt-decode";
+import VueCookies from "vue-cookies";
+import Modal from "./SubjectModal.vue";
+
 // import store from '@/store';
 // import { useStore } from "vuex";
 
 export default {
+  components: {
+    Modal,
+  },
   // setup() {
   //   const store = useStore();
   //   // const toggle = store.commit("isShow", store.state.isShow = !store.state.isShow)
@@ -33,14 +43,43 @@ export default {
   data() {
     return {
       API_URL: this.$store.state.API_URL,
+      Master: false,
+      showModal: false,
     };
   },
 
   name: "GameConfirm",
   created() {
     // this.toggle = store.commit("isShow", store.state.isShow = !store.state.isShow)
+    this.isMaster();
+  },
+  computed: {
+    // isMaster() {
+    //   if (
+    //     this.$store.state.gameinfo.master ===
+    //     jwtDecode.decode(VueCookies.get("accessToken")).id
+    //   ) {
+    //     return true;
+    //   }
+    //   return false;
+    // },
   },
   methods: {
+    closeModal() {
+      this.showModal = false;
+    },
+    isMaster() {
+      // if (
+      //   this.$store.state.gameinfo.master ===
+      //   jwtDecode.decode(VueCookies.get("accessToken")).id
+      // )
+      if (
+        this.$store.state.gameinfo.master ===
+        jwtDecode.decode(VueCookies.get("accessToken")).id
+      ) {
+        this.Master = true;
+      }
+    },
     toggle() {
       // console.log(this.$store.state.isShow)
       //   this.$store.state.isShow = !this.$store.state.isShow
@@ -49,20 +88,42 @@ export default {
       this.$store.state.sessions[myIdx].isReady =
         !this.$store.state.sessions[myIdx].isReady;
     },
+    isStart() {
+      console.log("start버튼 누름요!");
+      this.showModal = true;
+      // axios({
+      //   method: "POST",
+      //   url: `${this.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/games/start`,
+      //   headers: {
+      //     Authorization: `Bearer ${VueCookies.get("accessToken")}`,
+      //   },
+      //   data: {},
+      // })
+      //   .then((res) => {
+      //     console.log(res.data);
+      //     console.log(this.$store.state.gameinfo);
+      //     console.log(this.$store.state.sessions);
+      //   })
+      //   .catch((err) => {
+      //     console.log("시작실패");
+      //     console.log(err);
+      //   });
+    },
     isReady() {
-      console.log(this.$store.state.gameinfo);
-      console.log(this.$store.state.gameinfo.roomId);
+      console.log("ready버튼 누름요!");
       axios({
         method: "PATCH",
         // url: `${API_URL}/rooms`,
         url: `${this.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/ready`,
         headers: {
-          Authorization: `Bearer ${this.$store.state.accessToken}`,
+          Authorization: `Bearer ${VueCookies.get("accessToken")}`,
         },
         data: {},
       })
         .then((res) => {
           console.log(res.data);
+          console.log(this.$store.state.gameinfo);
+          console.log(this.$store.state.sessions);
         })
         .catch((err) => {
           console.log("레디실패");
@@ -75,8 +136,8 @@ export default {
 
 <style scoped>
 .btn-ready {
-  width: 10vw;
-  height: 6vw;
+  width: 28vh;
+  height: 8vh;
   background-color: rgba(158, 158, 158, 30%);
   border: none;
   border-radius: 10px;
@@ -85,8 +146,8 @@ export default {
   color: white;
 }
 .circle {
-  width: 3vw;
-  height: 3vh;
-  border-radius: 1.5vw;
+  width: 5vh;
+  height: 5vh;
+  border-radius: 2.5vh;
 }
 </style>

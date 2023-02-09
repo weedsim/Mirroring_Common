@@ -74,6 +74,7 @@ export default {
     // this.mySession = Object.assign({}, this.$store.modules.session),
     this.initFrontSession();
   },
+  computed: {},
   methods: {
     joinSession(myIdx) {
       // --- 1) Get an OpenVidu object ---
@@ -198,6 +199,7 @@ export default {
     //         this.mainStreamManager = stream;
     // },
     initFrontSession() {
+      this.mySessionId = this.$store.state.gameinfo.roomId;
       // let sessions = this.$store.state.sessions
       for (let i = 0; i < 10; i++) {
         if (!this.$store.state.sessions[i].isJoin) {
@@ -245,7 +247,7 @@ export default {
     async createSession(sessionId) {
       const response = await axios.post(
         APPLICATION_SERVER_URL + "api/sessions",
-        { customSessionId: sessionId },
+        { customSessionId: String(sessionId) },
         {
           headers: { "Content-Type": "application/json" },
         }
