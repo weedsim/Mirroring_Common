@@ -107,7 +107,8 @@ public class UserController {
     }
 
     @GetMapping("/duplicate")
-    public ResponseEntity<?> duplication(@RequestBody Map<String, String> header) {
-        return new ResponseEntity<Boolean>(userService.isDuplication(header.get("email"), header.get("name")), HttpStatus.OK);
+    public ResponseEntity<?> duplication(@RequestParam String email,
+                                         @RequestParam String name) {
+        return new ResponseEntity<Boolean>(userService.isDuplication(email, name), HttpStatus.OK);
     }
 }

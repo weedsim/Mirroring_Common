@@ -246,7 +246,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean isDuplication(String email, String name) {
-        if (email != null) return userRepository.existsByEmail(email);
+        if (!email.equals("null")) return userRepository.existsByEmail(email);
         else return userRepository.existsByName(name);
     }
 
