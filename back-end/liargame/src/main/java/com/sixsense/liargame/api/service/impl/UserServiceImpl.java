@@ -188,7 +188,12 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = jwtTokenProvider.getAuthentication(name.getAccessToken());
         User user = userRepository.findByEmail(authentication.getName()).get();
         user.updateName(name.getName());
-        return response.success("이름이 변경되었습니다.");
+        TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+
+        // RefreshToken Redis 업데이트
+        redisTemplate.opsForValue()
+                .set("RT:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
+        return response.success(tokenInfo, "이름이 변경되었습니다.", HttpStatus.OK);
     }
 
     @Override
