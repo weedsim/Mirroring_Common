@@ -10,7 +10,7 @@ import java.util.List;
 public interface ArticleService {
     List<ArticleResp> getArticles(Pageable pageable);
 
-    Article getArticle(Long articleId);
+    ArticleResp getArticle(Long articleId);
 
     void insertArticle(Long userId, ArticleReq articleReq);
 

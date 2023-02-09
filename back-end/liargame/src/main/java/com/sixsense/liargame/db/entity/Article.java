@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -38,7 +39,7 @@ public class Article extends CommunityBaseTime {
         this.content = content;
         this.isNotice = isNotice;
         this.userId = userId;
-        this.viewCnt = viewCnt;
+        this.viewCnt = 1;
         this.updatedAt = LocalDateTime.now();
     }
 

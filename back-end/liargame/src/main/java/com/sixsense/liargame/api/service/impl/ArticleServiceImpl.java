@@ -34,10 +34,10 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Transactional
-    public Article getArticle(Long articleId) {
+    public ArticleResp getArticle(Long articleId) {
         Article article = articleRepository.findById(articleId).orElseThrow();
         article.updateViewCnt();
-        return article;
+        return new ArticleResp(article);
     }
 
     @Override

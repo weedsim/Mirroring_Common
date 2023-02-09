@@ -7,6 +7,7 @@ import com.sixsense.liargame.db.entity.Article;
 import com.sixsense.liargame.security.auth.JwtProperties;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/articles")
+@Log4j
 public class ArticleController {
     private final ArticleService articleService;
     private final JwtTokenProvider jwtTokenProvider;
@@ -27,29 +29,33 @@ public class ArticleController {
 
     @GetMapping("/{articleId}")
     public ResponseEntity<?> getArticle(@PathVariable Long articleId) {
-        Article article = articleService.getArticle(articleId);
-        return ResponseEntity.ok(article);
+        ArticleResp articleResp = articleService.getArticle(articleId);
+        return ResponseEntity.ok(articleResp);
     }
 
     @PostMapping
-    public ResponseEntity<?> createArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @RequestBody ArticleReq articleReq) {
+    public ResponseEntity<?> createArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
+                                           @RequestBody ArticleReq articleReq) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.insertArticle(userId, articleReq);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("등록 성공");
     }
 
 
     @DeleteMapping("/{articleId}")
-    public ResponseEntity<?> deleteArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long articleId) {
+    public ResponseEntity<?> deleteArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
+                                           @PathVariable Long articleId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.deleteArticle(userId, articleId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("삭제 성공");
     }
 
     @PatchMapping("/{articleId}")
-    public ResponseEntity<?> patchArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long articleId, @RequestBody ArticleReq article) {
+    public ResponseEntity<?> patchArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
+                                          @PathVariable Long articleId,
+                                          @RequestBody ArticleReq article) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.updateArticle(userId, articleId, article);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("수정 성공");
     }
 }
