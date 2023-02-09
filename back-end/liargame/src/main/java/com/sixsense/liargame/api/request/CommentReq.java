@@ -10,6 +10,5 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CommentReq {
-    private Long userId;
     private String content;
 }
