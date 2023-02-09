@@ -1,6 +1,7 @@
 package com.sixsense.liargame.api.sse;
 
-import com.sixsense.liargame.common.model.CustomEmitter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -8,15 +9,16 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.stream.Collectors;
 
 public class Emitters {
     @Getter
     private final List<CustomEmitter> emitterList;
+    private final ObjectMapper om;
     private CustomEmitter liar;
     private CustomEmitter spy;
 
-    public Emitters() {
+    public Emitters(ObjectMapper om) {
+        this.om = om;
         emitterList = new CopyOnWriteArrayList<>();
     }
 
@@ -36,17 +38,32 @@ public class Emitters {
         return emitterList.size();
     }
 
-    public void sendToAll(String name, String message) {
-        sendToCitizens(name, message);
+    public void sendToAll(String name, SseResponse sseResponse) {
+
+        sendToCitizens(name, sseResponse);
         if (liar != null)
-            sendToLiar(name, message);
+            sendTo(name, sseResponse, liar);
         if (spy != null)
-            sendToSpy(name, message);
+            sendTo(name, sseResponse, spy);
     }
 
-    public void sendToLiar(String name, String message) {
+    public void sendToLiar(String name, SseResponse sseResponse) {
+        sendTo(name, sseResponse, liar);
+    }
+
+    public void sendToSpy(String name, SseResponse sseResponse) {
+        sendTo(name, sseResponse, spy);
+    }
+
+    private void sendTo(String name, SseResponse sseResponse, CustomEmitter emitter) {
+        String message;
         try {
-            liar.send(SseEmitter.event()
+            message = om.writeValueAsString(sseResponse);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            emitter.send(SseEmitter.event()
                     .name(name)
                     .data(message));
         } catch (IOException e) {
@@ -54,17 +71,13 @@ public class Emitters {
         }
     }
 
-    public void sendToSpy(String name, String message) {
+    public void sendToCitizens(String name, SseResponse sseResponse) {
+        String message;
         try {
-            spy.send(SseEmitter.event()
-                    .name(name)
-                    .data(message));
-        } catch (IOException e) {
+            message = om.writeValueAsString(sseResponse);
+        } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public void sendToCitizens(String name, String message) {
         emitterList.forEach(emitter -> {
             try {
                 emitter.send(SseEmitter.event()
@@ -98,16 +111,5 @@ public class Emitters {
                 .findFirst()
                 .orElse(null);
         emitterList.remove(spy);
-    }
-
-    public List<Long> getParticipants() {
-        return emitterList.stream().map(CustomEmitter::getUserId).collect(Collectors.toList());
-    }
-
-    public Long getUserIdByName(String name) {
-        for (CustomEmitter emitter : emitterList)
-            if (emitter.getName().equals(name))
-                return emitter.getUserId();
-        return null;
     }
 }

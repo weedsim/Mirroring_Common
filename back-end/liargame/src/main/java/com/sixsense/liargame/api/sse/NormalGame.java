@@ -1,7 +1,5 @@
 package com.sixsense.liargame.api.sse;
 
-import com.sixsense.liargame.common.model.UserInfo;
-import com.sixsense.liargame.common.model.Vote;
 import com.sixsense.liargame.common.model.response.GameResultResp;
 import com.sixsense.liargame.common.model.response.VoteResp;
 import com.sixsense.liargame.db.entity.Room;

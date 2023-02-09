@@ -1,4 +1,4 @@
-package com.sixsense.liargame.common.model;
+package com.sixsense.liargame.api.sse;
 
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 

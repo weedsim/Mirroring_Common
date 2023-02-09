@@ -33,9 +33,10 @@ public class UserController {
 
     @GetMapping("/register-email")
     public ResponseEntity<?> registerEmail(@RequestParam("email") String email,
-                                           @RequestParam("mail-key") String key){
+                                           @RequestParam("mail-key") String key) {
         return userService.registerEmail(email, key);
     }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@Validated UserRequestDto.Login login,
                                    Errors errors) {
@@ -80,7 +81,7 @@ public class UserController {
 
     @PutMapping("/modify/password")
     public ResponseEntity<?> updateUserPassword(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
-                                            String password) {
+                                                String password) {
         UserRequestDto.ModifyPassword modify = UserRequestDto.ModifyPassword.builder()
                 .accessToken(accessToken)
                 .password(password)

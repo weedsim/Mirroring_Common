@@ -65,15 +65,15 @@ public class RoomController {
     }
 
     @PostMapping
-    public ResponseEntity<Integer> create(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @RequestBody RoomReq roomReq) {
+    public ResponseEntity<RoomDetail> create(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @RequestBody RoomReq roomReq) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
-        Integer roomId;
+        RoomDetail roomDetail;
         try {
-            roomId = roomService.insert(userId, roomReq);
+            roomDetail = roomService.insert(userId, roomReq);
         } catch (OpenViduJavaClientException | OpenViduHttpException e) {
             throw new RuntimeException(e);
         }
-        return ResponseEntity.ok(roomId);
+        return ResponseEntity.ok(roomDetail);
     }
 
     @GetMapping("/last")

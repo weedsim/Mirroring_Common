@@ -23,7 +23,7 @@ public class SubjectController {
     }
 
     @GetMapping("/{subjectId}/words")
-    public ResponseEntity<?> getWord(@PathVariable Long subjectId, Long roomId) {
+    public ResponseEntity<?> getWord(@PathVariable Long subjectId, Integer roomId) {
         subjectService.selectRandomWord(subjectId, roomId);
         return ResponseEntity.ok().build();
     }
