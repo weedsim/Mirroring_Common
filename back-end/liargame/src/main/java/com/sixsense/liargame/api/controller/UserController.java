@@ -71,10 +71,10 @@ public class UserController {
 
     @PutMapping("/modify/name")
     public ResponseEntity<?> updateUserName(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
-                                            @RequestBody String name) {
+                                            @RequestBody Map<String, String> header) {
         UserRequestDto.ModifyName modify = UserRequestDto.ModifyName.builder()
                 .accessToken(accessToken)
-                .name(name)
+                .name(header.get("name"))
                 .build();
 
         return userService.updateName(modify);
@@ -82,10 +82,10 @@ public class UserController {
 
     @PutMapping("/modify/password")
     public ResponseEntity<?> updateUserPassword(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
-                                            @RequestBody String password) {
+                                            @RequestBody Map<String, String> header) {
         UserRequestDto.ModifyPassword modify = UserRequestDto.ModifyPassword.builder()
                 .accessToken(accessToken)
-                .password(password)
+                .password(header.get("password"))
                 .build();
 
         return userService.updatePassword(modify);
