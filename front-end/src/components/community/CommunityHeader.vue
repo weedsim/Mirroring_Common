@@ -2,35 +2,40 @@
 
   <!-- 헤드 -->
   <div class="m-0 p-0 row" style="height: 100%">
-    <div class="m-0 p-0 col-8">
+    <div class="m-0 p-0 col-9">
       <h1>커뮤니티</h1>
 
       
     </div>
 
 
-    <div class="m-0 p-0 col-4">
+    <div class="m-0 p-0 col-3">
 
       <div class="m-0 p-0 row" style="height: 100%"   >
-        <div class="m-0 p-0 col-4">
+        <div class="m-0 p-0 col-3">
           <div class="form"> 
-            <select class="m-0 p-0 form-select" id="floatingSelect" aria-label="Floating label select example" style="height: 30px;">
-              <option selected>  제목</option>
-              <option value="2">  작성자</option>
+            <select class="m-0 p-0 form-select-sm" id="floatingSelect" aria-label="Floating label select example" style="height: 37px;">
+              <option selected style="text-align: center;" >제목</option>
+              <option value="2" style="text-align: center;">작성자</option>
             </select>
           </div>
         </div>
-        <div class="m-0 p-0 col-8">
+        <div class="m-0 p-0 col-9">
           <div class="wrap">
-            <div class="search">
-              <input type="text" class="searchTerm" placeholder="What are you looking for?" style="height: auto;">
+            <!-- <div class="search">
+              <input type="text" class="searchTerm" placeholder="검색창" style="height: auto;"  aria-describedby="button-addon3">
                 <button type="submit" class="searchButton">
-                  <i class="fa fa-search"></i>
+                  <i class="fa fa-search" id="button-addon3"></i>
                 </button>
-            </div>
+            </div> -->
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="댓글을 입력하세요" aria-describedby="button-add" style="height: 37px;">
+              <button type="submit" class="searchButton" id="button-add" >
+                <i class="fa fa-search" id="button-add" ></i>
+              </button>
+            </div> 
           </div>  
         </div>
-
       </div>
       
      
