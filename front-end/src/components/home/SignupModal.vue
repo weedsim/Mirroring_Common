@@ -35,12 +35,13 @@
                 type="button"
                 class="btn btn-primary btn-sm"
                 style="margin-right: 0px"
-                v-on:click="chkemail"
+                @click="chkemail"
               >
                 중복확인
               </button>
             </li>
-            <li>사용 불가능한 이메일 입니다.</li>
+            <li v-show=showalertemail1>사용 불가능한 이메일 입니다.</li>
+            <li v-show=showalertemail2>사용 가능한 이메일 입니다.</li>
             <li>닉네임</li>
             <li style="display: flex; justify-content: space-between">
               <input
@@ -54,12 +55,13 @@
               <button
                 type="button"
                 class="btn btn-primary btn-sm"
-                v-on:click="chknick"
+                v-on:click="chknick()"
               >
                 중복확인
               </button>
             </li>
-            <li>사용 불가능한 닉네임 입니다.</li>
+            <li v-show=showalertname1>사용 불가능한 닉네임 입니다.</li>
+            <li v-show=showalertname2>사용 가능한 닉네임 입니다.</li>
             <li style="margin-top: 3vh">비밀번호</li>
             <li>
               <input
@@ -80,7 +82,8 @@
                 v-on:keyup="chkpwd"
               />
             </li>
-            <li>비밀번호가 일치하지 않습니다.</li>
+            <li v-show="pwmismatch">비밀번호가 일치하지 않습니다.</li>
+            <li v-show="pwmatch">비밀번호가 일치합니다.</li>
             <li style="text-align: center; margin-top: 3vh">
               <button
                 type="button"
@@ -105,6 +108,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "SignupModal",
   components: {},
@@ -114,6 +118,13 @@ export default {
       usernickname: null,
       userpwd: null,
       userpwdtwo: null,
+      API_URL: this.$store.state.API_URL,
+      showalertemail1: false,  //사용 불가능, 이메일 중복
+      showalertemail2: false,  //사용 가능
+      showalertname1: false,  //사용 불가능, 닉네임 중복
+      showalertname2: false,  //사용 가능
+      pwmismatch: false,  //비밀번호 불일치
+      pwmatch: false,  //비밀번호 일치
     };
   },
   setup() {},
@@ -125,16 +136,75 @@ export default {
       (this.useremail = null),
         (this.usernickname = null),
         (this.userpwd = null),
-        (this.userpwdtwo = null);
+        (this.userpwdtwo = null),
+        (this.showalertemail1 = false),
+        (this.showalertemail2 = false),
+        (this.showalertname1 = false),
+        (this.showalertname2 = false);
     },
     // 이메일 중복검사
-    chkemail() {},
+    chkemail() {
+      axios({
+            method: "get",
+            url: `${this.API_URL}/users/duplicate`,
+            params: {
+              email: this.useremail,
+            },
+          })
+          .then((res) => {
+            if(res.data === true) {
+              alert("이미 가입된 이메일 입니다.")
+              this.showalertemail1 = true;
+              this.showalertemail2 = false;
+            }
+            else{
+              console.log("중복이 아닙니다.");
+              this.showalertemail1 = false;
+              this.showalertemail2 = true;
+            }
+          })
+          .catch((err) => {
+            console.log("메일중복확인실패");
+            console.log(err);
+          })
+    },
     // 닉네임 중복검사
-    chknick() {},
+    chknick() {
+      axios({
+            method: "get",
+            url: `${this.API_URL}/users/duplicate`,
+            params: {
+              name: this.usernickname,
+            },
+          })
+          .then((res) => {
+            if(res.data === true) {
+              alert("중복입니다. 다시 작성해주세요")
+              this.showalertname1 = true;
+              this.showalertname2 = false;
+            }
+            else{
+              console.log("중복이 아닙니다.");
+              this.showalertname2 = true;
+              this.showalertname1 = false;
+            }
+          })
+          .catch((err) => {
+            console.log("이름중복확인실패");
+            console.log(err);
+          })
+    },
     // 비밀번호 일치여부 확인
     chkpwd() {
-      if (this.userpwd !== this.userpwdtwo) {
-        console.log(this.userpwd + this.userpwdtwo);
+      if (this.userpwd !== this.userpwdtwo) { //비번 불일치시
+        this.pwmismatch = true;
+        this.pwmatch = false;
+        console.log(this.userpwd + " " + this.userpwdtwo);
+      }
+      else{ //비빈 일치시
+        console.log("비번 일치")
+        this.pwmatch = true;
+        this.pwmismatch = false;
       }
     },
     // 회원가입
@@ -149,7 +219,24 @@ export default {
         email: email,
       };
 
-      this.$store.dispatch("signUp", payload);
+      if(this.useremail === null || this.usernickname === null){ //이메일이나 닉네임이 빈게 있으면 
+        console.log("비었다.")
+      }
+      else{
+        if(this.showalertemail2 === true && this.showalertname2 === true){
+          this.$store.dispatch("signUp", payload);
+        }
+        else if( this.showalertemail2 === true && this.showalertname2 === false){
+          console.log("닉네임이 중복입니다.");
+        }
+        else if( this.showalertemail2 === false && this.showalertname2 === true){
+          console.log("이미 가입된 이메일 입니다.");
+        }
+        else{
+          console.log("어디엔가 문제가 생겼습니다. 확인바랍니다.")
+        }
+      }
+
     },
   },
 };

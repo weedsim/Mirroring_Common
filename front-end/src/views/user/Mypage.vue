@@ -254,8 +254,8 @@ export default {
               url: `${this.API_URL}/users/modify/password`,
               headers: {
                 Authorization: `Bearer ${this.$store.state.accessToken}`,
-                // "Content-Type" : "application/json",
-                "Content-Type": "multipart/form-data"
+                "Content-Type" : "application/json",
+                // "Content-Type": "multipart/form-data"
               },
               data: {
                 "password": "{this.remodifyPW}",
@@ -285,8 +285,8 @@ export default {
               url:`${this.API_URL}/users/modify/name`,
               headers: {
                 Authorization: `Bearer ${this.$store.state.accessToken}`,
-                // 'Content-Type' : "application/json",
-                "Content-Type": "multipart/form-data"
+                'Content-Type' : "application/json",
+                // "Content-Type": "multipart/form-data"
               },
               data: {
                 name: this.username,
