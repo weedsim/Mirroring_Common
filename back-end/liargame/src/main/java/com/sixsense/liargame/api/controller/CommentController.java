@@ -35,7 +35,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<CommentResp> deleteComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
+    public ResponseEntity<> deleteComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
                                                      @PathVariable Long commentId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         commentService.deleteComment(userId, commentId);
