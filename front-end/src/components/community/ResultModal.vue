@@ -59,9 +59,9 @@
             <li style="text-align: center;">Rosa<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Adams</li>
             <li style="text-align: center;">Mai<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Josh</li>
             <li style="text-align: center;">Josh<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Jaxon</li>
-            <li style="text-align: center;">Nina<BIconArrowRight id="arrow" style="width:60px; height:20px;"></BIconArrowRight>Josh</li>
-            <li style="text-align: center;">Jaxon<BIconArrowRight id="arrow" style="width:60px; height:20px;"></BIconArrowRight>Josh</li>
-            <li style="text-align: center;">Adams<BIconArrowRight id="arrow" style="width:60px; height:20px;"></BIconArrowRight>Nina</li>
+            <li style="text-align: center;">Nina<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Josh</li>
+            <li style="text-align: center;">Jaxon<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Josh</li>
+            <li style="text-align: center;">Adams<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Nina</li>
           </ul>
             <div style="text-align: center;">
               <button class="btn btn-secondary" type="button">계속하기</button>
