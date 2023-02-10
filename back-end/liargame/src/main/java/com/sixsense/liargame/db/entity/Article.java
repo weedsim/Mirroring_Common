@@ -1,7 +1,5 @@
 package com.sixsense.liargame.db.entity;
 
-//import com.sixsense.liargame.db.entity.User;
-
 import com.sixsense.liargame.api.request.ArticleReq;
 import lombok.Builder;
 import lombok.Getter;
@@ -24,6 +22,7 @@ public class Article extends CommunityBaseTime {
     private String title;
     private String content;
     private Boolean isNotice;
+    private String userName;
     @Column(name = "user_id")
     private Long userId;
     @ManyToOne
@@ -33,12 +32,13 @@ public class Article extends CommunityBaseTime {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Article(Long id, String title, String content, Boolean isNotice, Long userId, Integer viewCnt) {
+    public Article(Long id, String title, String content, Boolean isNotice, Long userId, Integer viewCnt, String userName) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.isNotice = isNotice;
         this.userId = userId;
+        this.userName = userName;
         this.viewCnt = 1;
         this.updatedAt = LocalDateTime.now();
     }

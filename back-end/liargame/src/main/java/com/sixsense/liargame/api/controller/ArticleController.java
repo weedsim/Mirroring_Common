@@ -3,12 +3,9 @@ package com.sixsense.liargame.api.controller;
 import com.sixsense.liargame.api.request.ArticleReq;
 import com.sixsense.liargame.api.response.ArticleResp;
 import com.sixsense.liargame.api.service.ArticleService;
-import com.sixsense.liargame.db.entity.Article;
 import com.sixsense.liargame.security.auth.JwtProperties;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,8 +19,12 @@ public class ArticleController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping
-    public ResponseEntity<List<ArticleResp>> getArticles(Pageable pageable) {
-        return ResponseEntity.ok(articleService.getArticles(pageable));
+    public ResponseEntity<List<ArticleResp>> getArticles(@RequestParam(value = "page", defaultValue = "0")Integer page,
+                                                         @RequestParam(value = "size", defaultValue = "10")Integer size,
+                                                         @RequestParam(value = "title", required = false)String title,
+                                                         @RequestParam(value = "writer", required = false)String writer) {
+        
+        return ResponseEntity.ok(articleService.getArticles(page, size, title, writer));
     }
 
     @GetMapping("/{articleId}")
@@ -36,8 +37,9 @@ public class ArticleController {
     public ResponseEntity<?> createArticle(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
                                            @RequestBody ArticleReq articleReq) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
-        articleService.insertArticle(userId, articleReq);
-        return ResponseEntity.ok("등록 성공");
+        String userName = jwtTokenProvider.getUserName(accessToken);
+        articleService.insertArticle(userId, userName, articleReq);
+        return ResponseEntity.ok("INSERT SUCCESS");
     }
 
 
@@ -46,7 +48,7 @@ public class ArticleController {
                                            @PathVariable Long articleId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.deleteArticle(userId, articleId);
-        return ResponseEntity.ok("삭제 성공");
+        return ResponseEntity.ok("DELETE SUCCESS");
     }
 
     @PatchMapping("/{articleId}")
@@ -55,6 +57,6 @@ public class ArticleController {
                                           @RequestBody ArticleReq article) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.updateArticle(userId, articleId, article);
-        return ResponseEntity.ok("수정 성공");
+        return ResponseEntity.ok("UPDATE SUCCESS");
     }
 }

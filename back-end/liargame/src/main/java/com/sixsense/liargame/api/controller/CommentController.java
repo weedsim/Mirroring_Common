@@ -6,7 +6,6 @@ import com.sixsense.liargame.api.service.CommentService;
 import com.sixsense.liargame.security.auth.JwtProperties;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,33 +20,31 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<?> insertComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
-                                           @PathVariable Long articleId,
-                                           @RequestBody CommentReq commentReq) {
+                                           @PathVariable Long articleId, String content) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
-        commentService.insertComment(userId, articleId, commentReq.getContent());
-        return ResponseEntity.ok("생성 성공");
+        commentService.insertComment(userId, articleId, content);
+        return ResponseEntity.ok("INSERT SUCCESS");
     }
 
     @PatchMapping("/{commentId}")
     public ResponseEntity<?> updateComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
-                                           @PathVariable Long commentId,
-                                           @RequestBody CommentReq commentReq) {
+                                           @PathVariable Long commentId, String content) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
-        commentService.updateComment(userId, commentId, commentReq.getContent());
-        return ResponseEntity.ok("수정 성공");
+        commentService.updateComment(userId, commentId, content);
+        return ResponseEntity.ok("UPDATE SUCCESS");
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<?> deleteComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
-                                           @PathVariable Long commentId) {
+    public ResponseEntity<CommentResp> deleteComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
+                                                     @PathVariable Long commentId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         commentService.deleteComment(userId, commentId);
-        return ResponseEntity.ok("삭제 성공");
+        return ResponseEntity.ok("DELETE SUCCESS");
     }
 
     @GetMapping
     public ResponseEntity<List<CommentResp>> findAllComments(@PathVariable Long articleId,
-                                                             Pageable pageable) {
-        return ResponseEntity.ok(commentService.findAllComments(articleId, pageable));
+                                                             @RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "size", defaultValue = "5") Integer size) {
+        return ResponseEntity.ok(commentService.findAllComments(articleId, page, size));
     }
 }

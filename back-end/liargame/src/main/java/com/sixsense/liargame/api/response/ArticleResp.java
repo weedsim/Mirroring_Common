@@ -3,7 +3,7 @@ package com.sixsense.liargame.api.response;
 import com.sixsense.liargame.db.entity.Article;
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -18,8 +18,8 @@ public class ArticleResp {
     private Boolean isNotice;
     private String userName;
     private Integer viewCnt;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private String createdAt;
+    private String updatedAt;
 
     public ArticleResp(Article article) {
         this.id = article.getId();
@@ -28,6 +28,8 @@ public class ArticleResp {
         this.isNotice = article.getIsNotice();
         this.userName = article.getUser().getName();
         this.viewCnt = article.getViewCnt();
-        this.createdAt = article.getCreatedAt();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        this.createdAt = article.getCreatedAt().format(dateTimeFormatter);
+        this.updatedAt = article.getUpdatedAt().format(dateTimeFormatter);
     }
 }

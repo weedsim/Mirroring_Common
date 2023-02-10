@@ -27,12 +27,6 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleResp> getArticles(Pageable pageable) {
-        Page<Article> articles = articleRepository.findAll(pageable);
-        return articles.stream().map(ArticleResp::new).collect(Collectors.toList());
-    }
-
-    @Override
     @Transactional
     public ArticleResp getArticle(Long articleId) {
         Article article = articleRepository.findById(articleId).orElseThrow();
@@ -41,8 +35,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void insertArticle(Long userId, ArticleReq articleReq) {
-        articleRepository.save(toEntity(articleReq, userId));
+    public void insertArticle(Long userId, String userName, ArticleReq articleReq) {
+        articleRepository.save(toEntity(articleReq, userId, userName));
     }
 
 
@@ -56,8 +50,26 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional
     public void updateArticle(Long userId, Long articleId, ArticleReq articleReq) {
-        Article article = articleRepository.findById(userId).orElseThrow();
-        if (Objects.equals(article.getUserId(), userId))
+        Article article = articleRepository.findById(articleId).orElseThrow();
+        if (Objects.equals(article.getUserId(), userId)) {
             article.updateArticle(articleReq);
+        }
+    }
+
+    @Override
+    public List<ArticleResp> getArticles(Integer page, Integer size, String title, String writer) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Article> articles = articleRepository.findAll(pageable);
+        if(title!= null && !title.isEmpty()){
+            articles = articleRepository.findByTitle(title, pageable);
+        }
+        else if(writer!= null && !writer.isEmpty()){
+            articles = articleRepository.findByUserName(writer, pageable);
+        }
+        else {
+            articles = articleRepository.findAll(pageable);
+        }
+        return articles.stream().map(ArticleResp::new).collect(Collectors.toList());
     }
 }
