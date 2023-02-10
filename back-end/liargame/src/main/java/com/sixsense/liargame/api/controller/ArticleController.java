@@ -3,12 +3,9 @@ package com.sixsense.liargame.api.controller;
 import com.sixsense.liargame.api.request.ArticleReq;
 import com.sixsense.liargame.api.response.ArticleResp;
 import com.sixsense.liargame.api.service.ArticleService;
-import com.sixsense.liargame.db.entity.Article;
 import com.sixsense.liargame.security.auth.JwtProperties;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +19,7 @@ public class ArticleController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping
-    public ResponseEntity<List<ArticleResp>> getArticles(@RequestParam(value = "page", defaultValue = "0") Integer page,
+    public ResponseEntity<List<ArticleResp>> getArticles(@RequestParam(value = "page", defaultValue = "0")Integer page,
                                                          @RequestParam(value = "size", defaultValue = "10")Integer size,
                                                          @RequestParam(value = "title", required = false)String title,
                                                          @RequestParam(value = "writer", required = false)String writer) {

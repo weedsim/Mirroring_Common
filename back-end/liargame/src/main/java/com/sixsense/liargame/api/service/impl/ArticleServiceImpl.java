@@ -1,7 +1,5 @@
 package com.sixsense.liargame.api.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.sixsense.liargame.api.request.ArticleReq;
 import com.sixsense.liargame.api.response.ArticleResp;
 import com.sixsense.liargame.api.service.ArticleService;
@@ -52,7 +50,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional
     public void updateArticle(Long userId, Long articleId, ArticleReq articleReq) {
-        Article article = articleRepository.findById(articleId).orElse(null);
+        Article article = articleRepository.findById(articleId).orElseThrow();
         if (Objects.equals(article.getUserId(), userId)) {
             article.updateArticle(articleReq);
         }

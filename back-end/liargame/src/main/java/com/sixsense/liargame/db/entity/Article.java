@@ -1,7 +1,5 @@
 package com.sixsense.liargame.db.entity;
 
-//import com.sixsense.liargame.db.entity.User;
-
 import com.sixsense.liargame.api.request.ArticleReq;
 import lombok.Builder;
 import lombok.Getter;

@@ -93,7 +93,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
 
-    // localdatetime
+    // localdatetime toJSON
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
 }
 
