@@ -65,8 +65,14 @@ export default createStore({
     refreshToken: VueCookies.get("refreshToken"),
     // rooms: null, // rooms는 로비에서 방목록 8개 받아서 저장할곳.
     playgames: false,
+    myIdx: -1,
     rooms: [],
     gameinfo: [], // 게임참가자 정보저장
+    mysubject: null,
+    timer: -1,
+    liarAnswerModal: false,
+    curSpeakIdx: "on",
+    NowPageNum: 1,
   },
   getters: {
     isLogin(state) {
@@ -74,6 +80,12 @@ export default createStore({
     },
     isParticipants(state) {
       return state.gameinfo.participants;
+    },
+    GET_ROOM(state, idx) {
+      return state.rooms[idx];
+    },
+    GET_ROOMS(state) {
+      return state.rooms;
     },
   },
   mutations: {
@@ -95,9 +107,8 @@ export default createStore({
       router.push({ name: "main" }).catch(() => {});
     },
     // 방목록 저장할 뮤테이션(rooms)
-    SET_ROOMS(state, rooms) {
-      state.rooms = rooms;
-      router.push({ name: "lobby" });
+    SET_ROOMS(state, payload) {
+      state.rooms = payload.rooms;
     },
     // 라우터가드를 위한 isEnter 값 변경
     SET_ISENTER(state) {
@@ -124,7 +135,11 @@ export default createStore({
       // this.$store.state.sessions[curIdx].isReady
       for (var i = 0; i < participants.length; i++) {
         state.sessions[i].isReady = participants[i].isReady;
+        state.sessions[i].isJoin = true;
       }
+      // for (var j = participants.length; j < 10; j++) {
+      //   state.session[j].isJoin = false;
+      // }
     },
     // 게임레디상태변경(ready)
     CHG_ISREADY(state, payload) {
@@ -144,6 +159,33 @@ export default createStore({
     // 게임종료시(result창받고 난뒤)
     RESET_ISPLAYING(state) {
       state.gameinfo.isPlaying = false;
+    },
+    SET_MYIDX(state, payload) {
+      state.myIdx = payload;
+    },
+    // 게임중 주제부여
+    SET_MYROLE(state, payload) {
+      state.mysubject = payload.mysubject;
+    },
+    // 게임중 타이머세팅
+    SET_TIMER(state, payload) {
+      state.timer = payload;
+    },
+    // 타이머 0으로 세팅
+    RESET_TIMER(state) {
+      state.timer = 0;
+    },
+    ON_ANSWER(state) {
+      state.liarAnswerModal = true;
+    },
+    OFF_ANSWER(state) {
+      state.liarAnswerModal = false;
+    },
+    SET_CURSPEAKER(state, payload) {
+      state.curSpeakIdx = payload;
+    },
+    SET_PAGENUM(state, payload) {
+      state.NowPageNum = payload;
     },
   },
   actions: {
@@ -213,9 +255,51 @@ export default createStore({
         }
       });
     },
+    getRooms(context, payload) {
+      axios({
+        method: "get",
+        // url: `${API_URL}/rooms?pageNumber=${페이지네이션 번호}`,
+        url: `${API_URL}/rooms`,
+        data: {
+          pageNumber: payload,
+        },
+      })
+        .then((res) => {
+          // 받아온 방정보 8개는 뷰엑스 스토어로 저장할 예정
+          const payload = {
+            rooms: res.data,
+          };
+          // commit을 통해 mutations에 정의된 setRooms 호출
+          context.commit("SET_ROOMS", payload);
+          return this.state.rooms;
+          // console.log(this.$store.state.rooms);
+        })
+        .catch((err) => {
+          console.log("실패");
+          console.log(err);
+        });
+    },
     // 방목록 8개 받아오기
     setRooms(context, payload) {
-      context.commit("SET_ROOMS", payload.rooms);
+      axios({
+        method: "get",
+        // url: `${API_URL}/rooms?pageNumber=${페이지네이션 번호}`,
+        url: `${API_URL}/rooms`,
+        data: {
+          pageNumber: payload,
+        },
+      })
+        .then((res) => {
+          console.log("불러온 방 목록 :", res.data);
+          const payload = {
+            rooms: res.data,
+          };
+          context.commit("SET_ROOMS", payload.rooms);
+        })
+        .catch((err) => {
+          console.log("방목록 불러오기 실패");
+          console.log(err);
+        });
     },
     // 방진입 토큰 true
     setIsEnter(context) {
@@ -278,6 +362,14 @@ export default createStore({
         .catch((err) => {
           console.log(err);
         });
+    },
+    setMyIdx(context, payload) {
+      console.log("setMyIdx에서 :", payload);
+      context.commit("SET_MYIDX", payload.participants.length - 1);
+      console.log(
+        "setmyIdx에서 myidx에 저장되는 값 : ",
+        payload.participants.length - 1
+      );
     },
   },
 });

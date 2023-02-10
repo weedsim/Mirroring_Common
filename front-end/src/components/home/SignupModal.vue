@@ -1,101 +1,58 @@
 <template>
-  <div
-    class="modal fade"
-    id="signupModal"
-    tabindex="-1"
-    aria-labelledby="signupModalLabel"
-    aria-hidden="true"
-    data-bs-backdrop="static"
-  >
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="signupModalLabel">회원가입</h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            v-on:click="resetval"
-          ></button>
+  <div>
+    <div>
+      <div>
+        <div>
+          <h1>회원가입</h1>
+          <button>x</button>
         </div>
-        <div class="modal-body" style="text-align: left">
-          <ul style="list-style: none">
+        <div>
+          <ul>
             <li>이메일</li>
-            <li style="display: flex; justify-content: space-between">
+            <li>
               <input
                 type="text"
                 placeholder="이메일을 입력해주세요"
                 id="useremail"
-                class="form-control"
-                style="width: 70%"
                 v-model="useremail"
               />
-              <button
-                type="button"
-                class="btn btn-primary btn-sm"
-                style="margin-right: 0px"
-                v-on:click="chkemail"
-              >
-                중복확인
-              </button>
+              <button v-on:click="chkemail">중복확인</button>
             </li>
             <li>사용 불가능한 이메일 입니다.</li>
             <li>닉네임</li>
-            <li style="display: flex; justify-content: space-between">
+            <li>
               <input
                 type="text"
                 placeholder="닉네임을 입력해주세요"
                 id="usernickname"
-                class="form-control"
-                style="width: 70%"
                 v-model="usernickname"
               />
-              <button
-                type="button"
-                class="btn btn-primary btn-sm"
-                v-on:click="chknick"
-              >
-                중복확인
-              </button>
+              <button v-on:click="chknick">중복확인</button>
             </li>
-            <li>사용 불가능한 닉네임 입니다.</li>
-            <li style="margin-top: 3vh">비밀번호</li>
+            <li>비밀번호</li>
             <li>
               <input
                 type="password"
                 placeholder="비밀번호를 입력해주세요"
-                class="form-control"
                 v-model="userpwd"
               />
             </li>
-            <li>비밀번호는 알파벳, 숫자를 포함한 최소 0자리 입니다.</li>
-            <li style="margin-top: 3vh">비밀번호 확인</li>
+            <li></li>
             <li>
               <input
                 type="password"
                 placeholder="비밀번호를 입력해주세요"
-                class="form-control"
                 v-model="userpwdtwo"
                 v-on:keyup="chkpwd"
               />
             </li>
-            <li>비밀번호가 일치하지 않습니다.</li>
-            <li style="text-align: center; margin-top: 3vh">
-              <button
-                type="button"
-                class="btn btn-primary btn-sm"
-                v-on:click="signUp()"
-              >
-                회원가입
-              </button>
+            <li>
+              <button v-on:click="signUp()">회원가입</button>
             </li>
             <hr />
-            <li style="font-size: small">
+            <li>
               이미 회원이신가요?
-              <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
-                >로그인</a
-              >
+              <a href="#">로그인</a>
             </li>
           </ul>
         </div>

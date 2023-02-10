@@ -85,7 +85,12 @@ const routes = [
         if (store.state.isEnter) {
           next();
         } else {
-          next("/lobby");
+          next({
+            path: "/lobby",
+            query: {
+              page: 1,
+            },
+          });
         }
       } catch (error) {
         console.error(error);

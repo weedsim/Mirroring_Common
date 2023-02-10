@@ -1,38 +1,34 @@
 <template>
   <div class="m-0 p-0 users">
     <div class="m-0 p-0 row" style="height: 30%">
-      <div class="m-0 p-0" style="width: 20%">
+      <div style="width: 3%"></div>
+      <div class="m-0 p-2" style="width: 28%">
         <user-comp curIdx="0"></user-comp>
       </div>
-      <div class="m-0 p-0" style="width: 20%">
+      <div style="width: 5%"></div>
+      <div class="m-0 p-2" style="width: 28%">
         <user-comp curIdx="1"></user-comp>
       </div>
-      <div class="m-0 p-0" style="width: 20%">
+      <div style="width: 5%"></div>
+      <div class="m-0 p-2" style="width: 28%">
+        <div style="width: 3%"></div>
         <user-comp curIdx="2"></user-comp>
-      </div>
-      <div class="m-0 p-0" style="width: 20%">
-        <user-comp curIdx="3"></user-comp>
-      </div>
-      <div class="m-0 p-0" style="width: 20%">
-        <user-comp curIdx="4"></user-comp>
       </div>
     </div>
     <div class="m-0 p-0 row" style="height: 20%"></div>
     <div class="m-0 p-0 row" style="height: 30%">
-      <div class="m-0 p-0" style="width: 20%">
+      <div style="width: 3%"></div>
+      <div class="m-0 p-2" style="width: 28%">
+        <user-comp curIdx="3"></user-comp>
+      </div>
+      <div style="width: 5%"></div>
+      <div class="m-0 p-2" style="width: 28%">
+        <user-comp curIdx="4"></user-comp>
+      </div>
+      <div style="width: 5%"></div>
+      <div class="m-0 p-2" style="width: 28%">
+        <div style="width: 3%"></div>
         <user-comp curIdx="5"></user-comp>
-      </div>
-      <div class="m-0 p-0" style="width: 20%">
-        <user-comp curIdx="6"></user-comp>
-      </div>
-      <div class="m-0 p-0" style="width: 20%">
-        <user-comp curIdx="7"></user-comp>
-      </div>
-      <div class="m-0 p-0" style="width: 20%">
-        <user-comp curIdx="8"></user-comp>
-      </div>
-      <div class="m-0 p-0" style="width: 20%">
-        <user-comp curIdx="9"></user-comp>
       </div>
     </div>
   </div>
@@ -62,7 +58,7 @@ export default {
       mainStreamManager: undefined,
       publisher: undefined,
 
-      myIdx: -1,
+      myIdx: this.$store.state.myIdx,
       // Join form
       mySessionId: "SessionA",
       myUserName: "Participant" + Math.floor(Math.random() * 100),
@@ -118,16 +114,16 @@ export default {
       this.$store.state.sessions[myIdx].ovSession.session.on(
         "streamDestroyed",
         ({ stream }) => {
-          // const index = this.subscribers.indexOf(stream.streamManager, 0);
+          console.log(this.$store.state.sessions);
           for (let i = 0; i < 10; i++) {
-            console.log(
-              // this.$store.state.sessions[i].ovSession.publisher == stream.streamManager
-              this.$store.state.sessions[i].ovSession.publisher
-            );
+            if (this.$store.state.sessions[i].myIdx == -1) {
+              this.$store.state.sessions[i] = Object.assign(
+                {},
+                this.$store.state.session
+              );
+              break;
+            }
           }
-          // if (index >= 0) {
-          //     this.subscribers.splice(index, 1);
-          // }
         }
       );
 
@@ -199,44 +195,11 @@ export default {
     //         this.mainStreamManager = stream;
     // },
     initFrontSession() {
-      this.mySessionId = this.$store.state.gameinfo.roomId;
-      // let sessions = this.$store.state.sessions
-      for (let i = 0; i < 10; i++) {
-        if (!this.$store.state.sessions[i].isJoin) {
-          this.$store.state.sessions[i].isJoin = true;
-          this.$store.state.sessions[i].myIdx = i;
-          this.myIdx = i;
-          console.log(this.myIdx);
-          this.joinSession(i);
-          // myIdx에 유저 접속했다고 백에 알리기(x)
-          break;
-        }
-      }
-      for (let i = 0; i < 10; i++) {
-        console.log("myidx", this.$store.state.sessions[i].myIdx);
-      }
-    },
-
-    // 세션 통신 부분
-    // 세션 통신이 여기서만 이뤄지기 때문에 라우터 튜닝 안할껍니다
-
-    // 백엔드에서 세션 받아오기
-    getFrontSessionFromBackSession() {
-      let sessions;
-      // axios로 세션 받아와서 세션 구조 맞춰주기(x)
-      // 프론트랑 백이랑 세션 구조 동일하게 맞추기(x)
-      return sessions;
-    },
-
-    // 프론트 세션 싱크로
-    syncFrontSession() {
-      this.$store.state.sessions = this.getFrontSessionFromBackSession();
-    },
-
-    // 백엔드로 세션 보내기
-    postFrontSessionToBackSession() {
-      let session = this.mySession;
-      // axios로 세션보내기(x)
+      // this.myIdx에 서버에서 받은 idx 할당
+      console.log("myidx-gameusers", this.myIdx);
+      console.log("myidx-gameusers", this.$store.state.sessions[this.myIdx]);
+      this.$store.state.sessions[this.myIdx].isJoin = true;
+      this.joinSession(this.myIdx);
     },
 
     async getToken(mySessionId) {

@@ -1,18 +1,18 @@
 <template>
-  <transition name="modal">
+  <transition name="answer-modal">
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="modal-header">
-            <slot name="header"> default header </slot>
+            <slot name="header"> 라이어 정답 입력 </slot>
           </div>
 
           <div class="modal-body">
-            <slot name="body"> default body </slot>
+            <input v-model="answer" />
           </div>
 
           <div class="modal-footer">
-            <slot name="footer"> default footer </slot>
+            <div class="submit-answer" @click="sendAnswer">제출</div>
           </div>
         </div>
       </div>
@@ -22,8 +22,17 @@
 
 <script>
 import { ref } from "vue";
+import axios from "axios";
+import VueCookies from "vue-cookies";
 
 export default {
+  data() {
+    return {
+      answer: "",
+      API_URL: this.$store.state.API_URL,
+      roomId: this.$store.state.gameinfo.roomId,
+    };
+  },
   setup() {
     const show = ref(false);
 
@@ -40,6 +49,31 @@ export default {
       open,
       close,
     };
+  },
+  methods: {
+    sendAnswer() {
+      let ans = this.answer;
+      console.log("정답입력 전송 axios 시작");
+      console.log(ans);
+      axios({
+        method: "POST",
+        // url: `${API_URL}/rooms`,
+        url: `${this.API_URL}/rooms/${this.roomId}/games/answer`,
+        headers: {
+          Authorization: `Bearer ${VueCookies.get("accessToken")}`,
+        },
+        data: {
+          answer: ans,
+        },
+      })
+        .then((res) => {
+          this.subjects = res.data;
+        })
+        .catch((err) => {
+          console.log("정답제출실패");
+          console.log(err);
+        });
+    },
   },
 };
 </script>
@@ -80,5 +114,8 @@ export default {
 
 .modal-body {
   margin: 20px 0;
+}
+.submit-answer:hover {
+  cursor: pointer;
 }
 </style>

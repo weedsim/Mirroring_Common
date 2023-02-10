@@ -1,49 +1,47 @@
 <template>
   <navbar />
-  <div class="m-0 p-0 maintest">
-    <div class="m-0 p-0 maintop" style="height: 95vh">
-      <div class="m-0 p-0 maintopwrapper">
-        <h1>Liar Game</h1>
-        <button type="button" class="btn btn-light">게임 시작</button>
+  <div class="">
+    <div class="maintop">
+      <div class="wrapper-start">
+        <div>LIAR GAME</div>
+        <button>게임 시작</button>
       </div>
     </div>
-    <div class="m-0 p-0 mainbottom" style="height: 100vh">
-      <div class="mb-3 pt-5 mainbottomtitle">
-        <h1>게임 모드</h1>
+    <div class="mainbottom">
+      <div class="game-mode">
+        <div>게임 모드</div>
       </div>
-      <div class="m-0 p-0 mainbottomcardwrapper row">
-        <div class="mt-5 p-0 col-1"></div>
-        <div class="mt-5 p-0 col-4">
-          <div class="m-0 p-0 card">
-            <div class="m-0 p-0 card-img-top modeone">
-              <div class="m-0 p-0 cardframe"></div>
+      <div class="card-container">
+        <div class="card">
+          <div class="">
+            <div class="modeone">
+              <div class="cardframe"></div>
             </div>
-            <div class="m-0 p-0 card-body">
-              <h5 class="card-title">일반 모드</h5>
-              <p class="card-text text-truncate">
+            <div class="card-text">
+              <div class="card-title">일반 모드</div>
+              <p class="card-context">
                 시민들은 제시어를 알고, 라이어는 모른다. <br />누가 라이어인지
                 대화를 통해 맞추어야만 한다.
               </p>
             </div>
           </div>
         </div>
-        <div class="mt-5 p-0 col-2"></div>
+        <div class=""></div>
 
-        <div class="mt-5 p-0 card col-4">
-          <div class="m-0 p-0 card" v-on:mousemove="tmp(event)">
-            <div class="m-0 p-0 card-img-top modetwo">
-              <div class="m-0 p-0 cardframe"></div>
+        <div class="card">
+          <div class="" v-on:mousemove="tmp(event)">
+            <div class="modetwo">
+              <div class="cardframe"></div>
             </div>
-            <div class="m-0 p-0 card-body">
-              <h5 class="card-title">스파이 모드</h5>
-              <p class="card-text text-truncate">
+            <div class="card-text">
+              <div class="card-title">스파이 모드</div>
+              <p class="card-context">
                 서로 정체를 알고있는 라이어와 스파이. <br />누가 스파이인지 혹은
                 라이어인지 맞추어야만 한다.
               </p>
             </div>
           </div>
         </div>
-        <div class="mt-5 p-0 col-1"></div>
       </div>
     </div>
   </div>
@@ -77,78 +75,104 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Rye&display=swap");
 .maintop {
   background-image: url(../../assets/home/maintop.jpg);
   background-repeat: no-repeat;
-  background-size: 100% 100%;
   display: flex;
-  position: relative;
   justify-content: center;
+  background-size: cover;
+  height: 92vh;
+}
+.wrapper-start {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.wrapper-start button {
+  width: 18vw;
+  height: 10vh;
+  border-radius: 20px;
+  border: 0px;
+  background-color: rgba(217, 217, 217, 70%);
+  font-size: 3.5vh;
+  margin-top: 10vh;
+}
+.wrapper-start div {
+  padding-top: 32vh;
+  font-size: 10vh;
+  color: #871818;
+  font-family: Rye;
 }
 .mainbottom {
   background-image: url(../../assets/home/home-bottom.jpg);
-  background-size: 100% 100%;
+  background-size: cover;
+  height: 100vh;
+  position: relative;
+  background-repeat: no-repeat;
 }
-
-h1 {
-  /* margin: 0px;
-  padding: 0px; */
-}
-.maintopwrapper {
+.game-mode {
+  font-size: 6vh;
+  font-weight: 600;
   text-align: center;
-  position: absolute;
-  top: 40%;
+  padding-top: 10vh;
 }
-.maintopwrapper h1 {
-  color: red;
-}
-.maintopwrapper button {
-  opacity: 0.7;
-}
-
-.mainbottomtitle {
-  /* padding-top: 10vh; */
-  margin-left: 10vh;
-  padding-bottom: 5vh;
-  color: #ede0ce;
-}
-
-.mainbottomcardwrapper {
-  height: auto;
+.card-container {
+  padding-top: 10vh;
+  display: flex;
+  justify-content: space-evenly;
 }
 .card {
-  background-color: #332332;
-  padding: 0px;
+  width: 30vw;
+  height: 40vh;
 }
 .modeone {
-  height: 45vh;
   background-image: url(../../assets/home/mode-one.jpg);
   background-size: cover;
+  width: 30vw;
+  height: 40vh;
 }
 .modetwo {
-  height: 45vh;
   background-image: url(../../assets/home/mode-two.jpg);
   background-size: cover;
+  width: 30vw;
+  height: 40vh;
 }
 .cardframe {
-  height: 45vh;
   background-image: url(../../assets/home/mode-frame.png);
+  background-size: cover;
   background-size: 100% 212%;
   background-position: left top;
   background-repeat: no-repeat;
+  width: 30vw;
+  height: 40vh;
 }
 .cardframe:hover {
-  height: 45vh;
   background-image: url(../../assets/home/mode-frame.png);
+  background-size: cover;
   background-size: 100% 212%;
   background-position: 0px 95%;
   background-repeat: no-repeat;
-}
-
-.card-title {
-  color: #ede0ce;
+  width: 30vw;
+  height: 40vh;
 }
 .card-text {
-  color: #908280;
+  background-color: rgb(51, 35, 50);
+  height: 18vh;
+  padding-top: 3vh;
+  padding-left: 1vw;
+}
+.card-title {
+  font-size: 30px;
+  font-weight: 500;
+  padding-bottom: 1vh;
+  color: rgb(237, 224, 206);
+  font-family: frank-new, sans-serif;
+}
+.card-context {
+  font-size: 20px;
+  font-weight: 400;
+  color: rgb(144, 130, 128);
+  font-family: frank-new, sans-serif;
 }
 </style>

@@ -207,6 +207,7 @@ export default {
             this.$store.dispatch("setIsEnter");
             // 2. 기본방정보 저장
             this.$store.dispatch("setGameInfo", res.data);
+            this.$store.dispatch("setMyIdx", res.data); // 기본게임방 저장.
             // 응답결과로는 토큰과 roomId가 올것이다.
             // router.push({ name: "room", params: { roomId: 1 } });
             // 테스트용으로는 임의로 roomId를 설정한다.

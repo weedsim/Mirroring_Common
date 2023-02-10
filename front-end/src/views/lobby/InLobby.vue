@@ -1,23 +1,29 @@
 <template>
   <navbar />
-  <div class="m-0 p-0 mainlobby">
-    <outer-container363></outer-container363>
+  <div class="mainlobby">
+    <div class="lobby-container">
+      <lobby-header></lobby-header>
+      <lobby-main></lobby-main>
+      <lobby-footer></lobby-footer>
+    </div>
   </div>
 </template>
 
 <script>
 // import { mapState } from "vuex";
 import navbar from "@/components/NavView.vue";
-import MainLobby from "@/components/lobby/MainLobby.vue";
-import OuterContainer363 from "@/components/OuterContainer363.vue";
+import LobbyHeader from "@/components/lobby/LobbyHeader.vue";
+import LobbyMain from "@/components/lobby/LobbyMain.vue";
+import LobbyFooter from "@/components/lobby/LobbyFooter.vue";
 import VueCookies from "vue-cookies";
 
 export default {
   name: "InLobby",
   components: {
     navbar,
-    MainLobby,
-    OuterContainer363,
+    LobbyHeader,
+    LobbyMain,
+    LobbyFooter,
   },
   created() {
     this.getReIssue();
@@ -34,10 +40,16 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .mainlobby {
   background-image: url(../../assets/lobby/lobby.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  height: 92vh;
+  display: flex;
+  justify-content: center;
+}
+.lobby-container {
+  width: 60vw;
 }
 </style>

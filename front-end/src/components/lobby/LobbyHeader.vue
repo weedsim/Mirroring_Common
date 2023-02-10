@@ -1,23 +1,14 @@
 <template>
-  <div class="m-0 p-0 header" style="height: 100%">
-    <div class="m-0 p-0 row" style="height: 10%"></div>
-    <div class="m-0 p-0 row" style="height: 80%">
-      <div class="m-0 p-0 col-3"></div>
-      <div class="m-0 p-0 col-6 lobbytitlewrapper">
-        <div class="m-0 p-0 rounded-3 lobbytitle" style="color: white">
-          <h1>방목록</h1>
-        </div>
-      </div>
-      <div class="m-0 p-0 col-3 iconwrapper">
-        <div class="m-0 p-0 rounded-3">
-          <BIconArrowCounterclockwise
-            class="fs-3"
-            style="color: white"
-          ></BIconArrowCounterclockwise>
-        </div>
-      </div>
+  <div class="rooms">방 목록</div>
+  <div class="refresh-wrapper">
+    <BIconArrowCounterclockwise
+      class="btn-refresh"
+    ></BIconArrowCounterclockwise>
+    <div class="room-enter-wrapper">
+      <div class="text-white lobby-text">방 번호로 입장</div>
+      <input class="lobby lobby-input" />
+      <button class="lobby lobby-back lobby-enter">입장</button>
     </div>
-    <div class="m-0 p-0 row" style="height: 10%"></div>
   </div>
 </template>
 
@@ -33,17 +24,35 @@ export default {
 </script>
 
 <style scoped>
-.lobbytitlewrapper {
+.rooms {
+  font-size: 4vh;
+  color: rgb(207, 207, 207);
+  padding-top: 3vh;
+  text-align: center;
+  margin-bottom: 1vh;
+}
+.btn-refresh {
+  color: white;
+  font-size: 3.5vh;
+}
+.refresh-wrapper {
   display: flex;
-  justify-content: center;
+  flex-direction: row-reverse;
+  justify-content: space-between;
   align-items: center;
 }
-.lobbytitle > h1 {
-  text-align: center;
-}
-.iconwrapper {
+.room-enter-wrapper {
   display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+}
+.lobby-input {
+  width: 4vw;
+  margin-left: 1vw;
+  margin-right: 0.5vw;
+}
+.lobby-enter {
+  width: 3vw;
+}
+.lobby-text {
+  font-size: 2vh;
 }
 </style>

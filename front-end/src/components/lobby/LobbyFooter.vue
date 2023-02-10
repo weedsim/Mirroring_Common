@@ -44,29 +44,31 @@
       </div>
     </div>
   </div>
-  <CreateRoomModal />
+  <!-- <CreateRoomModal /> -->
 </template>
 
 <script>
-import CreateRoomModal from "@/components/lobby/CreateRoomModal.vue";
+// import CreateRoomModal from "@/components/lobby/CreateRoomModal.vue";
+import axios from "axios";
 
 export default {
   name: "LobbyFooter",
-  components: { CreateRoomModal },
+  // components: { CreateRoomModal },
   created() {},
+  data() {
+    return {
+      currentPage: 1,
+    };
+  },
+  methods: {
+    chgNowPage() {
+      this.$store.commit("SET_PAGENUM");
+    },
+  },
 };
 </script>
 
 <style>
-.btncss {
-  background-color: #b4b4b4;
-  border-color: #5b3700;
-  border-radius: 4px;
-}
-
-.btncss:hover {
-  color: white;
-}
 .findroom {
   display: table;
   margin-right: auto;

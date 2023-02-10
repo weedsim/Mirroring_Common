@@ -18,7 +18,7 @@
 
           <div class="modal-footer">
             <slot name="footer">
-              <button v-on:click="closeModal">시작</button>
+              <button v-on:click="postSubject">시작</button>
             </slot>
           </div>
         </div>
@@ -65,8 +65,28 @@ export default {
           console.log(err);
         });
     },
-    closeModal() {
-      this.$emit("close");
+    postSubject() {
+      console.log("방번호" + this.$store.state.gameinfo.roomId);
+      axios({
+        method: "GET",
+        // url: `${API_URL}/rooms`,
+        url: `${this.API_URL}/subjects/${this.selected}/words`,
+        headers: {
+          Authorization: `Bearer ${VueCookies.get("accessToken")}`,
+        },
+        params: {
+          roomId: this.$store.state.gameinfo.roomId,
+        },
+      })
+        .then((res) => {
+          console.log(res.data);
+          this.$emit("close"); // 창 닫아주세요.
+        })
+        .catch((err) => {
+          console.log("주제전송실패");
+          console.log(err);
+          this.$emit("close"); // 창 닫아주세요.
+        });
     },
   },
 };
