@@ -11,6 +11,7 @@ import com.sixsense.liargame.mail.TempKey;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
 import com.sixsense.liargame.security.auth.TokenInfo;
 import com.sixsense.liargame.db.repository.UserRepository;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -123,8 +124,12 @@ public class UserServiceImpl implements UserService {
 
     public ResponseEntity<?> reissue(UserRequestDto.Reissue reissue) {
         // 1. Refresh Token 검증
-        if (!jwtTokenProvider.validateToken(reissue.getRefreshToken())) {
-            return response.fail("Refresh Token 정보가 유효하지 않습니다.", HttpStatus.BAD_REQUEST);
+        try {
+            if (!jwtTokenProvider.validateToken(reissue.getRefreshToken())) {
+                return response.fail("Refresh Token 정보가 유효하지 않습니다.", HttpStatus.BAD_REQUEST);
+            }
+        } catch (ExpiredJwtException e) {
+            return response.fail("토큰의 유효기간이 지났습니다.", HttpStatus.UNAUTHORIZED);
         }
 
         // 2. Access Token 에서 User email 을 가져옵니다.
@@ -151,9 +156,13 @@ public class UserServiceImpl implements UserService {
     }
 
     public ResponseEntity<?> logout(UserRequestDto.Logout logout) {
-        // 1. Access Token 검증
-        if (!jwtTokenProvider.validateToken(logout.getAccessToken())) {
-            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+        // 1. Refresh Token 검증
+        try {
+            if (!jwtTokenProvider.validateToken(logout.getAccessToken())) {
+                return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
+            }
+        } catch (ExpiredJwtException e) {
+            return response.fail("토큰의 유효기간이 지났습니다.", HttpStatus.UNAUTHORIZED);
         }
 
         // 2. Access Token 에서 User email 을 가져옵니다.
@@ -179,7 +188,12 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = jwtTokenProvider.getAuthentication(name.getAccessToken());
         User user = userRepository.findByEmail(authentication.getName()).get();
         user.updateName(name.getName());
-        return response.success("이름이 변경되었습니다.");
+        TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
+
+        // RefreshToken Redis 업데이트
+        redisTemplate.opsForValue()
+                .set("RT:" + authentication.getName(), tokenInfo.getRefreshToken(), tokenInfo.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
+        return response.success(tokenInfo, "이름이 변경되었습니다.", HttpStatus.OK);
     }
 
     @Override
@@ -232,7 +246,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean isDuplication(String email, String name) {
-        if (email != null) return userRepository.existsByEmail(email);
+        if (!email.equals("null")) return userRepository.existsByEmail(email);
         else return userRepository.existsByName(name);
     }
 

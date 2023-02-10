@@ -1,5 +1,6 @@
 package com.sixsense.liargame.api.controller;
 
+import com.sixsense.liargame.api.request.CommentReq;
 import com.sixsense.liargame.api.response.CommentResp;
 import com.sixsense.liargame.api.service.CommentService;
 import com.sixsense.liargame.security.auth.JwtProperties;

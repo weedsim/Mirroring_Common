@@ -67,6 +67,7 @@ import { BIconVolumeMuteFill } from "bootstrap-icons-vue";
 import { BIconCameraVideoOffFill } from "bootstrap-icons-vue";
 import UserDisplay from "@/components/ingame/UserDisplay.vue";
 
+
 export default {
   data() {
     return {

@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <h1>댓글 1</h1>
 </template>
 
 <script>

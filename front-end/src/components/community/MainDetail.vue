@@ -1,11 +1,29 @@
 <template>
-  <div class="mb-3">
-    <label for="exampleFormControlInput1" class="form-label">제목</label>
-    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="제목">
-  </div>
-  <div class="mb-3">
-    <label for="exampleFormControlTextarea1" class="form-label">내용</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+  <navbar />
+  <div class="maindetail" style="height: 94vh;">
+    <div class="m-0 p-0 outer">
+      <div class="m-0 p-0 row">
+        <div class="m-0 p-0 col-2"></div>
+        <div class="m-0 p-0 col-8">
+          <!-- 반복문을 통해 컨테이너 추가 가능 -->
+          <div style="height: 10vh;">
+            <InputHeader></InputHeader>
+          </div>
+          <div style="height: 15vh;">
+            <DetailTitle></DetailTitle>
+          </div>
+          <div style="height: 30vh;">  
+            <DetailContent style="height:25vh"></DetailContent>
+          </div>
+          <div style="height: 35vh;">
+            <DetailReply></DetailReply>
+          </div>
+        </div>
+        <div class="m-0 p-0 col-2"></div>
+      </div>
+    </div>
+    
+   
   </div>
 </template>
 
@@ -13,8 +31,13 @@
 import DetailTitle from './DetailTitle.vue';
 import DetailContent from './DetailContent.vue';
 import DetailReply from './DetailReply.vue';
+import navbar from '@/components/NavView.vue';
+import InputHeader from './InputHeader.vue';
+import { BIconArrowRight } from "bootstrap-icons-vue";
+
+
 export default {
-  components: { DetailTitle, DetailContent, DetailReply },
+  components: { DetailTitle, DetailContent, DetailReply, InputHeader, navbar, },
   name: "MainDetail",
   data() {
     return {
@@ -32,5 +55,13 @@ export default {
 </script>
 
 <style>
-
+.maindetail {
+  background-image: url(../../assets/lobby/lobby.jpg);
+  background-repeat: no-repeat;
+  background-size:cover;  
+  color: white;
+}
+.arrow{
+  size: 5px;
+}
 </style>
