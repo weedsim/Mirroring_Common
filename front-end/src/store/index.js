@@ -5,7 +5,7 @@ import VueCookies from "vue-cookies";
 import createPersistedState from "vuex-persistedstate";
 import playGameStore from "@/store/modules/playgame.js";
 
-// const API_URL = "http://127.0.0.1:5000";
+// const API_URL = "http://localhost:5000";
 const API_URL = "http://192.168.91.171:5000";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
 
@@ -58,6 +58,7 @@ export default createStore({
     // myIdx: -1,
 
     API_URL: "http://192.168.91.171:5000",
+    // API_URL: "http://localhost:5000",
     // API_URL: "http://i8a706.p.ssafy.io:8080",
     isEnter: true, // 게임방 진입시 라우터가드를 위한 state
     isShow: false,
@@ -84,6 +85,7 @@ export default createStore({
     DELETE_TOKEN(state) {
       state.accessToken = null;
       state.refreshToken = null;
+      VueCookies.remove("accessToken");
       VueCookies.remove("refreshToken");
       router.push({ name: "main" }).catch(() => {});
     },
@@ -117,7 +119,9 @@ export default createStore({
         method: "post",
         url: `${API_URL}/users/sign-up/`,
         headers: {
-          "Content-Type": "multipart/form-data",
+          // "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
+
         },
         data: {
           name: payload.name,
@@ -133,7 +137,8 @@ export default createStore({
         method: "POST",
         url: `${API_URL}/users/login`,
         headers: {
-          "Content-Type": "multipart/form-data",
+          // "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
         data: {
           email: payload.email,

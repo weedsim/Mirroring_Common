@@ -1,6 +1,5 @@
 package com.sixsense.liargame.api.controller;
 
-import com.sixsense.liargame.api.request.CommentReq;
 import com.sixsense.liargame.api.response.CommentResp;
 import com.sixsense.liargame.api.service.CommentService;
 import com.sixsense.liargame.security.auth.JwtProperties;
@@ -35,8 +34,8 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<> deleteComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
-                                                     @PathVariable Long commentId) {
+    public ResponseEntity<?> deleteComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
+                                           @PathVariable Long commentId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         commentService.deleteComment(userId, commentId);
         return ResponseEntity.ok("DELETE SUCCESS");
@@ -44,7 +43,8 @@ public class CommentController {
 
     @GetMapping
     public ResponseEntity<List<CommentResp>> findAllComments(@PathVariable Long articleId,
-                                                             @RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "size", defaultValue = "5") Integer size) {
+                                                             @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                             @RequestParam(value = "size", defaultValue = "5") Integer size) {
         return ResponseEntity.ok(commentService.findAllComments(articleId, page, size));
     }
 }
