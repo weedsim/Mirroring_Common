@@ -1,27 +1,5 @@
 <template>
-  <div class="m-0 p-0 title" style="height: 100%">
-    <div class="m-0 p-0 row" style="height: 10%"></div>
-    <div class="m-0 p-0 row" style="height: 80%">
-      <div class="m-0 p-0 col-3">
-        <div
-          class="m-0 p-0"
-          id="title"
-          style="color: white; height: 100%"
-        ></div>
-      </div>
-      <div class="m-0 p-0 col-6">
-        <div
-          class="m-0 p-0"
-          id="title"
-          style="color: red; height: 100%; text-align: center; font-size: 3vw"
-        >
-          {{ displaySeconds }} : {{ displayMilliSeconds }}
-        </div>
-      </div>
-      <div class="m-0 p-0 col-3"></div>
-    </div>
-    <div class="m-0 p-0 row" style="height: 10%"></div>
-  </div>
+  <div class="timer">{{ displaySeconds }} : {{ displayMilliSeconds }}</div>
 </template>
 
 <script>
@@ -93,4 +71,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.timer {
+  color: red;
+  text-align: center;
+  font-size: 3vw;
+  margin-top: 5vh;
+  height: 9vh;
+  margin-bottom: 10px;
+}
+</style>

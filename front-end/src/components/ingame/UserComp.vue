@@ -195,7 +195,7 @@ export default {
 }
 .unready {
   position: absolute;
-  bottom: 0%;
+  bottom: 10%;
   width: 100%;
   font-size: 1.2vw;
   text-align: center;

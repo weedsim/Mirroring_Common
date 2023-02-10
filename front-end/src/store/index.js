@@ -57,7 +57,7 @@ export default createStore({
 
     // myIdx: -1,
 
-    API_URL: "http://192.168.91.171:5000",
+    API_URL: API_URL,
     // API_URL: "http://i8a706.p.ssafy.io:8080",
     isEnter: true, // 게임방 진입시 라우터가드를 위한 state
     isShow: false,
@@ -76,7 +76,7 @@ export default createStore({
   },
   getters: {
     isLogin(state) {
-      return state.token ? true : false;
+      return VueCookies.get("accessToken") ? true : false;
     },
     isParticipants(state) {
       return state.gameinfo.participants;
@@ -104,6 +104,7 @@ export default createStore({
       state.accessToken = null;
       state.refreshToken = null;
       VueCookies.remove("refreshToken");
+      VueCookies.remove("accessToken");
       router.push({ name: "main" }).catch(() => {});
     },
     // 방목록 저장할 뮤테이션(rooms)

@@ -80,4 +80,7 @@ a {
 .text-white {
   color: white;
 }
+.text-center {
+  text-align: center;
+}
 </style>

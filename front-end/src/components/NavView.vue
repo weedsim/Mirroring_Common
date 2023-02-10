@@ -17,13 +17,15 @@
             <router-link to="/community" class="nav-link">커뮤니티</router-link>
           </li>
         </ul>
-        <ul class="menu">
+        <ul class="menu" v-if="$store.state.isLogin">
           <li class="nav-link">
             <a class="" href="#" v-on:click="onModal('login')">로그인</a>
           </li>
           <li class="nav-link">
-            <a class="" href="#">회원가입</a>
+            <a class="" href="#" v-on:click="onModal('signup')">회원가입</a>
           </li>
+        </ul>
+        <ul class="menu" v-else>
           <li>
             <router-link to="/mypage" class="nav-link">마이페이지</router-link>
           </li>
@@ -35,36 +37,48 @@
     </div>
   </nav>
   <LoginModal v-if="loginShow" v-on:close="offModal" />
-  <!-- <SignupModal v-if="signShow"/> -->
+  <SignupModal v-if="signShow" v-on:close="offModal" />
   <PwdModal v-if="pwdShow" v-on:close="offModal" />
 </template>
 
 <script>
 import LoginModal from "@/components/home/LoginModal.vue";
-// import SignupModal from "@/components/home/SignupModal.vue";
-// import PwdModal from "@/components/home/PwdModal.vue";
+import SignupModal from "@/components/home/SignupModal.vue";
+import PwdModal from "@/components/home/PwdModal.vue";
 import VueCookies from "vue-cookies";
 
 export default {
-  // components: { LoginModal, SignupModal, PwdModal },
-  components: { LoginModal },
+  components: { LoginModal, SignupModal, PwdModal },
   name: "navbar",
   data() {
     return {
       loginShow: false,
       signShow: false,
       pwdShow: false,
+      // loginstatus: this.$cookies.isKey("refreshToken"),
+      // istoken: "cookieValue",
     };
   },
+  // computed:{
+  //   loginstatus(){
+  //     return this.$store.commit()
+  //   }
+  // },
   methods: {
-    onLogin(data) {
+    onModal(data) {
       if (data === "login") {
         this.loginShow = true;
+        this.pwdShow = false;
+        this.signShow = false;
       }
       if (data === "pwd") {
+        this.loginShow = false;
         this.pwdShow = true;
+        this.signShow = false;
       }
       if (data === "signup") {
+        this.loginShow = false;
+        this.pwdShow = false;
         this.signShow = true;
       }
     },

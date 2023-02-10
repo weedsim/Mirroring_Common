@@ -1,30 +1,35 @@
 <template>
   <modal v-if="showModal" v-on:close="isStart" />
-  <div
-    class="m-0 pt-5"
-    style="
-      width: 40%;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-    "
-  >
-    <button class="circle me-3 p-0">
-      <BIconVolumeUpFill
-        style="color: black; font-size: 1.5vw"
-      ></BIconVolumeUpFill>
-    </button>
-    <button class="circle">
-      <BIconCameraVideoOffFill
-        style="color: black; font-size: 1.2vw"
-      ></BIconCameraVideoOffFill>
-    </button>
-  </div>
-  <div class="m-0 pt-5" style="width: 40%; display: flex; align-items: center">
-    <button class="btn-ready" v-on:click="isReady()" v-if="!Master">
-      준비
-    </button>
-    <button class="btn-ready" v-on:click="onSubjectModal()" v-else>시작</button>
+  <div style="display: flex; padding-top: 3vh">
+    <div
+      class=""
+      style="
+        width: 40%;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        padding-right: 40px;
+      "
+    >
+      <button class="circle">
+        <BIconVolumeUpFill
+          style="color: black; font-size: 1.5vw"
+        ></BIconVolumeUpFill>
+      </button>
+      <button class="circle">
+        <BIconCameraVideoOffFill
+          style="color: black; font-size: 1.2vw"
+        ></BIconCameraVideoOffFill>
+      </button>
+    </div>
+    <div class="" style="display: flex; align-items: center">
+      <button class="btn-ready" v-on:click="isReady()" v-if="!Master">
+        준비
+      </button>
+      <button class="btn-ready" v-on:click="onSubjectModal()" v-else>
+        시작
+      </button>
+    </div>
   </div>
 </template>
 

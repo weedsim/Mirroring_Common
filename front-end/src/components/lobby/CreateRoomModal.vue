@@ -1,16 +1,13 @@
 <template>
-  <div
-    class="modal fade"
-    id="createRoomModal"
-    tabindex="-1"
-    aria-labelledby="createRoomModalLabel"
-    aria-hidden="true"
-    data-bs-backdrop="static"
-  >
+  <div class="modal fade" id="createRoomModal">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="createRoomModalLabel">게임생성</h1>
+          <div class="login-modal-header">
+            <div class="hidden-icon">&times;</div>
+            <div class="login-text">방 생성</div>
+            <div class="close" v-on:click="offModal">&times;</div>
+          </div>
           <button
             type="button"
             class="btn-close"
@@ -41,12 +38,15 @@
             />
             <label for="spy" class="spymode modeimg chkmode"></label>
           </div>
-          <div v-if="gamemode === 'normal'" class="speech-bubble m-4">
+          <div v-if="gamemode === 'normal'" class="speech-bubble describe">
             <h4>클래식모드</h4>
             <p>라이어는 1명인 기본 모드</p>
           </div>
 
-          <div v-else-if="gamemode === 'spy'" class="speech-bubble-two m-4">
+          <div
+            v-else-if="gamemode === 'spy'"
+            class="speech-bubble-two describe"
+          >
             <h4>스파이모드</h4>
             <p>라이어 1명, 스파이 1명인 모드</p>
           </div>
@@ -54,7 +54,7 @@
           <ul style="list-style: none" class="m-0 p-0 gameoption">
             <li>방 제목</li>
             <li>
-              <input type="text" class="form-control" v-model="roomtitle" />
+              <input type="text" class="modal-input" v-model="roomtitle" />
             </li>
             <li>
               비밀번호
@@ -64,7 +64,7 @@
               <input
                 type="text"
                 v-bind:disabled="!roomchk"
-                class="form-control"
+                class="modal-input"
                 v-model="roompwd"
               />
             </li>
@@ -129,7 +129,13 @@
 import axios from "axios";
 import router from "@/router";
 import VueCookies from "vue-cookies";
+import { OpenVidu } from "openvidu-browser";
 
+const APPLICATION_SERVER_URL =
+  // process.env.NODE_ENV === "production"
+  //   ? "http://192.168.91.171:5000/"
+  //   : "http://localhost:5000/";
+  "http://192.168.91.171:5000/";
 // const API_URL = "http://127.0.0.1:8080";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
 
@@ -137,6 +143,10 @@ export default {
   components: {},
   data() {
     return {
+      OV: null,
+      session: null,
+      publisher: null,
+      subcribers: [],
       gamemode: "normal", // 게임모드 기본설정
       roomchk: false, // 비밀번호 체크여부
       roompwd: null, // 게임방 비밀번호
@@ -151,13 +161,14 @@ export default {
   mounted() {},
   methods: {
     // 모달창 닫으면 초기화
-    resetval() {
+    offModal() {
       (this.gamemode = "normal"), // 게임모드 기본설정
         (this.roomchk = false), // 비밀번호 체크여부
         (this.roompwd = null), // 게임방 비밀번호
         (this.roomtitle = null), // 게임방 제목
         (this.playercnt = null), // 참가인원
         (this.talktime = null); // 발언시간
+      this.$emit("close");
     },
     // 비빌번호 체크 해제시 초기화
     chksecret() {
@@ -204,13 +215,16 @@ export default {
             // 만약 성공을했다면... room/${roomId}로 인게임.vue로 보낸다.
             // 1. state 방진입 isEnter -> true 단, 방진입직후에는 isEnter를 false로 바꿔줘야된다.
             this.roomPwd = null;
+            this.offModal();
             this.$store.dispatch("setIsEnter");
             // 2. 기본방정보 저장
             this.$store.dispatch("setGameInfo", res.data);
-            this.$store.dispatch("setMyIdx", res.data); // 기본게임방 저장.
             // 응답결과로는 토큰과 roomId가 올것이다.
             // router.push({ name: "room", params: { roomId: 1 } });
             // 테스트용으로는 임의로 roomId를 설정한다.
+
+            this.joinSession();
+
             router.push({ name: "room", params: { roomId: res.data.roomId } });
           })
           .catch((err) => {
@@ -225,11 +239,136 @@ export default {
           });
       }
     },
+    joinSession() {
+      // --- 1) Get an OpenVidu object ---
+      this.OV = new OpenVidu();
+
+      // --- 2) Init a session ---
+      this.session = this.OV.initSession();
+
+      // --- 3) Specify the actions when events take place in the session ---
+
+      // On every new Stream received...
+      this.session.on("streamCreated", ({ stream }) => {
+        const subscriber = this.session.subscribe(stream);
+        this.subscribers.push(subscriber);
+        console.log("subscribers", this.subscribers);
+      });
+
+      // On every Stream destroyed...
+      this.session.on("streamDestroyed", ({ stream }) => {
+        const index = this.subscribers.indexOf(stream.streamManager, 0);
+        if (index >= 0) {
+          this.subscribers.splice(index, 1);
+        }
+      });
+
+      // On every asynchronous exception...
+      this.session.on("exception", ({ exception }) => {
+        console.warn(exception);
+      });
+
+      // --- 4) Connect to the session with a valid user token ---
+
+      // Get a token from the OpenVidu deployment
+      this.getToken(this.mySessionId).then((token) => {
+        // First param is the token. Second param can be retrieved by every user on event
+        // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
+        this.session
+          .connect(token, { clientData: this.myUserName })
+          .then(() => {
+            // --- 5) Get your own camera stream with the desired properties ---
+
+            // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
+            // element: we will manage it on our own) and with the desired properties
+            let publisher = this.OV.initPublisher(undefined, {
+              audioSource: undefined, // The source of audio. If undefined default microphone
+              videoSource: undefined, // The source of video. If undefined default webcam
+              publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
+              publishVideo: true, // Whether you want to start publishing with your video enabled or not
+              resolution: "640x480", // The resolution of your video
+              frameRate: 30, // The frame rate of your video
+              insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
+              mirror: false, // Whether to mirror your local video or not
+            });
+
+            // Set the main video in the page to display our webcam and store our Publisher
+            this.publisher = publisher;
+            this.$store.state.publisher = publisher;
+            this.$store.state.subscribers = [];
+            // --- 6) Publish your stream ---
+
+            this.session.publish(this.publisher);
+            this.$store.state.session = this.session;
+            console.log("store-session", this.$store.state.session);
+            console.log("store-subscribers", this.$store.state.subscribers);
+            console.log("store-publisher", this.$store.state.publisher);
+            console.log("하이");
+            console.log("감자고구마", this.publisher);
+            console.log("하이2");
+            console.log("오픈비두 6완료");
+          })
+          .catch((error) => {
+            console.log("오픈비두 연결안됨");
+            console.log(
+              "There was an error connecting to the session:",
+              error.code,
+              error.message
+            );
+          });
+      });
+
+      window.addEventListener("beforeunload", this.leaveSession);
+    },
+    leaveSession() {
+      // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
+      if (this.session) this.session.disconnect();
+
+      // Empty all properties...
+      this.session = undefined;
+      this.mainStreamManager = undefined;
+      this.$store.state.myIdx = undefined;
+      this.$store.state.publisher = undefined;
+      this.$store.state.subscribers = [];
+      this.OV = undefined;
+
+      // Remove beforeunload listener
+      window.removeEventListener("beforeunload", this.leaveSession);
+    },
+    async getToken(mySessionId) {
+      const sessionId = await this.createSession(mySessionId);
+      return await this.createToken(sessionId);
+    },
+
+    async createSession(sessionId) {
+      const response = await axios.post(
+        APPLICATION_SERVER_URL + "api/sessions",
+        { customSessionId: String(sessionId) },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      return response.data; // The sessionId
+    },
+
+    async createToken(sessionId) {
+      const response = await axios.post(
+        APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
+        {},
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      return response.data; // The token
+    },
   },
 };
 </script>
 
 <style scoped>
+.describe {
+  margin-top: 2vh;
+}
 #createRoomModalLabel {
   margin: 0 auto;
   padding-left: 25%;
@@ -273,8 +412,8 @@ export default {
 .speech-bubble:after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 50%;
+  top: 1%;
+  left: 60%;
   width: 0;
   height: 0;
   border: 22px solid transparent;
@@ -292,8 +431,8 @@ export default {
 .speech-bubble-two:after {
   content: "";
   position: absolute;
-  top: 0;
-  left: 50%;
+  top: 1%;
+  left: 39%;
   width: 0;
   height: 0;
   border: 22px solid transparent;
@@ -313,5 +452,66 @@ export default {
 }
 select {
   width: 100px;
+}
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+.login-modal-header {
+  display: flex;
+  margin-top: 0.5vh;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Modal Content */
+.modal-content {
+  margin-top: 20vh;
+  margin-left: 39vw;
+  background-color: rgba(255, 255, 255, 75%);
+  padding: 20px;
+  border: 1px solid #888;
+  width: 22vw;
+  height: 75vh;
+  border-radius: 30px;
+}
+.login-text {
+  font-size: 3.5vh;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* The Close Button */
+.hidden-icon {
+  visibility: hidden;
+  font-size: 5vh;
+}
+.close {
+  color: #aaaaaa;
+  font-size: 5vh;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+.modal-input {
+  background-color: rgb(217, 217, 217);
+  border-radius: 20px;
+  border: 0px;
+  width: 100%;
+  height: 4vh;
+  padding: 20px;
 }
 </style>

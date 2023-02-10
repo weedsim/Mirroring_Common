@@ -4,7 +4,9 @@
     <div class="maintop">
       <div class="wrapper-start">
         <div>LIAR GAME</div>
-        <button>게임 시작</button>
+        <router-link :to="{ name: 'lobby', query: { page: 1 } }"
+          ><button class="btn-start-main">게임 시작</button></router-link
+        >
       </div>
     </div>
     <div class="mainbottom">
@@ -89,7 +91,7 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-.wrapper-start button {
+.btn-start-main {
   width: 18vw;
   height: 10vh;
   border-radius: 20px;
@@ -97,6 +99,9 @@ export default {
   background-color: rgba(217, 217, 217, 70%);
   font-size: 3.5vh;
   margin-top: 10vh;
+}
+.btn-start-main:hover {
+  cursor: pointer;
 }
 .wrapper-start div {
   padding-top: 32vh;
