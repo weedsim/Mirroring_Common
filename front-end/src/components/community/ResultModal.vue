@@ -27,91 +27,50 @@
         <div class="modal-body" style="text-align: left">
           <BIconCircleFill style="color:gray; width:100px; height:100px; margin-left:188px;"></BIconCircleFill>
 
-          <ul style="list-style: none">
-            <h1 style="text-align:center;">LIAR WIN</h1>
-            <li style="text-align:center;">제시어 정치가</li>
-            <li style="text-align: center;">Rosa<BIconArrowRight id="arrow"></BIconArrowRight>Adams</li>
-          <!-- <li>이메일</li>
-            <li style="display: flex; justify-content: space-between">
-              <input
-                type="text"
-                placeholder="이메일을 입력해주세요"
-                id="useremail"
-                class="form-control"
-                style="width: 70%"
-                v-model="useremail"
-              />
-              <button
-                type="button"
-                class="btn btn-primary btn-sm"
-                style="margin-right: 0px"
-                v-on:click="chkemail"
-              >
-                중복확인
-              </button>
-            </li>
-            <li>사용 불가능한 이메일 입니다.</li>
-            <li>닉네임</li>
-            <li style="display: flex; justify-content: space-between">
-              <input
-                type="text"
-                placeholder="닉네임을 입력해주세요"
-                id="usernickname"
-                class="form-control"
-                style="width: 70%"
-                v-model="usernickname"
-              />
-              <button
-                type="button"
-                class="btn btn-primary btn-sm"
-                v-on:click="chknick"
-              >
-                중복확인
-              </button>
-            </li>
-            <li>사용 불가능한 닉네임 입니다.</li>
-            <li style="margin-top: 3vh">비밀번호</li>
-            <li>
-              <input
-                type="password"
-                placeholder="비밀번호를 입력해주세요"
-                class="form-control"
-                v-model="userpwd"
-              />
-            </li>
-            <li>비밀번호는 알파벳, 숫자를 포함한 최소 0자리 입니다.</li>
-            <li style="margin-top: 3vh">비밀번호 확인</li>
-            <li>
-              <input
-                type="password"
-                placeholder="비밀번호를 입력해주세요"
-                class="form-control"
-                v-model="userpwdtwo"
-                v-on:keyup="chkpwd"
-              />
-            </li>
-            <li>비밀번호가 일치하지 않습니다.</li>
-            <li style="text-align: center; margin-top: 3vh">
-              <button
-                type="button"
-                class="btn btn-primary btn-sm"
-                v-on:click="signUp()"
-              >
-                회원가입
-              </button>
-            </li>
-            <hr />
-            <li style="font-size: small">
-              이미 회원이신가요?
-              <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
-                >로그인</a
-              >
-            </li> -->
+          <ul style="list-style: none; text-align: center;">
+            <div class="m-0 p-0 row " style="width:100%">
+              <div class="m-0 p-0 col-3">
+                
+              </div>
+              <div class="m-0 p-0 col-3">
+                <h1 style="text-align:center; color:red; font-weight: bold;">LIAR</h1>
+              </div>
+              <div class="m-0 p-0 col-3">
+                <h1 style="text-align:center; font-weight: bold;">WIN</h1>
+              </div>
+              <div class="m-0 p-0 col-3">
+                
+              </div>
+            </div>
+            
+            <div class="m-0 p-0 row " style="width:100%">
+              <div class="m-0 p-0 col-4">
+                
+              </div>
+              <div class="m-0 p-0 col-2">
+                <div style="text-align:center;">제시어</div>
+              </div>
+              <div class="m-0 p-0 col-2">
+                <div style="text-align:center; color:green">정치가</div>
+              </div>
+              <div class="m-0 p-0 col-4">
+              </div>
+            </div>            
+            <li style="text-align: center;">Rosa<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Adams</li>
+            <li style="text-align: center;">Mai<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Josh</li>
+            <li style="text-align: center;">Josh<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Jaxon</li>
+            <li style="text-align: center;">Nina<BIconArrowRight id="arrow" style="width:60px; height:20px;"></BIconArrowRight>Josh</li>
+            <li style="text-align: center;">Jaxon<BIconArrowRight id="arrow" style="width:60px; height:20px;"></BIconArrowRight>Josh</li>
+            <li style="text-align: center;">Adams<BIconArrowRight id="arrow" style="width:60px; height:20px;"></BIconArrowRight>Nina</li>
           </ul>
-        </div>
+            <div style="text-align: center;">
+              <button class="btn btn-secondary" type="button">계속하기</button>
+            </div>
+          </div>
       </div>
     </div>
   </div>
+  
 </template>
 
 <script>
