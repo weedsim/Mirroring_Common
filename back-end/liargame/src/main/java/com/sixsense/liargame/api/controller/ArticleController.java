@@ -26,13 +26,14 @@ public class ArticleController {
                                                          @RequestParam(value = "size", defaultValue = "10")Integer size,
                                                          @RequestParam(value = "title", required = false)String title,
                                                          @RequestParam(value = "writer", required = false)String writer) {
+        
         return ResponseEntity.ok(articleService.getArticles(page, size, title, writer));
     }
 
     @GetMapping("/{articleId}")
     public ResponseEntity<?> getArticle(@PathVariable Long articleId) {
-        ArticleResp article = articleService.getArticle(articleId);
-        return ResponseEntity.ok(article);
+        ArticleResp articleResp = articleService.getArticle(articleId);
+        return ResponseEntity.ok(articleResp);
     }
 
     @PostMapping

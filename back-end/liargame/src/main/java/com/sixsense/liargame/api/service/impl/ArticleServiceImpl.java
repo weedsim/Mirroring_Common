@@ -33,8 +33,7 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleResp getArticle(Long articleId) {
         Article article = articleRepository.findById(articleId).orElseThrow();
         article.updateViewCnt();
-        ArticleResp articleResp = new ArticleResp(article);
-        return articleResp;
+        return new ArticleResp(article);
     }
 
     @Override
@@ -73,7 +72,6 @@ public class ArticleServiceImpl implements ArticleService {
         else {
             articles = articleRepository.findAll(pageable);
         }
-        System.out.println(articles.stream().map(ArticleResp::new).collect(Collectors.toList()));
         return articles.stream().map(ArticleResp::new).collect(Collectors.toList());
     }
 }

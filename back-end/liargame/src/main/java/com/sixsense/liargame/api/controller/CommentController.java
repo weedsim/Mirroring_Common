@@ -19,28 +19,32 @@ public class CommentController {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping
-    public ResponseEntity<?> insertComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long articleId, String content) {
+    public ResponseEntity<?> insertComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
+                                           @PathVariable Long articleId, String content) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         commentService.insertComment(userId, articleId, content);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/{commentId}")
-    public ResponseEntity<?> updateComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long commentId, String content) {
+    public ResponseEntity<?> updateComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
+                                           @PathVariable Long commentId, String content) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         commentService.updateComment(userId, commentId, content);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<CommentResp> deleteComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Long commentId) {
+    public ResponseEntity<CommentResp> deleteComment(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
+                                                     @PathVariable Long commentId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         commentService.deleteComment(userId, commentId);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping
-    public ResponseEntity<List<CommentResp>> findAllComments(@PathVariable Long articleId, Pageable pageable) {
-        return ResponseEntity.ok(commentService.findAllComments(articleId, pageable));
+    public ResponseEntity<List<CommentResp>> findAllComments(@PathVariable Long articleId,
+                                                             @RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "size", defaultValue = "5") Integer size) {
+        return ResponseEntity.ok(commentService.findAllComments(articleId, page, size));
     }
 }
