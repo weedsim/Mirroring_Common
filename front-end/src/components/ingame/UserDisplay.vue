@@ -1,7 +1,22 @@
 <template>
-  <user-video
-    :stream-manager="$store.state.sessions[curIdx].ovSession.publisher"
+  <!-- <user-video
+    v-if="$store.state.myIdx == curIdx"
+    :stream-manager="$store.state.publisher"
+  /> -->
+  <!-- <user-video
+    v-if="$store.state.myIdx > curIdx"
+    :stream-manager="$store.state.subscribers[curIdx]"
   />
+  <user-video
+    v-if="
+      $store.state.myIdx < curIdx &&
+      $store.state.subscribers.length > curIdx - 1
+    "
+    :stream-manager="$store.state.subscribers[curIdx - 1]"
+  /> -->
+  <div>
+    <user-video />
+  </div>
   <!-- @click="updateMainVideoStreamManager(publisher)"  -->
   <!-- <user-video v-for="sub in $store.state.sessions[curIdx].ovSession.subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub"
           @click="updateMainVideoStreamManager(sub)" /> -->
@@ -37,7 +52,7 @@ export default {
       OV: undefined,
       session: undefined,
       mainStreamManager: undefined,
-      publisher: undefined,
+      publisher: this.$store.state.publisher,
 
       // Join form
       mySessionId: "SessionA",
@@ -46,6 +61,7 @@ export default {
   },
   created() {
     // this.joinSession();
+    console.log("store-publisher-userdisplay", this.$store.state.publisher);
     console.log(444, this.$store.state.sessions[this.curIdx].ovSession);
     //
     // console.log("OV,", this.OV)

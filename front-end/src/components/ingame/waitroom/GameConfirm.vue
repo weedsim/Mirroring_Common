@@ -1,5 +1,5 @@
 <template>
-  <modal v-if="showModal" v-on:close="closeModal" />
+  <modal v-if="showModal" v-on:close="isStart" />
   <div
     class="mt-3 pt-4"
     style="width: 40%; display: flex; justify-content: flex-end"
@@ -19,7 +19,7 @@
     <button class="btn-ready" v-on:click="isReady()" v-if="!Master">
       준비
     </button>
-    <button class="btn-ready" v-on:click="isStart()" v-else>시작</button>
+    <button class="btn-ready" v-on:click="onSubjectModal()" v-else>시작</button>
   </div>
 </template>
 
@@ -89,8 +89,8 @@ export default {
         !this.$store.state.sessions[myIdx].isReady;
     },
     isStart() {
-      console.log("start버튼 누름요!");
-      this.showModal = true;
+      this.showModal = false;
+      console.log("게임~ 시작~~~하겠습니다~!");
       // axios({
       //   method: "POST",
       //   url: `${this.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/games/start`,
@@ -108,6 +108,9 @@ export default {
       //     console.log("시작실패");
       //     console.log(err);
       //   });
+    },
+    onSubjectModal() {
+      this.showModal = true;
     },
     isReady() {
       console.log("ready버튼 누름요!");

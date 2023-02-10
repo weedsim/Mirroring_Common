@@ -1,6 +1,6 @@
 <template>
-  <div class="m-0 p-0" v-if="streamManager">
-    <ov-video :stream-manager="streamManager" />
+  <div class="m-0 p-0 here">
+    <ov-video />
   </div>
 </template>
 
@@ -14,17 +14,13 @@ export default {
     OvVideo,
   },
 
-  props: {
-    streamManager: Object,
-  },
-
   computed: {
     clientData() {
       const { clientData } = this.getConnectionData();
       return clientData;
     },
   },
-
+  created() {},
   methods: {
     getConnectionData() {
       console.log(666, this.streamManager);

@@ -4,6 +4,7 @@ import router from "@/router";
 import VueCookies from "vue-cookies";
 import createPersistedState from "vuex-persistedstate";
 import playGameStore from "@/store/modules/playgame.js";
+import jwtDecode from "vue-jwt-decode";
 
 // const API_URL = "http://127.0.0.1:5000";
 const API_URL = "http://192.168.91.171:5000";
@@ -65,8 +66,15 @@ export default createStore({
     refreshToken: VueCookies.get("refreshToken"),
     // rooms: null, // rooms는 로비에서 방목록 8개 받아서 저장할곳.
     playgames: false,
-    rooms: [],
-    gameinfo: [], // 게임참가자 정보저장
+    rooms: [], // 추후삭제.
+    gameinfo: [], // 게임참가자 정보저장\
+    myIdx: 0,
+    isConnected: false,
+    subscribers: [],
+    publisher: undefined,
+    tokenmap: {
+      // userId: myIdx
+    },
   },
   getters: {
     isLogin(state) {
@@ -121,9 +129,12 @@ export default createStore({
       console.log(payload);
       state.gameinfo = payload;
       var participants = payload.participants;
-      // this.$store.state.sessions[curIdx].isReady
+      var userid = jwtDecode.decode(VueCookies.get("accessToken")).id;
       for (var i = 0; i < participants.length; i++) {
         state.sessions[i].isReady = participants[i].isReady;
+        if (participants[i].userId === userid) {
+          state.tokenmap[userid] = i;
+        }
       }
     },
     // 게임레디상태변경(ready)
@@ -144,6 +155,13 @@ export default createStore({
     // 게임종료시(result창받고 난뒤)
     RESET_ISPLAYING(state) {
       state.gameinfo.isPlaying = false;
+    },
+    // 소스저장
+    SET_SOURCE(state, payload) {
+      console.log(payload);
+      // state.sessions.source = payload;
+      console.log("소스저장");
+      // console.log(state.sessions.source);
     },
   },
   actions: {
@@ -250,6 +268,11 @@ export default createStore({
     // 게임플레이상태 변경
     setIsPlaying(context) {
       context.commit("SET_ISPLAYING");
+    },
+    // source저장
+    setSource(context, payload) {
+      console.log("소스저장: " + payload);
+      context.commit("SET_SOURCE", payload);
     },
     // REISSUE요청
     reIssue(context, payload) {
