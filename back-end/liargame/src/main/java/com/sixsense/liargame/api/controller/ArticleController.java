@@ -39,7 +39,7 @@ public class ArticleController {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         String userName = jwtTokenProvider.getUserName(accessToken);
         articleService.insertArticle(userId, userName, articleReq);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("INSERT SUCCESS");
     }
 
 
@@ -48,7 +48,7 @@ public class ArticleController {
                                            @PathVariable Long articleId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.deleteArticle(userId, articleId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("DELETE SUCCESS");
     }
 
     @PatchMapping("/{articleId}")
@@ -57,6 +57,6 @@ public class ArticleController {
                                           @RequestBody ArticleReq article) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         articleService.updateArticle(userId, articleId, article);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("UPDATE SUCCESS");
     }
 }

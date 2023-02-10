@@ -22,7 +22,7 @@ public class CommentController {
                                            @PathVariable Long articleId, String content) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         commentService.insertComment(userId, articleId, content);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("INSERT SUCCESS");
     }
 
     @PatchMapping("/{commentId}")
@@ -30,7 +30,7 @@ public class CommentController {
                                            @PathVariable Long commentId, String content) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         commentService.updateComment(userId, commentId, content);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("UPDATE SUCCESS");
     }
 
     @DeleteMapping("/{commentId}")
@@ -38,7 +38,7 @@ public class CommentController {
                                                      @PathVariable Long commentId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         commentService.deleteComment(userId, commentId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("DELETE SUCCESS");
     }
 
     @GetMapping
