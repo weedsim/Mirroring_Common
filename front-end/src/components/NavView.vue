@@ -1,112 +1,44 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
-    <div class="container-fluid m-0 p-0">
-      <router-link to="/main" class="navbar-brand nav-link m-0 p-0"
-        ><img src="@/assets/nav/logo.jpg" alt="logo" id="logo"
+  <nav class="nav-main">
+    <div class="nav-container">
+      <router-link to="/main" class="logo"
+        ><img src="@/assets/nav/logo3.jpg" alt="logo" id="logo"
       /></router-link>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarTogglerDemo03"
-        aria-controls="navbarTogglerDemo03"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <router-link to="/lobby" class="nav-link">게임로비</router-link>
+      <div class="menu-container">
+        <ul class="menu">
+          <li>
+            <router-link
+              :to="{ name: 'lobby', query: { page: 1 } }"
+              class="nav-link"
+              >게임로비</router-link
+            >
           </li>
-          <li class="nav-item">
+          <li>
             <router-link to="/community" class="nav-link">커뮤니티</router-link>
           </li>
         </ul>
-        <ul class="navbar-nav d-flex">
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="#"
-              data-bs-toggle="modal"
-              data-bs-target="#loginModal"
-              >로그인</a
-            >
+        <ul class="menu" v-if="!$store.state.isLogin">
+          <li class="nav-link">
+            <a class="" href="#" v-on:click="onModal('login')">로그인</a>
           </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="#"
-              data-bs-toggle="modal"
-              data-bs-target="#signupModal"
-              >회원가입</a
-            >
+          <li class="nav-link">
+            <a class="" href="#" v-on:click="onModal('signup')">회원가입</a>
           </li>
-          <li class="nav-item">
+        </ul>
+        <ul class="menu" v-else>
+          <li>
             <router-link to="/mypage" class="nav-link">마이페이지</router-link>
           </li>
-          <li class="nav-item">
+          <li>
             <a class="nav-link" href="#" v-on:click="logout">로그아웃</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <router-link to="/main" class="nav-link"
-          ><img src="@/assets/nav/logo.jpg" alt="logo" id="logo"
-        /></router-link>
-      </a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <router-link to="/lobby" class="nav-link">게임로비</router-link>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">커뮤니티</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav d-flex">
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="#"
-              data-bs-toggle="modal"
-              data-bs-target="#loginModal"
-              >로그인</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link"
-              href="#"
-              data-bs-toggle="modal"
-              data-bs-target="#signupModal"
-              >회원가입</a
-            >
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav> -->
-  <LoginModal />
-  <SignupModal />
-  <PwdModal />
+  <LoginModal v-if="loginShow" v-on:close="offModal" />
+  <SignupModal v-if="signShow" v-on:close="offModal" />
+  <PwdModal v-if="pwdShow" v-on:close="offModal" />
 </template>
 
 <script>
@@ -118,7 +50,49 @@ import VueCookies from "vue-cookies";
 export default {
   components: { LoginModal, SignupModal, PwdModal },
   name: "navbar",
+  data() {
+    return {
+      loginShow: false,
+      signShow: false,
+      pwdShow: false,
+      // loginstatus: this.$cookies.isKey("refreshToken"),
+      // istoken: "cookieValue",
+    };
+  },
+  // computed:{
+  //   loginstatus(){
+  //     return this.$store.commit()
+  //   }
+  // },
   methods: {
+    onModal(data) {
+      if (data === "login") {
+        this.loginShow = true;
+        this.pwdShow = false;
+        this.signShow = false;
+      }
+      if (data === "pwd") {
+        this.loginShow = false;
+        this.pwdShow = true;
+        this.signShow = false;
+      }
+      if (data === "signup") {
+        this.loginShow = false;
+        this.pwdShow = false;
+        this.signShow = true;
+      }
+    },
+    offModal(data) {
+      if (data === "login") {
+        this.loginShow = false;
+      }
+      if (data === "pwd") {
+        this.pwdShow = false;
+      }
+      if (data === "signup") {
+        this.signShow = false;
+      }
+    },
     logout() {
       const payload = {
         accessToken: this.$store.state.accessToken,
@@ -130,24 +104,37 @@ export default {
 };
 </script>
 <style scoped>
+.nav-main {
+  background-color: black;
+  height: 8vh;
+}
 #logo {
-  height: 5vh;
-  margin: 0px;
-  padding: 0px;
+  height: 7vh;
+  padding-top: 0.5vh;
 }
-img {
-  margin: 0px;
-  padding: 0px;
+.menu {
+  color: white;
+  font-size: 20px;
+  display: flex;
 }
-/* .navbar {
-  padding: 0px !important;
-  margin: 0px !important;
-} */
-li {
-  padding: 0px;
-  margin: 0px;
+.nav-container {
+  display: flex;
+  align-items: center;
+}
+.menu-container {
+  width: 1800px;
+  padding-left: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 .nav-link {
-  padding: 0px;
+  color: white;
+}
+.nav-link a {
+  color: white;
+}
+.menu li {
+  padding-left: 7px;
+  padding-right: 7px;
 }
 </style>

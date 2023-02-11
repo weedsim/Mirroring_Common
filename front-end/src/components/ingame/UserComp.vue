@@ -1,8 +1,9 @@
 <template>
   <!-- <user-comp> -->
   <div class="p-0">
-    <div class="p-3 speaking-blur">
-      <div class="m-0 p-0 user screen speaking">
+    <div class="p-3" :class="{ 'speaking-blur': active }">
+      <!-- <div class="p-3 speaking-blur"> -->
+      <div class="m-0 p-0 user screen" :class="{ speaking: active }">
         <div class="m-0 p-0 row">
           <!-- 화상 화면 및 닉네임 -->
           <!-- <user-display :curIdx="curIdx" alt=""> </user-display> -->
@@ -71,7 +72,7 @@
             <div class="vote-msg wait" v-on:click="vote">지 목</div>
           </div>
         </div>
-        <div class="m-0 p-0 row" style="height: %"></div>
+        <!-- <div class="m-0 p-0 row" style="height: %"></div> -->
       </div>
     </div>
   </div>
@@ -84,12 +85,15 @@ import { BIconVolumeMuteFill } from "bootstrap-icons-vue";
 import { BIconCameraVideoOffFill } from "bootstrap-icons-vue";
 import UserDisplay from "@/components/ingame/UserDisplay.vue";
 import axios from "axios";
+import VueCookies from "vue-cookies";
 
 export default {
   data() {
     return {
       isShow_vol: false,
       isShow_cam: false,
+      API_URL: this.$store.state.API_URL,
+      active: true,
     };
   },
   name: "RoomComp",
@@ -102,45 +106,55 @@ export default {
     UserDisplay,
   },
   computed: {
-    // checkReady(idx) {
-    //   let tmp = this.$store.getters.isParticipants;
-    //   let length = tmp.length;
-    //   if (Number(idx) < length) {
-    //     return this.$store.getters.isParticipants[Number(idx)].isReady;
-    //   } else {
-    //     return false;
-    //   }
-    // },
+    chkSpeaker() {
+      return this.$store.state.curSpeakIdx;
+    },
+  },
+  watch: {
+    chkSpeaker(newVal) {
+      this.chgActive(newVal);
+    },
   },
   created() {
-    console.log("myIdx-usercomp: ", this.$store.state.myIdx);
-    console.log("publisher-usercomp: ", this.$store.state.publisher);
-    console.log(
-      "subscriber-length-usercomp: ",
-      this.$store.state.subscribers.length
-    );
-
     // console.log(11111111,this.curIdx)
   },
   props: {
     curIdx: String,
   },
   methods: {
+    chgActive(newVal) {
+      console.log("active값이 바뀝니다~!");
+      console.log("발언자idx: " + newVal);
+      console.log("내idx: " + this.$store.state.myIdx);
+      //만약에 새로운값이 자기자신의 인덱스이거나 on일때는 true로 변경 아닐경우에는 false로 변경
+      if (newVal === Number(this.$store.state.myIdx)) {
+        this.active = true;
+      } else if (newVal === "on") {
+        this.active = true;
+      } else {
+        this.active = false;
+      }
+    },
     togglev() {
       this.$store.state.isShow_vol = !this.$store.state.isShow_vol;
     },
     togglec() {
       this.$store.state.isShow_cam = !this.$store.state.isShow_cam;
     },
+    // 투표전송하기.
     vote() {
+      console.log("voter", this.$store.state.myIdx);
+      console.log("target", this.curIdx);
       axios({
-        method: "PATCH",
-        // url: `${API_URL}/rooms`,
-        url: `${this.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/ready`,
+        method: "POST",
+        url: `${this.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/games/vote`,
         headers: {
           Authorization: `Bearer ${VueCookies.get("accessToken")}`,
         },
-        data: {},
+        data: {
+          voter: this.$store.state.myIdx,
+          target: this.curIdx,
+        },
       })
         .then((res) => {
           console.log(res.data);
@@ -181,7 +195,7 @@ export default {
 }
 .unready {
   position: absolute;
-  bottom: 0%;
+  bottom: 10%;
   width: 100%;
   font-size: 1.2vw;
   text-align: center;

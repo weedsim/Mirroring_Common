@@ -1,22 +1,7 @@
 <template>
-  <!-- <user-video
-    v-if="$store.state.myIdx == curIdx"
-    :stream-manager="$store.state.publisher"
-  /> -->
-  <!-- <user-video
-    v-if="$store.state.myIdx > curIdx"
-    :stream-manager="$store.state.subscribers[curIdx]"
-  />
   <user-video
-    v-if="
-      $store.state.myIdx < curIdx &&
-      $store.state.subscribers.length > curIdx - 1
-    "
-    :stream-manager="$store.state.subscribers[curIdx - 1]"
-  /> -->
-  <div>
-    <user-video />
-  </div>
+    :stream-manager="$store.state.sessions[curIdx].ovSession.publisher"
+  />
   <!-- @click="updateMainVideoStreamManager(publisher)"  -->
   <!-- <user-video v-for="sub in $store.state.sessions[curIdx].ovSession.subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub"
           @click="updateMainVideoStreamManager(sub)" /> -->
@@ -31,10 +16,11 @@ import UserVideo from "@/components/UserVideo";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const APPLICATION_SERVER_URL =
-  // process.env.NODE_ENV === "production"
-  //   ? "http://192.168.91.171:5000/"
-  //   : "http://localhost:5000/";
-  "http://192.168.91.171:5000/";
+  //   process.env.NODE_ENV === "production"
+  //     ? "http://localhost:5000/"
+  //     : "http://192.168.91.171:5000/";
+  "http://localhost:5000";
+// "http://192.168.91.171:5000/";
 export default {
   name: "UserDisplay",
 
@@ -52,7 +38,7 @@ export default {
       OV: undefined,
       session: undefined,
       mainStreamManager: undefined,
-      publisher: this.$store.state.publisher,
+      publisher: undefined,
 
       // Join form
       mySessionId: "SessionA",
@@ -61,7 +47,6 @@ export default {
   },
   created() {
     // this.joinSession();
-    console.log("store-publisher-userdisplay", this.$store.state.publisher);
     console.log(444, this.$store.state.sessions[this.curIdx].ovSession);
     //
     // console.log("OV,", this.OV)

@@ -4,34 +4,34 @@ import router from "@/router";
 import VueCookies from "vue-cookies";
 import createPersistedState from "vuex-persistedstate";
 import playGameStore from "@/store/modules/playgame.js";
-import jwtDecode from "vue-jwt-decode";
 
 // const API_URL = "http://127.0.0.1:5000";
-const API_URL = "http://192.168.91.171:5000";
+const API_URL = "http://localhost:5000";
+// "http://192.168.91.171:5000";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
 
 const storageStata = createPersistedState({
   paths: ["playGameStore"],
 });
 
-const session = {
-  myIdx: -1,
-  isJoin: false,
-  isReady: false,
-  ovSession: {
-    OV: undefined,
-    session: undefined,
-    // mainStreamManager: undefined,
-    publisher: undefined,
-  },
-};
+// const session = {
+//   myIdx: -1,
+//   isJoin: false,
+//   isReady: false,
+//   ovSession: {
+//     OV: undefined,
+//     session: undefined,
+//     // mainStreamManager: undefined,
+//     publisher: undefined,
+//   },
+// };
 
-const sessions = [];
+// const sessions = [];
 
-for (let i = 0; i < 10; i++) {
-  let temp = Object.assign({}, session);
-  sessions.push(temp);
-}
+// for (let i = 0; i < 10; i++) {
+//   let temp = Object.assign({}, session);
+//   sessions.push(temp);
+// }
 
 // idx test
 let bits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -51,14 +51,20 @@ export default createStore({
   plugins: [storageStata],
   state: {
     // 세션 구조(깊은 복사해서 사용)
-    session: session,
+    // session: session,
     // idx위치의 세션의 상태
-    sessions: sessions,
+    // sessions: sessions,
     // Object.assign(dest, this.state.session)
 
     // myIdx: -1,
+    openvidu: {
+      OV: undefined,
+      session: undefined,
+      publisher: undefined,
+      subscribers: [],
+    },
 
-    API_URL: "http://192.168.91.171:5000",
+    API_URL: API_URL,
     // API_URL: "http://i8a706.p.ssafy.io:8080",
     isEnter: true, // 게임방 진입시 라우터가드를 위한 state
     isShow: false,
@@ -66,22 +72,27 @@ export default createStore({
     refreshToken: VueCookies.get("refreshToken"),
     // rooms: null, // rooms는 로비에서 방목록 8개 받아서 저장할곳.
     playgames: false,
-    rooms: [], // 추후삭제.
-    gameinfo: [], // 게임참가자 정보저장\
-    myIdx: 0,
-    isConnected: false,
-    subscribers: [],
-    publisher: undefined,
-    tokenmap: {
-      // userId: myIdx
-    },
+    myIdx: -1,
+    rooms: [],
+    gameinfo: [], // 게임참가자 정보저장
+    mysubject: null,
+    timer: -1,
+    liarAnswerModal: false,
+    curSpeakIdx: "on",
+    NowPageNum: 1,
   },
   getters: {
     isLogin(state) {
-      return state.token ? true : false;
+      return VueCookies.get("accessToken") ? true : false;
     },
     isParticipants(state) {
       return state.gameinfo.participants;
+    },
+    GET_ROOM(state, idx) {
+      return state.rooms[idx];
+    },
+    GET_ROOMS(state) {
+      return state.rooms;
     },
   },
   mutations: {
@@ -100,12 +111,12 @@ export default createStore({
       state.accessToken = null;
       state.refreshToken = null;
       VueCookies.remove("refreshToken");
+      VueCookies.remove("accessToken");
       router.push({ name: "main" }).catch(() => {});
     },
     // 방목록 저장할 뮤테이션(rooms)
-    SET_ROOMS(state, rooms) {
-      state.rooms = rooms;
-      router.push({ name: "lobby" });
+    SET_ROOMS(state, payload) {
+      state.rooms = payload.rooms;
     },
     // 라우터가드를 위한 isEnter 값 변경
     SET_ISENTER(state) {
@@ -128,25 +139,15 @@ export default createStore({
       console.log("mutation실행");
       console.log(payload);
       state.gameinfo = payload;
-      var participants = payload.participants;
-      var userid = jwtDecode.decode(VueCookies.get("accessToken")).id;
-      for (var i = 0; i < participants.length; i++) {
-        state.sessions[i].isReady = participants[i].isReady;
-        if (participants[i].userId === userid) {
-          state.tokenmap[userid] = i;
-        }
-      }
     },
     // 게임레디상태변경(ready)
     CHG_ISREADY(state, payload) {
       console.log("CHG_ISREADY 뮤테이션");
       state.gameinfo.participants[payload].isReady = true;
-      state.sessions[payload].isReady = true;
     },
     CHG_ISUNREADY(state, payload) {
       console.log("CHG_ISUNREADY 뮤테이션");
       state.gameinfo.participants[payload].isReady = false;
-      state.sessions[payload].isReady = false;
     },
     // 게임시작시(playing)
     SET_ISPLAYING(state) {
@@ -156,12 +157,37 @@ export default createStore({
     RESET_ISPLAYING(state) {
       state.gameinfo.isPlaying = false;
     },
-    // 소스저장
-    SET_SOURCE(state, payload) {
-      console.log(payload);
-      // state.sessions.source = payload;
-      console.log("소스저장");
-      // console.log(state.sessions.source);
+    SET_MYIDX(state, payload) {
+      state.myIdx = payload;
+    },
+    // 게임중 주제부여
+    SET_MYROLE(state, payload) {
+      state.mysubject = payload.mysubject;
+    },
+    // 게임중 타이머세팅
+    SET_TIMER(state, payload) {
+      state.timer = payload;
+    },
+    // 타이머 0으로 세팅
+    RESET_TIMER(state) {
+      state.timer = 0;
+    },
+    ON_ANSWER(state) {
+      state.liarAnswerModal = true;
+    },
+    OFF_ANSWER(state) {
+      state.liarAnswerModal = false;
+    },
+    SET_CURSPEAKER(state, payload) {
+      state.curSpeakIdx = payload;
+    },
+    SET_PAGENUM(state, payload) {
+      state.NowPageNum = payload;
+    },
+    SET_OPENVIDU(state, payload) {
+      console.log("여기는 mutation openvidu야", payload);
+      state.openvidu = payload;
+      console.log("여기는 mutation openvidu야", state.openvidu);
     },
   },
   actions: {
@@ -231,9 +257,51 @@ export default createStore({
         }
       });
     },
+    getRooms(context, payload) {
+      axios({
+        method: "get",
+        // url: `${API_URL}/rooms?pageNumber=${페이지네이션 번호}`,
+        url: `${API_URL}/rooms`,
+        data: {
+          pageNumber: payload,
+        },
+      })
+        .then((res) => {
+          // 받아온 방정보 8개는 뷰엑스 스토어로 저장할 예정
+          const payload = {
+            rooms: res.data,
+          };
+          // commit을 통해 mutations에 정의된 setRooms 호출
+          context.commit("SET_ROOMS", payload);
+          return this.state.rooms;
+          // console.log(this.$store.state.rooms);
+        })
+        .catch((err) => {
+          console.log("실패");
+          console.log(err);
+        });
+    },
     // 방목록 8개 받아오기
     setRooms(context, payload) {
-      context.commit("SET_ROOMS", payload.rooms);
+      axios({
+        method: "get",
+        // url: `${API_URL}/rooms?pageNumber=${페이지네이션 번호}`,
+        url: `${API_URL}/rooms`,
+        data: {
+          pageNumber: payload,
+        },
+      })
+        .then((res) => {
+          console.log("불러온 방 목록 :", res.data);
+          const payload = {
+            rooms: res.data,
+          };
+          context.commit("SET_ROOMS", payload.rooms);
+        })
+        .catch((err) => {
+          console.log("방목록 불러오기 실패");
+          console.log(err);
+        });
     },
     // 방진입 토큰 true
     setIsEnter(context) {
@@ -269,11 +337,6 @@ export default createStore({
     setIsPlaying(context) {
       context.commit("SET_ISPLAYING");
     },
-    // source저장
-    setSource(context, payload) {
-      console.log("소스저장: " + payload);
-      context.commit("SET_SOURCE", payload);
-    },
     // REISSUE요청
     reIssue(context, payload) {
       console.log(payload);
@@ -301,6 +364,17 @@ export default createStore({
         .catch((err) => {
           console.log(err);
         });
+    },
+    setMyIdx(context, payload) {
+      console.log("setMyIdx에서 :", payload);
+      context.commit("SET_MYIDX", payload.participants.length - 1);
+      console.log(
+        "setmyIdx에서 myidx에 저장되는 값 : ",
+        payload.participants.length - 1
+      );
+    },
+    setOpenvidu(context, payload) {
+      context.commit("SET_OPENVIDU", payload);
     },
   },
 });

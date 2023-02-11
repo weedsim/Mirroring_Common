@@ -85,6 +85,7 @@ export default {
         .catch((err) => {
           console.log("주제전송실패");
           console.log(err);
+          this.$emit("close"); // 창 닫아주세요.
         });
     },
   },
