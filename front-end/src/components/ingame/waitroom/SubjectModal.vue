@@ -42,7 +42,7 @@ export default {
   },
   setup() {},
   created() {
-    this.getSubject();
+    // this.getSubject();
   },
   mounted() {
     this.selected = this.subjects[0];

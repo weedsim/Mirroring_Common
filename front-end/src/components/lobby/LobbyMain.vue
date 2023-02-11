@@ -43,7 +43,7 @@ export default {
     };
   },
   created() {
-    this.getRooms();
+    // this.getRooms();
   },
   methods: {
     // 게임방 목록을 받아오는 메서드

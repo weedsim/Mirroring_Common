@@ -34,7 +34,7 @@ const APPLICATION_SERVER_URL =
   // process.env.NODE_ENV === "production"
   //   ? "http://192.168.91.171:5000/"
   //   : "http://localhost:5000/";
-  "http://192.168.91.171:5000/";
+  "http://localhost:5000/";
 export default {
   name: "UserDisplay",
 
@@ -60,9 +60,9 @@ export default {
     };
   },
   created() {
-    // this.joinSession();
-    console.log("store-publisher-userdisplay", this.$store.state.publisher);
-    console.log(444, this.$store.state.sessions[this.curIdx].ovSession);
+    this.joinSession();
+    // console.log("store-publisher-userdisplay", this.$store.state.publisher);
+    // console.log(444, this.$store.state.sessions[this.curIdx].ovSession);
     //
     // console.log("OV,", this.OV)
     // console.log("session,", this.session,)

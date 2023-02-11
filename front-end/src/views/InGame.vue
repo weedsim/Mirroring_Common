@@ -30,7 +30,7 @@ export default {
   },
   data() {
     return {
-      roomId: this.$route.params.roomId,
+      roomId: "1",
       API_URL: this.$store.state.API_URL,
       message: "",
     };
@@ -46,42 +46,42 @@ export default {
       const headers = {
         Authorization: "Bearer " + this.$store.state.accessToken,
       };
-      const source = new EventSourcePolyfill(
-        `${this.API_URL}/sse/connect?roomId=${this.roomId}`,
-        // 기본45000 -> 1시간으로 변경
-        { headers, heartbeatTimeout: 1000 * 60 * 60 }
-      );
-      console.log(source);
+    //   const source = new EventSourcePolyfill(
+    //     `${this.API_URL}/sse/connect?roomId=${this.roomId}`,
+    //     // 기본45000 -> 1시간으로 변경
+    //     { headers, heartbeatTimeout: 1000 * 60 * 60 }
+    //   );
+    //   console.log(source);
 
-      // 소스저장
-      this.$store.dispatch("setSource", source);
+    //   // 소스저장
+    //   this.$store.dispatch("setSource", source);
       console.log("vuex source", this.$store.state.sessions);
 
-      source.addEventListener("message", (event) => {
-        // console.log(JSON.parse (event.data));
-        console.log("event.data", JSON.parse(event.data));
-        const type = JSON.parse(event.data).type;
-        const val = JSON.parse(event.data).value;
-        // 레디상태
-        if (type === "ready") {
-          this.$store.dispatch("chgReady", Number(val));
-        }
-        // 언레디상태
-        if (type === "unready") {
-          this.$store.dispatch("chgUnReady", Number(val));
-        }
-        // 방정보 업데이트
-        if (type === "room") {
-          const gameinfo = JSON.parse(JSON.parse(event.data).value);
-          this.$store.dispatch("setGameInfo", gameinfo);
-        }
-        // 게임시작시 isPlaying == true
-        if (type === "message") {
-          if (val === "game start") {
-            this.$store.dispatch("setIsPlaying");
-          }
-        }
-      });
+    //   source.addEventListener("message", (event) => {
+    //     // console.log(JSON.parse (event.data));
+    //     console.log("event.data", JSON.parse(event.data));
+    //     const type = JSON.parse(event.data).type;
+    //     const val = JSON.parse(event.data).value;
+    //     // 레디상태
+    //     if (type === "ready") {
+    //       this.$store.dispatch("chgReady", Number(val));
+    //     }
+    //     // 언레디상태
+    //     if (type === "unready") {
+    //       this.$store.dispatch("chgUnReady", Number(val));
+    //     }
+    //     // 방정보 업데이트
+    //     if (type === "room") {
+    //       const gameinfo = JSON.parse(JSON.parse(event.data).value);
+    //       this.$store.dispatch("setGameInfo", gameinfo);
+    //     }
+    //     // 게임시작시 isPlaying == true
+    //     if (type === "message") {
+    //       if (val === "game start") {
+    //         this.$store.dispatch("setIsPlaying");
+    //       }
+    //     }
+    //   });
     },
     chgflag() {
       this.$store.dispatch("setPlaygames");

@@ -49,7 +49,7 @@ const APPLICATION_SERVER_URL =
   // process.env.NODE_ENV === "production"
   //   ? "http://192.168.91.171:5000/"
   //   : "http://localhost:5000/";
-  "http://192.168.91.171:5000/";
+  "http://localhost:5000/";
 
 export default {
   components: { UserComp },

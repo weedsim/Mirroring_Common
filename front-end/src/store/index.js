@@ -7,7 +7,7 @@ import playGameStore from "@/store/modules/playgame.js";
 import jwtDecode from "vue-jwt-decode";
 
 // const API_URL = "http://127.0.0.1:5000";
-const API_URL = "http://192.168.91.171:5000";
+const API_URL = "http://localhost:5000";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
 
 const storageStata = createPersistedState({
@@ -58,7 +58,7 @@ export default createStore({
 
     // myIdx: -1,
 
-    API_URL: "http://192.168.91.171:5000",
+    API_URL: "http://localhost:5000",
     // API_URL: "http://i8a706.p.ssafy.io:8080",
     isEnter: true, // 게임방 진입시 라우터가드를 위한 state
     isShow: false,

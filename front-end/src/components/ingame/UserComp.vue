@@ -11,6 +11,7 @@
             v-if="$store.state.sessions[curIdx].isJoin"
             alt=""
           >
+          <!-- $store.state.sessions[curIdx].isJoin -->
           </user-display>
           <img
             class="p-0 m-0"
@@ -78,6 +79,7 @@
 </template>
 
 <script>
+import VueCookies from "vue-cookies"; // [vue cookies]
 import { BIconVolumeUpFill } from "bootstrap-icons-vue";
 import { BIconCameraVideoFill } from "bootstrap-icons-vue";
 import { BIconVolumeMuteFill } from "bootstrap-icons-vue";

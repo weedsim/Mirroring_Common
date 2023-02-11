@@ -133,7 +133,7 @@ const APPLICATION_SERVER_URL =
   // process.env.NODE_ENV === "production"
   //   ? "http://192.168.91.171:5000/"
   //   : "http://localhost:5000/";
-  "http://192.168.91.171:5000/";
+  "http://localhost:5000/";
 export default {
   name: "RoomCard",
   props: ["roomIdx"],
@@ -158,7 +158,7 @@ export default {
   },
   setup() {},
   created() {
-    this.test();
+    // this.test();
   },
   mounted() {
     // if (this.roomIdx < this.$store.state.rooms.length) {

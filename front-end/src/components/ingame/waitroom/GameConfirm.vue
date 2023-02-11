@@ -51,7 +51,7 @@ export default {
   name: "GameConfirm",
   created() {
     // this.toggle = store.commit("isShow", store.state.isShow = !store.state.isShow)
-    this.isMaster();
+    // this.isMaster();
   },
   computed: {
     // isMaster() {
