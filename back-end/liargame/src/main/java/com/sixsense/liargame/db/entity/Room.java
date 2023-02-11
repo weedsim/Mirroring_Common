@@ -56,9 +56,17 @@ public class Room {
     }
 
     public Integer ready(Long userId) {
+        Integer userNumber = getUserInfo(userId);
+        if (userNumber != null) {
+            participants.get(userNumber).setIsReady(!participants.get(userNumber).getIsReady());
+            return userNumber;
+        }
+        return null;
+    }
+
+    private Integer getUserInfo(Long userId) {
         for (int i = 0; i < participants.size(); i++) {
             if (Objects.equals(participants.get(i).getUserId(), userId)) {
-                participants.get(i).setIsReady(!participants.get(i).getIsReady());
                 return i;
             }
         }
@@ -66,7 +74,21 @@ public class Room {
     }
 
     public void enter(Long userId, String name) {
-        participants.add(new UserInfo(userId, name, false));
+        participants.add(new UserInfo(userId, name));
+    }
+
+    public void mic(Long userId) {
+        Integer userNumber = getUserInfo(userId);
+        if (userNumber != null) {
+            participants.get(userNumber).setMic(!participants.get(userNumber).getMic());
+        }
+    }
+
+    public void cam(Long userId) {
+        Integer userNumber = getUserInfo(userId);
+        if (userNumber != null) {
+            participants.get(userNumber).setCam(!participants.get(userNumber).getCam());
+        }
     }
 
     public void exit(Long userId) {

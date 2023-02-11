@@ -64,6 +64,7 @@ public class RoomController {
         return ResponseEntity.ok().build();
     }
 
+
     @PostMapping
     public ResponseEntity<RoomDetail> create(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @RequestBody RoomReq roomReq) {
         Long userId = jwtTokenProvider.getUserId(accessToken);

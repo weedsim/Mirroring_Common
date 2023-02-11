@@ -68,6 +68,7 @@ public class NormalGame {
                 isTurned = true;
                 return curSpeaker;
             }
+            return null;
         }
         return curSpeaker;
     }

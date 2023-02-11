@@ -68,7 +68,7 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public RoomDetail enter(Long userId, Integer roomId) {
         Room room = rooms.get(roomId);
-        if (room.getMaxCount() > room.getCurCount()) {
+        if (6 > room.getCurCount()) {
             User user = userRepository.findById(userId).orElseThrow();
             room.enter(user.getId(), user.getName());
             RoomDetail roomDetail = toDetail(room);
@@ -110,14 +110,14 @@ public class RoomServiceImpl implements RoomService {
     public List<RoomResp> selectAll(Pageable pageable) {
         System.out.println("방목록 요청");
         System.out.println(pageable.getPageNumber());
-        List<RoomResp> list = rooms.values().stream().map(this::toDto).sorted(Comparator.comparingInt(RoomResp::getId)).limit(8).collect(Collectors.toList());
+        List<RoomResp> list = rooms.values().stream().map(this::toDto).sorted(Comparator.comparingInt(RoomResp::getId)).skip(pageable.getPageNumber() * 10L).limit(10).collect(Collectors.toList());
         System.out.println(list.toString());
-        return rooms.values().stream().map(this::toDto).sorted(Comparator.comparingInt(RoomResp::getId)).limit(8).collect(Collectors.toList());
+        return list;
     }
 
     @Override
     public Integer last() {
-        return (rooms.size() - 1) / 8 + 1;
+        return (rooms.size() - 1) / 10 + 1;
     }
 
     @Override

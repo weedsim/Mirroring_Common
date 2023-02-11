@@ -43,5 +43,6 @@ public class SubjectServiceImpl implements SubjectService {
         Room room = rooms.get(roomId);
         NormalGame normalGame = new NormalGame(room);
         normalGame.setWord(wordResp.getName());
+        games.put(roomId, normalGame);
     }
 }

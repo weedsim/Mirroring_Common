@@ -1,5 +1,6 @@
 package com.sixsense.liargame.api.controller;
 
+import com.sixsense.liargame.api.request.AnswerReq;
 import com.sixsense.liargame.api.service.GameService;
 import com.sixsense.liargame.api.sse.Vote;
 import com.sixsense.liargame.common.model.response.GameResultResp;
@@ -22,19 +23,20 @@ public class GameController {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         GameResultResp gameResultResp = gameService.normalGameStart(userId, roomId);
         if (gameResultResp != null)
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok(gameResultResp);
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
     }
 
     @PostMapping("/vote")
-    public ResponseEntity<?> vote(@PathVariable Integer roomId, Vote vote) {
+    public ResponseEntity<?> vote(@PathVariable Integer roomId, @RequestBody Vote vote) {
         gameService.vote(vote, roomId);
         return ResponseEntity.ok(vote);
     }
 
     @PostMapping("/answer")
-    public ResponseEntity<?> insertAnswer(@PathVariable Integer roomId, String answer) {
-        gameService.insertAnswer(answer, roomId);
+    public ResponseEntity<?> insertAnswer(@PathVariable Integer roomId, @RequestBody AnswerReq answer) {
+        answer.setRoomId(roomId);
+        gameService.insertAnswer(answer);
         return ResponseEntity.ok(answer);
     }
 }

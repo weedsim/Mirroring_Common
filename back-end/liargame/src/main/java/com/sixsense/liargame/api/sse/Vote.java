@@ -2,13 +2,11 @@ package com.sixsense.liargame.api.sse;
 
 import lombok.*;
 
-import java.io.Serializable;
-
 @Getter
 @AllArgsConstructor
-@EqualsAndHashCode
+@NoArgsConstructor
 @ToString
-public class Vote implements Serializable {
+public class Vote {
     private Integer voter;
     @Setter
     private Integer target;
