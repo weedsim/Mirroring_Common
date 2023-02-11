@@ -83,12 +83,12 @@ export default {
       //   this.$store.state.gameinfo.master ===
       //   jwtDecode.decode(VueCookies.get("accessToken")).id
       // )
-      if (
-        this.$store.state.gameinfo.master ===
-        jwtDecode.decode(VueCookies.get("accessToken")).id
-      ) {
+    //   if (
+    //     this.$store.state.gameinfo.master ===
+    //     jwtDecode.decode(VueCookies.get("accessToken")).id
+    //   ) {
         this.Master = true;
-      }
+    //   }
     },
     toggle() {
       // console.log(this.$store.state.isShow)
