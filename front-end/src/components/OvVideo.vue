@@ -14,14 +14,15 @@
 <script>
 export default {
   name: "OvVideo",
-
-  props: {
-    streamManager: Object,
+  data() {
+    return {
+      publisher: this.$store.state.publisher,
+    };
   },
-
-  mounted() {
+  created() {
+    console.log("좀떠라...", this.publisher);
     console.log("this.$el", this.$el);
-    this.streamManager.addVideoElement(this.$el);
+    // this.publisher.addVideoElement(this.$el);
   },
 };
 </script>
