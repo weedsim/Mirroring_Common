@@ -95,8 +95,8 @@ export default {
       //   this.$store.state.isShow = !this.$store.state.isShow
       let myIdx = this.$store.state.myIdx;
       // console.log(myIdx)
-      this.$store.state.sessions[myIdx].isReady =
-        !this.$store.state.sessions[myIdx].isReady;
+      this.$store.state.gameinfo.participants[myIdx].isReady =
+        !this.$store.state.gameinfo.participants[myIdx].isReady;
     },
     isStart() {
       this.showModal = false;
@@ -135,7 +135,6 @@ export default {
         .then((res) => {
           console.log(res.data);
           console.log(this.$store.state.gameinfo);
-          console.log(this.$store.state.sessions);
         })
         .catch((err) => {
           console.log("레디실패");

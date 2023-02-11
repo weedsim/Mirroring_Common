@@ -139,26 +139,15 @@ export default createStore({
       console.log("mutation실행");
       console.log(payload);
       state.gameinfo = payload;
-      var participants = payload.participants;
-      // this.$store.state.sessions[curIdx].isReady
-      for (var i = 0; i < participants.length; i++) {
-        state.sessions[i].isReady = participants[i].isReady;
-        state.sessions[i].isJoin = true;
-      }
-      // for (var j = participants.length; j < 10; j++) {
-      //   state.session[j].isJoin = false;
-      // }
     },
     // 게임레디상태변경(ready)
     CHG_ISREADY(state, payload) {
       console.log("CHG_ISREADY 뮤테이션");
       state.gameinfo.participants[payload].isReady = true;
-      state.sessions[payload].isReady = true;
     },
     CHG_ISUNREADY(state, payload) {
       console.log("CHG_ISUNREADY 뮤테이션");
       state.gameinfo.participants[payload].isReady = false;
-      state.sessions[payload].isReady = false;
     },
     // 게임시작시(playing)
     SET_ISPLAYING(state) {
@@ -194,6 +183,11 @@ export default createStore({
     },
     SET_PAGENUM(state, payload) {
       state.NowPageNum = payload;
+    },
+    SET_OPENVIDU(state, payload) {
+      console.log("여기는 mutation openvidu야", payload);
+      state.openvidu = payload;
+      console.log("여기는 mutation openvidu야", state.openvidu);
     },
   },
   actions: {
@@ -378,6 +372,9 @@ export default createStore({
         "setmyIdx에서 myidx에 저장되는 값 : ",
         payload.participants.length - 1
       );
+    },
+    setOpenvidu(context, payload) {
+      context.commit("SET_OPENVIDU", payload);
     },
   },
 });

@@ -178,13 +178,6 @@ export default {
     },
     // 생성버튼 클릭시 이벤트
     createGame() {
-      // console.log(this.roompwd);
-      // console.log(this.roomtitle);
-      // console.log(this.playercnt);
-      // console.log(this.talktime);
-      // console.log(this.gamemode);
-      // console.log(`${this.$store.state.accessToken}`);
-      console.log(VueCookies.get("accessToken"));
       if (
         this.roomtitle === null ||
         this.playercnt === null ||
@@ -211,6 +204,7 @@ export default {
         })
           .then((res) => {
             console.log(res.data);
+            this.$store.dispatch("setMyIdx", res.data);
 
             // 만약 성공을했다면... room/${roomId}로 인게임.vue로 보낸다.
             // 1. state 방진입 isEnter -> true 단, 방진입직후에는 isEnter를 false로 바꿔줘야된다.
@@ -222,10 +216,8 @@ export default {
             // 응답결과로는 토큰과 roomId가 올것이다.
             // router.push({ name: "room", params: { roomId: 1 } });
             // 테스트용으로는 임의로 roomId를 설정한다.
-
-            this.joinSession();
-
-            router.push({ name: "room", params: { roomId: res.data.roomId } });
+            console.log(4444444444444);
+            this.joinSession(res.data.roomId);
           })
           .catch((err) => {
             this.roomPwd = null;
@@ -239,20 +231,22 @@ export default {
           });
       }
     },
-    joinSession() {
+    joinSession(roomId) {
       // --- 1) Get an OpenVidu object ---
+
       this.OV = new OpenVidu();
+      console.log("1번성공");
 
       // --- 2) Init a session ---
       this.session = this.OV.initSession();
+      console.log("2번성공");
 
       // --- 3) Specify the actions when events take place in the session ---
 
       // On every new Stream received...
       this.session.on("streamCreated", ({ stream }) => {
-        const subscriber = this.session.subscribe(stream);
+        const subscriber = this.session.subscribe(stream, undefined);
         this.subscribers.push(subscriber);
-        console.log("subscribers", this.subscribers);
       });
 
       // On every Stream destroyed...
@@ -267,16 +261,19 @@ export default {
       this.session.on("exception", ({ exception }) => {
         console.warn(exception);
       });
+      console.log("3번성공");
 
       // --- 4) Connect to the session with a valid user token ---
 
       // Get a token from the OpenVidu deployment
-      this.getToken(this.mySessionId).then((token) => {
+      this.getToken(roomId).then((token) => {
+        console.log("3.5번성공");
         // First param is the token. Second param can be retrieved by every user on event
         // 'streamCreated' (property Stream.connection.data), and will be appended to DOM as the user's nickname
         this.session
-          .connect(token, { clientData: this.myUserName })
+          .connect(token, { clientData: "최원준" })
           .then(() => {
+            console.log("4번성공");
             // --- 5) Get your own camera stream with the desired properties ---
 
             // Init a publisher passing undefined as targetElement (we don't want OpenVidu to insert a video
@@ -291,22 +288,27 @@ export default {
               insertMode: "APPEND", // How the video is inserted in the target element 'video-container'
               mirror: false, // Whether to mirror your local video or not
             });
+            console.log("5번성공");
 
             // Set the main video in the page to display our webcam and store our Publisher
             this.publisher = publisher;
-            this.$store.state.publisher = publisher;
-            this.$store.state.subscribers = [];
             // --- 6) Publish your stream ---
+            console.log("오픈비두 6완료");
 
             this.session.publish(this.publisher);
-            this.$store.state.session = this.session;
-            console.log("store-session", this.$store.state.session);
-            console.log("store-subscribers", this.$store.state.subscribers);
-            console.log("store-publisher", this.$store.state.publisher);
-            console.log("하이");
-            console.log("감자고구마", this.publisher);
-            console.log("하이2");
-            console.log("오픈비두 6완료");
+            this.$store.dispatch("setOpenvidu", {
+              OV: this.OV,
+              session: this.session,
+              publisher: this.publisher,
+              subscribers: this.subscribers,
+            });
+
+            router.push({ name: "room", params: { roomId: roomId } });
+            console.log("라우터 푸시 완료");
+            // this.$store.state.openvidu.OV = this.OV;
+            // this.$store.state.openvidu.session = this.session;
+            // this.$store.state.openvidu.publisher = this.publisher;
+            // this.$store.state.openvidu.subscribers = this.subscribers;
           })
           .catch((error) => {
             console.log("오픈비두 연결안됨");
