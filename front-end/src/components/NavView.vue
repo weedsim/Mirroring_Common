@@ -17,7 +17,7 @@
             <router-link to="/community" class="nav-link">커뮤니티</router-link>
           </li>
         </ul>
-        <ul class="menu" v-if="$store.state.isLogin">
+        <ul class="menu" v-if="!$store.state.isLogin">
           <li class="nav-link">
             <a class="" href="#" v-on:click="onModal('login')">로그인</a>
           </li>

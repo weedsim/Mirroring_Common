@@ -14,24 +14,24 @@ const storageStata = createPersistedState({
   paths: ["playGameStore"],
 });
 
-const session = {
-  myIdx: -1,
-  isJoin: false,
-  isReady: false,
-  ovSession: {
-    OV: undefined,
-    session: undefined,
-    // mainStreamManager: undefined,
-    publisher: undefined,
-  },
-};
+// const session = {
+//   myIdx: -1,
+//   isJoin: false,
+//   isReady: false,
+//   ovSession: {
+//     OV: undefined,
+//     session: undefined,
+//     // mainStreamManager: undefined,
+//     publisher: undefined,
+//   },
+// };
 
-const sessions = [];
+// const sessions = [];
 
-for (let i = 0; i < 10; i++) {
-  let temp = Object.assign({}, session);
-  sessions.push(temp);
-}
+// for (let i = 0; i < 10; i++) {
+//   let temp = Object.assign({}, session);
+//   sessions.push(temp);
+// }
 
 // idx test
 let bits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -51,12 +51,18 @@ export default createStore({
   plugins: [storageStata],
   state: {
     // 세션 구조(깊은 복사해서 사용)
-    session: session,
+    // session: session,
     // idx위치의 세션의 상태
-    sessions: sessions,
+    // sessions: sessions,
     // Object.assign(dest, this.state.session)
 
     // myIdx: -1,
+    openvidu: {
+      OV: undefined,
+      session: undefined,
+      publisher: undefined,
+      subscribers: [],
+    },
 
     API_URL: API_URL,
     // API_URL: "http://i8a706.p.ssafy.io:8080",

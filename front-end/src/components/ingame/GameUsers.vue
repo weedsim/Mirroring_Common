@@ -9,7 +9,10 @@
         <!-- <div class="p-3 speaking-blur"> -->
         <div class="user-screen speaking" :class="{ speaking: active }">
           <!-- $store.state.sessions[index].isJoin -->
-          <video v-if="false" alt="" autoplay></video>
+          <OvVideo
+            v-if="false"
+            :stream-manager="$store.state.openvidu.publisher"
+          />
           <img src="@/assets/ingame/headphone.png" v-else alt="" />
           <div class="screen"></div>
           <div
@@ -36,20 +39,20 @@
 
 <script>
 import axios from "axios";
-import UserDisplay from "@/components/ingame/UserDisplay.vue";
+import OvVideo from "@/components/OvVideo.vue";
 import { OpenVidu } from "openvidu-browser";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const APPLICATION_SERVER_URL =
-  process.env.NODE_ENV === "production"
-    ? "http://localhost:5000/"
-    : "http://192.168.91.171:5000/";
-// "http://192.168.91.171:5000/";
+  // process.env.NODE_ENV === "production"
+  //   ? "http://localhost:5000/"
+  //   : "http://192.168.91.171:5000/";
+  "http://localhost:5000/";
 
 export default {
   components: {
-    UserDisplay,
+    OvVideo,
   },
   name: "GameUser",
   el: "#liar",

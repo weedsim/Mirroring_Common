@@ -47,7 +47,7 @@ const APPLICATION_SERVER_URL =
   // process.env.NODE_ENV === "production"
   //   ? "http://192.168.91.171:5000/"
   //   : "http://localhost:5000/";
-  "http://192.168.91.171:5000/";
+  "http://localhost:5000/";
 
 export default {
   name: "LobbyMain",
@@ -55,6 +55,11 @@ export default {
     return {
       API_URL: this.$store.state.API_URL,
       rooms: [],
+      OV: undefined,
+      session: undefined,
+      mySessionId: undefined,
+      subscribers: [],
+      publisher: undefined,
       // nowpage: this.$route.query.page,
     };
   },
@@ -115,7 +120,7 @@ export default {
           this.roomPwd = null;
           this.$store.dispatch("setIsEnter");
           this.$store.dispatch("setGameInfo", res.data);
-          this.joinSession();
+          this.joinSession(roomId);
           router.push({ name: "room", params: { roomId: res.data.roomId } });
         })
         .catch((err) => {
@@ -129,8 +134,9 @@ export default {
           // alert("게임방 진입에 실패하셨습니다");
         });
     },
-    joinSession() {
+    joinSession(roomId) {
       // --- 1) Get an OpenVidu object ---
+
       this.OV = new OpenVidu();
 
       // --- 2) Init a session ---
