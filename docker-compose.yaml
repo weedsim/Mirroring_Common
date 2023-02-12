@@ -3,7 +3,7 @@ version: "3.0"
 services:
  front:
   build:
-   context: /home/ubuntu/front-end
+   context: /home/ubuntu/S08P12A706/front-end
   ports:
    - 8081:8081
 
@@ -19,7 +19,7 @@ services:
 
  back:
   build:
-   context: /home/ubuntu/back-end/liargame
+   context: /home/ubuntu/S08P12A706/back-end/liargame
   ports:
    - "5000:5000"
   depends_on:
