@@ -2,12 +2,25 @@ version: "3.0"
 
 services:
  front:
-  build: ./front-end
+  build:
+   context: /home/ubuntu/front-end
   ports:
-   - "8081:8081"
+   - 8081:8081
+
+ db:
+  image: mysql:8.0
+  environment:
+   MYSQL_ROOT_PASSWORD: ssafy
+   MYSQL_DATABASE: test
+   MYSQL_USER: root
+   MYSQL_PASSWORD: ssafy
+  ports:
+   - "3306:3306"
 
  back:
-  build: ./back-end/liargame
+  build:
+   context: /home/ubuntu/back-end/liargame
   ports:
    - "5000:5000"
-
+  depends_on:
+   - db
