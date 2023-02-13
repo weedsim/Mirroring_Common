@@ -1,6 +1,6 @@
 package com.sixsense.liargame.common.model.response;
 
-import com.sixsense.liargame.common.model.UserInfo;
+import com.sixsense.liargame.api.sse.UserInfo;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;

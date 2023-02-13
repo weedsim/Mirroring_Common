@@ -1,18 +1,16 @@
 package com.sixsense.liargame.api.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sixsense.liargame.api.request.AnswerReq;
 import com.sixsense.liargame.api.service.GameService;
-import com.sixsense.liargame.api.sse.GameManager;
-import com.sixsense.liargame.api.sse.GlobalRoom;
-import com.sixsense.liargame.api.sse.NormalGame;
-import com.sixsense.liargame.common.model.UserInfo;
-import com.sixsense.liargame.common.model.Vote;
+import com.sixsense.liargame.api.sse.*;
 import com.sixsense.liargame.common.model.response.GameResultResp;
 import com.sixsense.liargame.db.entity.NormalHistory;
 import com.sixsense.liargame.db.entity.NormalPlay;
 import com.sixsense.liargame.db.entity.Room;
 import com.sixsense.liargame.db.repository.NormalHistoryRepository;
 import com.sixsense.liargame.db.repository.NormalPlayRepository;
-import com.sixsense.liargame.db.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +22,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class GameServiceImpl implements GameService {
-    private final UserRepository userRepository;
     private final NormalHistoryRepository normalHistoryRepository;
     private final NormalPlayRepository normalPlayRepository;
     private final GameManager gameManager;
@@ -33,14 +30,15 @@ public class GameServiceImpl implements GameService {
     private final String SPY = "spy";
     private final Map<Integer, Room> rooms;
     private final Map<Integer, NormalGame> games;
+    private final ObjectMapper om;
 
-    public GameServiceImpl(UserRepository userRepository, NormalHistoryRepository normalHistoryRepository, NormalPlayRepository normalPlayRepository, GameManager gameManager, GlobalRoom globalRoom) {
-        this.userRepository = userRepository;
+    public GameServiceImpl(NormalHistoryRepository normalHistoryRepository, NormalPlayRepository normalPlayRepository, GameManager gameManager, GlobalRoom globalRoom, ObjectMapper om) {
         this.normalHistoryRepository = normalHistoryRepository;
         this.normalPlayRepository = normalPlayRepository;
         this.gameManager = gameManager;
         this.rooms = globalRoom.getRooms();
         this.games = globalRoom.getGames();
+        this.om = om;
     }
 
     @Override
@@ -63,7 +61,15 @@ public class GameServiceImpl implements GameService {
                             .collect(Collectors.toList());
             normalPlayRepository.saveAll(playList);
             room.end();
-            return normalGame.getResult();
+            GameResultResp gameResultResp = normalGame.getResult();
+            String result;
+            try {
+                result = om.writeValueAsString(gameResultResp);
+            } catch (JsonProcessingException e) {
+                return null;
+            }
+            room.getEmitters().sendToAll("message", new SseResponse("result", result));
+            return gameResultResp;
         }
         return null;
     }
@@ -94,12 +100,13 @@ public class GameServiceImpl implements GameService {
     public void vote(Vote vote, Integer gameId) {
         NormalGame game = games.get(gameId);
         gameManager.vote(vote.getVoter(), vote.getTarget(), game.getVotes());
+        System.out.println("투표 완료");
     }
 
     @Override
     @Transactional
-    public void insertAnswer(String answer, Integer gameId) {
-        NormalGame game = games.get(gameId);
-        game.setAnswer(answer);
+    public void insertAnswer(AnswerReq answer) {
+        NormalGame game = games.get(answer.getRoomId());
+        game.setAnswer(answer.getAnswer());
     }
 }

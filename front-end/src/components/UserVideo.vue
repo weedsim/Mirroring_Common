@@ -1,37 +1,32 @@
 <template>
-<div v-if="streamManager">
-	<ov-video :stream-manager="streamManager"/>
-	<div><p>{{ clientData }}</p></div>
-</div>
+  <div class="m-0 p-0 here">
+    <ov-video />
+  </div>
 </template>
 
 <script>
-import OvVideo from './OvVideo';
+import OvVideo from "./OvVideo";
 
 export default {
-	name: 'UserVideo',
+  name: "UserVideo",
 
-	components: {
-		OvVideo,
-	},
+  components: {
+    OvVideo,
+  },
 
-	props: {
-		streamManager: Object,
-	},
-
-	computed: {
-		clientData () {
-			const { clientData } = this.getConnectionData();
-			return clientData;
-		},
-	},
-
-	methods: {
-		getConnectionData () {
-            console.log(666, this.streamManager)
-			const { connection } = this.streamManager.stream;
-			return JSON.parse(connection.data);
-		},
-	},
+  computed: {
+    clientData() {
+      const { clientData } = this.getConnectionData();
+      return clientData;
+    },
+  },
+  created() {},
+  methods: {
+    getConnectionData() {
+      console.log(666, this.streamManager);
+      const { connection } = this.streamManager.stream;
+      return JSON.parse(connection.data);
+    },
+  },
 };
 </script>

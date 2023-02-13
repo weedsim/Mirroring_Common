@@ -1,6 +1,5 @@
 package com.sixsense.liargame.api.sse;
 
-import com.sixsense.liargame.common.model.Vote;
 import com.sixsense.liargame.db.entity.Room;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -13,28 +12,34 @@ import java.util.stream.Collectors;
 
 @Component
 public class GameManager {
-    private final int SPARE_TIME = 1000;
+    private final int SPARE_TIME = 200;
+    private final Map<Integer, NormalGame> games;
 
-    public GameManager() {
+    public GameManager(GlobalRoom globalRoom) {
+        this.games = globalRoom.getGames();
     }
 
     public NormalGame start(Room room) {
-        NormalGame normalGame = new NormalGame(room);
+        NormalGame normalGame = games.get(room.getId());
         Emitters emitters = room.getEmitters();
         int timeout = room.getTimeout();
 
         room.getEmitters().setLiar(normalGame.getLiarUserId());
         //시민들에게 단어 알려주고 게임 시작 알리기
-        emitters.sendToCitizens("message", "word : " + normalGame.getWord());
-        emitters.sendToLiar("message", "word : " + "liar");
-        emitters.sendToAll("message", "msg : " + "game start");
+
+        emitters.sendToCitizens("message", new SseResponse("word", normalGame.getWord()));
+        emitters.sendToLiar("message", new SseResponse("word", "liar"));
+        //테스트용
+        emitters.sendToLiar("message", new SseResponse("word", normalGame.getWord()));
+        emitters.sendToAll("message", new SseResponse("message", "game start"));
         //timeout 만큼 쉼
-        waitTimeout(room.getEmitters(), timeout * 1000);
+        waitTimeout(room.getEmitters(), timeout * 200);
         //차례대로 발언
         Integer curSpeaker = normalGame.getCurSpeaker();
         while (curSpeaker != null) {
-            emitters.sendToAll("message", "curSpeaking : " + curSpeaker.toString());
-            waitTimeout(room.getEmitters(), timeout * 1000);
+
+            emitters.sendToAll("message", new SseResponse("curSpeaker", curSpeaker.toString()));
+            waitTimeout(room.getEmitters(), timeout * 200);
             curSpeaker = normalGame.changeSpeaker();
         }
         //투표시간 알림
@@ -50,40 +55,49 @@ public class GameManager {
         //시민인 경우 바로 게임종료, 라이어인 경우 정답 입력 시간 알림
         String winner = "LIAR";
         if (Objects.equals(normalGame.getLiar(), result)) {
-            emitters.sendToCitizens("message", "msg : " + "selected liar");
-            emitters.sendToLiar("message", "msg : " + "write answer");
-            waitTimeout(room.getEmitters(), 1000 * 10); // 정답 입력시간 10초
+            emitters.sendToCitizens("message", new SseResponse("message", "selected liar"));
+            emitters.sendToLiar("message", new SseResponse("message", "write answer"));
+            waitTimeout(room.getEmitters(), 200 * 10); // 정답 입력시간 10초
+            if (!StringUtils.hasText(normalGame.getAnswer())) {
+                winner = "CITIZEN";
+            }
             if (StringUtils.hasText(normalGame.getAnswer()) && !normalGame.getAnswer().equals(normalGame.getWord()))
                 winner = "CITIZEN";
         }
         normalGame.setWinner(winner);
+        System.out.println("winner: " + winner);
+
         return normalGame;
         //정답여부와 승패 알림(게임종료 알림)
     }
 
     private void noticeVote(Emitters emitters) {
-        emitters.sendToAll("message", "msg : " + "vote start");
-        waitTimeout(emitters, 30 * 1000); // 30초
+        emitters.sendToAll("message", new SseResponse("message", "vote start"));
+        waitTimeout(emitters, 5 * 1000); // 30초
         //투표종료 알림
-        emitters.sendToAll("message", "msg : " + "vote end");
+        emitters.sendToAll("message", new SseResponse("message", "vote end"));
     }
 
     private Integer getVoteResult(List<Vote> votes) {
         if (votes.isEmpty()) { // 일단 테스트용
-            return 0;
+            return null;
         }
         Map<Integer, VoteResult> voteResultMap = new HashMap<>();
-        votes.forEach(vote -> {
-            voteResultMap.computeIfPresent(vote.getTarget(), (aLong, voteResult) -> voteResult.vote());
-        });
+        for (Vote vote : votes) {
+            if (voteResultMap.containsKey(vote.getTarget())) {
+                voteResultMap.get(vote.getTarget()).vote();
+            } else {
+                voteResultMap.put(vote.getTarget(), new VoteResult(vote.getTarget()));
+            }
+        }
         List<VoteResult> voteResult = voteResultMap.values().stream().sorted((o1, o2) -> o2.getCnt() - o1.getCnt()).collect(Collectors.toList());
-        if (voteResult.get(0).getCnt() == voteResult.get(1).getCnt())
+        if (voteResult.size() > 1 && voteResult.get(0).getCnt() == voteResult.get(1).getCnt())
             return null;
         return voteResult.get(0).getTarget();
     }
 
     private void waitTimeout(Emitters emitters, Integer time) {
-        emitters.sendToAll("time", "time : " + time.toString());
+        emitters.sendToAll("message", new SseResponse("time", time.toString()));
         try {
             Thread.sleep(time + SPARE_TIME);
         } catch (InterruptedException e) {
@@ -109,11 +123,11 @@ public class GameManager {
 
         public VoteResult(Integer target) {
             this.target = target;
+            this.cnt = 1;
         }
 
-        public VoteResult vote() {
+        public void vote() {
             cnt++;
-            return this;
         }
 
         public Integer getTarget() {

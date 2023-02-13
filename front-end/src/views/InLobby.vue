@@ -16,13 +16,12 @@ import MainLobby from "@/components/lobby/MainLobby.vue";
 import OuterContainer282 from "@/components/OuterContainer282.vue";
 
 export default {
-    name:"InLobby",
-    components: {
-        
-    MainLobby
+  name: "InLobby",
+  components: {
+    MainLobby,
     // ,LeftContainer
     // ,RightContainer
-    , OuterContainer282
+    OuterContainer282
     },
 }
 

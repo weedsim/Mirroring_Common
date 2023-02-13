@@ -3,7 +3,9 @@ package com.sixsense.liargame.api.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sixsense.liargame.api.service.RoomService;
+import com.sixsense.liargame.api.sse.Emitters;
 import com.sixsense.liargame.api.sse.GlobalRoom;
+import com.sixsense.liargame.api.sse.SseResponse;
 import com.sixsense.liargame.common.model.request.RoomReq;
 import com.sixsense.liargame.common.model.request.SettingDto;
 import com.sixsense.liargame.common.model.response.RoomDetail;
@@ -52,28 +54,30 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
-    public Integer insert(Long userId, RoomReq roomReq) {
+    public RoomDetail insert(Long userId, RoomReq roomReq) {
         Room room = toEntity(roomReq);
+        room.setEmitters(new Emitters(om));
         Integer roomId = getRoomId();
         rooms.put(roomId, room);
         room.setMaster(userId);
         room.setId(roomId);
         enter(userId, roomId);
-        return roomId;
+        return toDetail(room);
     }
 
     @Override
     public RoomDetail enter(Long userId, Integer roomId) {
         Room room = rooms.get(roomId);
-        if (room.getMaxCount() > room.getCurCount()) {
+        if (6 > room.getCurCount()) {
             User user = userRepository.findById(userId).orElseThrow();
             room.enter(user.getId(), user.getName());
             RoomDetail roomDetail = toDetail(room);
             try {
-                room.getEmitters().sendToAll("message", "room : " + om.writeValueAsString(roomDetail));
+                room.getEmitters().sendToAll("message", new SseResponse("room", om.writeValueAsString(roomDetail)));
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
+            return roomDetail;
         }
         return null;
     }
@@ -89,7 +93,7 @@ public class RoomServiceImpl implements RoomService {
 
         RoomDetail roomDetail = toDetail(room);
         try {
-            room.getEmitters().sendToAll("message", "room : " + om.writeValueAsString(roomDetail));
+            room.getEmitters().sendToAll("message", new SseResponse("message", om.writeValueAsString(roomDetail)));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -106,14 +110,14 @@ public class RoomServiceImpl implements RoomService {
     public List<RoomResp> selectAll(Pageable pageable) {
         System.out.println("방목록 요청");
         System.out.println(pageable.getPageNumber());
-        List<RoomResp> list = rooms.values().stream().map(this::toDto).sorted(Comparator.comparingInt(RoomResp::getId)).limit(8).collect(Collectors.toList());
+        List<RoomResp> list = rooms.values().stream().map(this::toDto).sorted(Comparator.comparingInt(RoomResp::getId)).skip(pageable.getPageNumber() * 10L).limit(10).collect(Collectors.toList());
         System.out.println(list.toString());
-        return rooms.values().stream().map(this::toDto).sorted(Comparator.comparingInt(RoomResp::getId)).limit(8).collect(Collectors.toList());
+        return list;
     }
 
     @Override
     public Integer last() {
-        return (rooms.size() - 1) / 8 + 1;
+        return (rooms.size() - 1) / 10 + 1;
     }
 
     @Override
@@ -123,10 +127,10 @@ public class RoomServiceImpl implements RoomService {
         if (ready != null) {
             boolean isReady = room.getParticipants().get(ready).getIsReady();
             if (isReady) {
-                room.getEmitters().sendToAll("message", "ready : " + ready);
+                room.getEmitters().sendToAll("message", new SseResponse("ready", ready.toString()));
                 return;
             }
-            room.getEmitters().sendToAll("message", "unready : " + ready);
+            room.getEmitters().sendToAll("message", new SseResponse("unready", ready.toString()));
         }
     }
 

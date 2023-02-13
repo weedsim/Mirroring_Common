@@ -1,48 +1,26 @@
 <template>
-  <div id="main-container" class="container">
-    <!-- <div id="join" v-if="!session">
-      <div id="img-div">
-        <img src="resources/images/openvidu_grey_bg_transp_cropped.png" />
-      </div>
-      <div id="join-dialog" class="jumbotron vertical-center">
-        <h1>Join a video session</h1>
-        <div class="form-group">
-          <p>
-            <label>Participant</label>
-            <input v-model="myUserName" class="form-control" type="text" required />
-          </p>
-          <p>
-            <label>Session</label>
-            <input v-model="mySessionId" class="form-control" type="text" required />
-          </p>
-          <p class="text-center">
-            <button class="btn btn-lg btn-success" @click="joinSession()">
-              Join!
-            </button>
-          </p>
-        </div>
-      </div>
-    </div> -->
-
-    <!-- <div id="session" v-if="session"> -->
-    <!-- <div id="session-header">
-        <h1 id="session-title">{{ mySessionId }}</h1>
-        <input class="btn btn-large btn-danger" type="button" id="buttonLeaveSession" @click="leaveSession"
-          value="Leave session" />
-      </div> -->
-    <!-- <div id="main-video" class="col-md-6">
-        <user-video :stream-manager="mainStreamManager" />
-      </div> -->
-    <div id="video-container">
-      <user-video
-        :stream-manager="$store.state.sessions[curIdx].ovSession.publisher"
-      />
-      <!-- @click="updateMainVideoStreamManager(publisher)"  -->
-      <!-- <user-video v-for="sub in $store.state.sessions[curIdx].ovSession.subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub"
-          @click="updateMainVideoStreamManager(sub)" /> -->
-    </div>
-    <!-- </div> -->
+  <!-- <user-video
+    v-if="$store.state.myIdx == curIdx"
+    :stream-manager="$store.state.publisher"
+  /> -->
+  <!-- <user-video
+    v-if="$store.state.myIdx > curIdx"
+    :stream-manager="$store.state.subscribers[curIdx]"
+  />
+  <user-video
+    v-if="
+      $store.state.myIdx < curIdx &&
+      $store.state.subscribers.length > curIdx - 1
+    "
+    :stream-manager="$store.state.subscribers[curIdx - 1]"
+  /> -->
+  <div>
+    <user-video />
   </div>
+  <!-- @click="updateMainVideoStreamManager(publisher)"  -->
+  <!-- <user-video v-for="sub in $store.state.sessions[curIdx].ovSession.subscribers" :key="sub.stream.connection.connectionId" :stream-manager="sub"
+          @click="updateMainVideoStreamManager(sub)" /> -->
+  <!-- </div> -->
 </template>
 
 <script>
@@ -74,7 +52,7 @@ export default {
       OV: undefined,
       session: undefined,
       mainStreamManager: undefined,
-      publisher: undefined,
+      publisher: this.$store.state.publisher,
 
       // Join form
       mySessionId: "SessionA",
@@ -82,8 +60,10 @@ export default {
     };
   },
   created() {
+    // this.joinSession();
+    console.log("store-publisher-userdisplay", this.$store.state.publisher);
     console.log(444, this.$store.state.sessions[this.curIdx].ovSession);
-    // this.joinSession()
+    //
     // console.log("OV,", this.OV)
     // console.log("session,", this.session,)
     // console.log("mainStreamManager,", this.mainStreamManager,)
@@ -183,6 +163,7 @@ export default {
             this.publisher = publisher;
             // console.log(this.curIdx)
             // console.log("this.$store", this.$store.state.sessions[this.curIdx])
+
             this.$store.state.sessions[this.curIdx].ovSession.session =
               publisher;
             this.$store.state.sessions[this.curIdx].isJoin = true;

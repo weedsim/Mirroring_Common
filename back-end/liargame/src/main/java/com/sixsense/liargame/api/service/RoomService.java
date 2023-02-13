@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 public interface RoomService {
-    Integer insert(Long userId, RoomReq roomReq) throws OpenViduJavaClientException, OpenViduHttpException;
+    RoomDetail insert(Long userId, RoomReq roomReq) throws OpenViduJavaClientException, OpenViduHttpException;
 
     RoomDetail enter(Long userId, Integer roomId);
 
