@@ -14,7 +14,7 @@
           </tr>
           <tr>
             <td style="color: white; margin-right: 1%;">유저 이름:</td>
-            <td><input type="text" v-model="this.username" v-bind:disabled="!isinputActive" /><button id="namebtn" @click="namedupli">변경</button> </td>
+            <td><input type="text" v-model="this.username" v-bind:disabled="!isinputActive" /><button id="namebtn" @click="namedupli">변경</button><button v-show=showcancle @click="canclename(), showcancle=!showcancle">취소</button> </td>
           </tr>
           <tr>
             <td style="color: white;">수정 비밀번호 입력 : </td>
@@ -73,6 +73,7 @@ export default {
   data() {
     return {
       username: this.username,
+      showcancle: false,
       uaername1: null,
       changename: 0,
       email: null,
@@ -115,7 +116,7 @@ export default {
   mounted() {},
   methods: {
     userInfo() { //처음 유저 정보 불러오기, 전적정보 불러오기
-      console.log(this.$store.state)
+      console.log(this.$store.state.accessToken)
       axios({
         method: "get",
         url: `${this.API_URL}/users`,
@@ -198,85 +199,116 @@ export default {
         console.log(err);
       });
     },
+    canclename() {
+      this.isinputActive = true;
+      const btnElement = document.getElementById('namebtn');
+      btnElement.innerText = '중복 확인';
+      this.changename = 0;
+    },
     namedupli() {  //중복확인
-      this.username1 = this.username;
-      // const data = new FormData();
-      // data.append("name", username1);
-      if(this.isinputActive === true){
-        axios({
-          method: "get",
-          url: `${this.API_URL}/users/duplicate`,
-          params: {
-            name: this.username1,
-          },
-        })
-        .then((res) => {
-          if(res.data === true) {
-            console.log("중복입니다.")
-            alert("중복입니다. 다시 작성해주세요")
-          }
-          else{
-            console.log("중복이 아닙니다.")
-            this.changename = 1;
-          }
-        })
-        .catch((err) => {
-          console.log("중복확인실패");
-          console.log(err);
-        })
+      if(this.changename === 1){
+        this.patchname();
       }
-        this.isinputActive = true;
-        const btnElement = document.getElementById('namebtn');
-        btnElement.innerText = '중복 확인';
-      },
-      patchPW() { //비밀번호 변경되게 입력
-        if(this.changename == 1 && this.username1 === this.username){
-          axios({
-            method: "put",
-            url:`${this.API_URL}/users/modify/name`,
-            headers: {
-              Authorization: `Bearer ${this.$store.state.accessToken}`,
-            },
-            params: {
-              name: this.username,
-            },
-          })
-          .then((res) => {
-            if(res.data.result === "success"){
-              console.log("이름 변경 성공")
-            }
-            else {
-              console.log("이름 변경 실패")
-            }
-          })
-        };
+      else{
 
-        if(this.modifyPW === this.remodifyPW) {
+        this.username1 = this.username;
+        if(this.isinputActive === true){
           axios({
-            method: "put",
-            url: `${this.API_URL}/users/modify/password`,
-            headers: {
-              Authorization: `Bearer ${this.$store.state.accessToken}`,
-            },
+            method: "get",
+            url: `${this.API_URL}/users/duplicate`,
             params: {
-              password: this.remodifyPW
+              name: this.username1,
             },
           })
           .then((res) => {
-            console.log(res);
-            if(res.data.result === "success") {
-              console.log("비번 변경 성공")
-              location.reload();
+            if(res.data === true) {
+              console.log("중복입니다.")
+              alert("중복입니다. 다시 작성해주세요")
             }
             else{
-              console.log("비번 변경 실패")
+              console.log("중복이 아닙니다.")
+              this.changename = 1;
+              alert("이름을 수정하시려면 '이름 수정' 버튼을 눌러주세요");
+              const btnElement = document.getElementById('namebtn');
+              btnElement.innerText = '이름 수정';
+              this.isinputActive = false;
+              this.showcancle = true;
             }
-          })        
-        } else{
-          console.log("비밀번호가 다르게 입력되었습니다.")
+          })
+          .catch((err) => {
+            console.log("중복확인실패");
+            console.log(err);
+          })
         }
+          this.isinputActive = true;
+          const btnElement = document.getElementById('namebtn');
+          btnElement.innerText = '중복 확인';
+          
+      }
+        },
+        patchPW() {
+          if(this.modifyPW === this.remodifyPW) {
+            console.log(this.remodifyPW);
+            axios({ //비번 변경
+              method: "put",
+              url: `${this.API_URL}/users/modify/password`,
+              headers: {
+                Authorization: `Bearer ${this.$store.state.accessToken}`,
+                "Content-Type" : "application/json",
+                // "Content-Type": "multipart/form-data"
+              },
+              data: {
+                "password": "{this.remodifyPW}",
+              },
+            })
+            .then((res) => {
+              console.log(res);
+              if(res.data.result === "success") {
+                console.log("비번 변경 성공")
+                location.reload();
+              }
+              else{
+                console.log("비번 변경 실패")
+              }
+            })   
+            .catch((err) => {
+              console.log(err);
+            })     
+          } else{
+            console.log("비밀번호가 다르게 입력되었습니다.")
+          }
+      },
+      patchname(){
+        if(this.changename == 1 && this.username1 === this.username){ 
+            axios({ //유저 이름 변경
+              method: "put",
+              url:`${this.API_URL}/users/modify/name`,
+              headers: {
+                Authorization: `Bearer ${this.$store.state.accessToken}`,
+                'Content-Type' : "application/json",
+                // "Content-Type": "multipart/form-data"
+              },
+              data: {
+                name: this.username,
+              },
+            })
+            .then((res) => {
+              if(res.data.result === "success"){
+                console.log("이름 변경 성공")
+                location.reload();
+              }
+              else {
+                console.log("이름 변경 실패")
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              console.log("이름 변경에 문제가 생겼습니다");
+            })
+          };
+      },
     },
-  },
+    
 };
 </script>
 

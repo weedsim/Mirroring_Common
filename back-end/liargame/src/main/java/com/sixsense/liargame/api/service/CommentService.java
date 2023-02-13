@@ -13,7 +13,7 @@ public interface CommentService {
 
     void updateComment(Long userId, Long commentId, String content);
 
-    List<CommentResp> findAllComments(Long articleId, Pageable pageable);
+    List<CommentResp> findAllComments(Long articleId, Integer page, Integer size);
 
     default Comment toEntity(Long userId, Long articleId, String content) {
         return Comment.builder()

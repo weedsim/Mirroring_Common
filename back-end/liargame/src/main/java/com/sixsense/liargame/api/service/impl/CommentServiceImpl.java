@@ -47,11 +47,10 @@ public class CommentServiceImpl implements CommentService {
 
     //게시글의 댓글 전부 가져오기
     @Override
-    public List<CommentResp> findAllComments(Long articleId, Pageable pageable) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "updatedAt");
-        PageRequest pageRequest = (PageRequest) pageable;
-        pageRequest.withSort(sort);
-        List<Comment> comments = commentRepository.findAllByArticleId(articleId, pageRequest);
+    public List<CommentResp> findAllComments(Long articleId, Integer page, Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "createdAt");
+        Pageable pageable = PageRequest.of(page, size, sort);
+        List<Comment> comments = commentRepository.findAllByArticleId(articleId, pageable);
         return comments.stream().map(CommentResp::new).collect(Collectors.toList());
     }
 }
