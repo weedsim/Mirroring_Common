@@ -14,20 +14,16 @@
 <script>
 export default {
   name: "OvVideo",
+  data() {},
 
   props: {
     streamManager: Object,
-    myIdx: Object,
-    index: Object,
   },
+  computed: {},
 
   mounted() {
-    console.log("여기에요!!!!");
-    console.log("this.$el", this.$el);
-    console.log(this.streamManager);
-    console.log(this.myIdx);
-    console.log(this.index);
     this.streamManager.addVideoElement(this.$el);
   },
+  methods: {},
 };
 </script>

@@ -17,7 +17,7 @@
             <router-link to="/community" class="nav-link">커뮤니티</router-link>
           </li>
         </ul>
-        <ul class="menu" v-if="!$store.state.isLogin">
+        <ul class="menu" v-if="!this.isLogin">
           <li class="nav-link">
             <a class="" href="#" v-on:click="onModal('login')">로그인</a>
           </li>
@@ -46,6 +46,7 @@ import LoginModal from "@/components/home/LoginModal.vue";
 import SignupModal from "@/components/home/SignupModal.vue";
 import PwdModal from "@/components/home/PwdModal.vue";
 import VueCookies from "vue-cookies";
+import { mapGetters } from "vuex";
 
 export default {
   components: { LoginModal, SignupModal, PwdModal },
@@ -55,15 +56,25 @@ export default {
       loginShow: false,
       signShow: false,
       pwdShow: false,
+      islogin: false,
       // loginstatus: this.$cookies.isKey("refreshToken"),
       // istoken: "cookieValue",
     };
   },
-  // computed:{
-  //   loginstatus(){
-  //     return this.$store.commit()
-  //   }
-  // },
+  computed: {
+    loginstatus() {
+      // return this.$store.getters.isLogin;
+      console.log(VueCookies.isKey("accessToken"));
+      return VueCookies.isKey("accessToken");
+    },
+    ...mapGetters(["isLogin"]),
+  },
+  watch: {
+    loginstatus(newVal) {
+      console.log("로그인와치", newVal);
+      this.islogin = newVal;
+    },
+  },
   methods: {
     onModal(data) {
       if (data === "login") {
@@ -95,7 +106,7 @@ export default {
     },
     logout() {
       const payload = {
-        accessToken: this.$store.state.accessToken,
+        accessToken: VueCookies.get("accessToken"),
         refreshToken: VueCookies.get("refreshToken"),
       };
       this.$store.dispatch("logOut", payload);

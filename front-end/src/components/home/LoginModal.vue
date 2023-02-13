@@ -92,22 +92,12 @@ export default {
       (this.useremail = null), (this.userpwd = null);
       this.$emit("close", "login"); // 창 닫아주세요.
     },
-    // resetval() {
-    //   (this.useremail = null), (this.userpwd = null);
-    // },
-    // logIn() {
-    //   const payload = {
-    //     email: this.useremail,
-    //     password: this.userpwd,
-    //   };
-    //   this.$store.dispatch("logIn", payload);
-    // },
     logIn() {
       axios({
         method: "POST",
         url: `${this.$store.state.API_URL}/users/login`,
         headers: {
-          "Content-Type": "multipart/form-data",
+          // "Content-Type": "multipart/form-data",
           // "Content-Type": "application/json",
         },
         data: {

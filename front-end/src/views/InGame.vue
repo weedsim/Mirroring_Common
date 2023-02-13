@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div v-bind:class="[{ citizen: iscitizen }, { liar: !iscitizen }]">
     <div style="width: 12.5vw"></div>
     <div style="width: 75vw">
       <main-game style="height: 100vh"></main-game>
@@ -19,6 +19,7 @@ import axios from "axios";
 import { NativeEventSource, EventSourcePolyfill } from "event-source-polyfill";
 import router from "@/router";
 import AnswerModal from "@/components/ingame/playgame/AnswerModal.vue";
+import VueCookies from "vue-cookies";
 
 export default {
   name: "InGame",
@@ -34,6 +35,7 @@ export default {
       API_URL: this.$store.state.API_URL,
       message: "",
       isshow: false,
+      iscitizen: true,
     };
   },
   created() {
@@ -43,10 +45,20 @@ export default {
     chkShow() {
       return this.$store.state.liarAnswerModal;
     },
+    chkRole() {
+      return this.$store.state.mysubject;
+    },
   },
   watch: {
     chkShow(newVal) {
       this.isshow = newVal;
+    },
+    chkRole(newVal) {
+      if (newVal === "liar") {
+        this.iscitizen = false;
+      } else {
+        this.iscitizen = true;
+      }
     },
   },
   // 이방들어올때 룸ID가 있어야함. 이거받고.
@@ -54,7 +66,7 @@ export default {
     linkSSE() {
       // console.log(this.$store.state.accessToken);
       const headers = {
-        Authorization: "Bearer " + this.$store.state.accessToken,
+        Authorization: "Bearer " + VueCookies.get("accessToken"),
       };
       const source = new EventSourcePolyfill(
         `${this.API_URL}/sse/connect?roomId=${this.roomId}`,
@@ -77,6 +89,7 @@ export default {
         }
         // 방정보 업데이트
         if (type === "room") {
+          console.log("room정보가 왔어요");
           const gameinfo = JSON.parse(JSON.parse(event.data).value);
           this.$store.dispatch("setGameInfo", gameinfo);
         }
@@ -137,7 +150,7 @@ export default {
         // 결과물 받기
         if (type === "result") {
           console.log("결과" + val);
-          this.$store.commit("OFF_ANSWER");
+          this.$store.commit("OFF_ANSWER"); // 결과물 받으면 정답입력창 off
         }
       });
     },
@@ -151,7 +164,7 @@ export default {
         // url: `${this.API_URL}/rooms/${roomId}/enter`,
         url: `${this.API_URL}/rooms/${this.roomId}/games/start`,
         headers: {
-          Authorization: `Bearer ${this.$store.state.accessToken}`,
+          Authorization: `Bearer ${VueCookies.get("accessToken")}`,
         },
         data: {},
       })
@@ -172,8 +185,15 @@ export default {
 </script>
 
 <style scoped>
-.about {
+.citizen {
   background-image: url(../assets/ingame/ingame_bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  height: 100vh;
+}
+.liar {
+  background-image: url(../assets/ingame/ingame_bg_liar.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;

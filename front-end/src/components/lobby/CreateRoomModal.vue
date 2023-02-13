@@ -79,13 +79,15 @@
                 <li>
                   <select name="player" id="" v-model="playercnt">
                     <option value="null">선택</option>
-                    <option v-bind:value="4">4명</option>
+                    <option v-bind:value="6">6명</option>
+
+                    <!-- <option v-bind:value="4">4명</option>
                     <option v-bind:value="5">5명</option>
                     <option v-bind:value="6">6명</option>
                     <option v-bind:value="7">7명</option>
                     <option v-bind:value="8">8명</option>
                     <option v-bind:value="9">9명</option>
-                    <option v-bind:value="10">10명</option>
+                    <option v-bind:value="10">10명</option> -->
                   </select>
                 </li>
               </ul>
@@ -100,10 +102,6 @@
                   <select name="time" id="" v-model="talktime">
                     <option value="null">선택</option>
                     <option v-bind:value="10">10초</option>
-                    <option v-bind:value="15">15초</option>
-                    <option v-bind:value="20">20초</option>
-                    <option v-bind:value="25">25초</option>
-                    <option v-bind:value="30">30초</option>
                   </select>
                 </li>
               </ul>
@@ -131,11 +129,11 @@ import router from "@/router";
 import VueCookies from "vue-cookies";
 import { OpenVidu } from "openvidu-browser";
 
-const APPLICATION_SERVER_URL =
-  // process.env.NODE_ENV === "production"
-  //   ? "http://192.168.91.171:5000/"
-  //   : "http://localhost:5000/";
-  "http://localhost:5000/";
+const APPLICATION_SERVER_URL = "http://192.168.91.171:5000/";
+// process.env.NODE_ENV === "production"
+//   ? "http://192.168.91.171:5000/"
+//   : "http://localhost:5000/";
+// "http://localhost:5000/";
 // const API_URL = "http://127.0.0.1:8080";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
 
@@ -245,8 +243,11 @@ export default {
 
       // On every new Stream received...
       this.session.on("streamCreated", ({ stream }) => {
+        console.log("들어왔어?");
         const subscriber = this.session.subscribe(stream, undefined);
-        this.subscribers.push(subscriber);
+        console.log("subscriber", subscriber);
+        this.$store.dispatch("setSubscribers", subscriber);
+        console.log("됐냐?");
       });
 
       // On every Stream destroyed...
@@ -296,6 +297,9 @@ export default {
             console.log("오픈비두 6완료");
 
             this.session.publish(this.publisher);
+            if (this.subscribers === undefined) {
+              this.subscribers = [];
+            }
             this.$store.dispatch("setOpenvidu", {
               OV: this.OV,
               session: this.session,

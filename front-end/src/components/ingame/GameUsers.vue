@@ -1,32 +1,28 @@
 <template>
   <div class="users-container">
-    <div
-      class="user"
-      v-for="(item, index) in $store.state.gameinfo.participants"
-      :key="index"
-    >
+    <div class="user" v-for="(item, index) in this.getAll" :key="index">
+      <!-- v-on:click="vote(index)" -->
       <div class="speaking-blur" :class="{ 'speaking-blur': active }">
         <!-- <div class="p-3 speaking-blur"> -->
         <div class="user-screen speaking" :class="{ speaking: active }">
           <!-- $store.state.sessions[index].isJoin -->
-          <OvVideo
-            v-if="this.myIdx === index"
-            :stream-manager="this.$store.state.openvidu.publisher"
-            :myIdx="this.myIdx"
-            :index="index"
-          />
-          <OvVideo
-            v-if="this.myIdx !== index"
-            :stream-manager="this.$store.state.openvidu.subscribers[index]"
-            :myIdx="this.myIdx"
-            :index="index"
-          />
+          <OvVideo :streamManager="item" />
           <!-- <img src="@/assets/ingame/headphone.png" v-else alt="" /> -->
           <div class="screen"></div>
+          <!-- <div
+            class="ready"
+            style="background-color: rgba(0, 135, 70, 81%)"
+            v-if="Master"
+          >
+            방장
+          </div> -->
+
           <div
             class="ready"
             style="background-color: rgba(0, 135, 70, 81%)"
-            v-if="this.$store.state.gameinfo.participants[index].isReady"
+            v-if="
+              this.$store.state.gameinfo.participants[index].isReady && !Master
+            "
           >
             <!-- this.$store.state.sessions[index].isReady -->
             준비완료
@@ -35,7 +31,9 @@
           <div
             class="unready"
             style="background-color: rgba(255, 176, 57, 81%)"
-            v-else
+            v-if="
+              !this.$store.state.gameinfo.participants[index].isReady && !Master
+            "
           >
             대기중
           </div>
@@ -48,7 +46,9 @@
 <script>
 import axios from "axios";
 import OvVideo from "@/components/OvVideo.vue";
-import { OpenVidu } from "openvidu-browser";
+import VueCookies from "vue-cookies";
+import jwtDecode from "vue-jwt-decode";
+import { mapState, mapGetters } from "vuex";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
@@ -71,15 +71,100 @@ export default {
       publisher: this.$store.state.openvidu.publisher,
       subscribers: this.$store.state.openvidu.subscribers,
       myIdx: this.$store.state.myIdx,
+      Master: false,
+      participants: this.$store.state.gameinfo.participants,
     };
   },
   created() {
     console.log("여기야!!", this.$store.state.gameinfo.participants);
     console.log("여기야!!2", this.$store.state.openvidu);
     console.log("여기야!!3", this.$store.state.myIdx);
+    this.isMaster();
+    console.log("마스터입니까?", this.Master);
   },
-  computed: {},
-  methods: {},
+  computed: {
+    ...mapGetters(["getAll"]),
+    ...mapState(["gameinfo"]),
+    ...mapState(["openvidu"]),
+    chkparti() {
+      return this.$store.state.gameinfo.participants;
+    },
+    chkpublisher() {
+      return this.$store.state.openvidu.publisher;
+    },
+    chksubscribers() {
+      // return this.$store.state.openvidu.subscribers;
+      return this.$store.getters.get_subscribers;
+    },
+    chkmyIdx() {
+      return this.$store.state.myIdx;
+    },
+  },
+  watch: {
+    chkparti: {
+      handler(newVal) {
+        console.log("parti 와치", newVal);
+        this.participants = newVal;
+      },
+      immediate: true,
+      deep: true,
+    },
+    chkpublisher(newVal) {
+      console.log("시계는 와치", newVal);
+      this.publisher = newVal;
+    },
+    chksubscribers: {
+      handler(newVal) {
+        console.log("subscribers 와치", newVal);
+        this.subscribers = this.$store.getters.get_subscribers;
+      },
+      immediate: true,
+      deep: true,
+    },
+    chkmyIdx(newVal) {
+      console.log("시계는 와치", newVal);
+      this.myIdx = newVal;
+    },
+  },
+  methods: {
+    getThis() {
+      console.log(this.subscribers);
+    },
+    isMaster() {
+      console.log(this.$store.state.gameinfo.master);
+      console.log(
+        "내아이디는 " +
+          Number(jwtDecode.decode(VueCookies.get("accessToken")).id)
+      );
+      if (
+        this.$store.state.gameinfo.master ===
+        Number(jwtDecode.decode(VueCookies.get("accessToken")).id)
+      ) {
+        this.Master = true;
+      }
+    },
+    vote(targetIndex) {
+      console.log("myidx: " + this.myIdx + " targetidx: " + targetIndex);
+      axios({
+        method: "POST",
+        url: `${this.$store.state.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/vote`,
+        headers: {
+          // "Content-Type": "multipart/form-data",
+          // "Content-Type": "application/json",
+        },
+        data: {
+          voter: this.myIdx,
+          target: targetIndex,
+        },
+      })
+        .then((res) => {
+          console.log("투표완료", res.data);
+        })
+        .catch((err) => {
+          console.log("투표실패", err);
+        });
+    },
+  },
 };
 </script>
 

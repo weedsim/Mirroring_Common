@@ -4,10 +4,11 @@ import router from "@/router";
 import VueCookies from "vue-cookies";
 import createPersistedState from "vuex-persistedstate";
 import playGameStore from "@/store/modules/playgame.js";
+import jwtDecode from "vue-jwt-decode";
 
 // const API_URL = "http://127.0.0.1:5000";
-const API_URL = "http://localhost:5000";
-// "http://192.168.91.171:5000";
+// const API_URL = "http://localhost:5000";
+const API_URL = "http://192.168.91.171:5000";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
 
 const storageStata = createPersistedState({
@@ -68,8 +69,8 @@ export default createStore({
     // API_URL: "http://i8a706.p.ssafy.io:8080",
     isEnter: true, // 게임방 진입시 라우터가드를 위한 state
     isShow: false,
-    accessToken: VueCookies.get("accessToken"),
-    refreshToken: VueCookies.get("refreshToken"),
+    accessToken: null,
+    refreshToken: null,
     // rooms: null, // rooms는 로비에서 방목록 8개 받아서 저장할곳.
     playgames: false,
     myIdx: -1,
@@ -82,8 +83,32 @@ export default createStore({
     NowPageNum: 1,
   },
   getters: {
-    isLogin(state) {
-      return VueCookies.get("accessToken") ? true : false;
+    getAll(state) {
+      var result = [];
+      if (state.openvidu.subscribers.length === 0) {
+        result.push(state.openvidu.publisher);
+        console.log("결과", result);
+        return result;
+      }
+      for (var i = 0; i < state.openvidu.subscribers.length; i++) {
+        if (i === state.myIdx) {
+          result.push(state.openvidu.publisher);
+        }
+        result.push(state.openvidu.subscribers[i]);
+        console.log("결과", result);
+      }
+      if (state.myIdx === state.openvidu.subscribers.length) {
+        result.push(state.openvidu.publisher);
+      }
+      console.log("결과", result);
+      return result;
+    },
+    isLogin() {
+      console.log("로그인상태getters", VueCookies.isKey("accessToken"));
+      if (VueCookies.isKey("accessToken")) {
+        return true;
+      }
+      return false;
     },
     isParticipants(state) {
       return state.gameinfo.participants;
@@ -94,8 +119,17 @@ export default createStore({
     GET_ROOMS(state) {
       return state.rooms;
     },
+    get_subscribers(state) {
+      return state.openvidu.subscribers;
+    },
   },
   mutations: {
+    SET_SUBSCRIBERS(state, payload) {
+      console.log("이거 구독자여야만해", payload);
+      console.log("여기다가 넣었어", state.openvidu.subscribers);
+      state.openvidu.subscribers.push(payload);
+      console.log("구독자에 잘 넣었어");
+    },
     // 회원가입 && 로그인
     SAVE_TOKEN(state, payload) {
       console.log("토큰저장" + payload);
@@ -105,14 +139,16 @@ export default createStore({
       VueCookies.set("refreshToken", payload.refreshToken);
       state.refreshToken = payload.refreshToken;
 
-      router.push({ name: "main" });
+      // router.push({ name: "main" });
+      router.go(0);
     },
     DELETE_TOKEN(state) {
       state.accessToken = null;
       state.refreshToken = null;
       VueCookies.remove("refreshToken");
       VueCookies.remove("accessToken");
-      router.push({ name: "main" }).catch(() => {});
+      // router.push({ name: "main" }).catch(() => {});
+      router.go(0);
     },
     // 방목록 저장할 뮤테이션(rooms)
     SET_ROOMS(state, payload) {
@@ -198,7 +234,7 @@ export default createStore({
         method: "post",
         url: `${API_URL}/users/sign-up/`,
         headers: {
-          "Content-Type": "multipart/form-data",
+          // "Content-Type": "multipart/form-data",
         },
         data: {
           name: payload.name,
@@ -213,9 +249,9 @@ export default createStore({
       axios({
         method: "POST",
         url: `${API_URL}/users/login`,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        // headers: {
+        //   "Content-Type": "multipart/form-data",
+        // },
         data: {
           email: payload.email,
           password: payload.password,
@@ -230,6 +266,7 @@ export default createStore({
             refreshToken: res.data.data.refreshToken,
           };
           context.commit("SAVE_TOKEN", payload);
+          // router.replace({ name: "main" });
         })
         .catch((err) => {
           console.log(err);
@@ -250,12 +287,18 @@ export default createStore({
           accessToken: payload.accessToken,
           refreshToken: payload.refreshToken,
         },
-      }).then((res) => {
-        if (res) {
-          console.log(res);
-          context.commit("DELETE_TOKEN");
-        }
-      });
+      })
+        .then((res) => {
+          if (res) {
+            console.log(res);
+            context.commit("DELETE_TOKEN");
+            // router.replace({ name: "main" });
+          }
+        })
+        .catch((err) => {
+          console.log("실패");
+          console.log(err);
+        });
     },
     getRooms(context, payload) {
       axios({
@@ -366,15 +409,29 @@ export default createStore({
         });
     },
     setMyIdx(context, payload) {
-      console.log("setMyIdx에서 :", payload);
-      context.commit("SET_MYIDX", payload.participants.length - 1);
-      console.log(
-        "setmyIdx에서 myidx에 저장되는 값 : ",
-        payload.participants.length - 1
-      );
+      console.log("디코더", jwtDecode.decode(VueCookies.get("accessToken")));
+      let myid = Number(jwtDecode.decode(VueCookies.get("accessToken")).id);
+      console.log(myid);
+      console.log(payload);
+      for (var i = 0; i < payload.participants.length; i++) {
+        if (myid === payload.participants[i].userId) {
+          context.commit("SET_MYIDX", i);
+          break;
+        }
+      }
+      // console.log("setMyIdx에서 :", payload);
+      // context.commit("SET_MYIDX", payload.participants.length - 1);
+      // console.log(
+      //   "setmyIdx에서 myidx에 저장되는 값 : ",
+      //   payload.participants.length - 1
+      // );
     },
     setOpenvidu(context, payload) {
       context.commit("SET_OPENVIDU", payload);
+    },
+    setSubscribers(context, payload) {
+      console.log("와야하는데..");
+      context.commit("SET_SUBSCRIBERS", payload);
     },
   },
 });

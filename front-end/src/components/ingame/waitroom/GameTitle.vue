@@ -5,7 +5,7 @@
   </div>
   <div class="setting-container">
     <router-link :to="{ path: 'InLobby' }">
-      <button class="btn-exit">나가기</button>
+      <button class="btn-exit" v-on:click="chkinfo">나가기</button>
     </router-link>
     <div class="btn-setting">
       <BIconGearFill v-on:click="test" class=""></BIconGearFill>
@@ -16,7 +16,6 @@
 
 <script>
 import { BIconGearFill } from "bootstrap-icons-vue";
-import UserComp from "@/components/ingame/UserComp.vue";
 
 export default {
   name: "GameTitle",
@@ -24,6 +23,9 @@ export default {
   methods: {
     test() {
       console.log("test!!!~");
+    },
+    chkinfo() {
+      console.log(this.$store.state.openvidu);
     },
   },
 };

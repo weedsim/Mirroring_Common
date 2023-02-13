@@ -4,7 +4,8 @@
     <router-link to="/ingame">InGame</router-link> |
     <router-link to="/inlobby">InLobby</router-link>
   </nav> -->
-  <router-view />
+  <!-- <router-view :key="$route.fullPath" /> -->
+  <router-view :key="$route.path" />
 </template>
 
 <script>
