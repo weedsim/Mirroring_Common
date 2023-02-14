@@ -7,22 +7,32 @@
     <router-link :to="{ path: 'InLobby' }">
       <button class="btn-exit" v-on:click="chkinfo">나가기</button>
     </router-link>
-    <div class="btn-setting">
-      <BIconGearFill v-on:click="test" class=""></BIconGearFill>
-      방 설정 변경
-    </div>
+    <div class="btn-setting" v-on:click="test">방 설정 변경</div>
   </div>
+  <!-- <ResultModal v-if="resultShow" v-on:close="offModal" /> -->
 </template>
 
 <script>
-import { BIconGearFill } from "bootstrap-icons-vue";
+// import ResultModal from "@/components/ingame/playgame/ResultModal.vue";
 
 export default {
   name: "GameTitle",
+  components: {
+    // ResultModal,
+  },
+  data() {
+    return {
+      resultShow: false,
+    };
+  },
   created() {},
   methods: {
     test() {
       console.log("test!!!~");
+      this.resultShow = true;
+    },
+    offModal() {
+      this.resultShow = false;
     },
     chkinfo() {
       console.log(this.$store.state.openvidu);

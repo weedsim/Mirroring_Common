@@ -8,6 +8,7 @@
   </div>
   <SettingModal v-if="setting === true" />
   <AnswerModal v-if="isshow === true" />
+  <ResultModal v-if="isresult === true" />
 </template>
 
 <script>
@@ -20,6 +21,7 @@ import { NativeEventSource, EventSourcePolyfill } from "event-source-polyfill";
 import router from "@/router";
 import AnswerModal from "@/components/ingame/playgame/AnswerModal.vue";
 import VueCookies from "vue-cookies";
+import ResultModal from "@/components/ingame/playgame/ResultModal.vue";
 
 export default {
   name: "InGame",
@@ -28,6 +30,7 @@ export default {
     MainGame,
     AnswerModal,
     SettingModal,
+    ResultModal,
   },
   data() {
     return {
@@ -36,6 +39,7 @@ export default {
       message: "",
       isshow: false,
       iscitizen: true,
+      isresult: false,
     };
   },
   created() {
@@ -48,10 +52,16 @@ export default {
     chkRole() {
       return this.$store.state.mysubject;
     },
+    chkresult() {
+      return this.$store.state.resultModal;
+    },
   },
   watch: {
     chkShow(newVal) {
       this.isshow = newVal;
+    },
+    chkresult(newVal) {
+      this.isresult = newVal;
     },
     chkRole(newVal) {
       if (newVal === "liar") {
@@ -150,6 +160,7 @@ export default {
         // 결과물 받기
         if (type === "result") {
           console.log("결과" + val);
+          this.$store.commit("ON_RESULT");
           this.$store.commit("OFF_ANSWER"); // 결과물 받으면 정답입력창 off
         }
       });

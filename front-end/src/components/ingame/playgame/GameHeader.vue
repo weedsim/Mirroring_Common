@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "GameHeader",
   components: {},
@@ -20,28 +22,16 @@ export default {
     _milliseconds() {
       return 10;
     },
-    setTimer() {
-      return this.$store.state.timer;
-    },
+    ...mapState(["timer"]),
   },
   watch: {
-    setTimer(newTime) {
+    timer(newTime) {
       console.log("시간이변경됨");
       this.runTimer(newTime);
     },
   },
-  created() {
-    this.countDownTimer();
-  },
+  created() {},
   methods: {
-    countDownTimer() {
-      if (this.countDown > 0) {
-        setTimeout(() => {
-          this.countDown -= 1;
-          this.countDownTimer();
-        }, 1000);
-      }
-    },
     runTimer(newTime) {
       if (newTime === 0) {
         this.displaySeconds = 0;

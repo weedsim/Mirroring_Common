@@ -7,8 +7,8 @@ import playGameStore from "@/store/modules/playgame.js";
 import jwtDecode from "vue-jwt-decode";
 
 // const API_URL = "http://127.0.0.1:5000";
-// const API_URL = "http://localhost:5000";
-const API_URL = "http://192.168.91.171:5000";
+const API_URL = "http://localhost:5000";
+// const API_URL = "http://192.168.91.171:5000";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
 
 const storageStata = createPersistedState({
@@ -81,6 +81,8 @@ export default createStore({
     liarAnswerModal: false,
     curSpeakIdx: "on",
     NowPageNum: 1,
+    resultModal: false,
+    result: [],
   },
   getters: {
     getAll(state) {
@@ -224,6 +226,10 @@ export default createStore({
       console.log("여기는 mutation openvidu야", payload);
       state.openvidu = payload;
       console.log("여기는 mutation openvidu야", state.openvidu);
+    },
+    ON_RESULT(state) {},
+    OFF_RESULT(state) {
+      state.resultModal = false;
     },
   },
   actions: {

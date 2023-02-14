@@ -129,7 +129,8 @@ import router from "@/router";
 import VueCookies from "vue-cookies";
 import { OpenVidu } from "openvidu-browser";
 
-const APPLICATION_SERVER_URL = "http://192.168.91.171:5000/";
+// const APPLICATION_SERVER_URL = "http://192.168.91.171:5000/";
+const APPLICATION_SERVER_URL = "http://localhost:5000/";
 // process.env.NODE_ENV === "production"
 //   ? "http://192.168.91.171:5000/"
 //   : "http://localhost:5000/";

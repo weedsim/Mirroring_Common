@@ -1,6 +1,11 @@
 <template>
   <div class="users-container">
-    <div class="user" v-for="(item, index) in this.getAll" :key="index">
+    <div
+      class="user"
+      v-for="(item, index) in this.getAll"
+      :key="index"
+      v-on:click="vote(index)"
+    >
       <!-- v-on:click="vote(index)" -->
       <div class="speaking-blur" :class="{ 'speaking-blur': active }">
         <!-- <div class="p-3 speaking-blur"> -->
@@ -20,9 +25,7 @@
           <div
             class="ready"
             style="background-color: rgba(0, 135, 70, 81%)"
-            v-if="
-              this.$store.state.gameinfo.participants[index].isReady && !Master
-            "
+            v-if="this.$store.state.gameinfo.participants[index].isReady"
           >
             <!-- this.$store.state.sessions[index].isReady -->
             준비완료
@@ -31,9 +34,7 @@
           <div
             class="unready"
             style="background-color: rgba(255, 176, 57, 81%)"
-            v-if="
-              !this.$store.state.gameinfo.participants[index].isReady && !Master
-            "
+            v-else
           >
             대기중
           </div>

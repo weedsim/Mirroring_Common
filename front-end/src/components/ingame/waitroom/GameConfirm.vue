@@ -12,14 +12,12 @@
       "
     >
       <button class="circle">
-        <BIconVolumeUpFill
-          style="color: black; font-size: 1.5vw"
-        ></BIconVolumeUpFill>
+        <!-- 마이크 이미지 -->
+        <img src="@/assets/ingame/mic32-on.png" alt="" class="tmpImg" />
       </button>
       <button class="circle">
-        <BIconCameraVideoOffFill
-          style="color: black; font-size: 1.2vw"
-        ></BIconCameraVideoOffFill>
+        <!-- 비디오 이미지 -->
+        <img src="@/assets/ingame/video30-on.png" alt="" class="tmpImg" />
       </button>
     </div>
     <div class="" style="display: flex; align-items: center">
@@ -160,5 +158,11 @@ export default {
   width: 5vh;
   height: 5vh;
   border-radius: 2.5vh;
+}
+.tmpImg {
+  display: block;
+  margin: 0px auto;
+  padding: 0px;
+  width: 1vw;
 }
 </style>
