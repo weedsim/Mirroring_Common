@@ -52,7 +52,7 @@ public class UserController {
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
                                     @RequestHeader(JwtProperties.REFRESH_TOKEN) String refreshToken) {
-        System.out.println(refreshToken);
+        System.out.println(accessToken);
         UserRequestDto.Logout logout = UserRequestDto.Logout.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
@@ -64,10 +64,12 @@ public class UserController {
     @PostMapping("/reissue")
     public ResponseEntity<?> reissue(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
                                      @RequestHeader(JwtProperties.REFRESH_TOKEN) String refreshToken) {
+        System.out.println(accessToken);
         UserRequestDto.Reissue reissue = UserRequestDto.Reissue.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
+
         return userService.reissue(reissue);
     }
 

@@ -158,7 +158,7 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<?> logout(UserRequestDto.Logout logout) {
         // 1. Refresh Token 검증
         try {
-            if (!jwtTokenProvider.validateToken(logout.getAccessToken())) {
+            if (!jwtTokenProvider.validateToken(logout.getRefreshToken())) {
                 return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
             }
         } catch (ExpiredJwtException e) {
@@ -173,6 +173,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // 4. 해당 Access Token 유효시간 가지고 와서 BlackList 로 저장하기
+        System.out.println(logout.getAccessToken());
         Long expiration = jwtTokenProvider.getExpiration(logout.getAccessToken());
         redisTemplate.opsForValue()
                 .set(logout.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);

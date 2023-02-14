@@ -250,13 +250,9 @@ export default createStore({
         method: "post",
         url: `${API_URL}/users/logout`,
         headers: {
-          Authorization: `Bearer${payload.accessToken}`,
+          Authorization: `Bearer ${payload.accessToken}`,
           "refresh-token": `${payload.refreshToken}`
-        },
-        data: {
-          accessToken: payload.accessToken,
-          refreshToken: payload.refreshToken,
-        },
+        }
       }).then((res) => {
         if (res) {
           console.log(res);
@@ -350,27 +346,31 @@ export default createStore({
     // REISSUE요청
     reIssue(context, payload) {
       console.log(payload.refreshToken);
-      const refreshtoken = payload.refreshToken;
+      console.log(payload.accessToken);
       axios({
         method: "POST",
         url: `${API_URL}/users/reissue`,
         headers: {
           Authorization: `Bearer ${payload.accessToken}`,
-          "refresh-token": refreshtoken,
+          "refresh-token": `${payload.refreshToken}`
         },
-        data: {
-          accessToken: payload.accessToken,
-          refreshToken: payload.refreshToken,
-        },
+        // data: {
+        //   accessToken: payload.accessToken,
+        //   refreshToken: payload.refreshToken,
+        // },
       })
         .then((res) => {
           console.log("reissue 테스트중입니다. ");
+          console.log(res);
           console.log(res.data);
-          const payload = {
-            token: res.data,
-            refreshToken: payload.refreshToken,
-          };
-          context.commit("SAVE_TOKEN", payload);
+          console.log("res 고장");
+          if(res){
+            const payload = {
+              token: res.data,
+              refreshToken: payload.refreshToken,
+            };
+            context.commit("SAVE_TOKEN", payload);
+          }
         })
         .catch((err) => {
           console.log(err);

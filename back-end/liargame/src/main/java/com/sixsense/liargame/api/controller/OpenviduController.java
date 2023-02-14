@@ -37,6 +37,7 @@ public class OpenviduController {
             throws OpenViduJavaClientException, OpenViduHttpException {
         SessionProperties properties = SessionProperties.fromJson(params).build();
         Session session;
+        System.out.println(params);
         try {
             session = openvidu.createSession(properties);
         } catch (Exception e) {
