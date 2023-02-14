@@ -83,9 +83,22 @@ public class RoomServiceImpl implements RoomService {
     }
 
     @Override
+    public void ban(Long userId, Integer roomId, Long banId) {
+        Room room = rooms.get(roomId);
+        room.exit(banId);
+        RoomDetail roomDetail = toDetail(room);
+        try {
+            room.getEmitters().sendToAll("message", new SseResponse("message", om.writeValueAsString(roomDetail)));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void exit(Long userId, Integer roomId) {
         Room room = rooms.get(roomId);
         room.exit(userId);
+        System.out.println("room 현재 인원 수 : " + room.getCurCount());
 
         if (room.getCurCount() <= 0) {
             rooms.remove(roomId);

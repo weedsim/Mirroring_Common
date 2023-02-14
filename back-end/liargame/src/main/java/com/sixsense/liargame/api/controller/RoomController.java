@@ -55,6 +55,13 @@ public class RoomController {
         return ResponseEntity.ok().build();
     }
 
+    @PatchMapping("/{roomId}/ban/{banId}")
+    public ResponseEntity<?> ban(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId, @PathVariable Long banId) {
+        Long userId = jwtTokenProvider.getUserId(accessToken);
+        roomService.ban(userId, roomId, banId);
+        return ResponseEntity.ok().build();
+    }
+
     @PatchMapping("/{roomId}")
     public ResponseEntity<?> changeSetting(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId, @RequestBody SettingDto settingDto) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
