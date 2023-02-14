@@ -2,7 +2,7 @@
 <div class="main">
   <ul>
     <li>  
-      <button class="btn btn-secondary"><router-link to="detail"  style="text-decoration:none; color:white">detail 임시</router-link></button>
+      <button class="btn btn-secondary"><router-link to="maindetail"  style="text-decoration:none; color:white">detail 임시</router-link></button>
     </li>
     <li>[공지]</li>
     <li>[게시글]</li>
