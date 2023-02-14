@@ -109,4 +109,12 @@ public class Room {
         isPlaying = false;
     }
 
+    public boolean isAllReady() {
+        for (UserInfo user : participants) {
+            if (!user.getIsReady() && !Objects.equals(master, user.getUserId()))
+                return false;
+        }
+        return true;
+    }
+
 }

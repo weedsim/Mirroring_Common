@@ -48,11 +48,13 @@ public class Emitters {
     }
 
     public void sendToLiar(String name, SseResponse sseResponse) {
-        sendTo(name, sseResponse, liar);
+        if (liar != null)
+            sendTo(name, sseResponse, liar);
     }
 
     public void sendToSpy(String name, SseResponse sseResponse) {
-        sendTo(name, sseResponse, spy);
+        if (spy != null)
+            sendTo(name, sseResponse, spy);
     }
 
     private void sendTo(String name, SseResponse sseResponse, CustomEmitter emitter) {

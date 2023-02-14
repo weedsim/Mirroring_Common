@@ -4,7 +4,7 @@ import com.sixsense.liargame.common.model.response.GameResultResp;
 import com.sixsense.liargame.common.model.response.VoteResp;
 import com.sixsense.liargame.db.entity.Room;
 import lombok.Getter;
-import lombok.Setter;
+import org.springframework.data.redis.core.RedisHash;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,31 +12,24 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 @Getter
-public class NormalGame extends Game {
+@RedisHash("normal_game")
+public class SpyGame extends Game {
+    private int spy;
 
-    private Integer id;
-    @Setter
-    private String word;
-    @Setter
-    private String answer;
-    private List<Vote> votes;
-    private int startPerson;
-    private UserInfo[] participants;
-    private boolean isTurned;
-    private Integer curSpeaker;
-    private int liar;
-    @Setter
-    private String winner;
-
-    public NormalGame(Room room) {
+    public SpyGame(Room room) {
         this.id = room.getId();
         this.participants = room.getParticipants().toArray(new UserInfo[0]);
         startPerson = (int) (Math.random() * participants.length);
         curSpeaker = startPerson;
         liar = (int) (Math.random() * participants.length);
         votes = new CopyOnWriteArrayList<>();
+        spy = (int) (Math.random() * super.participants.length);
+        while (super.liar == spy) {
+            spy = (int) (Math.random() * super.participants.length);
+        }
     }
 
+    @Override
     public GameResultResp getResult() {
         List<VoteResp> voteResult =
                 votes.stream()
@@ -44,12 +37,19 @@ public class NormalGame extends Game {
                         .collect(Collectors.toList());
         String liarName = participants[liar].getName();
         List<String> citizens = Arrays.stream(participants).map(UserInfo::getName).filter(name -> !name.equals(liarName)).collect(Collectors.toList());
+
+        String spyName = super.participants[spy].getName();
         return GameResultResp.builder()
                 .winner(winner)
                 .votes(voteResult)
                 .word(word)
                 .liar(liarName)
+                .spy(spyName)
                 .citizens(citizens)
                 .build();
+    }
+
+    public Long getSpyUserId() {
+        return super.participants[spy].getUserId();
     }
 }

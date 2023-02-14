@@ -21,7 +21,7 @@ public class GameController {
     @PostMapping("/start")
     public ResponseEntity<?> start(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
-        GameResultResp gameResultResp = gameService.normalGameStart(userId, roomId);
+        GameResultResp gameResultResp = gameService.gameStart(userId, roomId);
         if (gameResultResp != null)
             return ResponseEntity.ok(gameResultResp);
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();

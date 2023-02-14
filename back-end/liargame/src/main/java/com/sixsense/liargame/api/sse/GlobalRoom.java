@@ -9,7 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class GlobalRoom {
     private final Map<Integer, Room> rooms;
-    private final Map<Integer, NormalGame> games;
+    private final Map<Integer, Game> games;
 
     public GlobalRoom() {
         this.games = new ConcurrentHashMap<>();
@@ -20,7 +20,7 @@ public class GlobalRoom {
         return rooms;
     }
 
-    public Map<Integer, NormalGame> getGames() {
+    public Map<Integer, Game> getGames() {
         return games;
     }
 }

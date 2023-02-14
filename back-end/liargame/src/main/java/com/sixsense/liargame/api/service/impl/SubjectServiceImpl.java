@@ -3,8 +3,10 @@ package com.sixsense.liargame.api.service.impl;
 import com.sixsense.liargame.api.response.SubjectResp;
 import com.sixsense.liargame.api.response.WordResp;
 import com.sixsense.liargame.api.service.SubjectService;
+import com.sixsense.liargame.api.sse.Game;
 import com.sixsense.liargame.api.sse.GlobalRoom;
 import com.sixsense.liargame.api.sse.NormalGame;
+import com.sixsense.liargame.api.sse.SpyGame;
 import com.sixsense.liargame.db.entity.Room;
 import com.sixsense.liargame.db.entity.Subject;
 import com.sixsense.liargame.db.repository.SubjectRepository;
@@ -18,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class SubjectServiceImpl implements SubjectService {
     private final SubjectRepository subjectRepository;
-    private final Map<Integer, NormalGame> games;
+    private final Map<Integer, Game> games;
     private final Map<Integer, Room> rooms;
 
     public SubjectServiceImpl(SubjectRepository subjectRepository, GlobalRoom globalRoom) {
@@ -41,8 +43,12 @@ public class SubjectServiceImpl implements SubjectService {
         int idx = (int) (Math.random() * size);
         WordResp wordResp = toWordDto(subject.getWords().get(idx));
         Room room = rooms.get(roomId);
-        NormalGame normalGame = new NormalGame(room);
-        normalGame.setWord(wordResp.getName());
-        games.put(roomId, normalGame);
+        Game game;
+        if (room.getMode().equals("normal"))
+            game = new NormalGame(room);
+        else
+            game = new SpyGame(room);
+        game.setWord(wordResp.getName());
+        games.put(roomId, game);
     }
 }

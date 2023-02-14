@@ -4,13 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sixsense.liargame.api.request.AnswerReq;
 import com.sixsense.liargame.api.service.GameService;
+import com.sixsense.liargame.api.sse.Game;
 import com.sixsense.liargame.api.sse.*;
 import com.sixsense.liargame.common.model.response.GameResultResp;
-import com.sixsense.liargame.db.entity.NormalHistory;
-import com.sixsense.liargame.db.entity.NormalPlay;
-import com.sixsense.liargame.db.entity.Room;
+import com.sixsense.liargame.db.entity.*;
 import com.sixsense.liargame.db.repository.NormalHistoryRepository;
 import com.sixsense.liargame.db.repository.NormalPlayRepository;
+import com.sixsense.liargame.db.repository.SpyHistoryRepository;
+import com.sixsense.liargame.db.repository.SpyPlayRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,17 +25,21 @@ import java.util.stream.Collectors;
 public class GameServiceImpl implements GameService {
     private final NormalHistoryRepository normalHistoryRepository;
     private final NormalPlayRepository normalPlayRepository;
+    private final SpyHistoryRepository spyHistoryRepository;
+    private final SpyPlayRepository spyPlayRepository;
     private final GameManager gameManager;
     private final String CITIZEN = "citizen";
     private final String LIAR = "liar";
     private final String SPY = "spy";
     private final Map<Integer, Room> rooms;
-    private final Map<Integer, NormalGame> games;
+    private final Map<Integer, Game> games;
     private final ObjectMapper om;
 
-    public GameServiceImpl(NormalHistoryRepository normalHistoryRepository, NormalPlayRepository normalPlayRepository, GameManager gameManager, GlobalRoom globalRoom, ObjectMapper om) {
+    public GameServiceImpl(NormalHistoryRepository normalHistoryRepository, NormalPlayRepository normalPlayRepository, SpyHistoryRepository spyHistoryRepository, SpyPlayRepository spyPlayRepository, GameManager gameManager, GlobalRoom globalRoom, ObjectMapper om) {
         this.normalHistoryRepository = normalHistoryRepository;
         this.normalPlayRepository = normalPlayRepository;
+        this.spyHistoryRepository = spyHistoryRepository;
+        this.spyPlayRepository = spyPlayRepository;
         this.gameManager = gameManager;
         this.rooms = globalRoom.getRooms();
         this.games = globalRoom.getGames();
@@ -42,26 +47,40 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public GameResultResp normalGameStart(Long userId, Integer roomId) {
+    public GameResultResp gameStart(Long userId, Integer roomId) {
         Room room = rooms.get(roomId);
 
-        if (Objects.equals(room.getMaster(), userId) && isAllReady(room)) {
+        if (Objects.equals(room.getMaster(), userId)) {
             room.start();
-            NormalGame normalGame = gameManager.start(room);
+            Game game = gameManager.start(room);
+            if (room.getMode().equals("normal")) {
+                NormalHistory normalHistory =
+                        NormalHistory.builder()
+                                .liar(game.getLiarUserId())
+                                .winner(game.getWinner())
+                                .build();
+                Long historyId = normalHistoryRepository.save(normalHistory).getId();
+                List<NormalPlay> playList =
+                        Arrays.stream(game.getParticipants())
+                                .map(p -> new NormalPlay(p.getUserId(), historyId, getRole(p.getUserId(), game.getLiarUserId(), null)))
+                                .collect(Collectors.toList());
+                normalPlayRepository.saveAll(playList);
 
-            NormalHistory normalHistory =
-                    NormalHistory.builder()
-                            .liar(normalGame.getLiarUserId())
-                            .winner(normalGame.getWinner())
-                            .build();
-            Long historyId = normalHistoryRepository.save(normalHistory).getId();
-            List<NormalPlay> playList =
-                    Arrays.stream(normalGame.getParticipants())
-                            .map(p -> new NormalPlay(p.getUserId(), historyId, getRole(p.getUserId(), normalGame.getLiarUserId())))
-                            .collect(Collectors.toList());
-            normalPlayRepository.saveAll(playList);
+            } else {
+                SpyHistory spyHistory = SpyHistory.builder()
+                        .liar(game.getLiarUserId())
+                        .spy(((SpyGame) game).getSpyUserId())
+                        .winner(game.getWinner())
+                        .build();
+                Long historyId = spyHistoryRepository.save(spyHistory).getId();
+                List<SpyPlay> playList =
+                        Arrays.stream(game.getParticipants())
+                                .map(p -> new SpyPlay(p.getUserId(), historyId, getRole(p.getUserId(), game.getLiarUserId(), ((SpyGame) game).getSpyUserId())))
+                                .collect(Collectors.toList());
+                spyPlayRepository.saveAll(playList);
+            }
             room.end();
-            GameResultResp gameResultResp = normalGame.getResult();
+            GameResultResp gameResultResp = game.getResult();
             String result;
             try {
                 result = om.writeValueAsString(gameResultResp);
@@ -74,18 +93,11 @@ public class GameServiceImpl implements GameService {
         return null;
     }
 
-    private boolean isAllReady(Room room) {
-        List<UserInfo> participants = room.getParticipants();
-        for (UserInfo user : participants) {
-            if (!user.getIsReady() && !Objects.equals(room.getMaster(), user.getUserId()))
-                return false;
-        }
-        return true;
-    }
-
-    private String getRole(Long userId, Long liar) {
+    private String getRole(Long userId, Long liar, Long spy) {
         if (Objects.equals(userId, liar)) {
             return LIAR;
+        } else if (Objects.equals(userId, spy)) {
+            return SPY;
         }
         return CITIZEN;
     }
@@ -98,7 +110,7 @@ public class GameServiceImpl implements GameService {
     @Override
     @Transactional
     public void vote(Vote vote, Integer gameId) {
-        NormalGame game = games.get(gameId);
+        Game game = games.get(gameId);
         gameManager.vote(vote.getVoter(), vote.getTarget(), game.getVotes());
         System.out.println("투표 완료");
     }
@@ -106,7 +118,7 @@ public class GameServiceImpl implements GameService {
     @Override
     @Transactional
     public void insertAnswer(AnswerReq answer) {
-        NormalGame game = games.get(answer.getRoomId());
+        Game game = games.get(answer.getRoomId());
         game.setAnswer(answer.getAnswer());
     }
 }

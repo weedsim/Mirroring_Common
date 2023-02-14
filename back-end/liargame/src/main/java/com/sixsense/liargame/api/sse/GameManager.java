@@ -13,39 +13,40 @@ import java.util.stream.Collectors;
 @Component
 public class GameManager {
     private final int SPARE_TIME = 200;
-    private final Map<Integer, NormalGame> games;
+    private final Map<Integer, Game> games;
 
     public GameManager(GlobalRoom globalRoom) {
         this.games = globalRoom.getGames();
     }
 
-    public NormalGame start(Room room) {
-        NormalGame normalGame = games.get(room.getId());
+    public Game start(Room room) {
+        Game game = games.get(room.getId());
         Emitters emitters = room.getEmitters();
         int timeout = room.getTimeout();
 
-        room.getEmitters().setLiar(normalGame.getLiarUserId());
+        room.getEmitters().setLiar(game.getLiarUserId());
         //시민들에게 단어 알려주고 게임 시작 알리기
 
-        emitters.sendToCitizens("message", new SseResponse("word", normalGame.getWord()));
+        emitters.sendToCitizens("message", new SseResponse("word", game.getWord()));
         emitters.sendToLiar("message", new SseResponse("word", "liar"));
+        emitters.sendToSpy("message", new SseResponse("word", "spy"));
         //테스트용
-        emitters.sendToLiar("message", new SseResponse("word", normalGame.getWord()));
+        emitters.sendToSpy("message", new SseResponse("word", game.getWord()));
         emitters.sendToAll("message", new SseResponse("message", "game start"));
         //timeout 만큼 쉼
         waitTimeout(room.getEmitters(), timeout * 200);
         //차례대로 발언
-        Integer curSpeaker = normalGame.getCurSpeaker();
+        Integer curSpeaker = game.getCurSpeaker();
         while (curSpeaker != null) {
 
             emitters.sendToAll("message", new SseResponse("curSpeaker", curSpeaker.toString()));
             waitTimeout(room.getEmitters(), timeout * 200);
-            curSpeaker = normalGame.changeSpeaker();
+            curSpeaker = game.changeSpeaker();
         }
         //투표시간 알림
         noticeVote(emitters);
         //투표 집계 후 투표 결과 알림 동표일경우 5번까지 투표 진행
-        List<Vote> votes = normalGame.getVotes();
+        List<Vote> votes = game.getVotes();
         Integer result = getVoteResult(votes);
         int voteCount = 1;
         while (result == null && voteCount++ < 5) {
@@ -54,20 +55,22 @@ public class GameManager {
         }
         //시민인 경우 바로 게임종료, 라이어인 경우 정답 입력 시간 알림
         String winner = "LIAR";
-        if (Objects.equals(normalGame.getLiar(), result)) {
+        if (Objects.equals(game.getLiar(), result)) {
             emitters.sendToCitizens("message", new SseResponse("message", "selected liar"));
             emitters.sendToLiar("message", new SseResponse("message", "write answer"));
             waitTimeout(room.getEmitters(), 200 * 10); // 정답 입력시간 10초
-            if (!StringUtils.hasText(normalGame.getAnswer())) {
+            if (!StringUtils.hasText(game.getAnswer())) {
                 winner = "CITIZEN";
             }
-            if (StringUtils.hasText(normalGame.getAnswer()) && !normalGame.getAnswer().equals(normalGame.getWord()))
+            if (StringUtils.hasText(game.getAnswer()) && !game.getAnswer().equals(game.getWord()))
                 winner = "CITIZEN";
+        } else if (Objects.equals(((SpyGame) game).getSpy(), result)) {
+            winner = "CITIZEN";
         }
-        normalGame.setWinner(winner);
+        game.setWinner(winner);
         System.out.println("winner: " + winner);
 
-        return normalGame;
+        return game;
         //정답여부와 승패 알림(게임종료 알림)
     }
 

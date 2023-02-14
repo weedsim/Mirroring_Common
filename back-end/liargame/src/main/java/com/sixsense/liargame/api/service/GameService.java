@@ -6,7 +6,7 @@ import com.sixsense.liargame.common.model.response.GameResultResp;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface GameService {
-    GameResultResp normalGameStart(Long userId, Integer roomId);
+    GameResultResp gameStart(Long userId, Integer roomId);
 
     GameResultResp spyGameStart(Long userId);
 
