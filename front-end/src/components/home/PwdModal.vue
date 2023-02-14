@@ -1,33 +1,17 @@
 <template>
-  <div
-    class="modal fade"
-    id="pwdModal"
-    tabindex="-1"
-    aria-labelledby="PwdModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="PwdModalLabel">비밀번호 찾기</h1>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
+  <div>
+    <div>
+      <div>
+        <div>
+          <h1>비밀번호 찾기</h1>
+          <button v-on:click="offModal">x</button>
         </div>
-        <div class="modal-body" style="text-align: left">
-          <ul style="list-style: none">
+        <div>
+          <ul>
             <li>이메일</li>
-            <li style="display: flex; justify-content: space-between">
-              <input
-                type="text"
-                placeholder="이메일을 입력해주세요"
-                class="form-control"
-                style="width: 70%"
-              />
-              <button type="button" class="btn btn-primary btn-sm">발송</button>
+            <li>
+              <input type="text" placeholder="이메일을 입력해주세요" />
+              <button type="button">발송</button>
             </li>
           </ul>
         </div>
@@ -46,7 +30,11 @@ export default {
   setup() {},
   created() {},
   mounted() {},
-  methods: {},
+  methods: {
+    offModal() {
+      this.$emit("close", "pwd"); // 창 닫아주세요.
+    },
+  },
 };
 </script>
 

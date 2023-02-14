@@ -4,6 +4,8 @@
     <router-link to="/ingame">InGame</router-link> |
     <router-link to="/inlobby">InLobby</router-link>
   </nav> -->
+  <!-- <router-view :key="$route.fullPath" /> -->
+  <!-- <router-view :key="$route.path" /> -->
   <router-view />
 </template>
 
@@ -54,4 +56,33 @@ nav a.router-link-exact-active {
 /* div {
   box-shadow: 0 0 0 1px #f00 inset;
 } */
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+ul {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+.lobby {
+  border-color: #5b3700;
+  border-radius: 5px;
+}
+.lobby-back {
+  background-color: #b4b4b4;
+}
+
+.lobby:hover {
+  color: white;
+}
+.text-white {
+  color: white;
+}
+.text-center {
+  text-align: center;
+}
 </style>

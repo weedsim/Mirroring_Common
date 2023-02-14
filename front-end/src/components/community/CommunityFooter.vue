@@ -30,10 +30,15 @@
           </ul>
         </nav> -->
       </div>
-      <div class="m-0 p-0 col-3">
-      </div>
+      <div class="m-0 p-0 col-3"></div>
       <div class="m-0 p-0 col-1">
-        <button class="btn btn-secondary"><router-link :to="{name:'maininput'}"  style="text-decoration:none; color:white">글쓰기</router-link></button>
+        <button class="btn btn-secondary">
+          <router-link
+            :to="{ name: 'maininput' }"
+            style="text-decoration: none; color: white"
+            >글쓰기</router-link
+          >
+        </button>
         <!-- <ul class="findroom" style="list-style: none">
           <li style="display: flex; justify-content: space-between">
             <input
@@ -48,16 +53,16 @@
       </div>
     </div>
   </div>
-  <CreateRoomModal />
+  <!-- <CreateRoomModal /> -->
 </template>
 
 <script>
-import CreateRoomModal from "@/components/lobby/CreateRoomModal.vue";
+// import CreateRoomModal from "@/components/lobby/CreateRoomModal.vue";
 import FooterPagination from "@/components/FooterPagination.vue";
 
 export default {
   name: "CommunityFooter",
-  components: { CreateRoomModal, FooterPagination }, 
+  components: { FooterPagination },
   created() {},
 };
 </script>

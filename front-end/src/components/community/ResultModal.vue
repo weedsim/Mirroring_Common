@@ -1,17 +1,7 @@
 <template>
-  <div
-    class="modal fade"
-    id="signupModal"
-    tabindex="-1"
-    aria-labelledby="signupModalLabel"
-    aria-hidden="true"
-    data-bs-backdrop="static"
-  >
-  
+  <div id="resultModal">
     <div class="modal-dialog modal-dialog-centered">
-      
       <div class="modal-content">
-        
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="signupModalLabel">게임 결과</h1>
           <!-- <BIconCircleFill style="color:gray; text-align:center;"></BIconCircleFill> -->
@@ -25,52 +15,84 @@
           ></button>
         </div>
         <div class="modal-body" style="text-align: left">
-          <BIconCircleFill style="color:gray; width:100px; height:100px; margin-left:188px;"></BIconCircleFill>
+          <BIconCircleFill
+            style="color: gray; width: 100px; height: 100px; margin-left: 188px"
+          ></BIconCircleFill>
 
-          <ul style="list-style: none; text-align: center;">
-            <div class="m-0 p-0 row " style="width:100%">
+          <ul style="list-style: none; text-align: center">
+            <div class="m-0 p-0 row" style="width: 100%">
+              <div class="m-0 p-0 col-3"></div>
               <div class="m-0 p-0 col-3">
-                
+                <h1 style="text-align: center; color: red; font-weight: bold">
+                  LIAR
+                </h1>
               </div>
               <div class="m-0 p-0 col-3">
-                <h1 style="text-align:center; color:red; font-weight: bold;">LIAR</h1>
+                <h1 style="text-align: center; font-weight: bold">WIN</h1>
               </div>
-              <div class="m-0 p-0 col-3">
-                <h1 style="text-align:center; font-weight: bold;">WIN</h1>
-              </div>
-              <div class="m-0 p-0 col-3">
-                
-              </div>
+              <div class="m-0 p-0 col-3"></div>
             </div>
-            
-            <div class="m-0 p-0 row " style="width:100%">
-              <div class="m-0 p-0 col-4">
-                
+
+            <div class="m-0 p-0 row" style="width: 100%">
+              <div class="m-0 p-0 col-4"></div>
+              <div class="m-0 p-0 col-2">
+                <div style="text-align: center">제시어</div>
               </div>
               <div class="m-0 p-0 col-2">
-                <div style="text-align:center;">제시어</div>
+                <div style="text-align: center; color: green">정치가</div>
               </div>
-              <div class="m-0 p-0 col-2">
-                <div style="text-align:center; color:green">정치가</div>
-              </div>
-              <div class="m-0 p-0 col-4">
-              </div>
-            </div>            
-            <li style="text-align: center;">Rosa<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Adams</li>
-            <li style="text-align: center;">Mai<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Josh</li>
-            <li style="text-align: center;">Josh<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Jaxon</li>
-            <li style="text-align: center;">Nina<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Josh</li>
-            <li style="text-align: center;">Jaxon<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Josh</li>
-            <li style="text-align: center;">Adams<BIconArrowRight id="arrow" style="width:80px; height:25px;"></BIconArrowRight>Nina</li>
+              <div class="m-0 p-0 col-4"></div>
+            </div>
+            <li style="text-align: center">
+              Rosa<BIconArrowRight
+                id="arrow"
+                style="width: 80px; height: 25px"
+              ></BIconArrowRight
+              >Adams
+            </li>
+            <li style="text-align: center">
+              Mai<BIconArrowRight
+                id="arrow"
+                style="width: 80px; height: 25px"
+              ></BIconArrowRight
+              >Josh
+            </li>
+            <li style="text-align: center">
+              Josh<BIconArrowRight
+                id="arrow"
+                style="width: 80px; height: 25px"
+              ></BIconArrowRight
+              >Jaxon
+            </li>
+            <li style="text-align: center">
+              Nina<BIconArrowRight
+                id="arrow"
+                style="width: 80px; height: 25px"
+              ></BIconArrowRight
+              >Josh
+            </li>
+            <li style="text-align: center">
+              Jaxon<BIconArrowRight
+                id="arrow"
+                style="width: 80px; height: 25px"
+              ></BIconArrowRight
+              >Josh
+            </li>
+            <li style="text-align: center">
+              Adams<BIconArrowRight
+                id="arrow"
+                style="width: 80px; height: 25px"
+              ></BIconArrowRight
+              >Nina
+            </li>
           </ul>
-            <div style="text-align: center;">
-              <button class="btn btn-secondary" type="button">계속하기</button>
-            </div>
+          <div style="text-align: center">
+            <button class="btn btn-secondary" type="button">계속하기</button>
           </div>
+        </div>
       </div>
     </div>
   </div>
-  
 </template>
 
 <script>

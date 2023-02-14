@@ -10,7 +10,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="createRoomModalLabel">설정변경</h1>
+          <h1 class="modal-title fs-5" id="createRoomModalLabel">게임생성</h1>
           <button
             type="button"
             class="btn-close"
@@ -95,7 +95,28 @@
 </template>
 
 <script>
-export default {};
+import axios from "axios";
+export default {
+  name: "SettingModal",
+  components: {},
+  data() {
+    return {
+      roomId: this.$route.params.roomId,
+      API_URL: this.$store.state.API_URL,
+      message: "",
+      isshow: false,
+    };
+  },
+  setup() {},
+  created() {},
+  watched() {},
+  mounted() {},
+  methods: {},
+};
 </script>
 
-<style></style>
+<style scoped>
+.fade {
+  display: none;
+}
+</style>

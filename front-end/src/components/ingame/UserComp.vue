@@ -86,7 +86,6 @@ import UserDisplay from "@/components/ingame/UserDisplay.vue";
 import { VueCookies } from "vue-cookies";
 import axios from "axios";
 
-
 export default {
   data() {
     return {

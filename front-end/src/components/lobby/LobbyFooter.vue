@@ -1,101 +1,145 @@
 <template>
-  <div class="m-0 p-0 footer">
-    <div class="m-0 p-0 row" style="height: 100%">
-      <div class="m-0 p-0 col-4">
-        <button
-          class="btncss"
-          data-bs-toggle="modal"
-          data-bs-target="#createRoomModal"
-        >
-          방 생성
-        </button>
-      </div>
-      <div class="m-0 p-0 col-4 navwrapper">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
-      <div class="m-0 p-0 col-4">
-        <ul class="findroom" style="list-style: none">
-          <li style="display: flex; justify-content: space-between">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="방번호 입력"
-              style="width: 70%"
-            />
-            <button class="btncss">입장</button>
-          </li>
-        </ul>
-      </div>
+  <div class="layout">
+    <div id="pagination" class="layout">
+      <nav>
+        <button @click="prevPage" :disabled="down">prev</button>
+        <span v-for="page in pages" :key="page">
+          <router-link :to="{ name: 'lobby', query: { page: page } }">
+            {{ page }}
+          </router-link>
+          <!-- <a href="/lobby?page={{ page }}">{{ page }}</a> -->
+        </span>
+        <button @click="nextPage" :disabled="up">next</button>
+      </nav>
+    </div>
+    <div class="layout">
+      <ul>
+        <button v-on:click="onRoom">방생성</button>
+      </ul>
     </div>
   </div>
-  <CreateRoomModal />
+  <CreateRoomModal v-if="showRoom" v-on:close="offRoom" />
 </template>
 
 <script>
 import CreateRoomModal from "@/components/lobby/CreateRoomModal.vue";
+import axios from "axios";
+import VueCookies from "vue-cookies";
 
 export default {
   name: "LobbyFooter",
   components: { CreateRoomModal },
-  created() {},
+  data() {
+    return {
+      pageSize: 5,
+      currentPage: this.$route.query.page,
+      totalPages: 0,
+      paginationMinNum: 1,
+      // pages: [],
+      showRoom: false,
+    };
+  },
+  created() {
+    this.init();
+  },
+  computed: {
+    pages() {
+      const start = (this.paginationMinNum - 1) * this.pageSize + 1;
+      const end = start + this.pageSize - 1;
+      const pages = [];
+
+      for (let i = start; i <= end && i <= this.totalPages; i++) {
+        pages.push(i);
+      }
+
+      return pages;
+    },
+    down() {
+      if (this.paginationMinNum == 1) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    up() {
+      if (
+        this.paginationMinNum == parseInt(this.totalPages / this.pageSize + 1)
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
+  methods: {
+    init() {
+      axios({
+        method: "GET",
+        url: `${this.$store.state.API_URL}/rooms/last`,
+        headers: {
+          Authorization: `Bearer ${VueCookies.get("accessToken")}`,
+        },
+      })
+        .then((res) => {
+          this.totalPages = Number(res.data);
+          // const start = (this.currentPage - 1) * this.pageSize + 1;
+          // const end = start + this.pageSize - 1;
+          // const pages = [];
+
+          // for (let i = start; i <= end && i <= this.totalPages; i++) {
+          //   pages.push(i);
+          // }
+
+          // this.pages = pages;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    prevPage() {
+      if (this.paginationMinNum > 1) {
+        this.paginationMinNum--;
+      }
+    },
+    nextPage() {
+      if (this.paginationMinNum < this.totalPages) {
+        this.paginationMinNum++;
+      }
+    },
+    onRoom() {
+      this.showRoom = true;
+    },
+    offRoom() {
+      this.showRoom = false;
+    },
+    chgNowPage() {
+      this.$store.commit("SET_PAGENUM");
+    },
+  },
 };
 </script>
 
 <style>
-.btncss {
-  background-color: #b4b4b4;
-  border-color: #5b3700;
-  border-radius: 4px;
+.layout {
+  border: 1px solid red;
 }
 
-.btncss:hover {
-  color: white;
+template > div {
+  display: inline;
 }
-.findroom {
-  display: table;
-  margin-right: auto;
-  margin-left: auto;
-  width: 80%;
-  padding: 0px;
+
+input {
+  width: 70%;
 }
-.navwrapper {
+#pagination {
   display: flex;
   justify-content: center;
-}
-/* .page-link {
-  color: #000;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  text-align: center;
 }
 
-.page-item.active .page-link {
-  z-index: 1;
-  color: #555;
-  font-weight: bold;
-  background-color: #f1f1f1;
-  border-color: #ccc;
+span {
+  background-color: green;
+  margin-left: 2px;
+  margin-right: 2px;
 }
-
-.page-link:focus,
-.page-link:hover {
-  color: #000;
-  background-color: #fafafa;
-  border-color: #ccc;
-} */
 </style>

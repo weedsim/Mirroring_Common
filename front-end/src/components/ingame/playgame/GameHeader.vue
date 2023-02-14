@@ -1,26 +1,10 @@
 <template>
-  <div class="m-0 p-0 title" style="height: 100%">
-    <div class="m-0 p-0 row" style="height: 10%"></div>
-    <div class="m-0 p-0 row" style="height: 80%">
-      <div class="m-0 p-0 col-3">
-        <div class="m-0 p-0" id="title" style="color: white; height: 100%">
-          주제어
-        </div>
-      </div>
-      <div class="m-0 p-0 col-6">
-        <div class="m-0 p-0" id="title" style="color: white; height: 100%">
-          타이머
-          <button v-on:click="showRemaining">test</button>
-          {{ displaySeconds }} : {{ displayMilliSeconds }}
-        </div>
-      </div>
-      <div class="m-0 p-0 col-3"></div>
-    </div>
-    <div class="m-0 p-0 row" style="height: 10%"></div>
-  </div>
+  <div class="timer">{{ displaySeconds }} : {{ displayMilliSeconds }}</div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "GameHeader",
   components: {},
@@ -28,6 +12,7 @@ export default {
     return {
       displaySeconds: 0,
       displayMilliSeconds: 0,
+      testTime: 0,
     };
   },
   computed: {
@@ -37,22 +22,24 @@ export default {
     _milliseconds() {
       return 10;
     },
+    ...mapState(["timer"]),
   },
-  created() {
-    this.countDownTimer();
-  },
-  methods: {
-    countDownTimer() {
-      if (this.countDown > 0) {
-        setTimeout(() => {
-          this.countDown -= 1;
-          this.countDownTimer();
-        }, 1000);
-      }
+  watch: {
+    timer(newTime) {
+      console.log("시간이변경됨");
+      this.runTimer(newTime);
     },
-    showRemaining() {
-      var distance = 1000 * 20;
-
+  },
+  created() {},
+  methods: {
+    runTimer(newTime) {
+      if (newTime === 0) {
+        this.displaySeconds = 0;
+        this.displayMilliSeconds = 0;
+        return;
+      }
+      var distance = newTime;
+      console.log("타이머돌아가요: " + newTime);
       const timer = setInterval(() => {
         // 20기본 타이머 20초 설정
         if (distance < 0) {
@@ -65,6 +52,7 @@ export default {
         this.displayMilliSeconds = milliseconds;
         distance -= 10;
       }, 10);
+      this.$store.commit("RESET_TIMER");
     },
   },
 
@@ -73,4 +61,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.timer {
+  color: red;
+  text-align: center;
+  font-size: 3vw;
+  margin-top: 5vh;
+  height: 9vh;
+  margin-bottom: 10px;
+}
+</style>

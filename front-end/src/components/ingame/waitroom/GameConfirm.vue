@@ -1,25 +1,33 @@
 <template>
   <modal v-if="showModal" v-on:close="isStart" />
-  <div
-    class="mt-3 pt-4"
-    style="width: 40%; display: flex; justify-content: flex-end"
-  >
-    <button class="circle me-3 p-0">
-      <BIconVolumeUpFill
-        style="color: black; font-size: 1.5vw"
-      ></BIconVolumeUpFill>
-    </button>
-    <button class="circle">
-      <BIconCameraVideoOffFill
-        style="color: black; font-size: 1.2vw"
-      ></BIconCameraVideoOffFill>
-    </button>
-  </div>
-  <div class="m-0 pt-4" style="width: 40%">
-    <button class="btn-ready" v-on:click="isReady()" v-if="!Master">
-      준비
-    </button>
-    <button class="btn-ready" v-on:click="onSubjectModal()" v-else>시작</button>
+  <div style="display: flex; padding-top: 3vh">
+    <div
+      class=""
+      style="
+        width: 40%;
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        padding-right: 40px;
+      "
+    >
+      <button class="circle">
+        <!-- 마이크 이미지 -->
+        <img src="@/assets/ingame/mic32-on.png" alt="" class="tmpImg" />
+      </button>
+      <button class="circle">
+        <!-- 비디오 이미지 -->
+        <img src="@/assets/ingame/video30-on.png" alt="" class="tmpImg" />
+      </button>
+    </div>
+    <div class="" style="display: flex; align-items: center">
+      <button class="btn-ready" v-on:click="isReady()" v-if="!Master">
+        준비
+      </button>
+      <button class="btn-ready" v-on:click="onSubjectModal()" v-else>
+        시작
+      </button>
+    </div>
   </div>
 </template>
 
@@ -85,29 +93,28 @@ export default {
       //   this.$store.state.isShow = !this.$store.state.isShow
       let myIdx = this.$store.state.myIdx;
       // console.log(myIdx)
-      this.$store.state.sessions[myIdx].isReady =
-        !this.$store.state.sessions[myIdx].isReady;
+      this.$store.state.gameinfo.participants[myIdx].isReady =
+        !this.$store.state.gameinfo.participants[myIdx].isReady;
     },
     isStart() {
       this.showModal = false;
       console.log("게임~ 시작~~~하겠습니다~!");
-      // axios({
-      //   method: "POST",
-      //   url: `${this.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/games/start`,
-      //   headers: {
-      //     Authorization: `Bearer ${VueCookies.get("accessToken")}`,
-      //   },
-      //   data: {},
-      // })
-      //   .then((res) => {
-      //     console.log(res.data);
-      //     console.log(this.$store.state.gameinfo);
-      //     console.log(this.$store.state.sessions);
-      //   })
-      //   .catch((err) => {
-      //     console.log("시작실패");
-      //     console.log(err);
-      //   });
+      axios({
+        method: "POST",
+        url: `${this.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/games/start`,
+        headers: {
+          Authorization: `Bearer ${VueCookies.get("accessToken")}`,
+        },
+        data: {},
+      })
+        .then((res) => {
+          console.log("게임시작성공.");
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log("시작실패");
+          console.log(err);
+        });
     },
     onSubjectModal() {
       this.showModal = true;
@@ -126,7 +133,6 @@ export default {
         .then((res) => {
           console.log(res.data);
           console.log(this.$store.state.gameinfo);
-          console.log(this.$store.state.sessions);
         })
         .catch((err) => {
           console.log("레디실패");
@@ -152,5 +158,11 @@ export default {
   width: 5vh;
   height: 5vh;
   border-radius: 2.5vh;
+}
+.tmpImg {
+  display: block;
+  margin: 0px auto;
+  padding: 0px;
+  width: 1vw;
 }
 </style>
