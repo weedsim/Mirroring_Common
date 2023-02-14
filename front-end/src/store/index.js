@@ -69,8 +69,8 @@ export default createStore({
     // API_URL: "http://i8a706.p.ssafy.io:8080",
     isEnter: true, // 게임방 진입시 라우터가드를 위한 state
     isShow: false,
-    accessToken: null,
-    refreshToken: null,
+    accessToken: VueCookies.get("accessToken"),
+    refreshToken: VueCookies.get("refreshToken"),
     // rooms: null, // rooms는 로비에서 방목록 8개 받아서 저장할곳.
     playgames: false,
     myIdx: -1,
@@ -141,16 +141,16 @@ export default createStore({
       VueCookies.set("refreshToken", payload.refreshToken);
       state.refreshToken = payload.refreshToken;
 
-      // router.push({ name: "main" });
-      router.go(0);
+      router.push({ name: "main" });
+      // router.go(0);
     },
     DELETE_TOKEN(state) {
       state.accessToken = null;
       state.refreshToken = null;
       VueCookies.remove("refreshToken");
       VueCookies.remove("accessToken");
-      // router.push({ name: "main" }).catch(() => {});
-      router.go(0);
+      router.push({ name: "main" }).catch(() => {});
+      // router.go(0);
     },
     // 방목록 저장할 뮤테이션(rooms)
     SET_ROOMS(state, payload) {
@@ -285,9 +285,10 @@ export default createStore({
     logOut(context, payload) {
       axios({
         method: "post",
-        url: `${API_URL}/logout`,
+        url: `${API_URL}/users/logout`,
         headers: {
           Authorization: `Bearer ${payload.accessToken}`,
+          "refresh-token": payload.refreshToken,
         },
         data: {
           accessToken: payload.accessToken,

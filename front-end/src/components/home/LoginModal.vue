@@ -93,30 +93,12 @@ export default {
       this.$emit("close", "login"); // 창 닫아주세요.
     },
     logIn() {
-      axios({
-        method: "POST",
-        url: `${this.$store.state.API_URL}/users/login`,
-        headers: {
-          // "Content-Type": "multipart/form-data",
-          // "Content-Type": "application/json",
-        },
-        data: {
-          email: this.useremail,
-          password: this.userpwd,
-        },
-      })
-        .then((res) => {
-          console.log(res.data);
-          const payload = {
-            token: res.data.data.accessToken,
-            refreshToken: res.data.data.refreshToken,
-          };
-          this.$store.commit("SAVE_TOKEN", payload);
-          this.offModal();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const payload = {
+        email: this.useremail,
+        password: this.userpwd,
+      };
+      this.$store.dispatch("logIn", payload);
+      this.offModal();
     },
   },
 };

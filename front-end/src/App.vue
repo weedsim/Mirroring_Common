@@ -5,7 +5,8 @@
     <router-link to="/inlobby">InLobby</router-link>
   </nav> -->
   <!-- <router-view :key="$route.fullPath" /> -->
-  <router-view :key="$route.path" />
+  <!-- <router-view :key="$route.path" /> -->
+  <router-view />
 </template>
 
 <script>
