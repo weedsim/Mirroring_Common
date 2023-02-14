@@ -38,11 +38,19 @@ const routes = [
       ),
   },
   {
-    path: "/detail",
-    name: "detail",
+    path: "/maindetail",
+    name: "maindetail",
     component: () =>
       import(
         /* webpackChunkName: "about" */ "@/components/community/MainDetail.vue"
+      ),
+  },
+  {
+    path: "/titlemodify",
+    name: "titlemodify",
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "@/components/community/TitleModify.vue"
       ),
   },
   {

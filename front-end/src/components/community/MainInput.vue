@@ -16,7 +16,7 @@
             <button class="btn btn-secondary btn-lg"><router-link to="maininput"  style="text-decoration:none; color:white">확인</router-link></button>
           </div>
           <div class="m-0 p-0 col-3">
-            <button class="btn btn-secondary btn-lg"><router-link to="maininput"  style="text-decoration:none; color:white">취소</router-link></button>
+            <button class="btn btn-secondary btn-lg"><router-link to="community"  style="text-decoration:none; color:white">취소</router-link></button>
           </div>
           <div class="m-0 p-0 col-3">
         
