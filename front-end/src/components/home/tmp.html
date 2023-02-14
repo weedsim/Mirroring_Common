@@ -48,6 +48,7 @@
         xhttp.open(
           "POST",
           "http://localhost:8080/auth/login/kakao?state=kakao&code=" +
+          // "http://localhost:8081/auth/login/kakao?state=kakao&code=" +
             getParameter("code")
         );
         xhttp.send();
@@ -69,6 +70,7 @@
         xhttp.open(
           "POST",
           "http://localhost:8080/auth/login/google?state=google&code=" +
+          // "http://localhost:8081/auth/login/google?state=google&code=" +
             getParameter("code")
         );
         xhttp.send();

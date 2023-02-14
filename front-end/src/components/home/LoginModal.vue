@@ -36,7 +36,7 @@
             >
           </li>
           <li class="login-container">
-            <button class="btn-login modal-email-pwd" v-on:click="logIn()">
+            <button class="btn-login modal-email-pwd" v-on:click="logIn">
               로그인
             </button>
           </li>
@@ -95,39 +95,39 @@ export default {
     // resetval() {
     //   (this.useremail = null), (this.userpwd = null);
     // },
-    // logIn() {
-    //   const payload = {
-    //     email: this.useremail,
-    //     password: this.userpwd,
-    //   };
-    //   this.$store.dispatch("logIn", payload);
-    // },
     logIn() {
-      axios({
-        method: "POST",
-        url: `${this.$store.state.API_URL}/users/login`,
-        headers: {
-          "Content-Type": "multipart/form-data",
-          // "Content-Type": "application/json",
-        },
-        data: {
-          email: this.useremail,
-          password: this.userpwd,
-        },
-      })
-        .then((res) => {
-          console.log(res.data);
-          const payload = {
-            token: res.data.data.accessToken,
-            refreshToken: res.data.data.refreshToken,
-          };
-          this.$store.commit("SAVE_TOKEN", payload);
-          this.offModal();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      const payload = {
+        email: this.useremail,
+        password: this.userpwd,
+      };
+      this.$store.dispatch("logIn", payload);
     },
+    // logIn() {
+    //   axios({
+    //     method: "POST",
+    //     url: `${this.$store.state.API_URL}/users/login`,
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //       // "Content-Type": "application/json",
+    //     },
+    //     bodys: {
+    //       email: this.useremail,
+    //       password: this.userpwd,
+    //     },
+    //   })
+    //     .then((res) => {
+    //       console.log(res.data);
+    //       const payload = {
+    //         token: res.data.data.accessToken,
+    //         refreshToken: res.data.data.refreshToken,
+    //       };
+    //       this.$store.commit("SAVE_TOKEN", payload);
+    //       this.offModal();
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // },
   },
 };
 </script>

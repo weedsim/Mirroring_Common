@@ -83,6 +83,7 @@ export default {
     // 게임방 목록을 받아오는 메서드
     getRooms(pageNumber) {
       console.log(pageNumber.page);
+      console.log(pageNumber);
       axios({
         method: "get",
         // url: `${API_URL}/rooms?pageNumber=${페이지네이션 번호}`,
@@ -94,6 +95,7 @@ export default {
         .then((res) => {
           // 받아온 방정보 8개는 뷰엑스 스토어로 저장할 예정
           console.log(res.data);
+          console.log("1")
           this.rooms = res.data;
         })
         .catch((err) => {

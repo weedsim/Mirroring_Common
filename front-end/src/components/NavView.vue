@@ -17,7 +17,7 @@
             <router-link to="/community" class="nav-link">커뮤니티</router-link>
           </li>
         </ul>
-        <ul class="menu" v-if="!$store.state.isLogin">
+        <ul class="menu" v-if="!loginstatus">
           <li class="nav-link">
             <a class="" href="#" v-on:click="onModal('login')">로그인</a>
           </li>
@@ -30,7 +30,7 @@
             <router-link to="/mypage" class="nav-link">마이페이지</router-link>
           </li>
           <li>
-            <a class="nav-link" href="#" v-on:click="logout">로그아웃</a>
+            <a class="nav-link" href="#" v-on:click="logout()">로그아웃</a>
           </li>
         </ul>
       </div>
@@ -46,6 +46,7 @@ import LoginModal from "@/components/home/LoginModal.vue";
 import SignupModal from "@/components/home/SignupModal.vue";
 import PwdModal from "@/components/home/PwdModal.vue";
 import VueCookies from "vue-cookies";
+// import store from '@/store/index.js';
 
 export default {
   components: { LoginModal, SignupModal, PwdModal },
@@ -59,11 +60,11 @@ export default {
       // istoken: "cookieValue",
     };
   },
-  // computed:{
-  //   loginstatus(){
-  //     return this.$store.commit()
-  //   }
-  // },
+  computed:{
+    loginstatus(){
+      return this.$store.state.refreshToken
+    }
+  },
   methods: {
     onModal(data) {
       if (data === "login") {

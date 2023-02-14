@@ -4,6 +4,7 @@ import router from "@/router";
 import VueCookies from "vue-cookies";
 import createPersistedState from "vuex-persistedstate";
 import playGameStore from "@/store/modules/playgame.js";
+import { genPropsAccessExp } from "@vue/shared";
 
 // const API_URL = "http://127.0.0.1:5000";
 const API_URL = "http://localhost:5000";
@@ -210,11 +211,13 @@ export default createStore({
       });
     },
     logIn(context, payload) {
+      console.log(payload);
       axios({
         method: "POST",
         url: `${API_URL}/users/login`,
         headers: {
-          "Content-Type": "multipart/form-data",
+          // "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
         data: {
           email: payload.email,
@@ -232,6 +235,9 @@ export default createStore({
           context.commit("SAVE_TOKEN", payload);
         })
         .catch((err) => {
+          console.log(err.config.url);
+          console.log(err.config.method);
+          console.log("에러");
           console.log(err);
         });
     },
@@ -242,9 +248,10 @@ export default createStore({
     logOut(context, payload) {
       axios({
         method: "post",
-        url: `${API_URL}/logout`,
+        url: `${API_URL}/users/logout`,
         headers: {
-          Authorization: `Bearer ${payload.accessToken}`,
+          Authorization: `Bearer${payload.accessToken}`,
+          "refresh-token": `${payload.refreshToken}`
         },
         data: {
           accessToken: payload.accessToken,
@@ -255,7 +262,10 @@ export default createStore({
           console.log(res);
           context.commit("DELETE_TOKEN");
         }
-      });
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     },
     getRooms(context, payload) {
       axios({
@@ -339,27 +349,28 @@ export default createStore({
     },
     // REISSUE요청
     reIssue(context, payload) {
-      console.log(payload);
+      console.log(payload.refreshToken);
+      const refreshtoken = payload.refreshToken;
       axios({
         method: "POST",
         url: `${API_URL}/users/reissue`,
         headers: {
           Authorization: `Bearer ${payload.accessToken}`,
-          "refresh-token": payload.refreshToken,
+          "refresh-token": refreshtoken,
         },
-        // data: {
-        //   accessToken: payload.accessToken,
-        //   refreshToken: payload.refreshToken,
-        // },
+        data: {
+          accessToken: payload.accessToken,
+          refreshToken: payload.refreshToken,
+        },
       })
         .then((res) => {
           console.log("reissue 테스트중입니다. ");
           console.log(res.data);
-          // const payload = {
-          //   token: res.data,
-          //   refreshToken: payload.refreshToken,
-          // };
-          // context.commit("SAVE_TOKEN", payload);
+          const payload = {
+            token: res.data,
+            refreshToken: payload.refreshToken,
+          };
+          context.commit("SAVE_TOKEN", payload);
         })
         .catch((err) => {
           console.log(err);

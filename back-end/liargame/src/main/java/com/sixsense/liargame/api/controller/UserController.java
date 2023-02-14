@@ -12,6 +12,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
@@ -22,7 +24,7 @@ public class UserController {
     private final Response response;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<?> signUp(@Validated UserRequestDto.SignUp signUp,
+    public ResponseEntity<?> signUp(@Validated @RequestBody UserRequestDto.SignUp signUp,
                                     Errors errors) {
         // validation check
         if (errors.hasErrors()) {
@@ -38,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Validated UserRequestDto.Login login,
+    public ResponseEntity<?> login(@Validated @RequestBody UserRequestDto.Login login,
                                    Errors errors) {
         // validation check
         if (errors.hasErrors()) {
@@ -50,6 +52,7 @@ public class UserController {
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
                                     @RequestHeader(JwtProperties.REFRESH_TOKEN) String refreshToken) {
+        System.out.println(refreshToken);
         UserRequestDto.Logout logout = UserRequestDto.Logout.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
@@ -70,10 +73,10 @@ public class UserController {
 
     @PutMapping("/modify/name")
     public ResponseEntity<?> updateUserName(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
-                                            String name) {
+                                            @RequestBody Map<String, String> header) {
         UserRequestDto.ModifyName modify = UserRequestDto.ModifyName.builder()
                 .accessToken(accessToken)
-                .name(name)
+                .name(header.get("name"))
                 .build();
 
         return userService.updateName(modify);
@@ -81,10 +84,10 @@ public class UserController {
 
     @PutMapping("/modify/password")
     public ResponseEntity<?> updateUserPassword(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
-                                                String password) {
+                                                @RequestBody Map<String, String> header) {
         UserRequestDto.ModifyPassword modify = UserRequestDto.ModifyPassword.builder()
                 .accessToken(accessToken)
-                .password(password)
+                .password(header.get("password"))
                 .build();
 
         return userService.updatePassword(modify);
@@ -106,7 +109,9 @@ public class UserController {
     }
 
     @GetMapping("/duplicate")
-    public ResponseEntity<?> duplication(String email, String name) {
+    public ResponseEntity<?> duplication(@RequestParam(required = false) String email,
+                                         @RequestParam(required = false) String name
+    ) {
         return new ResponseEntity<Boolean>(userService.isDuplication(email, name), HttpStatus.OK);
     }
 }
