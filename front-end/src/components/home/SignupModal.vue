@@ -11,14 +11,14 @@
           <li class="modal-email-pwd-name">이메일</li>
           <li class="signup-container">
             <input
-              class="modal-input"
-              type="text"
-              placeholder="이메일을 입력해주세요"
-              v-model="useremail"
+                class="modal-input"
+                type="text"
+                placeholder="이메일을 입력해주세요"
+                v-model="useremail"
             />
             <button
-              class="modal-btn-duplicate modal-email-pwd-name"
-              v-on:click="chkemail"
+                class="modal-btn-duplicate modal-email-pwd-name"
+                v-on:click="chkemail"
             >
               중복확인
             </button>
@@ -32,14 +32,14 @@
           <li class="modal-email-pwd-name">닉네임</li>
           <li class="signup-container">
             <input
-              class="modal-input"
-              type="text"
-              placeholder="닉네임을 입력해주세요"
-              v-model="usernickname"
+                class="modal-input"
+                type="text"
+                placeholder="닉네임을 입력해주세요"
+                v-model="usernickname"
             />
             <button
-              class="modal-btn-duplicate modal-email-pwd-name"
-              v-on:click="chknick"
+                class="modal-btn-duplicate modal-email-pwd-name"
+                v-on:click="chknick"
             >
               중복확인
             </button>
@@ -53,20 +53,20 @@
           <li class="modal-email-pwd-name">비밀번호</li>
           <li>
             <input
-              class="modal-input"
-              type="password"
-              placeholder="비밀번호를 입력해주세요"
-              v-model="userpwd"
+                class="modal-input"
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                v-model="userpwd"
             />
           </li>
           <li class="modal-email-pwd-name">비밀번호 확인</li>
           <li>
             <input
-              class="modal-input"
-              type="password"
-              placeholder="비밀번호를 입력해주세요"
-              v-model="userpwdtwo"
-              v-on:keyup="chkpwd"
+                class="modal-input"
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                v-model="userpwdtwo"
+                v-on:keyup="chkpwd"
             />
           </li>
           <li class="signup-container">
@@ -84,6 +84,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   name: "SignupModal",
   components: {},
@@ -103,23 +104,27 @@ export default {
       pwmatch: false, //비밀번호 일치
     };
   },
-  setup() {},
-  created() {},
-  watched() {},
-  mounted() {},
+  setup() {
+  },
+  created() {
+  },
+  watched() {
+  },
+  mounted() {
+  },
   methods: {
     // 모달닫힐때 초기화
     offModal() {
       (this.useremail = null),
-        (this.usernickname = null),
-        (this.userpwd = null),
-        (this.userpwdtwo = null),
-        (this.name_positive = false),
-        (this.name_negative = false),
-        (this.email_positive = false),
-        (this.email_negative = false),
-        (this.pwmismatch = false),
-        (this.pwmatch = false);
+          (this.usernickname = null),
+          (this.userpwd = null),
+          (this.userpwdtwo = null),
+          (this.name_positive = false),
+          (this.name_negative = false),
+          (this.email_positive = false),
+          (this.email_negative = false),
+          (this.pwmismatch = false),
+          (this.pwmatch = false);
       this.$emit("close", "signup"); // 창 닫아주세요.
     },
     // 이메일 중복검사
@@ -131,21 +136,21 @@ export default {
           email: this.useremail,
         },
       })
-        .then((res) => {
-          if (res.data === true) {
-            alert("이미 가입된 이메일 입니다.");
-            this.email_positive = true;
-            this.email_negative = false;
-          } else {
-            console.log("중복이 아닙니다.");
-            this.email_positive = false;
-            this.email_negative = true;
-          }
-        })
-        .catch((err) => {
-          console.log("메일중복확인실패");
-          console.log(err);
-        });
+          .then((res) => {
+            if (res.data === true) {
+              alert("이미 가입된 이메일 입니다.");
+              this.email_positive = true;
+              this.email_negative = false;
+            } else {
+              console.log("중복이 아닙니다.");
+              this.email_positive = false;
+              this.email_negative = true;
+            }
+          })
+          .catch((err) => {
+            console.log("메일중복확인실패");
+            console.log(err);
+          });
     },
     // 닉네임 중복검사
     chknick() {
@@ -156,21 +161,21 @@ export default {
           name: this.usernickname,
         },
       })
-        .then((res) => {
-          if (res.data === true) {
-            alert("중복입니다. 다시 작성해주세요");
-            this.name_positive = true;
-            this.name_negative = false;
-          } else {
-            console.log("중복이 아닙니다.");
-            this.name_positive = false;
-            this.name_negative = true;
-          }
-        })
-        .catch((err) => {
-          console.log("이름중복확인실패");
-          console.log(err);
-        });
+          .then((res) => {
+            if (res.data === true) {
+              alert("중복입니다. 다시 작성해주세요");
+              this.name_positive = true;
+              this.name_negative = false;
+            } else {
+              console.log("중복이 아닙니다.");
+              this.name_positive = false;
+              this.name_negative = true;
+            }
+          })
+          .catch((err) => {
+            console.log("이름중복확인실패");
+            console.log(err);
+          });
     },
     // 비밀번호 일치여부 확인
     chkpwd() {
@@ -199,20 +204,18 @@ export default {
         //이메일이나 닉네임이 빈게 있으면
         console.log("비었다.");
       } else {
-        if (this.showalertemail2 === true && this.showalertname2 === true) {
+        if (this.email_negative === true && this.name_negative === true) {
           this.$store.dispatch("signUp", payload);
         } else if (
-          this.showalertemail2 === true &&
-          this.showalertname2 === false
+            this.email_negative === true &&
+            this.name_negative === false
         ) {
           console.log("닉네임이 중복입니다.");
         } else if (
-          this.showalertemail2 === false &&
-          this.showalertname2 === true
+            this.email_negative === false &&
+            this.name_negative === true
         ) {
           console.log("이미 가입된 이메일 입니다.");
-        } else {
-          console.log("어디엔가 문제가 생겼습니다. 확인바랍니다.");
         }
       }
     },
@@ -226,9 +229,11 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .already {
   text-align: center;
 }
+
 .signup-btn {
   background-color: rgba(253, 253, 253, 70%);
   border-radius: 20px;
@@ -238,9 +243,11 @@ export default {
   margin: 25px;
   font-size: 20px;
 }
+
 .signup-btn:hover {
   background-color: rgb(253, 253, 253);
 }
+
 .modal-email-pwd-name {
   font-weight: 500;
   font-size: 20px;
@@ -258,6 +265,7 @@ export default {
   font-size: 15px;
   margin-left: 40px;
 }
+
 .modal-btn-duplicate:hover {
   background-color: rgb(253, 253, 253);
 }
@@ -270,6 +278,7 @@ export default {
   height: 48px;
   padding: 20px;
 }
+
 .signup-modal-header {
   display: flex;
   margin-top: 12px;
@@ -277,10 +286,12 @@ export default {
   align-items: center;
   margin-bottom: 30px;
 }
+
 .modal-padding {
   padding-left: 20px;
   padding-right: 20px;
 }
+
 .modal {
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -311,6 +322,7 @@ export default {
   visibility: hidden;
   font-size: 50px;
 }
+
 .close {
   color: #aaaaaa;
   font-size: 50px;
@@ -323,6 +335,7 @@ export default {
   text-decoration: none;
   cursor: pointer;
 }
+
 .signup-text {
   font-size: 35px;
   font-weight: 500;
