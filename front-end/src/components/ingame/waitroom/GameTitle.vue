@@ -4,9 +4,9 @@
     <div class="room-title">{{ $store.state.gameinfo.title }}</div>
   </div>
   <div class="setting-container">
-    <router-link :to="{ path: 'InLobby' }">
-      <button class="btn-exit" v-on:click="chkinfo">나가기</button>
-    </router-link>
+    <!-- <router-link :to="{ path: 'InLobby' }"> -->
+    <button class="btn-exit" v-on:click="goLobby">나가기</button>
+    <!-- </router-link> -->
     <div class="btn-setting" v-on:click="test">방 설정 변경</div>
   </div>
   <!-- <ResultModal v-if="resultShow" v-on:close="offModal" /> -->
@@ -36,6 +36,10 @@ export default {
     },
     chkinfo() {
       console.log(this.$store.state.openvidu);
+    },
+    goLobby() {
+      console.log("실행");
+      this.$router.push({ name: "lobby", query: { page: 1 } });
     },
   },
 };

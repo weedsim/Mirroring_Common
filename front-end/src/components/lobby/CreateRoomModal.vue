@@ -221,6 +221,7 @@ export default {
             this.roomPwd = null;
 
             console.log("실패");
+            console.log(VueCookies.get("accessToken"));
             console.log(err);
             // 테스트용
             // this.$store.dispatch("setIsEnter");

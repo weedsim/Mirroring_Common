@@ -66,7 +66,6 @@ export default {
         });
     },
     postSubject() {
-      console.log("방번호" + this.$store.state.gameinfo.roomId);
       axios({
         method: "GET",
         // url: `${API_URL}/rooms`,

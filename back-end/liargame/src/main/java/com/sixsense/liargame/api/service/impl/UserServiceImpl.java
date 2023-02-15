@@ -165,7 +165,7 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity<?> logout(UserRequestDto.Logout logout) {
         // 1. Refresh Token 검증
         try {
-            if (!jwtTokenProvider.validateToken(logout.getAccessToken())) {
+            if (!jwtTokenProvider.validateToken(logout.getRefreshToken())) {
                 return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
             }
         } catch (ExpiredJwtException e) {

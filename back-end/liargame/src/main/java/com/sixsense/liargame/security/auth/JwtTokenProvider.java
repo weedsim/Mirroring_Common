@@ -123,6 +123,9 @@ public class JwtTokenProvider {
                 accessToken = accessToken.substring(7);
             }
         // accessToken 남은유효시간
+        if (StringUtils.hasText(accessToken) && accessToken.startsWith("Bearer")) {
+            accessToken = accessToken.substring(7);
+        }
         Date expiration = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody().getExpiration();
         // 현재 시간
         Long now = new Date().getTime();

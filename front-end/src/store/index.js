@@ -249,9 +249,13 @@ export default createStore({
       state.openvidu = payload;
       console.log("여기는 mutation openvidu야", state.openvidu);
     },
-    ON_RESULT(state) {},
+    ON_RESULT(state, payload) {
+      state.resultModal = true;
+      state.result = payload;
+    },
     OFF_RESULT(state) {
       state.resultModal = false;
+      state.result = [];
     },
   },
   actions: {
