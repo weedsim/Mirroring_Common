@@ -8,15 +8,11 @@
       align-items: center;
     "
   >
-    <button class="circle me-3 p-0">
-      <BIconVolumeUpFill
-        style="color: black; font-size: 1.5vw"
-      ></BIconVolumeUpFill>
+    <button class="circle">
+      <img src="@/assets/ingame/mic32-on.png" alt="" class="tmpImg" />
     </button>
     <button class="circle">
-      <BIconCameraVideoOffFill
-        style="color: black; font-size: 1.2vw"
-      ></BIconCameraVideoOffFill>
+      <img src="@/assets/ingame/video30-on.png" alt="" class="tmpImg" />
     </button>
   </div>
   <div
@@ -65,5 +61,11 @@ export default {
   width: 5vh;
   height: 5vh;
   border-radius: 2.5vh;
+}
+.tmpImg {
+  display: block;
+  margin: 0px auto;
+  padding: 0px;
+  width: 1vw;
 }
 </style>

@@ -160,7 +160,7 @@ export default {
         // 결과물 받기
         if (type === "result") {
           console.log("결과" + val);
-          this.$store.commit("ON_RESULT");
+          this.$store.commit("ON_RESULT", JSON.parse(val)); // 결과물 모달 온
           this.$store.commit("OFF_ANSWER"); // 결과물 받으면 정답입력창 off
         }
       });

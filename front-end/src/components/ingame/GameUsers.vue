@@ -148,7 +148,7 @@ export default {
       console.log("myidx: " + this.myIdx + " targetidx: " + targetIndex);
       axios({
         method: "POST",
-        url: `${this.$store.state.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/vote`,
+        url: `${this.$store.state.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/games/vote`,
         headers: {
           // "Content-Type": "multipart/form-data",
           // "Content-Type": "application/json",
