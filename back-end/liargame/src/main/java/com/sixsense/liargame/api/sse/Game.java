@@ -17,6 +17,8 @@ public abstract class Game {
     @Setter
     protected String word;
     @Setter
+    protected String subject;
+    @Setter
     protected String answer;
     protected List<Vote> votes;
     protected int startPerson;
@@ -30,7 +32,10 @@ public abstract class Game {
     public abstract GameResultResp getResult();
 
     protected VoteResp toVoteResp(Vote vote) {
-        return new VoteResp(participants[vote.getVoter()].getName(), participants[vote.getTarget()].getName(), Objects.equals(vote.getTarget(), liar));
+        if (vote.getTarget() != null)
+            return new VoteResp(participants[vote.getVoter()].getName(), participants[vote.getTarget()].getName(), Objects.equals(vote.getTarget(), liar));
+        else
+            return new VoteResp(participants[vote.getVoter()].getName(), null, false);
     }
 
     public Integer changeSpeaker() {

@@ -5,7 +5,6 @@ import com.sixsense.liargame.api.response.VoteResp;
 import com.sixsense.liargame.api.sse.Game;
 import com.sixsense.liargame.common.model.UserInfo;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +24,15 @@ public class NormalGame extends Game {
     }
 
     public GameResultResp getResult() {
+        boolean[] voted = new boolean[super.participants.length];
+        for (Vote vote : super.votes) {
+            voted[vote.getVoter()] = true;
+        }
+        for (int i = 0; i < voted.length; i++) {
+            if (!voted[i]) {
+                votes.add(new Vote(i, null));
+            }
+        }
         List<VoteResp> voteResult =
                 super.votes.stream()
                         .map(this::toVoteResp)
@@ -35,6 +43,7 @@ public class NormalGame extends Game {
                 .winner(super.winner)
                 .votes(voteResult)
                 .word(super.word)
+                .liarIdx(super.liar)
                 .liar(liarName)
                 .citizens(citizens)
                 .build();

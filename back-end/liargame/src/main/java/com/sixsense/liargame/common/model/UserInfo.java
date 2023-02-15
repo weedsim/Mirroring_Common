@@ -25,7 +25,7 @@ public class UserInfo implements Serializable {
         this.name = name;
         this.isReady = false;
         this.isJoin = true;
-        this.mic = false;
-        this.cam = false;
+        this.mic = true;
+        this.cam = true;
     }
 }

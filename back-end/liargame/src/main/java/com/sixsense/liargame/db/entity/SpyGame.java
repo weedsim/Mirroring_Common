@@ -45,6 +45,8 @@ public class SpyGame extends Game {
                 .votes(voteResult)
                 .word(super.word)
                 .liar(liarName)
+                .liarIdx(super.liar)
+                .spyIdx(spy)
                 .spy(spyName)
                 .citizens(citizens)
                 .build();
