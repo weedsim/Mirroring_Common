@@ -16,7 +16,8 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Arrays.asList("http://localhost:8081","http://192.168.91.111:8081"));
+        config.setAllowedOrigins(
+                Arrays.asList("http://localhost:8081", "http://192.168.91.111:8081", "https://i8a706.p.ssafy.io"));
         config.addAllowedOriginPattern("*");
         config.setAllowedHeaders(Arrays.asList("*"));
         config.addAllowedMethod("*");
