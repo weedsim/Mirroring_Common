@@ -105,7 +105,7 @@ export default {
     UserDisplay,
   },
   computed: {
-    ...mapState["API_URL"],
+    ...mapState(["API_URL"]),
     // checkReady(idx) {
     //   let tmp = this.$store.getters.isParticipants;
     //   let length = tmp.length;

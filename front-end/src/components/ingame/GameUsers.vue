@@ -8,18 +8,28 @@
     >
       <!-- v-on:click="vote(index)" -->
       <div
-        class=""
+        class="speaking-blur"
         v-bind:class="{ 'speaking-blur': gameinfo.participants[index].mic }"
       >
         <!-- <div class="p-3 speaking-blur"> -->
         <div
           class="user-screen"
-          v-bind:class="{ speaking: gameinfo.participants[index].mic }"
+          v-bind:class="[
+            { speaking: gameinfo.participants[index].mic },
+            { unspeaking: !gameinfo.participants[index].mic },
+          ]"
         >
           <!-- $store.state.sessions[index].isJoin -->
           <OvVideo :streamManager="item" class="ov-video" />
           <!-- <img src="@/assets/ingame/headphone.png" v-else alt="" /> -->
-          <div class="screen"></div>
+          <div class="screen test">
+            <div class="user-name">
+              {{ gameinfo.participants[index].name }}
+            </div>
+            <div class="vote">
+              <div class="vote-msg">지목</div>
+            </div>
+          </div>
           <div
             class="ready"
             style="background-color: rgba(0, 135, 70, 81%)"
@@ -138,6 +148,8 @@ export default {
   methods: {
     getThis() {
       console.log(this.subscribers);
+      console.log("찍혀라 얍!");
+      console.log(this.getAll);
     },
     vote(targetIndex) {
       console.log("myidx: " + this.myIdx + " targetidx: " + targetIndex);
@@ -184,7 +196,12 @@ img {
 .speaking {
   outline-style: solid;
   outline-color: #008c06;
-  outline-width: 10px;
+  outline-width: 8px;
+}
+.unspeaking {
+  outline-style: solid;
+  outline-color: black;
+  outline-width: 1px;
 }
 .speaking-blur {
   outline-width: 15px;
@@ -215,19 +232,21 @@ img {
   /* opacity: 0%; */
   /* z-index: 5; */
 }
-.btn-mic-cam {
+/* .btn-mic-cam {
   position: absolute;
   top: 0%;
   display: none;
   width: 100%;
   height: 100%;
-}
+} */
 .user-name {
   position: absolute;
   top: 0%;
   color: black;
   text-shadow: -1px 0 #ffffff, 0 1px #ffffff, 1px 0 #ffffff, 0 -1px #ffffff;
   font-weight: 600;
+  padding-left: 1vw;
+  margin-top: 1vh;
 }
 .screen {
   top: 0%;
@@ -239,13 +258,21 @@ img {
 .screen:hover {
   background-color: rgba(0, 0, 0, 30%);
 }
-.screen:hover > .btn-mic-cam {
+
+/* .screen:hover > .btn-mic-cam {
   background-color: rgba(0, 0, 0, 30%);
   display: block;
 }
 .screen:hover > .btn-mic-cam .vote {
   display: block;
+} */
+.screen:hover > .vote {
+  display: block;
 }
+/* .screen:hover > .vote-msg {
+  display: block;
+} */
+
 .vote-msg:hover {
   cursor: pointer;
 }
@@ -267,14 +294,18 @@ img {
 .vote-msg {
   text-align: center;
   position: relative;
-  top: 45%;
-  transform: translateY(-50%);
+  /* top: 45%; */
+  transform: translateY(150%);
   color: rgb(210, 0, 0);
   font-size: 3vw;
+  z-index: 100;
   /* letter-spacing: 1vw; */
   font-weight: 600;
 }
-.wait {
-  /* opacity: 0%; */
+.test {
+  background-image: url(@/assets/ingame/selectLiar2.jpg);
+
+  background-repeat: no-repeat;
+  opacity: 0.5;
 }
 </style>

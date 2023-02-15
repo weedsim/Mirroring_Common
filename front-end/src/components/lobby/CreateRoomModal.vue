@@ -342,7 +342,7 @@ export default {
 
     async createSession(sessionId) {
       const response = await axios.post(
-        this.API_URL + "api/sessions",
+        this.API_URL + "/api/sessions",
         { customSessionId: String(sessionId) },
         {
           headers: { "Content-Type": "application/json" },
@@ -353,7 +353,7 @@ export default {
 
     async createToken(sessionId) {
       const response = await axios.post(
-        this.API_URL + "api/sessions/" + sessionId + "/connections",
+        this.API_URL + "/api/sessions/" + sessionId + "/connections",
         {},
         {
           headers: { "Content-Type": "application/json" },
@@ -477,6 +477,7 @@ select {
   align-items: center;
 }
 .btn-create {
+  border-radius: 10px;
   width: 100px;
   height: 40px;
   font-size: 18px;

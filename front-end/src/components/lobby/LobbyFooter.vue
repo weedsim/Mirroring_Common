@@ -7,7 +7,7 @@
         </button>
         <span v-for="page in pages" :key="page">
           <router-link
-            v-if="page === this.current"
+            v-if="page === this.currentPage"
             class="now page"
             :to="{ name: 'lobby', query: { page: page } }"
           >
@@ -20,7 +20,6 @@
           >
             {{ page }}
           </router-link>
-          <!-- <a href="/lobby?page={{ page }}">{{ page }}</a> -->
         </span>
         <button @click="nextPage" :disabled="up" class="btn-page">&#62;</button>
       </nav>
@@ -38,35 +37,34 @@
 import CreateRoomModal from "@/components/lobby/CreateRoomModal.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
-
 import { mapState } from "vuex";
+
 export default {
   name: "LobbyFooter",
   components: { CreateRoomModal },
   data() {
     return {
       pageSize: 5,
-      currentPage: this.$route.query.page,
+      currentPage: 1,
       totalPages: 0,
       paginationMinNum: 1,
-      // pages: [],
       showRoom: false,
     };
   },
   created() {
+    this.currentPage = this.$route.query.page;
     this.init();
   },
   computed: {
-    ...mapState["API_URL"],
+    ...mapState(["API_URL"]),
     pages() {
       const start = (this.paginationMinNum - 1) * this.pageSize + 1;
       const end = start + this.pageSize - 1;
       const pages = [];
-
       for (let i = start; i <= end && i <= this.totalPages; i++) {
         pages.push(i);
       }
-
+      console.log("start, end", start, end);
       return pages;
     },
     down() {
@@ -88,6 +86,7 @@ export default {
   },
   methods: {
     init() {
+      console.log(this.API_URL);
       axios({
         method: "GET",
         url: `${this.API_URL}/rooms/last`,
@@ -97,15 +96,6 @@ export default {
       })
         .then((res) => {
           this.totalPages = Number(res.data);
-          // const start = (this.currentPage - 1) * this.pageSize + 1;
-          // const end = start + this.pageSize - 1;
-          // const pages = [];
-
-          // for (let i = start; i <= end && i <= this.totalPages; i++) {
-          //   pages.push(i);
-          // }
-
-          // this.pages = pages;
         })
         .catch((err) => {
           console.log(err);
@@ -149,6 +139,7 @@ input {
 .page {
   color: white;
   font-size: 20px;
+  margin: 0 7px;
 }
 #pagination {
   display: flex;
