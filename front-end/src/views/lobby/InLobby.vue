@@ -50,6 +50,6 @@ export default {
   justify-content: center;
 }
 .lobby-container {
-  width: 50vw;
+  width: 900px;
 }
 </style>

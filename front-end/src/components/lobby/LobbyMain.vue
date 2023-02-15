@@ -20,12 +20,14 @@
               src="@/assets/home/mode-two-room.jpg"
             />
           </div>
-          <div>
+          <div style="width: 100%">
             <div class="room-id-title">
               <div>No.{{ room.id }}</div>
               <div>{{ room.title }}</div>
             </div>
-            <div>{{ room.curCount }} / {{ room.maxCount }}</div>
+            <div class="room-count">
+              <div>{{ room.curCount }} / {{ room.maxCount }}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -40,6 +42,7 @@ import axios from "axios";
 import router from "@/router";
 import VueCookies from "vue-cookies";
 import { OpenVidu } from "openvidu-browser";
+import { mapState, mapActions } from "vuex";
 
 // const API_URL = "http://127.0.0.1:8080";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
@@ -66,12 +69,16 @@ export default {
   },
   created() {
     this.getRooms(1);
+    if (this.openvidu !== undefined && this.openvidu.session !== undefined)
+      this.initSession;
   },
-  // computed: {
-  //   chgpage() {
-  //     return this.$route.query.page;
-  //   },
-  // },
+  computed: {
+    ...mapActions(["initSession"]),
+    ...mapState(["openvidu"]),
+    // chgpage() {
+    //   return this.$route.query.page;
+    // },
+  },
   watch: {
     $route(to, from) {
       if (to.query !== from.query) {
@@ -151,12 +158,14 @@ export default {
 
       // On every new Stream received...
       this.session.on("streamCreated", ({ stream }) => {
+        console.log("누군가 들어왔어");
         const subscriber = this.session.subscribe(stream, undefined);
         this.subscribers.push(subscriber);
       });
 
       // On every Stream destroyed...
       this.session.on("streamDestroyed", ({ stream }) => {
+        console.log("누군가 떠났어");
         const index = this.subscribers.indexOf(stream.streamManager, 0);
         if (index >= 0) {
           this.subscribers.splice(index, 1);
@@ -165,6 +174,7 @@ export default {
 
       // On every asynchronous exception...
       this.session.on("exception", ({ exception }) => {
+        console.log("오류발생");
         console.warn(exception);
       });
       console.log("3번성공");
@@ -225,24 +235,8 @@ export default {
             );
           });
       });
-
-      window.addEventListener("beforeunload", this.leaveSession);
     },
-    leaveSession() {
-      // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
-      if (this.session) this.session.disconnect();
 
-      // Empty all properties...
-      this.session = undefined;
-      this.mainStreamManager = undefined;
-      this.$store.state.myIdx = undefined;
-      this.$store.state.publisher = undefined;
-      this.$store.state.subscribers = [];
-      this.OV = undefined;
-
-      // Remove beforeunload listener
-      window.removeEventListener("beforeunload", this.leaveSession);
-    },
     async getToken(mySessionId) {
       const sessionId = await this.createSession(mySessionId);
       return await this.createToken(sessionId);
@@ -289,6 +283,20 @@ export default {
 .room-id-title {
   width: 100%;
   display: flex;
+  justify-content: space-between;
+  padding-top: 1.4vh;
+  padding-right: 1.5vw;
+  padding-left: 0.5vw;
+  font-size: 20px;
+}
+.room-count {
+  width: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  padding-top: 1.4vh;
+  padding-right: 1.5vw;
+  padding-left: 0.5vw;
+  font-size: 20px;
 }
 .roomwrapper {
   display: flex;
