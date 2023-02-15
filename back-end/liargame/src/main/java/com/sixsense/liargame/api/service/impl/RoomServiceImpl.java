@@ -10,6 +10,7 @@ import com.sixsense.liargame.api.sse.GlobalRoom;
 import com.sixsense.liargame.api.sse.SseResponse;
 import com.sixsense.liargame.common.model.RoomDetail;
 import com.sixsense.liargame.common.model.SettingDto;
+import com.sixsense.liargame.common.model.UserInfo;
 import com.sixsense.liargame.db.entity.Room;
 import com.sixsense.liargame.db.entity.User;
 import com.sixsense.liargame.db.repository.NormalHistoryRepository;
@@ -80,6 +81,20 @@ public class RoomServiceImpl implements RoomService {
             return roomDetail;
         }
         return null;
+    }
+
+    @Override
+    public void initRoom(Integer roomId) {
+        Room room = rooms.get(roomId);
+        List<UserInfo> participants = room.getParticipants();
+        for (UserInfo userInfo : participants)
+            userInfo.setIsReady(false);
+        RoomDetail roomDetail = toDetail(room);
+        try {
+            room.getEmitters().sendToAll("message", new SseResponse("room", om.writeValueAsString(roomDetail)));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

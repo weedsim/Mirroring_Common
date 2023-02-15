@@ -1,5 +1,8 @@
 package com.sixsense.liargame.api.sse;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sixsense.liargame.common.model.GameInfo;
 import com.sixsense.liargame.db.entity.Room;
 import com.sixsense.liargame.db.entity.SpyGame;
 import com.sixsense.liargame.db.entity.Vote;
@@ -16,9 +19,11 @@ import java.util.stream.Collectors;
 public class GameManager {
     private final int SPARE_TIME = 200;
     private final Map<Integer, Game> games;
+    private final ObjectMapper om;
 
-    public GameManager(GlobalRoom globalRoom) {
+    public GameManager(GlobalRoom globalRoom, ObjectMapper om) {
         this.games = globalRoom.getGames();
+        this.om = om;
     }
 
     public Game start(Room room) {
@@ -26,23 +31,29 @@ public class GameManager {
         Emitters emitters = room.getEmitters();
         int timeout = room.getTimeout();
 
-        room.getEmitters().setLiar(game.getLiarUserId());
-        //시민들에게 단어 알려주고 게임 시작 알리기
+        emitters.setLiar(game.getLiarUserId());
+        if (room.getMode().equals("spy"))
+            emitters.setSpy(((SpyGame) game).getSpyUserId());
+        GameInfo citizenInfo = new GameInfo(game.getSubject(), game.getWord(), "citizen");
+        GameInfo liarInfo = new GameInfo(game.getSubject(), null, "liar");
+        GameInfo spyInfo = new GameInfo(game.getSubject(), game.getWord(), "spy");
 
-        emitters.sendToCitizens("message", new SseResponse("word", game.getWord()));
-        emitters.sendToLiar("message", new SseResponse("word", "liar"));
-        emitters.sendToSpy("message", new SseResponse("word", "spy"));
-        //테스트용
-        emitters.sendToSpy("message", new SseResponse("word", game.getWord()));
+        try {
+            emitters.sendToCitizens("message", new SseResponse("role", om.writeValueAsString(citizenInfo)));
+            emitters.sendToLiar("message", new SseResponse("role", om.writeValueAsString(liarInfo)));
+            emitters.sendToSpy("message", new SseResponse("role", om.writeValueAsString(spyInfo)));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         emitters.sendToAll("message", new SseResponse("message", "game start"));
         //timeout 만큼 쉼
-        waitTimeout(room.getEmitters(), timeout * 200);
+        waitTimeout(room.getEmitters(), timeout * 1000);
         //차례대로 발언
         Integer curSpeaker = game.getCurSpeaker();
         while (curSpeaker != null) {
 
             emitters.sendToAll("message", new SseResponse("curSpeaker", curSpeaker.toString()));
-            waitTimeout(room.getEmitters(), timeout * 200);
+            waitTimeout(room.getEmitters(), timeout * 1000);
             curSpeaker = game.changeSpeaker();
         }
         //투표시간 알림
@@ -60,13 +71,13 @@ public class GameManager {
         if (Objects.equals(game.getLiar(), result)) {
             emitters.sendToCitizens("message", new SseResponse("message", "selected liar"));
             emitters.sendToLiar("message", new SseResponse("message", "write answer"));
-            waitTimeout(room.getEmitters(), 200 * 10); // 정답 입력시간 10초
+            waitTimeout(room.getEmitters(), 10 * 1000); // 정답 입력시간 10초
             if (!StringUtils.hasText(game.getAnswer())) {
                 winner = "CITIZEN";
             }
             if (StringUtils.hasText(game.getAnswer()) && !game.getAnswer().equals(game.getWord()))
                 winner = "CITIZEN";
-        } else if (Objects.equals(((SpyGame) game).getSpy(), result)) {
+        } else if (game instanceof SpyGame && Objects.equals(((SpyGame) game).getSpy(), result)) {
             winner = "CITIZEN";
         }
         game.setWinner(winner);
@@ -78,7 +89,7 @@ public class GameManager {
 
     private void noticeVote(Emitters emitters) {
         emitters.sendToAll("message", new SseResponse("message", "vote start"));
-        waitTimeout(emitters, 5 * 1000); // 30초
+        waitTimeout(emitters, 10 * 1000); // 10초
         //투표종료 알림
         emitters.sendToAll("message", new SseResponse("message", "vote end"));
     }

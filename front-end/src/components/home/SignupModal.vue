@@ -198,27 +198,26 @@ export default {
         password: password,
         email: email,
       };
-      this.$store.dispatch("signUp", payload);
-      // if (this.useremail === null || this.usernickname === null) {
-      //   //이메일이나 닉네임이 빈게 있으면
-      //   console.log("비었다.");
-      // } else {
-      //   if (this.showalertemail2 === true && this.showalertname2 === true) {
-      //     this.$store.dispatch("signUp", payload);
-      //   } else if (
-      //     this.showalertemail2 === true &&
-      //     this.showalertname2 === false
-      //   ) {
-      //     console.log("닉네임이 중복입니다.");
-      //   } else if (
-      //     this.showalertemail2 === false &&
-      //     this.showalertname2 === true
-      //   ) {
-      //     console.log("이미 가입된 이메일 입니다.");
-      //   } else {
-      //     console.log("어디엔가 문제가 생겼습니다. 확인바랍니다.");
-      //   }
-      // }
+
+      if (this.useremail === null || this.usernickname === null) {
+        //이메일이나 닉네임이 빈게 있으면
+        console.log("비었다.");
+      } else {
+        if (this.email_negative === true && this.name_negative === true) {
+          this.$store.dispatch("signUp", payload);
+          this.offModal();
+        } else if (
+          this.email_negative === true &&
+          this.name_negative === false
+        ) {
+          console.log("닉네임이 중복입니다.");
+        } else if (
+          this.email_negative === false &&
+          this.name_negative === true
+        ) {
+          console.log("이미 가입된 이메일 입니다.");
+        }
+      }
     },
   },
 };
@@ -230,9 +229,11 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .already {
   text-align: center;
 }
+
 .signup-btn {
   background-color: rgba(253, 253, 253, 70%);
   border-radius: 20px;
@@ -242,9 +243,11 @@ export default {
   margin: 25px;
   font-size: 20px;
 }
+
 .signup-btn:hover {
   background-color: rgb(253, 253, 253);
 }
+
 .modal-email-pwd-name {
   font-weight: 500;
   font-size: 20px;
@@ -262,6 +265,7 @@ export default {
   font-size: 15px;
   margin-left: 40px;
 }
+
 .modal-btn-duplicate:hover {
   background-color: rgb(253, 253, 253);
 }
@@ -274,6 +278,7 @@ export default {
   height: 48px;
   padding: 20px;
 }
+
 .signup-modal-header {
   display: flex;
   margin-top: 12px;
@@ -281,10 +286,12 @@ export default {
   align-items: center;
   margin-bottom: 30px;
 }
+
 .modal-padding {
   padding-left: 20px;
   padding-right: 20px;
 }
+
 .modal {
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
@@ -315,6 +322,7 @@ export default {
   visibility: hidden;
   font-size: 50px;
 }
+
 .close {
   color: #aaaaaa;
   font-size: 50px;
@@ -327,6 +335,7 @@ export default {
   text-decoration: none;
   cursor: pointer;
 }
+
 .signup-text {
   font-size: 35px;
   font-weight: 500;

@@ -17,6 +17,8 @@ public interface RoomService {
 
     RoomDetail enter(Long userId, Integer roomId);
 
+    void initRoom(Integer roomId);
+
     void ban(Long userId, Integer roomId, Long banId);
 
     void exit(Long userId, Integer roomId);

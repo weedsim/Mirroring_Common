@@ -43,9 +43,9 @@ public class UserController {
     public ResponseEntity<?> login(@Validated @RequestBody UserRequestDto.Login login,
                                    Errors errors) {
         // validation check
-        if (errors.hasErrors()) {
-            return response.invalidFields(Helper.refineErrors(errors));
-        }
+//        if (errors.hasErrors()) {
+//            return response.invalidFields(Helper.refineErrors(errors));
+//        }
         return userService.login(login);
     }
 

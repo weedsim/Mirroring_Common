@@ -49,6 +49,7 @@ public class SubjectServiceImpl implements SubjectService {
         else
             game = new SpyGame(room);
         game.setWord(wordResp.getName());
+        game.setSubject(subject.getName());
         games.put(roomId, game);
     }
 }
