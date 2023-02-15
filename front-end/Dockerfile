@@ -1,11 +1,7 @@
 FROM node:14
-
-WORKDIR /root/S08P12A706/front-end
-
-COPY ./ ./
-
+WORKDIR /app
+COPY . .
 RUN npm install
-
+COPY . .
 RUN npm run build
-
-COPY ./ ./
+ENTRYPOINT ["npm", "run", "serve"]
