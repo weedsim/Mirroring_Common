@@ -9,7 +9,7 @@ import jwtDecode from "vue-jwt-decode";
 // const API_URL = "http://127.0.0.1:5000";
 // const API_URL = "http://localhost:5000";
 // const API_URL = "http://192.168.91.171:5000";
-const API_URL = "http://i8a706.p.ssafy.io";
+const API_URL = "https://i8a706.p.ssafy.io/api";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
 
 const storageStata = createPersistedState({
