@@ -119,7 +119,7 @@ export default {
     },
   },
   computed: {
-    ...mapState["API_URL"],
+    ...mapState(["API_URL"]),
   },
   setup() {},
   created() {

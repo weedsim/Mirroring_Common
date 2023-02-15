@@ -106,7 +106,7 @@ export default {
   },
   setup() {},
   computed: {
-    ...mapState["API_URL"],
+    ...mapState(["API_URL"]),
   },
   created() {},
   watched() {},

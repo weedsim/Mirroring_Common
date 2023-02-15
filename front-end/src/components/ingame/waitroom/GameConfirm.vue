@@ -62,7 +62,7 @@ export default {
     this.isMaster();
   },
   computed: {
-    ...mapState["API_URL"],
+    ...mapState(["API_URL"]),
   },
   methods: {
     closeModal() {

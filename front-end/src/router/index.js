@@ -2,11 +2,11 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import store from "../store/index.js";
 const routes = [
-  {
-    path: "/",
-    name: "home",
-    component: HomeView,
-  },
+  // {
+  //   path: "/",
+  //   name: "home",
+  //   component: HomeView,
+  // },
   {
     path: "/ingame",
     name: "ingame",
@@ -18,7 +18,7 @@ const routes = [
     component: () => import("../views/InLobby.vue"),
   },
   {
-    path: "/main",
+    path: "/",
     name: "main",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/home/MainHome.vue"),
@@ -34,7 +34,7 @@ const routes = [
     name: "community",
     component: () =>
       import(
-        /* webpackChunkName: "about" */ "@/components/community/MainCommunity.vue"
+        /* webpackChunkName: "about" */ "@/views/community/communityaa.vue"
       ),
   },
   {

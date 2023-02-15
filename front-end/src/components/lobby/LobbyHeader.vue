@@ -35,7 +35,7 @@ export default {
   },
   created() {},
   computed: {
-    ...mapState["API_URL"],
+    ...mapState(["API_URL"]),
   },
   methods: {
     joinRoom() {

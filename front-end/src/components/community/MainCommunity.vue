@@ -1,40 +1,70 @@
 <template>
-  <navbar />
-  <div class="community row" style="table-layout: fixed">
-    <!-- <div class="m-0 p-0 row" style="height: 20%; background-color: red"> -->
-    <div class="m-0 p-0 col-2"></div>
-    <div class="m-0 p-0 col-8">
-      <!-- 반복문을 통해 컨테이너 추가 가능 -->
-      <component :is="comp" style="width: 100%; height: 95vh"></component>
-
-      <div class="m-0 p-0 row" style="height: 10vh">
-        <community-header></community-header>
+  <div class="main-community">
+    <div class="community-container">
+      <div class="header">
+        <div class="header-sub">
+          <div style="color: #cfcfce; font-size: 40px">커뮤니티</div>
+          <div class="search-bar">
+            <div>
+              <select class="select-search">
+                <option>제목</option>
+              </select>
+            </div>
+            <div style="display: flex">
+              <input class="input-search" />
+              <div class="btn-search"></div>
+            </div>
+          </div>
+        </div>
+        <hr style="height: 4px; border: none; background-color: white" />
       </div>
-      <!-- <div class="m-0 p-0 row" style="height: 80%; background-color: blue"> -->
-      <div class="m-0 p-0 row" style="height: 72vh">
-        <community-main></community-main>
-      </div>
-      <!-- <div class="m-0 p-0 row" style="height: 20%; background-color: yellow"> -->
-      <div class="m-0 p-0 row" style="height: 10vh">
-        <community-footer></community-footer>
+      <div class="community-body">
+        <table>
+          <!-- v-for문 걸어야함 -->
+          <tr class="notice">
+            <td style="width: 64%" class="first-left-td first-td">
+              <div class="notice-td">
+                <div class="notice-circle"><span>공지</span></div>
+                알려진 이슈를 알려 드립니다.
+              </div>
+            </td>
+            <td style="width: 12%"></td>
+            <td style="width: 12%"></td>
+            <td style="width: 12%" class="first-right-td">2023.01.12</td>
+          </tr>
+          <tr class="article">
+            <td style="width: 64%" class="first-td-article">
+              운영자님 부탁드립니다 <span style="color: #700073">(2)</span>
+            </td>
+            <td style="width: 12%">호에에에엥</td>
+            <td style="width: 12%">
+              <div class="notice-td center">
+                <img
+                  src="@/assets/community/viewcnt.png"
+                  style="width: 24px; height: 15px; margin-right: 10px"
+                />
+                9
+              </div>
+            </td>
+            <td style="width: 12%">2023.01.06</td>
+          </tr>
+          <tr></tr>
+          <tr></tr>
+          <tr></tr>
+          <tr></tr>
+          <tr></tr>
+          <tr></tr>
+          <tr></tr>
+          <tr></tr>
+        </table>
       </div>
     </div>
-    <div class="m-0 p-0 col-2"></div>
   </div>
 </template>
 
 <script>
-import navbar from "@/components/NavView.vue";
-// import MainCommunity from "@/components/community/MainCommunity.vue";
-// import { BIconBellFill } from "bootstrap-icons-vue";
-
-import CommunityHeader from "@/components/community/CommunityHeader.vue";
-import CommunityMain from "@/components/community/CommunityMain.vue";
-import CommunityFooter from "@/components/community/CommunityFooter.vue";
-
 export default {
   name: "community",
-  components: { navbar, CommunityHeader, CommunityMain, CommunityFooter },
   data() {
     return {};
   },
@@ -46,44 +76,112 @@ export default {
 </script>
 
 <style scoped>
-.community {
+.community-container {
+  width: 1000px;
+}
+.main-community {
   background-image: url(../../assets/lobby/lobby.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  color: white;
+  height: 92vh;
+  display: flex;
+  justify-content: center;
 }
-.search {
-  width: 100%;
-  position: relative;
+.header {
+  height: 16vh;
+  padding-bottom: 2vh;
+}
+.header-sub {
+  height: 14vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2vh;
+}
+.select-search {
+  height: 40px;
+  width: 80px;
+  font-size: 18px;
+  background-color: #e7e7e7;
+  border: #747474 1px solid;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding-left: 5px;
+}
+.search-bar {
   display: flex;
 }
-
-.searchTerm {
-  width: 100%;
-  border: 3px solid #00b4cc;
+.input-search {
+  height: 40px;
+  width: 200px;
+  background-color: #e7e7e7;
+  border: #747474 1px solid;
   border-right: none;
-  /* padding: 5px; */
-  /* height: 20px;  */
-  border-radius: 5px 0 0 5px;
-  outline: none;
-  color: #9dbfaf;
 }
-
-.searchTerm:focus {
-  color: #00b4cc;
+.btn-search {
+  background-color: #e7e7e7;
+  border: #747474 1px solid;
+  border-left: none;
+  width: 30px;
+  height: 40px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
-
-.searchButton {
-  width: 40px;
-  height: 36px;
-  border: 1px solid #00b4cc;
-  background: #00b4cc;
+.community-body {
+  height: 65vh;
+  padding-top: 3vh;
+  display: flex;
+}
+.notice {
+  background-color: #dbdbdbcc;
+}
+.article {
+  background-color: rgba(255, 255, 255, 80%);
+}
+.notice-td {
+  display: flex;
   text-align: center;
-  color: #fff;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
-  font-size: 20px;
+  height: 100%;
+  align-items: center;
 }
-
-/*Resize the wrap to see the search bar change!*/
+.first-right-td {
+  border-top-right-radius: 10px;
+}
+.first-left-td {
+  border-top-left-radius: 10px;
+}
+.first-td {
+  padding-left: 20px;
+}
+.first-td-article {
+  padding-left: 40px;
+}
+.notice-circle {
+  width: 70px;
+  height: 30px;
+  background-color: #fdfdfd;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+}
+tr {
+  width: 100%;
+  height: 10%;
+  border: 1px #646464 solid;
+}
+table {
+  border-collapse: separate;
+  border-spacing: 0px;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 500;
+}
+tr > td:nth-child(n + 2) {
+  text-align: center;
+}
+.center {
+  justify-content: center;
+}
 </style>

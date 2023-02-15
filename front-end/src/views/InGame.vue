@@ -56,7 +56,7 @@ export default {
       return this.$store.state.resultModal;
     },
 
-    ...mapState["API_URL"],
+    ...mapState(["API_URL"]),
   },
   watch: {
     chkShow(newVal) {
