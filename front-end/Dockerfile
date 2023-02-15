@@ -1,12 +1,7 @@
 FROM node:14
-
-WORKDIR /root/S08P12A706/front-end
-
-COPY package.json ./
-COPY package-lock.json ./
-
+WORKDIR /app
+COPY . .
 RUN npm install
-
-COPY ./ ./
-
-CMD ["npm", "run", "serve"]
+COPY . .
+RUN npm run build
+ENTRYPOINT ["npm", "run", "serve"]
