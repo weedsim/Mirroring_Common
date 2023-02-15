@@ -49,7 +49,7 @@ import axios from "axios";
 import OvVideo from "@/components/OvVideo.vue";
 import VueCookies from "vue-cookies";
 import jwtDecode from "vue-jwt-decode";
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
@@ -83,10 +83,11 @@ export default {
     this.isMaster();
     console.log("마스터입니까?", this.Master);
   },
+  mounted() {},
   computed: {
+    ...mapActions(["setDeleteOpenvidu"]),
     ...mapGetters(["getAll"]),
-    ...mapState(["gameinfo"]),
-    ...mapState(["openvidu"]),
+    ...mapState(["gameinfo", "openvidu"]),
     chkparti() {
       return this.$store.state.gameinfo.participants;
     },
@@ -148,7 +149,7 @@ export default {
       console.log("myidx: " + this.myIdx + " targetidx: " + targetIndex);
       axios({
         method: "POST",
-        url: `${this.$store.state.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/vote`,
+        url: `${this.$store.state.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/games/vote`,
         headers: {
           // "Content-Type": "multipart/form-data",
           // "Content-Type": "application/json",

@@ -126,6 +126,27 @@ export default createStore({
     },
   },
   mutations: {
+    DELETE_SUBSCRIBER(state, payload) {
+      console.log(payload);
+      if (payload >= 0) {
+        state.openvidu.subscribers.splice(payload, 1);
+      }
+    },
+    INIT_GAMEINFO(state) {
+      console.log("initgameinfo-mutation");
+      state.gameinfo = [];
+    },
+    INIT_SESSION(state) {
+      console.log("initsession-mutation");
+      const session = state.openvidu.session;
+      if (session) session.disconnect();
+    },
+    SET_DELETE_OPENVIDU(state) {
+      state.openvidu.OV = undefined;
+      state.openvidu.session = undefined;
+      state.openvidu.publisher = undefined;
+      state.openvidu.subscribers = [];
+    },
     SET_SUBSCRIBERS(state, payload) {
       console.log("이거 구독자여야만해", payload);
       console.log("여기다가 넣었어", state.openvidu.subscribers);
@@ -433,12 +454,57 @@ export default createStore({
       //   payload.participants.length - 1
       // );
     },
-    setOpenvidu(context, payload) {
-      context.commit("SET_OPENVIDU", payload);
-    },
     setSubscribers(context, payload) {
       console.log("와야하는데..");
       context.commit("SET_SUBSCRIBERS", payload);
+    },
+    setOpenvidu(context, payload) {
+      context.commit("SET_OPENVIDU", payload);
+    },
+    deleteSubscriber(context, payload) {
+      context.commit("DELETE_SUBSCRIBER", payload);
+    },
+    initSession(context) {
+      console.log("initsession-actions");
+      console.log(this.state.gameinfo);
+      if (this.state.gameinfo.length !== 0)
+        axios({
+          method: "patch",
+          url: `${this.state.API_URL}/rooms/${this.state.gameinfo.roomId}/exit`,
+          headers: {
+            Authorization: `Bearer ${VueCookies.get("accessToken")}`,
+          },
+        })
+          .then((res) => {
+            console.log(res);
+            context.commit("INIT_SESSION");
+            context.commit("INIT_GAMEINFO");
+            context.commit("SET_DELETE_OPENVIDU");
+          })
+          .catch((err) => {
+            console.log("실패");
+            console.log(err);
+          });
+    },
+    setDeleteOpenvidu(context) {
+      context.commit("SET_DELETE_OPENVIDU");
+    },
+    ban(context, payload) {
+      const index = Number(payload);
+      axios({
+        method: "patch",
+        url: `${this.state.API.URL}/rooms/${this.state.gameinfo.roomId}/ban/${this.state.gameinfo.participants[index].userId}`,
+        headers: {
+          Authorization: `Bearer ${VueCookies.get("accessToken")}`,
+        },
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log("실패");
+          console.log(err);
+        });
     },
   },
 });

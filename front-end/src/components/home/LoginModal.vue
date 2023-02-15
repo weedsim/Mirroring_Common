@@ -27,11 +27,11 @@
               v-model="userpwd"
             />
           </li>
-          <li style="margin-bottom: 1vh; margin-top: 1vh">
-            <span style="font-size: 1.2vh; color: #684107"
+          <li style="margin-bottom: 10px; margin-top: 10px">
+            <span style="font-size: 14px; color: #684107"
               >비밀번호를 잊어버리셨나요?
             </span>
-            <a href="#" style="font-size: 1.2vh; color: #b80000"
+            <a href="#" style="font-size: 14px; color: #b80000"
               >비밀번호 찾기</a
             >
           </li>
@@ -40,15 +40,15 @@
               로그인
             </button>
           </li>
-          <li class="text-center" style="margin-bottom: 1vh">
-            <span style="font-size: 1.2vh; color: #684107"
+          <li class="text-center" style="margin-bottom: 10px">
+            <span style="font-size: 14px; color: #684107"
               >아직 회원이 아니신가요?
             </span>
-            <a href="#" style="font-size: 1.2vh; color: #b80000"> 회원가입</a>
+            <a href="#" style="font-size: 14px; color: #b80000"> 회원가입</a>
           </li>
           <hr />
-          <li class="text-center" style="margin-bottom: 1.7vh; margin-top: 1vh">
-            <span style="font-size: 1.5vh">다른 방법으로 로그인 </span>
+          <li class="text-center" style="margin-bottom: 17px; margin-top: 10px">
+            <span style="font-size: 15px">다른 방법으로 로그인 </span>
           </li>
           <li class="btngrp">
             <a
@@ -111,19 +111,19 @@ export default {
 }
 .btn-logo {
   border-radius: 20px;
-  width: 8vw;
-  height: 6vh;
+  width: 140px;
+  height: 60px;
   display: flex;
   align-items: center;
 }
 .social-text {
-  margin-left: 0.6vw;
-  font-size: 1vw;
+  margin-left: 10px;
+  font-size: 20px;
 }
 .google-logo {
-  margin-left: 1.5vh;
-  width: 3.5vh;
-  height: 3.5vh;
+  margin-left: 15px;
+  width: 35px;
+  height: 35px;
   background-image: url(../../assets/icon/btngoogle.png);
   background-repeat: no-repeat;
   display: flex;
@@ -131,9 +131,9 @@ export default {
   background-size: cover;
 }
 .kakao-logo {
-  margin-left: 1.5vh;
-  width: 3.5vh;
-  height: 3.5vh;
+  margin-left: 15px;
+  width: 35px;
+  height: 35px;
   background-image: url(../../assets/icon/btnkakao.png);
   background-repeat: no-repeat;
   display: flex;
@@ -153,8 +153,8 @@ export default {
 .btn-login {
   background-color: rgba(253, 253, 253, 70%);
   border-radius: 20px;
-  width: 7vw;
-  height: 4vh;
+  width: 150px;
+  height: 42px;
   border: 0px;
 }
 .btn-login:hover {
@@ -162,28 +162,28 @@ export default {
 }
 .modal-email-pwd {
   font-weight: 500;
-  font-size: 2vh;
-  margin-top: 1vh;
-  margin-bottom: 1vh;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .modal-input {
   background-color: rgb(217, 217, 217);
   border-radius: 20px;
   border: 0px;
   width: 100%;
-  height: 4vh;
+  height: 48px;
   padding: 20px;
 }
 .login-modal-header {
   display: flex;
-  margin-top: 1.2vh;
+  margin-top: 12px;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3vh;
+  margin-bottom: 30px;
 }
 .modal-padding {
-  padding-left: 1.5vw;
-  padding-right: 1.5vw;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .modal {
   position: fixed; /* Stay in place */
@@ -201,23 +201,23 @@ export default {
 /* Modal Content */
 .modal-content {
   margin-top: 20vh;
-  margin-left: 39vw;
-  background-color: rgba(255, 255, 255, 75%);
+  margin-left: calc(50vw - 200px);
+  background-color: rgba(255, 255, 255, 85%);
   padding: 20px;
   border: 1px solid #888;
-  width: 22vw;
-  height: 65vh;
+  width: 400px;
+  height: 600px;
   border-radius: 30px;
 }
 
 /* The Close Button */
 .hidden-icon {
   visibility: hidden;
-  font-size: 5vh;
+  font-size: 50px;
 }
 .close {
   color: #aaaaaa;
-  font-size: 5vh;
+  font-size: 50px;
   font-weight: bold;
 }
 
@@ -228,7 +228,7 @@ export default {
   cursor: pointer;
 }
 .login-text {
-  font-size: 3.5vh;
+  font-size: 35px;
   font-weight: 500;
   text-align: center;
 }
