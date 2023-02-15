@@ -2,19 +2,32 @@
   <div class="layout">
     <div id="pagination" class="layout">
       <nav>
-        <button @click="prevPage" :disabled="down">prev</button>
+        <button @click="prevPage" :disabled="down" class="btn-page">
+          &#60;
+        </button>
         <span v-for="page in pages" :key="page">
-          <router-link :to="{ name: 'lobby', query: { page: page } }">
+          <router-link
+            v-if="page === this.current"
+            class="now page"
+            :to="{ name: 'lobby', query: { page: page } }"
+          >
+            {{ page }}
+          </router-link>
+          <router-link
+            v-else
+            class="page"
+            :to="{ name: 'lobby', query: { page: page } }"
+          >
             {{ page }}
           </router-link>
           <!-- <a href="/lobby?page={{ page }}">{{ page }}</a> -->
         </span>
-        <button @click="nextPage" :disabled="up">next</button>
+        <button @click="nextPage" :disabled="up" class="btn-page">&#62;</button>
       </nav>
     </div>
     <div class="layout">
       <ul>
-        <button v-on:click="onRoom">방생성</button>
+        <button class="card btn-create" v-on:click="onRoom">방 생성</button>
       </ul>
     </div>
   </div>
@@ -120,10 +133,6 @@ export default {
 </script>
 
 <style>
-.layout {
-  border: 1px solid red;
-}
-
 template > div {
   display: inline;
 }
@@ -131,15 +140,37 @@ template > div {
 input {
   width: 70%;
 }
+.now {
+  color: rgb(255, 193, 158);
+  font-size: 28px;
+}
+.page {
+  color: white;
+  font-size: 20px;
+}
 #pagination {
   display: flex;
   justify-content: center;
   text-align: center;
 }
-
-span {
-  background-color: green;
-  margin-left: 2px;
-  margin-right: 2px;
+.card {
+  border: 2px solid #5b3700;
+  background-color: #949494;
+  font-size: 18px;
+  width: 80px;
+  height: 40px;
+}
+.btn-create {
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-page {
+  color: white;
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+  margin: 10px;
 }
 </style>

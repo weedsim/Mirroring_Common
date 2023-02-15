@@ -108,12 +108,7 @@
             </div>
           </div>
           <div class="btnwrapper">
-            <button
-              type="button"
-              class="btn btn-primary btn-sm"
-              data-bs-dismiss="modal"
-              v-on:click="createGame"
-            >
+            <button type="button" class="btn-create" v-on:click="createGame">
               생성
             </button>
           </div>
@@ -128,6 +123,7 @@ import axios from "axios";
 import router from "@/router";
 import VueCookies from "vue-cookies";
 import { OpenVidu } from "openvidu-browser";
+import { mapState, mapActions } from "vuex";
 
 // const APPLICATION_SERVER_URL = "http://192.168.91.171:5000/";
 const APPLICATION_SERVER_URL = "http://localhost:5000/";
@@ -158,6 +154,9 @@ export default {
   setup() {},
   created() {},
   mounted() {},
+  computed: {
+    ...mapState(["openvidu", "gameinfo"]),
+  },
   methods: {
     // 모달창 닫으면 초기화
     offModal() {
@@ -253,10 +252,20 @@ export default {
 
       // On every Stream destroyed...
       this.session.on("streamDestroyed", ({ stream }) => {
-        const index = this.subscribers.indexOf(stream.streamManager, 0);
-        if (index >= 0) {
-          this.subscribers.splice(index, 1);
+        console.log("누군가 나갔어");
+        const index = this.openvidu.subscribers.indexOf(
+          stream.streamManager,
+          0
+        );
+        console.log("index", index);
+        console.log(this.gameinfo.participants);
+        console.log(this.openvidu.subscribers);
+        if (
+          this.gameinfo.participants.length === this.openvidu.subscribers.length
+        ) {
+          this.$store.dispatch("ban", index);
         }
+        this.$store.dispatch("deleteSubscriber", index);
       });
 
       // On every asynchronous exception...
@@ -298,9 +307,7 @@ export default {
             console.log("오픈비두 6완료");
 
             this.session.publish(this.publisher);
-            if (this.subscribers === undefined) {
-              this.subscribers = [];
-            }
+            this.subscribers = [];
             this.$store.dispatch("setOpenvidu", {
               OV: this.OV,
               session: this.session,
@@ -324,23 +331,6 @@ export default {
             );
           });
       });
-
-      window.addEventListener("beforeunload", this.leaveSession);
-    },
-    leaveSession() {
-      // --- 7) Leave the session by calling 'disconnect' method over the Session object ---
-      if (this.session) this.session.disconnect();
-
-      // Empty all properties...
-      this.session = undefined;
-      this.mainStreamManager = undefined;
-      this.$store.state.myIdx = undefined;
-      this.$store.state.publisher = undefined;
-      this.$store.state.subscribers = [];
-      this.OV = undefined;
-
-      // Remove beforeunload listener
-      window.removeEventListener("beforeunload", this.leaveSession);
     },
     async getToken(mySessionId) {
       const sessionId = await this.createSession(mySessionId);
@@ -374,7 +364,10 @@ export default {
 
 <style scoped>
 .describe {
-  margin-top: 2vh;
+  margin-top: 20px;
+  padding-left: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 #createRoomModalLabel {
   margin: 0 auto;
@@ -412,7 +405,7 @@ export default {
 
 .speech-bubble {
   position: relative;
-  background: #00aabb;
+  background: #ffffff;
   border-radius: 0.4em;
 }
 
@@ -420,18 +413,18 @@ export default {
   content: "";
   position: absolute;
   top: 1%;
-  left: 60%;
+  left: 55%;
   width: 0;
   height: 0;
   border: 22px solid transparent;
-  border-bottom-color: #00aabb;
+  border-bottom-color: #ffffff;
   border-top: 0;
   margin-left: -115px;
   margin-top: -22px;
 }
 .speech-bubble-two {
   position: relative;
-  background: #00aabb;
+  background: #ffffff;
   border-radius: 0.4em;
 }
 
@@ -439,11 +432,11 @@ export default {
   content: "";
   position: absolute;
   top: 1%;
-  left: 39%;
+  left: 45%;
   width: 0;
   height: 0;
   border: 22px solid transparent;
-  border-bottom-color: #00aabb;
+  border-bottom-color: #ffffff;
   border-top: 0;
   margin-left: 75px;
   margin-top: -22px;
@@ -478,7 +471,12 @@ select {
   justify-content: space-between;
   align-items: center;
 }
-
+.btn-create {
+  width: 100px;
+  height: 40px;
+  font-size: 18px;
+  margin-top: 5px;
+}
 /* Modal Content */
 .modal-content {
   margin-top: 20vh;
@@ -486,8 +484,8 @@ select {
   background-color: rgba(255, 255, 255, 75%);
   padding: 20px;
   border: 1px solid #888;
-  width: 22vw;
-  height: 75vh;
+  width: 400px;
+  height: 650px;
   border-radius: 30px;
 }
 .login-text {

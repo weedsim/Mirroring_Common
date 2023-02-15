@@ -70,17 +70,11 @@
             />
           </li>
           <li class="signup-container">
-            <button
-              class="signup-btn modal-email-pwd-name"
-              v-on:click="signUp()"
-            >
-              회원가입
-            </button>
+            <button class="signup-btn" v-on:click="signUp()">회원가입</button>
           </li>
-          <hr />
-          <li>
+          <li class="already">
             이미 회원이신가요?
-            <a href="#">로그인</a>
+            <a href="#" style="color: #a00000">로그인</a>
           </li>
         </ul>
       </div>
@@ -230,34 +224,39 @@ export default {
 .signup-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+.already {
+  text-align: center;
 }
 .signup-btn {
   background-color: rgba(253, 253, 253, 70%);
   border-radius: 20px;
-  width: 7vw;
-  height: 4vh;
+  width: 170px;
+  height: 50px;
   border: 0px;
+  margin: 25px;
+  font-size: 20px;
 }
 .signup-btn:hover {
   background-color: rgb(253, 253, 253);
 }
 .modal-email-pwd-name {
   font-weight: 500;
-  font-size: 2vh;
-  margin-top: 1vh;
-  margin-bottom: 1vh;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .modal-btn-duplicate {
   background-color: rgb(253, 253, 253, 70%);
   border-radius: 20px;
   border: 0px;
-  width: 7vw;
+  width: 150px;
   height: 4vh;
   font-weight: 500;
-  font-size: 1vh;
-  margin-top: 1vh;
-  margin-bottom: 1vh;
+  font-size: 15px;
+  margin-left: 40px;
 }
 .modal-btn-duplicate:hover {
   background-color: rgb(253, 253, 253);
@@ -268,19 +267,19 @@ export default {
   border-radius: 20px;
   border: 0px;
   width: 100%;
-  height: 4vh;
+  height: 48px;
   padding: 20px;
 }
 .signup-modal-header {
   display: flex;
-  margin-top: 1.2vh;
+  margin-top: 12px;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 3vh;
+  margin-bottom: 30px;
 }
 .modal-padding {
-  padding-left: 1.5vw;
-  padding-right: 1.5vw;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 .modal {
   position: fixed; /* Stay in place */
@@ -297,24 +296,24 @@ export default {
 
 /* Modal Content */
 .modal-content {
-  margin-top: 10vh;
-  margin-left: 30vw;
-  background-color: rgba(255, 255, 255, 75%);
+  margin-top: 20vh;
+  margin-left: calc(50vw - 200px);
+  background-color: rgba(255, 255, 255, 85%);
   padding: 20px;
   border: 1px solid #888;
-  width: 40vw;
-  height: 80vh;
+  width: 500px;
+  height: 700px;
   border-radius: 30px;
 }
 
 /* The Close Button */
 .hidden-icon {
   visibility: hidden;
-  font-size: 5vh;
+  font-size: 50px;
 }
 .close {
   color: #aaaaaa;
-  font-size: 5vh;
+  font-size: 50px;
   font-weight: bold;
 }
 
@@ -325,7 +324,7 @@ export default {
   cursor: pointer;
 }
 .signup-text {
-  font-size: 3.5vh;
+  font-size: 35px;
   font-weight: 500;
   text-align: center;
 }
