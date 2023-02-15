@@ -206,6 +206,7 @@ export default {
       } else {
         if (this.email_negative === true && this.name_negative === true) {
           this.$store.dispatch("signUp", payload);
+          this.offModal();
         } else if (
             this.email_negative === true &&
             this.name_negative === false
