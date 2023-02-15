@@ -1,6 +1,6 @@
 package com.sixsense.liargame.security.oauth2;
 
-import com.sixsense.liargame.api.enums.Authority;
+import com.sixsense.liargame.common.enums.Authority;
 import com.sixsense.liargame.db.entity.User;
 import com.sixsense.liargame.db.repository.UserRepository;
 import com.sixsense.liargame.security.auth.UserDetailsCustom;

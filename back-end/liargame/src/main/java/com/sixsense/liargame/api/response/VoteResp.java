@@ -1,4 +1,4 @@
-package com.sixsense.liargame.common.model.response;
+package com.sixsense.liargame.api.response;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

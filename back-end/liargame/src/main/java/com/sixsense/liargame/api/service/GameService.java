@@ -1,8 +1,8 @@
 package com.sixsense.liargame.api.service;
 
 import com.sixsense.liargame.api.request.AnswerReq;
-import com.sixsense.liargame.api.sse.Vote;
-import com.sixsense.liargame.common.model.response.GameResultResp;
+import com.sixsense.liargame.api.response.GameResultResp;
+import com.sixsense.liargame.db.entity.Vote;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface GameService {

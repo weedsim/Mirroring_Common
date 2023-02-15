@@ -1,4 +1,4 @@
-package com.sixsense.liargame.api.enums;
+package com.sixsense.liargame.common.enums;
 
 public enum Authority {
     ROLE_GUEST,

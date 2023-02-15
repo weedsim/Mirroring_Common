@@ -1,4 +1,4 @@
-package com.sixsense.liargame.common.model.request;
+package com.sixsense.liargame.api.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

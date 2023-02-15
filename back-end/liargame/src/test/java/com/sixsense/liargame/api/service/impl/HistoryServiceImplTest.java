@@ -4,8 +4,8 @@
 //import com.sixsense.liargame.api.request.SpyGameHistoryReq;
 //import com.sixsense.liargame.api.response.HistoryResp;
 //import com.sixsense.liargame.api.service.HistoryService;
-//import com.sixsense.liargame.common.model.request.GameUserReq;
-//import com.sixsense.liargame.common.model.response.GameUserResp;
+//import com.sixsense.liargame.api.request.GameUserReq;
+//import com.sixsense.liargame.api.response.GameUserResp;
 //import com.sixsense.liargame.db.entity.*;
 //import com.sixsense.liargame.db.repository.*;
 //import org.junit.jupiter.api.*;

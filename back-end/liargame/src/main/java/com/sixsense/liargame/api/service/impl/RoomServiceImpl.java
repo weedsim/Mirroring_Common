@@ -2,14 +2,14 @@ package com.sixsense.liargame.api.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sixsense.liargame.api.request.RoomReq;
+import com.sixsense.liargame.api.response.RoomResp;
 import com.sixsense.liargame.api.service.RoomService;
 import com.sixsense.liargame.api.sse.Emitters;
 import com.sixsense.liargame.api.sse.GlobalRoom;
 import com.sixsense.liargame.api.sse.SseResponse;
-import com.sixsense.liargame.common.model.request.RoomReq;
-import com.sixsense.liargame.common.model.request.SettingDto;
-import com.sixsense.liargame.common.model.response.RoomDetail;
-import com.sixsense.liargame.common.model.response.RoomResp;
+import com.sixsense.liargame.common.model.RoomDetail;
+import com.sixsense.liargame.common.model.SettingDto;
 import com.sixsense.liargame.db.entity.Room;
 import com.sixsense.liargame.db.entity.User;
 import com.sixsense.liargame.db.repository.NormalHistoryRepository;

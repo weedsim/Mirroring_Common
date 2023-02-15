@@ -3,7 +3,7 @@ package com.sixsense.liargame.api.controller;
 import com.sixsense.liargame.api.lib.Helper;
 import com.sixsense.liargame.api.service.UserService;
 import com.sixsense.liargame.common.model.Response;
-import com.sixsense.liargame.common.model.request.UserRequestDto;
+import com.sixsense.liargame.common.model.UserRequestDto;
 import com.sixsense.liargame.security.auth.JwtProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,9 +35,10 @@ public class UserController {
 
     @GetMapping("/register-email")
     public ResponseEntity<?> registerEmail(@RequestParam("email") String email,
-                                           @RequestParam("mail-key") String key){
+                                           @RequestParam("mail-key") String key) {
         return userService.registerEmail(email, key);
     }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@Validated @RequestBody UserRequestDto.Login login,
                                    Errors errors) {
@@ -82,7 +83,7 @@ public class UserController {
 
     @PutMapping("/modify/password")
     public ResponseEntity<?> updateUserPassword(@RequestHeader(JwtProperties.AUTHORIZATION) String accessToken,
-                                            @RequestBody Map<String, String> header) {
+                                                @RequestBody Map<String, String> header) {
         UserRequestDto.ModifyPassword modify = UserRequestDto.ModifyPassword.builder()
                 .accessToken(accessToken)
                 .password(header.get("password"))

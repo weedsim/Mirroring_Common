@@ -2,7 +2,7 @@ package com.sixsense.liargame.security.auth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sixsense.liargame.common.model.request.LoginReq;
+import com.sixsense.liargame.api.request.LoginReq;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

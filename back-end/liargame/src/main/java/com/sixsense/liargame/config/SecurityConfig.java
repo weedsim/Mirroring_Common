@@ -1,6 +1,5 @@
 package com.sixsense.liargame.config;
 
-import com.sixsense.liargame.api.enums.Authority;
 import com.sixsense.liargame.security.auth.JwtAuthenticationFilter;
 import com.sixsense.liargame.security.auth.JwtExceptionFilter;
 import com.sixsense.liargame.security.auth.JwtLoginFilter;
@@ -58,7 +57,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/swagger-resources/", "/**").permitAll()
-                .antMatchers("/users/login", "/users", "/users/duplicate", "/users/sign-up", "/rooms", "/users/modify" ).permitAll()
+                .antMatchers("/users/login", "/users", "/users/duplicate", "/users/sign-up", "/rooms", "/users/modify").permitAll()
 //                .antMatchers().hasRole(Authority.ROLE_GUEST.name())
 //                .antMatchers().hasRole(Authority.ROLE_USER.name())
 //                .antMatchers().hasRole(Authority.ROLE_ADMIN.name())

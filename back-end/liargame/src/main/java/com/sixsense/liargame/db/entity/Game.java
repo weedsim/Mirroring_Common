@@ -1,6 +1,5 @@
 package com.sixsense.liargame.db.entity;
 
-import com.sixsense.liargame.api.sse.Vote;
 import lombok.Getter;
 import lombok.ToString;
 

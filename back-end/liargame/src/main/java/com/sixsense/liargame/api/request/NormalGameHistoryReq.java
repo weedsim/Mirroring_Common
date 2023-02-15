@@ -1,6 +1,5 @@
 package com.sixsense.liargame.api.request;
 
-import com.sixsense.liargame.common.model.request.GameUserReq;
 import lombok.*;
 
 import java.util.List;

@@ -1,16 +1,16 @@
 package com.sixsense.liargame.api.service.impl;
 
-import com.sixsense.liargame.api.enums.Authority;
 import com.sixsense.liargame.api.service.UserService;
+import com.sixsense.liargame.common.enums.Authority;
 import com.sixsense.liargame.common.model.Response;
-import com.sixsense.liargame.common.model.request.UserRequestDto;
-import com.sixsense.liargame.common.model.response.UserInfoDto;
+import com.sixsense.liargame.common.model.UserInfoDto;
+import com.sixsense.liargame.common.model.UserRequestDto;
 import com.sixsense.liargame.db.entity.User;
+import com.sixsense.liargame.db.repository.UserRepository;
 import com.sixsense.liargame.mail.MailHandler;
 import com.sixsense.liargame.mail.TempKey;
 import com.sixsense.liargame.security.auth.JwtTokenProvider;
 import com.sixsense.liargame.security.auth.TokenInfo;
-import com.sixsense.liargame.db.repository.UserRepository;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -41,6 +41,14 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final RedisTemplate redisTemplate;
     private final JavaMailSender mailSender;
+
+    public static String getCurrentUserEmail() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication.getName() == null) {
+            throw new RuntimeException("No authentication information.");
+        }
+        return authentication.getName();
+    }
 
     @Override
     public ResponseEntity<?> signUp(UserRequestDto.SignUp signUp) {
@@ -78,21 +86,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity<?> registerEmail(String email, String key){
+    public ResponseEntity<?> registerEmail(String email, String key) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("No authentication information."));
 
 
         String userKey = user.getMailKey();
         String msg;
-        if(userKey.equals(key)) {
+        if (userKey.equals(key)) {
             msg = "이메일 인증 성공했습니다. TODO: 메인페이지로";
             // add ROLE_ADMIN
             user.getRole().remove(0);
             user.getRole().add(Authority.ROLE_USER.name());
             userRepository.save(user);
-        }
-        else msg = "이메일 인증 실패했습니다.";
+        } else msg = "이메일 인증 실패했습니다.";
         return response.success(msg);
     }
 
@@ -136,12 +143,12 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = jwtTokenProvider.getAuthentication(reissue.getAccessToken());
 
         // 3. Redis 에서 User email 을 기반으로 저장된 Refresh Token 값을 가져옵니다.
-        String refreshToken = (String)redisTemplate.opsForValue().get("RT:" + authentication.getName());
+        String refreshToken = (String) redisTemplate.opsForValue().get("RT:" + authentication.getName());
         // (추가) 로그아웃되어 Redis 에 RefreshToken 이 존재하지 않는 경우 처리
-        if(ObjectUtils.isEmpty(refreshToken)) {
+        if (ObjectUtils.isEmpty(refreshToken)) {
             return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
         }
-        if(!refreshToken.equals(reissue.getRefreshToken())) {
+        if (!refreshToken.equals(reissue.getRefreshToken())) {
             return response.fail("Refresh Token 정보가 일치하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
 
@@ -230,18 +237,11 @@ public class UserServiceImpl implements UserService {
         return response.success();
     }
 
-    public static String getCurrentUserEmail() {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication.getName() == null) {
-            throw new RuntimeException("No authentication information.");
-        }
-        return authentication.getName();
-    }
-
     /**
      * 이메일 또는 이름 중복 여부 확인
+     *
      * @param email 사용자 이메일
-     * @param name 사용자 이름
+     * @param name  사용자 이름
      * @return 이메일 또는 이름 중복 여부 (true == 중복, false == 중복x)
      */
     @Override

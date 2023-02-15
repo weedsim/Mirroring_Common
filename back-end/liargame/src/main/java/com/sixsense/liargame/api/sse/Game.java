@@ -1,7 +1,9 @@
 package com.sixsense.liargame.api.sse;
 
-import com.sixsense.liargame.common.model.response.GameResultResp;
-import com.sixsense.liargame.common.model.response.VoteResp;
+import com.sixsense.liargame.api.response.GameResultResp;
+import com.sixsense.liargame.api.response.VoteResp;
+import com.sixsense.liargame.common.model.UserInfo;
+import com.sixsense.liargame.db.entity.Vote;
 import lombok.Getter;
 import lombok.Setter;
 

@@ -1,6 +1,8 @@
 package com.sixsense.liargame.api.sse;
 
 import com.sixsense.liargame.db.entity.Room;
+import com.sixsense.liargame.db.entity.SpyGame;
+import com.sixsense.liargame.db.entity.Vote;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 

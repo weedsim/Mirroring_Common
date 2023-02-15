@@ -1,9 +1,9 @@
 package com.sixsense.liargame.api.service;
 
-import com.sixsense.liargame.common.model.request.RoomReq;
-import com.sixsense.liargame.common.model.request.SettingDto;
-import com.sixsense.liargame.common.model.response.RoomDetail;
-import com.sixsense.liargame.common.model.response.RoomResp;
+import com.sixsense.liargame.api.request.RoomReq;
+import com.sixsense.liargame.api.response.RoomResp;
+import com.sixsense.liargame.common.model.RoomDetail;
+import com.sixsense.liargame.common.model.SettingDto;
 import com.sixsense.liargame.db.entity.Room;
 import io.openvidu.java.client.OpenViduHttpException;
 import io.openvidu.java.client.OpenViduJavaClientException;

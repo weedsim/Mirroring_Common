@@ -1,6 +1,5 @@
 package com.sixsense.liargame.api.request;
 
-import com.sixsense.liargame.common.model.request.GameUserReq;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

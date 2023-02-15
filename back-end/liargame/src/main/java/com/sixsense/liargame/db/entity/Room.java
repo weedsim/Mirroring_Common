@@ -1,8 +1,8 @@
 package com.sixsense.liargame.db.entity;
 
 import com.sixsense.liargame.api.sse.Emitters;
-import com.sixsense.liargame.api.sse.UserInfo;
-import com.sixsense.liargame.common.model.request.SettingDto;
+import com.sixsense.liargame.common.model.SettingDto;
+import com.sixsense.liargame.common.model.UserInfo;
 import lombok.*;
 
 import java.util.ArrayList;

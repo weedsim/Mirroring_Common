@@ -1,4 +1,4 @@
-package com.sixsense.liargame.api.sse;
+package com.sixsense.liargame.common.model;
 
 import lombok.*;
 
