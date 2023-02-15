@@ -6,6 +6,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.util.Arrays;
+
 @Configuration
 public class CorsConfig {
 
@@ -14,10 +16,9 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-//        config.addAllowedOrigin("http://192.168.91.111:8081");
-        config.addAllowedOrigin("http://localhost:8081");
+        config.setAllowedOrigins(Arrays.asList("http://localhost:8081","http://192.168.91.111:8081"));
         config.addAllowedOriginPattern("*");
-        config.addAllowedHeader("*");
+        config.setAllowedHeaders(Arrays.asList("*"));
         config.addAllowedMethod("*");
 
         source.registerCorsConfiguration("/**", config);

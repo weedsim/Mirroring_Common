@@ -18,12 +18,12 @@ public class SpyGame extends Game {
     private int spy;
 
     public SpyGame(Room room) {
-        this.id = room.getId();
-        this.participants = room.getParticipants().toArray(new UserInfo[0]);
-        startPerson = (int) (Math.random() * participants.length);
-        curSpeaker = startPerson;
-        liar = (int) (Math.random() * participants.length);
-        votes = new CopyOnWriteArrayList<>();
+        super.id = room.getId();
+        super.participants = room.getParticipants().toArray(new UserInfo[0]);
+        super.startPerson = (int) (Math.random() * super.participants.length);
+        super.curSpeaker = super.startPerson;
+        super.liar = (int) (Math.random() * participants.length);
+        super.votes = new CopyOnWriteArrayList<>();
         spy = (int) (Math.random() * super.participants.length);
         while (super.liar == spy) {
             spy = (int) (Math.random() * super.participants.length);
@@ -33,17 +33,17 @@ public class SpyGame extends Game {
     @Override
     public GameResultResp getResult() {
         List<VoteResp> voteResult =
-                votes.stream()
+                super.votes.stream()
                         .map(this::toVoteResp)
                         .collect(Collectors.toList());
-        String liarName = participants[liar].getName();
-        List<String> citizens = Arrays.stream(participants).map(UserInfo::getName).filter(name -> !name.equals(liarName)).collect(Collectors.toList());
-
+        String liarName = super.participants[super.liar].getName();
         String spyName = super.participants[spy].getName();
+        List<String> citizens = Arrays.stream(super.participants).map(UserInfo::getName).filter(name -> !name.equals(liarName)).collect(Collectors.toList());
+
         return GameResultResp.builder()
-                .winner(winner)
+                .winner(super.winner)
                 .votes(voteResult)
-                .word(word)
+                .word(super.word)
                 .liar(liarName)
                 .spy(spyName)
                 .citizens(citizens)

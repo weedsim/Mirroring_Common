@@ -26,7 +26,10 @@ public class GameManager {
         Emitters emitters = room.getEmitters();
         int timeout = room.getTimeout();
 
-        room.getEmitters().setLiar(game.getLiarUserId());
+        emitters.setLiar(game.getLiarUserId());
+        if (room.getMode().equals("spy"))
+            emitters.setSpy(((SpyGame) game).getSpyUserId());
+
         //시민들에게 단어 알려주고 게임 시작 알리기
 
         emitters.sendToCitizens("message", new SseResponse("word", game.getWord()));
@@ -36,13 +39,13 @@ public class GameManager {
         emitters.sendToSpy("message", new SseResponse("word", game.getWord()));
         emitters.sendToAll("message", new SseResponse("message", "game start"));
         //timeout 만큼 쉼
-        waitTimeout(room.getEmitters(), timeout * 200);
+        waitTimeout(room.getEmitters(), timeout * 10);
         //차례대로 발언
         Integer curSpeaker = game.getCurSpeaker();
         while (curSpeaker != null) {
 
             emitters.sendToAll("message", new SseResponse("curSpeaker", curSpeaker.toString()));
-            waitTimeout(room.getEmitters(), timeout * 200);
+            waitTimeout(room.getEmitters(), timeout * 10);
             curSpeaker = game.changeSpeaker();
         }
         //투표시간 알림
@@ -60,13 +63,13 @@ public class GameManager {
         if (Objects.equals(game.getLiar(), result)) {
             emitters.sendToCitizens("message", new SseResponse("message", "selected liar"));
             emitters.sendToLiar("message", new SseResponse("message", "write answer"));
-            waitTimeout(room.getEmitters(), 200 * 10); // 정답 입력시간 10초
+            waitTimeout(room.getEmitters(), 200 * 10000); // 정답 입력시간 10초
             if (!StringUtils.hasText(game.getAnswer())) {
                 winner = "CITIZEN";
             }
             if (StringUtils.hasText(game.getAnswer()) && !game.getAnswer().equals(game.getWord()))
                 winner = "CITIZEN";
-        } else if (Objects.equals(((SpyGame) game).getSpy(), result)) {
+        } else if (game instanceof SpyGame && Objects.equals(((SpyGame) game).getSpy(), result)) {
             winner = "CITIZEN";
         }
         game.setWinner(winner);
@@ -78,7 +81,7 @@ public class GameManager {
 
     private void noticeVote(Emitters emitters) {
         emitters.sendToAll("message", new SseResponse("message", "vote start"));
-        waitTimeout(emitters, 5 * 1000); // 30초
+        waitTimeout(emitters, 5 * 100); // 30초
         //투표종료 알림
         emitters.sendToAll("message", new SseResponse("message", "vote end"));
     }
