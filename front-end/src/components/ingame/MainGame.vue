@@ -1,7 +1,7 @@
 <template>
   <game-title v-if="playgame !== true"></game-title>
   <game-header v-else></game-header>
-  <game-users style="height: 70vh"></game-users>
+  <game-users style="height: 65vh"></game-users>
   <game-confirm v-if="playgame !== true"></game-confirm>
   <game-bottom v-else></game-bottom>
 </template>

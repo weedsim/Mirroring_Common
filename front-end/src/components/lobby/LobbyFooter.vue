@@ -39,6 +39,7 @@ import CreateRoomModal from "@/components/lobby/CreateRoomModal.vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
 
+import { mapState } from "vuex";
 export default {
   name: "LobbyFooter",
   components: { CreateRoomModal },
@@ -56,6 +57,7 @@ export default {
     this.init();
   },
   computed: {
+    ...mapState["API_URL"],
     pages() {
       const start = (this.paginationMinNum - 1) * this.pageSize + 1;
       const end = start + this.pageSize - 1;
@@ -88,7 +90,7 @@ export default {
     init() {
       axios({
         method: "GET",
-        url: `${this.$store.state.API_URL}/rooms/last`,
+        url: `${this.API_URL}/rooms/last`,
         headers: {
           Authorization: `Bearer ${VueCookies.get("accessToken")}`,
         },
@@ -132,7 +134,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 template > div {
   display: inline;
 }

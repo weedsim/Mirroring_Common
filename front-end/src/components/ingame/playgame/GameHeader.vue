@@ -1,4 +1,15 @@
 <template>
+  <div
+    style="
+      width: 100%;
+      text-align: center;
+      font-size: 40px;
+      color: #e20000;
+      margin-top: 20px;
+    "
+  >
+    남은 시간
+  </div>
   <div class="timer">{{ displaySeconds }} : {{ displayMilliSeconds }}</div>
 </template>
 
@@ -62,12 +73,13 @@ export default {
 </script>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Jura:wght@500&display=swap");
 .timer {
-  color: red;
+  color: #e20000;
   text-align: center;
-  font-size: 3vw;
-  margin-top: 5vh;
-  height: 9vh;
-  margin-bottom: 10px;
+  font-size: 60px;
+  margin-top: 10px;
+  height: 90px;
+  font-family: "Jura", sans-serif;
 }
 </style>

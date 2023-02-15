@@ -79,6 +79,7 @@
 <script>
 import navbar from "@/components/NavView.vue";
 import axios from "axios";
+import { mapState } from "vuex";
 
 export default {
   components: { navbar },
@@ -92,7 +93,6 @@ export default {
       pwd: null,
       chkpwd: null,
       role: null,
-      API_URL: this.$store.state.API_URL,
       remodifyPW: "",
       modifyPW: "",
       isinputActive: false,
@@ -117,6 +117,9 @@ export default {
         console.log("비밀번호 일치");
       }
     },
+  },
+  computed: {
+    ...mapState["API_URL"],
   },
   setup() {},
   created() {

@@ -24,6 +24,7 @@ import router from "@/router";
 import VueCookies from "vue-cookies";
 import { OpenVidu } from "openvidu-browser";
 
+import { mapState } from "vuex";
 export default {
   name: "LobbyHeader",
   components: { BIconArrowCounterclockwise },
@@ -33,6 +34,9 @@ export default {
     };
   },
   created() {},
+  computed: {
+    ...mapState["API_URL"],
+  },
   methods: {
     joinRoom() {
       let roomId = this.roomId;

@@ -56,9 +56,14 @@
             <li>
               <input type="text" class="modal-input" v-model="roomtitle" />
             </li>
-            <li>
+            <li style="display: flex">
               비밀번호
-              <input type="checkbox" v-model="roomchk" v-on:click="chksecret" />
+              <input
+                type="checkbox"
+                v-model="roomchk"
+                v-on:click="chksecret"
+                style="margin-left: 10px"
+              />
             </li>
             <li>
               <input
@@ -108,9 +113,7 @@
             </div>
           </div>
           <div class="btnwrapper">
-            <button type="button" class="btn-create" v-on:click="createGame">
-              생성
-            </button>
+            <button class="btn-create" v-on:click="createGame">생성</button>
           </div>
         </div>
       </div>
@@ -125,8 +128,8 @@ import VueCookies from "vue-cookies";
 import { OpenVidu } from "openvidu-browser";
 import { mapState, mapActions } from "vuex";
 
-// const APPLICATION_SERVER_URL = "http://192.168.91.171:5000/";
-const APPLICATION_SERVER_URL = "http://localhost:5000/";
+// const this.API_URL = "http://192.168.91.171:5000/";
+// const this.API_URL = "http://localhost:5000/";
 // process.env.NODE_ENV === "production"
 //   ? "http://192.168.91.171:5000/"
 //   : "http://localhost:5000/";
@@ -148,14 +151,13 @@ export default {
       roomtitle: null, // 게임방 제목
       playercnt: null, // 참가인원
       talktime: null, // 발언시간
-      API_URL: this.$store.state.API_URL,
     };
   },
   setup() {},
   created() {},
   mounted() {},
   computed: {
-    ...mapState(["openvidu", "gameinfo"]),
+    ...mapState(["openvidu", "gameinfo", "API_URL"]),
   },
   methods: {
     // 모달창 닫으면 초기화
@@ -271,7 +273,7 @@ export default {
 
       // On every asynchronous exception...
       this.session.on("exception", ({ exception }) => {
-        console.warn(exception);
+        console.log("오류발생");
       });
       console.log("3번성공");
 
@@ -340,7 +342,7 @@ export default {
 
     async createSession(sessionId) {
       const response = await axios.post(
-        APPLICATION_SERVER_URL + "api/sessions",
+        this.API_URL + "api/sessions",
         { customSessionId: String(sessionId) },
         {
           headers: { "Content-Type": "application/json" },
@@ -351,7 +353,7 @@ export default {
 
     async createToken(sessionId) {
       const response = await axios.post(
-        APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
+        this.API_URL + "api/sessions/" + sessionId + "/connections",
         {},
         {
           headers: { "Content-Type": "application/json" },
@@ -448,6 +450,8 @@ export default {
 }
 
 .btnwrapper {
+  display: flex;
+  justify-content: center;
   text-align: center;
   margin-top: 10px;
 }
@@ -477,6 +481,7 @@ select {
   height: 40px;
   font-size: 18px;
   margin-top: 5px;
+  border: none;
 }
 /* Modal Content */
 .modal-content {

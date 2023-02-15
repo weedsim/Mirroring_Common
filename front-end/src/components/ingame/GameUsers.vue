@@ -7,25 +7,35 @@
       v-on:click="vote(index)"
     >
       <!-- v-on:click="vote(index)" -->
-      <div class="speaking-blur" :class="{ 'speaking-blur': active }">
+      <div
+        class=""
+        v-bind:class="{ 'speaking-blur': gameinfo.participants[index].mic }"
+      >
         <!-- <div class="p-3 speaking-blur"> -->
-        <div class="user-screen speaking" :class="{ speaking: active }">
+        <div
+          class="user-screen"
+          v-bind:class="{ speaking: gameinfo.participants[index].mic }"
+        >
           <!-- $store.state.sessions[index].isJoin -->
-          <OvVideo :streamManager="item" />
+          <OvVideo :streamManager="item" class="ov-video" />
           <!-- <img src="@/assets/ingame/headphone.png" v-else alt="" /> -->
           <div class="screen"></div>
-          <!-- <div
+          <div
             class="ready"
             style="background-color: rgba(0, 135, 70, 81%)"
-            v-if="Master"
+            v-if="this.gameinfo.isPlaying === false && index === this.isMaster"
           >
             방장
-          </div> -->
+          </div>
 
           <div
             class="ready"
             style="background-color: rgba(0, 135, 70, 81%)"
-            v-if="this.$store.state.gameinfo.participants[index].isReady"
+            v-if="
+              this.gameinfo.isPlaying === false &&
+              index !== this.isMaster &&
+              this.gameinfo.participants[index].isReady
+            "
           >
             <!-- this.$store.state.sessions[index].isReady -->
             준비완료
@@ -34,7 +44,11 @@
           <div
             class="unready"
             style="background-color: rgba(255, 176, 57, 81%)"
-            v-else
+            v-if="
+              this.gameinfo.isPlaying === false &&
+              index !== this.isMaster &&
+              !this.gameinfo.participants[index].isReady
+            "
           >
             대기중
           </div>
@@ -53,12 +67,6 @@ import { mapState, mapGetters, mapActions } from "vuex";
 
 axios.defaults.headers.post["Content-Type"] = "application/json";
 
-const APPLICATION_SERVER_URL =
-  // process.env.NODE_ENV === "production"
-  //   ? "http://localhost:5000/"
-  //   : "http://192.168.91.171:5000/";
-  "http://localhost:5000/";
-
 export default {
   components: {
     OvVideo,
@@ -72,22 +80,21 @@ export default {
       publisher: this.$store.state.openvidu.publisher,
       subscribers: this.$store.state.openvidu.subscribers,
       myIdx: this.$store.state.myIdx,
-      Master: false,
       participants: this.$store.state.gameinfo.participants,
+      active: true,
     };
   },
   created() {
     console.log("여기야!!", this.$store.state.gameinfo.participants);
     console.log("여기야!!2", this.$store.state.openvidu);
     console.log("여기야!!3", this.$store.state.myIdx);
-    this.isMaster();
-    console.log("마스터입니까?", this.Master);
+    console.log("마스터입니까?", this.isMaster);
   },
   mounted() {},
   computed: {
     ...mapActions(["setDeleteOpenvidu"]),
-    ...mapGetters(["getAll"]),
-    ...mapState(["gameinfo", "openvidu"]),
+    ...mapGetters(["getAll", "isMaster"]),
+    ...mapState(["gameinfo", "openvidu", "myIdx", "API_URL"]),
     chkparti() {
       return this.$store.state.gameinfo.participants;
     },
@@ -132,24 +139,11 @@ export default {
     getThis() {
       console.log(this.subscribers);
     },
-    isMaster() {
-      console.log(this.$store.state.gameinfo.master);
-      console.log(
-        "내아이디는 " +
-          Number(jwtDecode.decode(VueCookies.get("accessToken")).id)
-      );
-      if (
-        this.$store.state.gameinfo.master ===
-        Number(jwtDecode.decode(VueCookies.get("accessToken")).id)
-      ) {
-        this.Master = true;
-      }
-    },
     vote(targetIndex) {
       console.log("myidx: " + this.myIdx + " targetidx: " + targetIndex);
       axios({
         method: "POST",
-        url: `${this.$store.state.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/games/vote`,
+        url: `${this.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/games/vote`,
         headers: {
           // "Content-Type": "multipart/form-data",
           // "Content-Type": "application/json",
@@ -254,6 +248,13 @@ img {
 }
 .vote-msg:hover {
   cursor: pointer;
+}
+.ov-video {
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  margin: 0;
+  padding: 0;
 }
 .vote {
   position: absolute;

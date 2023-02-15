@@ -7,43 +7,14 @@ import playGameStore from "@/store/modules/playgame.js";
 import jwtDecode from "vue-jwt-decode";
 
 // const API_URL = "http://127.0.0.1:5000";
-const API_URL = "http://localhost:5000";
+// const API_URL = "http://localhost:5000";
 // const API_URL = "http://192.168.91.171:5000";
+const API_URL = "http://i8a706.p.ssafy.io:5000";
 // const API_URL = "http://i8a706.p.ssafy.io:8080";
 
 const storageStata = createPersistedState({
   paths: ["playGameStore"],
 });
-
-// const session = {
-//   myIdx: -1,
-//   isJoin: false,
-//   isReady: false,
-//   ovSession: {
-//     OV: undefined,
-//     session: undefined,
-//     // mainStreamManager: undefined,
-//     publisher: undefined,
-//   },
-// };
-
-// const sessions = [];
-
-// for (let i = 0; i < 10; i++) {
-//   let temp = Object.assign({}, session);
-//   sessions.push(temp);
-// }
-
-// idx test
-let bits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-for (let i = 0; i < 10; i++) {
-  if (bits[i]) {
-    // 접속테스트
-    // sessions[i].isJoin = true;
-    // 레디 테스트
-    // sessions[i].isReady = false;
-  }
-}
 
 export default createStore({
   modules: {
@@ -51,13 +22,6 @@ export default createStore({
   },
   plugins: [storageStata],
   state: {
-    // 세션 구조(깊은 복사해서 사용)
-    // session: session,
-    // idx위치의 세션의 상태
-    // sessions: sessions,
-    // Object.assign(dest, this.state.session)
-
-    // myIdx: -1,
     openvidu: {
       OV: undefined,
       session: undefined,
@@ -71,12 +35,11 @@ export default createStore({
     isShow: false,
     accessToken: VueCookies.get("accessToken"),
     refreshToken: VueCookies.get("refreshToken"),
-    // rooms: null, // rooms는 로비에서 방목록 8개 받아서 저장할곳.
     playgames: false,
     myIdx: -1,
     rooms: [],
     gameinfo: [], // 게임참가자 정보저장
-    mysubject: null,
+    myRole: undefined,
     timer: -1,
     liarAnswerModal: false,
     curSpeakIdx: "on",
@@ -85,6 +48,12 @@ export default createStore({
     result: [],
   },
   getters: {
+    isMaster(state) {
+      for (var i = 0; i < state.gameinfo.participants.length; i++) {
+        if (state.gameinfo.participants[i].userId === state.gameinfo.master)
+          return i;
+      }
+    },
     getAll(state) {
       var result = [];
       if (state.openvidu.subscribers.length === 0) {
@@ -221,8 +190,8 @@ export default createStore({
       state.myIdx = payload;
     },
     // 게임중 주제부여
-    SET_MYROLE(state, payload) {
-      state.mysubject = payload.mysubject;
+    SET_ROLE(state, payload) {
+      state.myRole = payload;
     },
     // 게임중 타이머세팅
     SET_TIMER(state, payload) {
@@ -240,6 +209,20 @@ export default createStore({
     },
     SET_CURSPEAKER(state, payload) {
       state.curSpeakIdx = payload;
+      if (payload === "off") {
+        for (let i = 0; i < state.gameinfo.participants.length; i++) {
+          state.gameinfo.participants[i].mic = false;
+        }
+      } else if (payload === "on") {
+        for (let i = 0; i < state.gameinfo.participants.length; i++) {
+          state.gameinfo.participants[i].mic = true;
+        }
+      } else {
+        for (let i = 0; i < state.gameinfo.participants.length; i++) {
+          state.gameinfo.participants[i].mic = false;
+        }
+        state.gameinfo.participants[payload].mic = true;
+      }
     },
     SET_PAGENUM(state, payload) {
       state.NowPageNum = payload;
@@ -256,6 +239,7 @@ export default createStore({
     OFF_RESULT(state) {
       state.resultModal = false;
       state.result = [];
+      state.mysubject = null;
     },
   },
   actions: {

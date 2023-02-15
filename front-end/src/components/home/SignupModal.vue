@@ -84,6 +84,8 @@
 
 <script>
 import axios from "axios";
+import { mapState } from "vuex";
+
 export default {
   name: "SignupModal",
   components: {},
@@ -93,7 +95,6 @@ export default {
       usernickname: null,
       userpwd: null,
       userpwdtwo: null,
-      API_URL: this.$store.state.API_URL,
 
       email_positive: false, //메일 중복
       email_negative: false, //메일 사용 가능
@@ -104,6 +105,9 @@ export default {
     };
   },
   setup() {},
+  computed: {
+    ...mapState["API_URL"],
+  },
   created() {},
   watched() {},
   mounted() {},
@@ -194,27 +198,27 @@ export default {
         password: password,
         email: email,
       };
-
-      if (this.useremail === null || this.usernickname === null) {
-        //이메일이나 닉네임이 빈게 있으면
-        console.log("비었다.");
-      } else {
-        if (this.showalertemail2 === true && this.showalertname2 === true) {
-          this.$store.dispatch("signUp", payload);
-        } else if (
-          this.showalertemail2 === true &&
-          this.showalertname2 === false
-        ) {
-          console.log("닉네임이 중복입니다.");
-        } else if (
-          this.showalertemail2 === false &&
-          this.showalertname2 === true
-        ) {
-          console.log("이미 가입된 이메일 입니다.");
-        } else {
-          console.log("어디엔가 문제가 생겼습니다. 확인바랍니다.");
-        }
-      }
+      this.$store.dispatch("signUp", payload);
+      // if (this.useremail === null || this.usernickname === null) {
+      //   //이메일이나 닉네임이 빈게 있으면
+      //   console.log("비었다.");
+      // } else {
+      //   if (this.showalertemail2 === true && this.showalertname2 === true) {
+      //     this.$store.dispatch("signUp", payload);
+      //   } else if (
+      //     this.showalertemail2 === true &&
+      //     this.showalertname2 === false
+      //   ) {
+      //     console.log("닉네임이 중복입니다.");
+      //   } else if (
+      //     this.showalertemail2 === false &&
+      //     this.showalertname2 === true
+      //   ) {
+      //     console.log("이미 가입된 이메일 입니다.");
+      //   } else {
+      //     console.log("어디엔가 문제가 생겼습니다. 확인바랍니다.");
+      //   }
+      // }
     },
   },
 };

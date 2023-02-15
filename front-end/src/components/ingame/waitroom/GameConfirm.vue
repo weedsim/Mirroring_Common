@@ -37,6 +37,7 @@ import jwtDecode from "vue-jwt-decode";
 import VueCookies from "vue-cookies";
 import Modal from "./SubjectModal.vue";
 
+import { mapState } from "vuex";
 // import store from '@/store';
 // import { useStore } from "vuex";
 
@@ -50,7 +51,6 @@ export default {
   // },
   data() {
     return {
-      API_URL: this.$store.state.API_URL,
       Master: false,
       showModal: false,
     };
@@ -62,15 +62,7 @@ export default {
     this.isMaster();
   },
   computed: {
-    // isMaster() {
-    //   if (
-    //     this.$store.state.gameinfo.master ===
-    //     jwtDecode.decode(VueCookies.get("accessToken")).id
-    //   ) {
-    //     return true;
-    //   }
-    //   return false;
-    // },
+    ...mapState["API_URL"],
   },
   methods: {
     closeModal() {
@@ -99,6 +91,7 @@ export default {
     isStart() {
       this.showModal = false;
       console.log("게임~ 시작~~~하겠습니다~!");
+      console.log("게임방정보", this.$store.state.gameinfo);
       axios({
         method: "POST",
         url: `${this.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/games/start`,
@@ -155,14 +148,15 @@ export default {
   color: white;
 }
 .circle {
-  width: 5vh;
-  height: 5vh;
-  border-radius: 2.5vh;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  margin-left: 10px;
 }
 .tmpImg {
   display: block;
   margin: 0px auto;
   padding: 0px;
-  width: 1vw;
+  width: 30px;
 }
 </style>

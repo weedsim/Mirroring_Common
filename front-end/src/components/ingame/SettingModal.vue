@@ -96,16 +96,19 @@
 
 <script>
 import axios from "axios";
+import { mapState } from "vuex";
 export default {
   name: "SettingModal",
   components: {},
   data() {
     return {
       roomId: this.$route.params.roomId,
-      API_URL: this.$store.state.API_URL,
       message: "",
       isshow: false,
     };
+  },
+  computed: {
+    ...mapState["API_URL"],
   },
   setup() {},
   created() {},

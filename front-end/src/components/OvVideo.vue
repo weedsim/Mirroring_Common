@@ -1,14 +1,5 @@
 <template>
-  <video
-    autoplay
-    style="
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
-      margin: 0;
-      padding: 0;
-    "
-  ></video>
+  <video autoplay></video>
 </template>
 
 <script>

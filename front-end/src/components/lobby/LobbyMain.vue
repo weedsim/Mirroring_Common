@@ -36,35 +36,22 @@
 </template>
 
 <script>
-// const API_URL = "http://127.0.0.1:8080";
-// const API_URL = "http://i8a706.p.ssafy.io:8080";
 import axios from "axios";
 import router from "@/router";
 import VueCookies from "vue-cookies";
 import { OpenVidu } from "openvidu-browser";
 import { mapState, mapActions } from "vuex";
 
-// const API_URL = "http://127.0.0.1:8080";
-// const API_URL = "http://i8a706.p.ssafy.io:8080";
-// const APPLICATION_SERVER_URL = "http://192.168.91.171:5000/";
-const APPLICATION_SERVER_URL = "http://localhost:5000/";
-// process.env.NODE_ENV === "production"
-//   ? "http://192.168.91.171:5000/"
-//   : "http://localhost:5000/";
-// "http://localhost:5000/";
-
 export default {
   name: "LobbyMain",
   data() {
     return {
-      API_URL: this.$store.state.API_URL,
       rooms: [],
       OV: undefined,
       session: undefined,
       mySessionId: undefined,
       subscribers: [],
       publisher: undefined,
-      // nowpage: this.$route.query.page,
     };
   },
   created() {
@@ -74,10 +61,7 @@ export default {
   },
   computed: {
     ...mapActions(["initSession"]),
-    ...mapState(["openvidu"]),
-    // chgpage() {
-    //   return this.$route.query.page;
-    // },
+    ...mapState(["openvidu", "API_URL"]),
   },
   watch: {
     $route(to, from) {
@@ -175,7 +159,6 @@ export default {
       // On every asynchronous exception...
       this.session.on("exception", ({ exception }) => {
         console.log("오류발생");
-        console.warn(exception);
       });
       console.log("3번성공");
 
@@ -244,7 +227,7 @@ export default {
 
     async createSession(sessionId) {
       const response = await axios.post(
-        APPLICATION_SERVER_URL + "api/sessions",
+        this.API_URL + "api/sessions",
         { customSessionId: String(sessionId) },
         {
           headers: { "Content-Type": "application/json" },
@@ -255,7 +238,7 @@ export default {
 
     async createToken(sessionId) {
       const response = await axios.post(
-        APPLICATION_SERVER_URL + "api/sessions/" + sessionId + "/connections",
+        this.API_URL + "api/sessions/" + sessionId + "/connections",
         {},
         {
           headers: { "Content-Type": "application/json" },

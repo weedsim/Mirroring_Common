@@ -86,6 +86,8 @@ import UserDisplay from "@/components/ingame/UserDisplay.vue";
 import { VueCookies } from "vue-cookies";
 import axios from "axios";
 
+import { mapState } from "vuex";
+
 export default {
   data() {
     return {
@@ -103,6 +105,7 @@ export default {
     UserDisplay,
   },
   computed: {
+    ...mapState["API_URL"],
     // checkReady(idx) {
     //   let tmp = this.$store.getters.isParticipants;
     //   let length = tmp.length;
@@ -136,7 +139,6 @@ export default {
     vote() {
       axios({
         method: "PATCH",
-        // url: `${API_URL}/rooms`,
         url: `${this.API_URL}/rooms/${this.$store.state.gameinfo.roomId}/ready`,
         headers: {
           Authorization: `Bearer ${VueCookies.get("accessToken")}`,

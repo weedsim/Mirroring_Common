@@ -1,6 +1,6 @@
 <template>
   <navbar />
-  <div class="">
+  <div>
     <div class="maintop">
       <div class="wrapper-start">
         <div>LIAR GAME</div>
@@ -78,6 +78,9 @@ export default {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Rye&display=swap");
+/* html::-webkit-scrollbar {
+  display: none;
+} */
 .maintop {
   background-image: url(../../assets/home/maintop.jpg);
   background-repeat: no-repeat;
@@ -179,5 +182,9 @@ export default {
   font-weight: 400;
   color: rgb(144, 130, 128);
   font-family: frank-new, sans-serif;
+}
+
+.scroll::-webkit-scrollbar {
+  display: none;
 }
 </style>

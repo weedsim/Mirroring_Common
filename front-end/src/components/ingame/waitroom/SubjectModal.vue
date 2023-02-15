@@ -4,22 +4,19 @@
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="modal-header">
-            <slot name="header"> 주제어 선택</slot>
+            <div class="header">주제어 선택</div>
           </div>
 
           <div class="modal-body">
-            <ul>
-              <li v-for="(item, index) in subjects" v-bind:key="index">
-                <input type="radio" v-bind:value="item.id" v-model="selected" />
+            <div
+              class="btn-wrapper"
+              v-for="(item, index) in subjects"
+              :key="index"
+            >
+              <button class="btn-select" @click="select(item.id)">
                 {{ item.name }}
-              </li>
-            </ul>
-          </div>
-
-          <div class="modal-footer">
-            <slot name="footer">
-              <button v-on:click="postSubject">시작</button>
-            </slot>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -31,22 +28,22 @@
 import axios from "axios";
 import VueCookies from "vue-cookies";
 
+import { mapState } from "vuex";
 export default {
   components: {},
   data() {
     return {
-      API_URL: this.$store.state.API_URL,
       subjects: [],
-      selected: "",
     };
+  },
+  computed: {
+    ...mapState["API_URL"],
   },
   setup() {},
   created() {
     this.getSubject();
   },
-  mounted() {
-    this.selected = this.subjects[0];
-  },
+  mounted() {},
   methods: {
     getSubject() {
       axios({
@@ -65,11 +62,12 @@ export default {
           console.log(err);
         });
     },
-    postSubject() {
+    select(index) {
+      console.log("인덱스야", index);
       axios({
         method: "GET",
         // url: `${API_URL}/rooms`,
-        url: `${this.API_URL}/subjects/${this.selected}/words`,
+        url: `${this.API_URL}/subjects/${index}/words`,
         headers: {
           Authorization: `Bearer ${VueCookies.get("accessToken")}`,
         },
@@ -92,8 +90,23 @@ export default {
 </script>
 
 <style scoped>
-ul {
-  list-style: none;
+.header {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+.btn-wrapper {
+  display: flex;
+}
+.btn-select {
+  display: flex;
+  font-size: 15px;
+  margin: 10px;
+  margin-bottom: 0px;
+  width: 50px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
 }
 .modal-mask {
   position: fixed;
@@ -116,9 +129,8 @@ ul {
   width: 500px;
   margin: 0px auto;
   padding: 20px 30px;
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
 }
@@ -129,6 +141,7 @@ ul {
 }
 
 .modal-body {
+  display: flex;
   margin: 20px 0;
 }
 </style>

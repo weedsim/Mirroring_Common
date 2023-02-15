@@ -4,14 +4,16 @@
 
 <script>
 import axios from "axios";
+import { mapState } from "vuex";
 
 export default {
   name: "kakao",
   components: {},
   data() {
-    return {
-      API_URL: this.$store.state.API_URL,
-    };
+    return {};
+  },
+  computed: {
+    ...mapState["API_URL"],
   },
   setup() {},
   created() {

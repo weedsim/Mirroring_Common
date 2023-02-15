@@ -17,6 +17,7 @@ import MainChat from "../components/ingame/MainChat.vue";
 import MainGame from "../components/ingame/MainGame.vue";
 import SettingModal from "@/components/ingame/SettingModal.vue";
 import axios from "axios";
+import { mapState, mapGetters, mapActions } from "vuex";
 import { NativeEventSource, EventSourcePolyfill } from "event-source-polyfill";
 import router from "@/router";
 import AnswerModal from "@/components/ingame/playgame/AnswerModal.vue";
@@ -35,7 +36,6 @@ export default {
   data() {
     return {
       roomId: this.$route.params.roomId,
-      API_URL: this.$store.state.API_URL,
       message: "",
       isshow: false,
       iscitizen: true,
@@ -55,6 +55,8 @@ export default {
     chkresult() {
       return this.$store.state.resultModal;
     },
+
+    ...mapState["API_URL"],
   },
   watch: {
     chkShow(newVal) {
@@ -100,14 +102,14 @@ export default {
         // 방정보 업데이트
         if (type === "room") {
           console.log("room정보가 왔어요");
-          const gameinfo = JSON.parse(JSON.parse(event.data).value);
+          const gameinfo = JSON.parse(val);
           this.$store.dispatch("setGameInfo", gameinfo);
         }
         // 게임시작시 isPlaying == true
         if (type === "message") {
           if (val === "game start") {
             this.$store.dispatch("setIsPlaying");
-            this.$store.commit("SET_CURSPEAKER", -1);
+            this.$store.commit("SET_CURSPEAKER", "off");
           }
 
           if (val === "vote start") {
@@ -125,22 +127,10 @@ export default {
         }
 
         // 주제어를 받는다면
-        if (type === "word") {
-          if (val === "liar") {
-            console.log("역할 - liar");
-            console.log("주제 - liar");
-            const payload = {
-              mysubject: "liar",
-            };
-            this.$store.commit("SET_MYROLE", payload);
-          } else {
-            console.log("역할 - 시민");
-            console.log("주제 - " + val);
-            const payload = {
-              mysubject: val,
-            };
-            this.$store.commit("SET_MYROLE", payload);
-          }
+        if (type === "role") {
+          console.log("역할이 들어왔어요~!", val);
+          console.log("json.parse했음", JSON.parse(val));
+          this.$store.commit("SET_ROLE", JSON.parse(val));
         }
 
         // 타이머 설정

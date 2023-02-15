@@ -4,15 +4,20 @@
       <div class="modal-wrapper">
         <div class="modal-container">
           <div class="modal-header">
-            <slot name="header"> 라이어 정답 입력 </slot>
+            <div class="header">
+              <span style="color: red">라이어</span>로 지목당했습니다!
+            </div>
           </div>
 
           <div class="modal-body">
-            <input v-model="answer" />
+            <div class="answer-info">정답을 입력해주세요</div>
+            <div style="display: flex; justify-content: center">
+              <input class="input-answer" v-model="answer" />
+            </div>
           </div>
 
           <div class="modal-footer">
-            <div class="submit-answer" @click="sendAnswer">제출</div>
+            <button class="submit-answer" @click="sendAnswer">제출</button>
           </div>
         </div>
       </div>
@@ -25,11 +30,11 @@ import { ref } from "vue";
 import axios from "axios";
 import VueCookies from "vue-cookies";
 
+import { mapState } from "vuex";
 export default {
   data() {
     return {
       answer: "",
-      API_URL: this.$store.state.API_URL,
       roomId: this.$store.state.gameinfo.roomId,
     };
   },
@@ -50,6 +55,9 @@ export default {
       close,
     };
   },
+  computed: {
+    ...mapState["API_URL"],
+  },
   methods: {
     sendAnswer() {
       let ans = this.answer;
@@ -68,6 +76,7 @@ export default {
       })
         .then((res) => {
           this.subjects = res.data;
+          this.$store.commit("OFF_ANSWER");
         })
         .catch((err) => {
           console.log("정답제출실패");
@@ -79,6 +88,17 @@ export default {
 </script>
 
 <style scoped>
+.answer-info {
+  font-size: 30px;
+  text-align: center;
+  margin-top: 70px;
+}
+.header {
+  font-size: 40px;
+  text-align: center;
+  margin-top: 40px;
+  font-weight: 500;
+}
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -90,6 +110,10 @@ export default {
   display: table;
   transition: opacity 0.3s ease;
 }
+.modal-footer {
+  display: flex;
+  justify-content: center;
+}
 
 .modal-wrapper {
   display: table-cell;
@@ -97,11 +121,12 @@ export default {
 }
 
 .modal-container {
-  width: 500px;
+  width: 600px;
+  height: 500px;
   margin: 0px auto;
-  padding: 20px 30px;
-  background-color: #fff;
-  border-radius: 2px;
+  padding: 20px;
+  background-image: url(@/assets/ingame/liaranswer.png);
+  border-radius: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
   font-family: Helvetica, Arial, sans-serif;
@@ -115,7 +140,29 @@ export default {
 .modal-body {
   margin: 20px 0;
 }
-.submit-answer:hover {
-  cursor: pointer;
+.input-answer {
+  border-left-width: 0;
+  border-right-width: 0;
+  border-top-width: 0;
+  border-bottom-width: 1;
+  background-color: transparent;
+  width: 200px;
+  margin-top: 60px;
+  font-size: 20px;
+  text-align: center;
+  padding-bottom: 5px;
+}
+.input-answer:focus {
+  outline: none;
+}
+.submit-answer {
+  background-color: rgba(217, 217, 217, 60%);
+  width: 120px;
+  height: 50px;
+  border: none;
+  border-radius: 20px;
+  font-size: 20px;
+  margin-top: 40px;
+  text-align: center;
 }
 </style>
