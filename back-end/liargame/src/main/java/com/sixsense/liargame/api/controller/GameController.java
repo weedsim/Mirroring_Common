@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/sse/rooms/{roomId}/games")
+@RequestMapping("/rooms/{roomId}/games")
 public class GameController {
     private final GameService gameService;
     private final JwtTokenProvider jwtTokenProvider;
     private final RoomService roomService;
 
     @PostMapping("/start")
-    public ResponseEntity<?> start(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
+    public ResponseEntity<?> start(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken,
+            @PathVariable Integer roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         GameResultResp gameResultResp = gameService.gameStart(userId, roomId);
         if (gameResultResp != null) {

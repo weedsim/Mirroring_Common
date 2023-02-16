@@ -52,14 +52,14 @@
           </li>
           <li class="btngrp">
             <a
-              href="https://accounts.google.com/o/oauth2/v2/auth?client_id=379257368587-calfpqn6bh9ehcfqtd3po48r2ohhpr1l.apps.googleusercontent.com&redirect_uri=http://localhost:8081/google&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+              href="https://accounts.google.com/o/oauth2/v2/auth?client_id=379257368587-calfpqn6bh9ehcfqtd3po48r2ohhpr1l.apps.googleusercontent.com&redirect_uri=https://i8a706.p.ssafy.io/google&response_type=code&scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
               ><div class="google btn-logo">
                 <span class="google-logo"></span
                 ><span class="social-text">Google</span>
               </div>
             </a>
             <a
-              href="https://kauth.kakao.com/oauth/authorize?client_id=1ff9c0d8399e2993bcc0f81a9c899269&redirect_uri=http://localhost:8081/kakao&response_type=code"
+              href="https://kauth.kakao.com/oauth/authorize?client_id=1ff9c0d8399e2993bcc0f81a9c899269&redirect_uri=https://i8a706.p.ssafy.io/kakao&response_type=code"
               ><div class="kakao btn-logo">
                 <span class="kakao-logo"></span
                 ><span class="social-text">Kakao</span>
