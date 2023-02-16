@@ -103,7 +103,7 @@ public class RoomServiceImpl implements RoomService {
         room.exit(banId);
         RoomDetail roomDetail = toDetail(room);
         try {
-            room.getEmitters().sendToAll("message", new SseResponse("message", om.writeValueAsString(roomDetail)));
+            room.getEmitters().sendToAll("message", new SseResponse("room", om.writeValueAsString(roomDetail)));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -121,7 +121,7 @@ public class RoomServiceImpl implements RoomService {
 
         RoomDetail roomDetail = toDetail(room);
         try {
-            room.getEmitters().sendToAll("message", new SseResponse("message", om.writeValueAsString(roomDetail)));
+            room.getEmitters().sendToAll("message", new SseResponse("room", om.writeValueAsString(roomDetail)));
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
