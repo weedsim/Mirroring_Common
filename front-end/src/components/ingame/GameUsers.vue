@@ -22,12 +22,21 @@
           <!-- $store.state.sessions[index].isJoin -->
           <OvVideo :streamManager="item" class="ov-video" />
           <!-- <img src="@/assets/ingame/headphone.png" v-else alt="" /> -->
-          <div class="screen test">
+          <div class="screen">
             <div class="user-name">
               {{ gameinfo.participants[index].name }}
             </div>
-            <div class="vote">
-              <div class="vote-msg">지목</div>
+            <div
+              class="vote"
+              v-if="this.liar !== index && this.gameinfo.isPlaying"
+            >
+              <div class="vote-msg" @click="setLiar(index)">지목</div>
+            </div>
+            <div
+              class="selected"
+              v-if="this.liar === index && this.gameinfo.isPlaying"
+            >
+              <div class="selected-msg">Liar</div>
             </div>
           </div>
           <div
@@ -92,6 +101,7 @@ export default {
       myIdx: this.$store.state.myIdx,
       participants: this.$store.state.gameinfo.participants,
       active: true,
+      chk: true,
     };
   },
   created() {
@@ -104,7 +114,7 @@ export default {
   computed: {
     ...mapActions(["setDeleteOpenvidu"]),
     ...mapGetters(["getAll", "isMaster"]),
-    ...mapState(["gameinfo", "openvidu", "myIdx", "API_URL"]),
+    ...mapState(["gameinfo", "openvidu", "myIdx", "liar", "API_URL"]),
     chkparti() {
       return this.$store.state.gameinfo.participants;
     },
@@ -146,6 +156,10 @@ export default {
     },
   },
   methods: {
+    setLiar(index) {
+      console.log("선택함", index);
+      this.$store.commit("SET_LIAR", index);
+    },
     getThis() {
       console.log(this.subscribers);
       console.log("찍혀라 얍!");
@@ -302,10 +316,24 @@ img {
   /* letter-spacing: 1vw; */
   font-weight: 600;
 }
-.test {
-  background-image: url(@/assets/ingame/selectLiar2.jpg);
-
-  background-repeat: no-repeat;
-  opacity: 0.5;
+.selected {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0%;
+  left: 0%;
+  /* display: none; */
+  background-color: rgba(255, 109, 109, 51%);
+  /* display: none; */
+}
+.selected-msg {
+  text-align: center;
+  position: relative;
+  /* top: 45%; */
+  transform: translateY(150%);
+  font-size: 3vw;
+  z-index: 100;
+  /* letter-spacing: 1vw; */
+  font-weight: 600;
 }
 </style>
