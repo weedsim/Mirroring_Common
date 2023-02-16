@@ -19,19 +19,20 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/rooms")
 public class RoomController {
     private final RoomService roomService;
 
     private final JwtTokenProvider jwtTokenProvider;
     private final GlobalRoom globalRoom;
 
-    @GetMapping("/rooms")
+    @GetMapping
     public ResponseEntity<List<RoomResp>> getAll(Pageable pageable) {
         List<RoomResp> rooms = roomService.selectAll(pageable);
         return ResponseEntity.ok(rooms);
     }
 
-    @PatchMapping("/sse/rooms/{roomId}/enter")
+    @PatchMapping("/{roomId}/enter")
     public ResponseEntity<RoomDetail> enter(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         RoomDetail roomDetail = roomService.enter(userId, roomId);
@@ -40,28 +41,28 @@ public class RoomController {
         return ResponseEntity.ok(roomDetail);
     }
 
-    @PatchMapping("/sse/rooms/{roomId}/ready")
+    @PatchMapping("/{roomId}/ready")
     public ResponseEntity<RoomDetail> ready(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         roomService.ready(userId, roomId);
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/sse/rooms/{roomId}/exit")
+    @PatchMapping("/{roomId}/exit")
     public ResponseEntity<?> exit(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         roomService.exit(userId, roomId);
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/sse/rooms/{roomId}/ban/{banId}")
+    @PatchMapping("/{roomId}/ban/{banId}")
     public ResponseEntity<?> ban(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId, @PathVariable Long banId) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         roomService.ban(userId, roomId, banId);
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/rooms/{roomId}")
+    @PatchMapping("/{roomId}")
     public ResponseEntity<?> changeSetting(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @PathVariable Integer roomId, @RequestBody SettingDto settingDto) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         System.out.println(userId);
@@ -71,7 +72,7 @@ public class RoomController {
     }
 
 
-    @PostMapping("/rooms")
+    @PostMapping
     public ResponseEntity<RoomDetail> create(@RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken, @RequestBody RoomReq roomReq) {
         Long userId = jwtTokenProvider.getUserId(accessToken);
         RoomDetail roomDetail;
@@ -83,7 +84,7 @@ public class RoomController {
         return ResponseEntity.ok(roomDetail);
     }
 
-    @GetMapping("/rooms/last")
+    @GetMapping("/last")
     public ResponseEntity<Integer> lastNumber() {
         return ResponseEntity.ok(roomService.last());
     }

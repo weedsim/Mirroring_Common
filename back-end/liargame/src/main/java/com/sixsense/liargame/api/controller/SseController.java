@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/sse")
 public class SseController {
@@ -23,7 +25,8 @@ public class SseController {
     }
 
     @GetMapping(value = "/connect", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public ResponseEntity<SseEmitter> connect(Integer roomId, @RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken) {
+    public ResponseEntity<SseEmitter> connect(HttpServletResponse response, Integer roomId, @RequestHeader(name = JwtProperties.AUTHORIZATION) String accessToken) {
+        response.setHeader("X-Accel-Buffering", "no");
         Long userId = jwtTokenProvider.getUserId(accessToken);
         String name = jwtTokenProvider.getUserName(accessToken);
         System.out.println("서비스 전");

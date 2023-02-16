@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/rooms/{roomId}/games")
+@RequestMapping("/sse/rooms/{roomId}/games")
 public class GameController {
     private final GameService gameService;
     private final JwtTokenProvider jwtTokenProvider;
