@@ -1,6 +1,25 @@
 version: "3.0"
 
 services:
+ mysql:
+  image: mariadb:10.4.20
+  container_name: mysql
+  restart: always
+  ports:
+   - "3306:3306"
+  environment:
+   MYSQL_DATABASE: test
+   MYSQL_ROOT_PASSWORD: ssafy
+   MYSQL_USER: root
+   MYSQL_PASSWORD: ssafy
+  volumes:
+   - ./mariadb/data:/var/lib/mysql
+   - ./mariadb/config:/etc/mysql/conf.d
+  privileged: true
+  command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  networks:
+   - tempnet
+  
  front:
   build: ./front-end
   ports:
@@ -17,12 +36,15 @@ services:
    server.address: 0.0.0.0
   depends_on:
    - redis
+   - mysql
   networks:
    - tempnet
 
  redis:
   image: redis:6.2.4-alpine
   container_name: redis
+  volumes:
+   - ./redis/redis-data:/data
   ports:
    - "6379:6379"
   networks:
