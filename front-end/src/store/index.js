@@ -46,6 +46,7 @@ export default createStore({
     NowPageNum: 1,
     resultModal: false,
     result: [],
+    liar: -1,
   },
   getters: {
     isMaster(state) {
@@ -95,6 +96,9 @@ export default createStore({
     },
   },
   mutations: {
+    SET_LIAR(state, payload) {
+      state.liar = payload;
+    },
     DELETE_SUBSCRIBER(state, payload) {
       console.log(payload);
       if (payload >= 0) {
