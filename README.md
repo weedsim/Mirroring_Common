@@ -1,4 +1,4 @@
-# ![favicon](https://user-images.githubusercontent.com/96412633/219274760-d3499ab9-1142-451d-a6e9-ebf0420479df.jpg)Liar Game
+# ![logo](https://user-images.githubusercontent.com/96412633/219275679-0f4b8ec4-a982-496f-a6a5-a6fe34f21df3.jpg)Liar Game
 
 화상채팅을 이용한 라이어 게임
 
