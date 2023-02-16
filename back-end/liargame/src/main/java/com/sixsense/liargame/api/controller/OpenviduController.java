@@ -32,17 +32,17 @@ public class OpenviduController {
      * @param params The Session properties
      * @return The Session ID
      */
-    @PostMapping("/api/sessions")
+    @PostMapping("/aapi/sessions")
     public ResponseEntity<String> initializeSession(@RequestBody(required = false) Map<String, Object> params)
             throws OpenViduJavaClientException, OpenViduHttpException {
         SessionProperties properties = SessionProperties.fromJson(params).build();
         Session session;
-        try {
+//        try {
             session = openvidu.createSession(properties);
-        } catch (Exception e) {
-            System.out.println("오픈비두 연결문제");
-            return ResponseEntity.internalServerError().build();
-        }
+//        } catch (Exception e) {
+//            System.out.println("오픈비두 연결문제");
+//            return ResponseEntity.internalServerError().build();
+//        }
         System.out.println("세션생성 : " + session.getSessionId());
         return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
     }
@@ -52,7 +52,7 @@ public class OpenviduController {
      * @param params    The Connection properties
      * @return The Token associated to the Connection
      */
-    @PostMapping("/api/sessions/{sessionId}/connections")
+    @PostMapping("/aapi/sessions/{sessionId}/connections")
     public ResponseEntity<String> createConnection(@PathVariable("sessionId") String sessionId,
             @RequestBody(required = false) Map<String, Object> params)
             throws OpenViduJavaClientException, OpenViduHttpException {
