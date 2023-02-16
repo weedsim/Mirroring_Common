@@ -26,7 +26,7 @@ public class GameManager {
         this.om = om;
     }
 
-    public Game start(Room room) {
+    public Game start(Room room) throws InterruptedException {
         Game game = games.get(room.getId());
         Emitters emitters = room.getEmitters();
         int timeout = room.getTimeout();
@@ -46,6 +46,7 @@ public class GameManager {
             throw new RuntimeException(e);
         }
         emitters.sendToAll("message", new SseResponse("message", "game start"));
+        Thread.sleep(2000);
         //timeout 만큼 쉼
         waitTimeout(room.getEmitters(), timeout * 1000);
         //차례대로 발언
