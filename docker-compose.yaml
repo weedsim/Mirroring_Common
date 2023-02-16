@@ -13,8 +13,8 @@ services:
    MYSQL_USER: root
    MYSQL_PASSWORD: ssafy
   volumes:
-   - ./mariadb/data:/var/lib/mysql
-   - ./mariadb/config:/etc/mysql/conf.d
+   - ./mysql/data:/var/lib/mysql
+   - ./mysql/config:/etc/mysql/conf.d
   privileged: true
   command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
   networks:
@@ -32,6 +32,9 @@ services:
   ports:
    - "5000:5000"
   environment:
+   SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/test?useUnicode=yes&characterEncoding=UTF-8&serverTimezone=Asia/Seoul&zeroDateTimeBehavior=convertToNull&rewriteBatchedStatements=true"
+   SPRING_DATASOURCE_USERNAME: root
+   SPRING_DATASOURCE_PASSWORD: ssafy
    SPRING_REDIS_HOST: "redis"
    server.address: 0.0.0.0
   depends_on:
