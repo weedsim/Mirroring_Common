@@ -37,12 +37,12 @@ public class OpenviduController {
             throws OpenViduJavaClientException, OpenViduHttpException {
         SessionProperties properties = SessionProperties.fromJson(params).build();
         Session session;
-        try {
+//        try {
             session = openvidu.createSession(properties);
-        } catch (Exception e) {
-            System.out.println("오픈비두 연결문제");
-            return ResponseEntity.internalServerError().build();
-        }
+//        } catch (Exception e) {
+//            System.out.println("오픈비두 연결문제");
+//            return ResponseEntity.internalServerError().build();
+//        }
         System.out.println("세션생성 : " + session.getSessionId());
         return new ResponseEntity<>(session.getSessionId(), HttpStatus.OK);
     }
