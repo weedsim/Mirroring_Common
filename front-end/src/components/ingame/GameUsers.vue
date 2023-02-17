@@ -9,14 +9,31 @@
       <!-- v-on:click="vote(index)" -->
       <div
         class="speaking-blur"
-        v-bind:class="{ 'speaking-blur': gameinfo.participants[index].mic }"
+        v-bind:class="{
+          'speaking-blur':
+            gameinfo !== undefined &&
+            gameinfo.participants !== undefined &&
+            gameinfo.participants.length > index &&
+            gameinfo.participants[index].mic === true,
+        }"
       >
         <!-- <div class="p-3 speaking-blur"> -->
         <div
           class="user-screen"
           v-bind:class="[
-            { speaking: gameinfo.participants[index].mic },
-            { unspeaking: !gameinfo.participants[index].mic },
+            {
+              speaking:
+                gameinfo !== undefined &&
+                gameinfo.participants[index].mic === true,
+            },
+            {
+              unspeaking: !(
+                gameinfo !== undefined &&
+                gameinfo.participants !== undefined &&
+                gameinfo.participants.length > index &&
+                gameinfo.participants[index].mic === true
+              ),
+            },
           ]"
         >
           <!-- $store.state.sessions[index].isJoin -->

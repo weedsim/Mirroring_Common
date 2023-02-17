@@ -81,12 +81,12 @@
               <div style="width: 100px; position: relative">
                 {{ item.voter }}
               </div>
-              <div style="width: 100px; display: flex; justify-content: center">
+              <div style="width: 70px; display: flex; justify-content: center">
                 <img
                   v-if="item.isCorrect"
                   src="@/assets/ingame/arrow48g.png"
                   alt=""
-                  style="margin: 10px 10px"
+                  style="margin: 0 10px"
                 />
                 <img
                   v-else
@@ -95,7 +95,10 @@
                   style="margin: 0 10px"
                 />
               </div>
-              <div v-if="item.target !== null" style="width: 100px">
+              <div
+                v-if="item.target !== null"
+                style="width: 100px; text-align: end"
+              >
                 {{ item.target }}
               </div>
               <div v-else style="width: 100px; text-align: end">투표 안함</div>
@@ -113,14 +116,17 @@
                 <div class="liar-text">liar</div>
                 {{ item.voter }}
               </div>
-              <div style="width: 100px; display: flex; justify-content: center">
+              <div style="width: 70px; display: flex; justify-content: center">
                 <img
                   src="@/assets/ingame/arrow48g.png"
                   alt=""
                   style="margin: 0 10px"
                 />
               </div>
-              <div v-if="item.target !== null" style="width: 100px">
+              <div
+                v-if="item.target !== null"
+                style="width: 100px; text-align: end"
+              >
                 {{ item.target }}
               </div>
               <div v-else style="width: 100px; text-align: end">투표 안함</div>
