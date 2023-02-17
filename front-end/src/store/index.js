@@ -483,7 +483,7 @@ export default createStore({
       const index = Number(payload);
       axios({
         method: "patch",
-        url: `${this.state.API.URL}/rooms/${this.state.gameinfo.roomId}/ban/${this.state.gameinfo.participants[index].userId}`,
+        url: `${this.state.API_URL}/rooms/${this.state.gameinfo.roomId}/ban/${this.state.gameinfo.participants[index].userId}`,
         headers: {
           Authorization: `Bearer ${VueCookies.get("accessToken")}`,
         },
