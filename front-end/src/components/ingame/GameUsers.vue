@@ -14,6 +14,7 @@
             gameinfo !== undefined &&
             gameinfo.participants !== undefined &&
             gameinfo.participants.length > index &&
+            gameinfo.participants[index].mic !== undefined &&
             gameinfo.participants[index].mic === true,
         }"
       >
@@ -24,6 +25,9 @@
             {
               speaking:
                 gameinfo !== undefined &&
+                gameinfo.participants !== undefined &&
+                gameinfo.participants.length > index &&
+                gameinfo.participants[index].mic !== undefined &&
                 gameinfo.participants[index].mic === true,
             },
             {
@@ -31,6 +35,7 @@
                 gameinfo !== undefined &&
                 gameinfo.participants !== undefined &&
                 gameinfo.participants.length > index &&
+                gameinfo.participants[index].mic !== undefined &&
                 gameinfo.participants[index].mic === true
               ),
             },
