@@ -1,0 +1,11 @@
+{
+  "name": "mirroring_common",
+  "version": "1.0.0",
+  "description": "화상채팅을 이용한 라이어 게임",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

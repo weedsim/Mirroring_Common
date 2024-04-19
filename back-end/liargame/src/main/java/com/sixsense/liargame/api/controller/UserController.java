@@ -110,6 +110,7 @@ public class UserController {
     @GetMapping("/duplicate")
     public ResponseEntity<?> duplication(@RequestParam(required = false) String email,
                                          @RequestParam(required = false) String name) {
+        System.out.println("test");
         return new ResponseEntity<Boolean>(userService.isDuplication(email, name), HttpStatus.OK);
     }
 }
